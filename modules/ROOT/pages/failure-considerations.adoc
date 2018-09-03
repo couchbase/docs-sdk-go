@@ -1,0 +1,4 @@
+= Failure considerations for the Go SDK in Couchbase
+:navtitle: Failure Considerations
+
+include::4.5@sdk:shared:partial$env-errors.adoc[tag=group]

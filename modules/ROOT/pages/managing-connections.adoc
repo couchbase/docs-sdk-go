@@ -1,37 +1,59 @@
-= Managing connections
+= Managing Connections Using the Go SDK with Couchbase Server
+:navtitle: Managing Connections
 :page-topic-type: concept
 
 [abstract]
-Instantiate a new `Cluster` object.
+This section describes how to connect the Go SDK to a Couchbase cluster and bucket.
+It contains best practices as well as information on the connection string,  SSL and other advanced connection options.
 
-== Configuring the client
+== Creating a Cluster Object
 
-To configure the client, instantiate a new `Cluster` object:
-
-[source,go]
-----
-myCluster, _ := gocb.Connect("couchbase://10.4.4.1")
-----
-
-== Connecting to a bucket
-
-To connect to a bucket, call the `OpenBucket()` method against your `Cluster` instance, passing in the name of the bucket that you want to connect to, along with any password.
-If a blank bucket name is specified, the default bucket is opened.
-The following example shows how to connect to a bucket:
+The [.api]`Cluster` object serves as an organizational unit for any [.api]`Bucket` objects created.
+As on the server each bucket is a member of a cluster, likewise in the SDK each [.api]`Bucket` object is a child of a [.api]`Cluster`.
+To create a cluster, construct it using a _connection string_, specifying the scheme and host(s) to connect to [.api]`gocb.Connect`:
 
 [source,go]
 ----
-myBucket, _ := myCluster.OpenBucket("beer-sample", "")
+cluster, err := gocb.Connect("couchbase://localhost")
 ----
 
-In addition to the bucket name, you can optionally include the bucket password if one has been defined, as shown in the following example:
+You can also specify multiple hosts in the connection string by separating each host with a comma:
 
 [source,go]
 ----
-myBucket, _ := myCluster.OpenBucket("default", "password");
+cluster, err := gocb.Connect("couchbase://host1,host2,host3,hostN")
 ----
 
+Specifying multiple hosts may add xref:failure-considerations.adoc[additional redundancy] when bootstrapping.
+
+== Opening a Bucket
+
+Once the [.api]`Cluster` object has been created, you may open one or more [.api]`Bucket` objects using [.api]`Cluster.OpenBucket`.
+The first argument is the bucket name to use, and the second is the bucket password - which should be provided if the bucket is password protected, or supplied as `nil` otherwise.
+
+[source,go]
+----
+bucket1, err := cluster.OpenBucket("messages", nil)
+protectedBucket, err := cluster.openBucket("protected", "s3cr3t")
+----
+
+Note that the bucket password is _not_ the administrative password used to access the Couchbase Web UI.
+
+Once the bucket has been created, it may be used throughout your application.
+Buckets are thread-safe and need not be locked or otherwise protected to be used from multiple threads.
+
+You should only need to open one [.api]`Bucket` object for each Couchbase Bucket in your application, and you should attempt to keep the [.api]`Bucket` object available and open for as long as you plan to access Couchbase within your application.
+
+== Closing a Bucket
+
+When your application is done talking to Couchbase, you can issue the [.api]`Bucket.Close()` call on the bucket, which will disconnect your application from the given bucket.
+
+[#ssl]
 == Configuring SSL
+
+.SSL Verification not implemented in Go SDK
+CAUTION: Be aware that the Go SDK does not implement certificate validation when connecting to Couchbase using SSL.
+This means that SSL connections are subject to https://en.wikipedia.org/wiki/Man-in-the-middle_attack[man-in-the-middle^] attacks.
 
 To configure SSL, pass an SSL scheme with your connection string when creating your cluster object.
 

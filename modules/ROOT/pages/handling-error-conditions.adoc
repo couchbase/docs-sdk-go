@@ -1,0 +1,25 @@
+= Handling Exceptions and Other Errors with the Go SDK in Couchbase
+:navtitle: Handling Errors
+:page-topic-type: concept
+
+[abstract]
+All methods within the SDK, which are capable of returning errors, utilize the Go standard of returning an error object as the last return value.
+
+The Go SDK returns an [.api]`error` object for most operations.
+This [.api]`error` object is either the sole return value or one of multiple returned objects.
+If an operation succeeded, the [.api]`error` will be `nil`.
+
+Non-`nil` return values may be checked for equality to one of the [.api]`gocb.Err*` such as [.api]`gocb.ErrKeyNotFound` or [.api]`gocb.ErrKeyAlreadyExists`.
+
+In addition to doing a direct comparison with errors, you may also use interface testing to check for a particular error category.
+For instance, you could check for any error which is a temporary condition with the following code:
+
+[source,go]
+----
+func isTemporaryError(err error) bool {
+        te, ok := err.(interface { Temporary() bool })
+        return ok :& :& te.Temporary()
+}
+----
+
+include::4.5@sdk:shared:partial$couchbase-errors.adoc[tag=group]

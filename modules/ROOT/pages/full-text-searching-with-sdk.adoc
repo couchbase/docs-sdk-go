@@ -1,0 +1,64 @@
+= Full Text Search (FTS) Using the Go SDK with Couchbase Server
+:navtitle: Searching from the SDK
+
+[abstract]
+You can use the Full Text Search service (FTS) to create queryable full-text indexes in Couchbase Server.
+
+Couchbase offers Full-text search support, allowing you to search for documents that contain certain words or phrases.
+In the Go SDK you can search full-text indexes by using the [.api]`SearchQuery` object and executing it with the [.api]`Bucket.ExecuteSearchQuery()` API.
+
+include::4.5@sdk:shared:partial$experimental-pars.adoc[tag=fts]
+
+The following example shows how to send a simple Search query (note that in this example the cbft package also has to be imported independently):
+
+[source,go]
+----
+import (
+  "github.com/couchbase/gocb"
+  "github.com/couchbase/gocb/cbft"
+  "fmt"
+)
+
+// ...
+query := gocb.NewSearchQuery("travel-search", cbft.NewTermQuery("office"))
+res, _ := bucket.ExecuteSearchQuery(query)
+for _, hit := range res.Hits() {
+        fmt.Printf("%s\n", hit.Id)
+}
+----
+
+The [.api]`Bucket.ExecuteSearchQuery()` method returns a [.api]``SearchResults``interface which provides access to all of the information returned by the query.
+
+Other search result data may be accessed using the various other available methods on the [.api]`SearchResults` interface.
+
+[source,go]
+----
+res, _ := bucket.ExecuteSearchQuery(query)
+for _, facet := range res.Facets() {
+        // ...
+}
+fmt.Printf("Total Hits: %d", res.Status().Total)
+----
+
+== Query Types
+
+Query types may be found inside the `gocb/cbft` package.
+The package contains query classes corresponding to those enumerated in xref:4.5@server:fts:fts-query-types.adoc[Types of Queries].
+Query object should be instantiated by using the associated `New*Query` functions, passing the search term (usually a string) as the first argument, followed by some query modifiers.
+
+It is important to distinguish between _query options_ and general _search options_.
+Some options affect the search process in general (such as the [.param]`Limit`, indicating how many results to return) while others only affect a specific query (such as [.param]`Fuzziness` for a given query).
+Because multiple queries can be combined in a single search operation, _query specific options_ can be specified only in the query object itself, while _search options_ are specified through methods on the [.api]`SearchQuery` object itself.
+
+== Query Facets
+
+Query xref:full-text-search-overview.adoc#facets[facets] may also be added to the _general search parameters_ by using the [.param]`AddFacet` method.
+The [.param]`AddFacet` method accepts a facet name as well as a facet definiton You can create facets by instantiating a [.api]`Facet` object found in the [.api]`gocb.cbft` package.
+
+[source,go]
+----
+query := gocb.NewSearchQuery("travel-search", cbft.NewTermQuery("office"))
+query.AddFacet("countries", cbft.NewTermFacet("country", 5))
+res, _ := bucket.ExecuteSearchQuery(query)
+fmt.Printf("Total Countries: %d", res.Facets()["countries"].Total)
+----

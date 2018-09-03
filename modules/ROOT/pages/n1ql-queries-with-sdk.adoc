@@ -1,0 +1,75 @@
+= N1QL Queries Using the Go SDK with Couchbase Server
+:navtitle: N1QL from the SDK
+:page-topic-type: concept
+
+NOTE: See xref:n1ql-query.adoc[Couchbase Developer documentation for a quick intro to developing with N1QL]
+
+== Simple Queries
+
+You can issue N1QL queries by first creating a [.api]`N1qlQuery` via [.api]`gocb.NewN1qlQuery()`, and submitting the query to [.api]`Bucket.ExecuteN1qlQuery`
+
+The following example shows how to send a simple N1QL query:
+
+[source,go]
+----
+myQuery := gocb.NewN1qlQuery("SELECT * FROM default")
+rows, err := myBucket.ExecuteN1qlQuery(myQuery, nil)
+var row interface{}
+for rows.Next(&row) {
+        fmt.Printf("Row: %+v\n", row)
+}
+if err = rows.Close(); err != nil {
+        fmt.Printf("Couldn't get all the rows: %s\n", err);
+}
+----
+
+The returned value ([.api]`QueryResults`) may be iterated over using the [.api]`QueryResults.Next()` method, which may be passed a pointer to an object which may be converted from each row.
+You may use an empty interface or a custom object containing JSON tags.
+Note that the JSON fields in the row are controlled by the query string itself: See https://github.com/couchbaselabs/devguide-examples/blob/server-4.5/go/query-marshalling-rest.go[^] for an example of using typed query rows.
+
+== Querying with Placeholders
+
+You can use N1QL xref:n1ql-query.adoc#devguide-named-placeholders[placeholders] in the query.
+Placeholders allow you to specify variable constraints for an otherwise constant query.
+To use placeholders, insert the placeholders themselves in the query string - these may be positional (e.g.
+`$1`, `$2`, etc.) or named (e.g.
+`$age`, `$lname`, etc).
+A named or poditional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query.
+To set the value for the placeholders, construct an object of an appropriate type and pass it as the second argument to the [.api]`ExecuteN1qlQuery()` method:
+
+* For positional placeholders, pass an array.
+`$1` refers to the the first array element, and so on.
+* For named placeholders, pass a Map.
+The Map keys should match up to the named placeholders, without the sigil (`$`).
+To specify a value for the `$age` placeholder, the Map should contain a value for `age`.
+
+Note that placeholder values may be anything JSON serializable - meaning things such as Maps and arrays are accepted.
+
+[source,go]
+----
+myQuery := gocb.NewN1qlQuery("SELECT airportname, city, country FROM `travel-sample` " +
+        "WHERE type='airport' AND city=$1 ")
+myParams = append(myParams, []interface{}{"Reno"})
+rows, err := bucket.ExecuteN1qlQuery(myQuery, myParams)
+----
+
+== Query Options
+
+You may configure the [.api]`N1qlQuery` object with various options to control query behavior.
+These options may be configured using various setter/getting methods
+
+* [.api]`N1qlQuery.Adhoc()` controls whether the query will be xref:n1ql-query.adoc#prepare-stmts[prepared].
+* [.api]`N1qlQuery.Timeout()` allows you to set the per-query timeout.
+This is useful for long-running queries
+* [.api]`N1qlQuery.Consistency()` allows you to modify the query index xref:n1ql-query.adoc#consistency[consistency].
++
+[source,go]
+----
+query.Consistency(gocb.RequestPlus)
+----
+
+== Index Creation
+
+In order to query a bucket, it must have an index defined.
+You can create indexes using raw N1QL statements (e.g.
+xref:4.5@server:n1ql:n1ql-language-reference/createindex.adoc[CREATE INDEX]) or via the Go SDK's xref:managing-clusters.adoc[cluster management interface]

@@ -1,0 +1,1 @@
+include::4.5@sdk:pages:partial$n1ql-query.adoc[]

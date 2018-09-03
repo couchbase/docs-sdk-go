@@ -1,7 +1,7 @@
 name: go-sdk
-version: '1.0'
+version: '1.1'
 title: Go SDK
-start_page: introduction.adoc
+start_page: start-using-sdk.adoc
 nav:
 - modules/ROOT/nav.adoc
-server_version: '4.1'
+server_version: '4.5'

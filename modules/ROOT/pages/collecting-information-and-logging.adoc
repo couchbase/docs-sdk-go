@@ -1,0 +1,28 @@
+= Collecting Information and Logging in the Go SDK with Couchbase Server
+:navtitle: Collecting Information
+:page-topic-type: concept
+
+The Go SDK offers simple logging of library internals to help debug issues.
+Logging may be configured on a global library-level basis.
+*Note that the logging API is subject to change*.
+
+You can configure logging using the [.api]`gocbcore.SetLogger`, which accepts an implementation of [.api]`gocbcore.Logger`.
+The SDK comes with two built-in [.api]`Logger` implementations, which can be instantiated using the following _methods_:
+
+* [.api]`gocbcore.DefaultStdioLogger()` returns a logger that logs errors and warnings.
+This is fairly non-disruptive and does not produce a lot of output
+* [.api]`gocbcore.VerboseStdioLogger()` returns a logger that logs more detailed tracing information.
+This logger should only be used when trying to diagnose an issue.
+
+[source,go]
+----
+import (
+        "github.com/couchbaselabs/gocb/gocbcore"
+)
+
+func main() {
+        gocbcore.SetLogger(gocbcore.DefaultStdioLogger())
+
+        // Use the gocb library.
+}
+----
