@@ -1,7 +1,7 @@
 = Managing Clusters Using the Go SDK with Couchbase Server
 :navtitle: Managing Clusters
 
-include::5.1@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
+include::6.0@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
 
 The Go SDK also comes with some convenience functionality for common Couchbase management requests.
 
@@ -25,7 +25,7 @@ clusterManager = myCluster.Manager("Administrator", "123456")
 To create a bucket, use the [.api]``ClusterManager``'s [.api]`InsertBucket(settings *BucketSettings)` method.
 The [.api]`BucketSettings` struct is also used to expose information about existing buckets ([.api]`ClusterManager.GetBuckets()` returns a slice of settings) or to update an existing bucket ([.api]`ClusterManager.UpdateBucket(settings *BucketSettings)`).
 
-include::5.1@sdk:shared:partial$flush-info-pars.adoc[tag=update-bucket-warning]
+include::6.0@sdk:shared:partial$flush-info-pars.adoc[tag=update-bucket-warning]
 
 Only [.param]`name` and [.param]`type` parameters are mandatory for the [.api]`BucketSettings`.
 Here is the list of parameters available:
@@ -68,7 +68,7 @@ clusterManager.RemoveBucket("hello");
 [#go-flushing]
 == Flushing Buckets
 
-include::5.1@sdk:shared:partial$flush-info-pars.adoc[tag=flush-intro]
+include::6.0@sdk:shared:partial$flush-info-pars.adoc[tag=flush-intro]
 
 You may flush a bucket in the Go SDK by using the [.api]`BucketManager.Flush()` method (for an example of connecting to the `BucketManager`, see the _Index Management_ section below).
 
@@ -84,7 +84,7 @@ The [.api]`flush` operation may fail if the bucket does not have flush enabled:
 [#go-index-management]
 == Index Management
 
-include::5.1@sdk:shared:partial$flush-info-pars.adoc[tag=index-management]
+include::6.0@sdk:shared:partial$flush-info-pars.adoc[tag=index-management]
 
 You can manage indexes in the Go SDK using the [.api]`BucketManager` interface, with its various N1QL related methods: [.api]`GetIndexes()`, [.api]`+CreateIndex(...)+`, etc\...
 
@@ -103,7 +103,7 @@ testManager.CreateIndex("fooBar", string[]{ "foo", "bar" }, true, false);
 [#go-view-management]
 == View Management
 
-include::5.1@sdk:shared:partial$flush-info-pars.adoc[tag=view-management]
+include::6.0@sdk:shared:partial$flush-info-pars.adoc[tag=view-management]
 
 In the Go SDK, design documents are represented by the `DesignDocument` and `View` structs.
 All operations on design documents are performed on a `BucketManager` instance.
@@ -142,7 +142,7 @@ designDoc := DesignDocument {
 bucketManager.InsertDesignDocument(designDoc)
 ----
 
-include::5.1@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
+include::6.0@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
 
 [source,go]
 ----

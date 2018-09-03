@@ -1,0 +1,36 @@
+= Threshold Logging Tracing through the SDK
+:navtitle: Threshold Logging
+
+include::6.0@sdk:shared:partial$tracing.adoc[tag=why_tracing]
+
+include::6.0@sdk:shared:partial$tracing.adoc[tag=open_tracing]
+
+include::6.0@sdk:shared:partial$tracing.adoc[tag=threshold_configuration]
+
+[#tracing_dot_net]
+== Threshold Logging in Go
+
+Response Time Observability is implemented in the Go SDK from version 1.4 onwards.
+With `OperationTracingEnabled` set to true [the default in Couchbase Server 5.5], `operation_tracing` is passed in the cluster connection query string.
+And with `OperationTracingServerDurationEnabled` set [it currently defaults to `false`], the `server_duration` is passed in the cluster connection query string.
+This is a brief example of customizing the threshold settings.
+
+[source,go]
+----
+cluster, _ := gocb.Connect("couchbase://localhost”)
+// cluster, _ := gocb.Connect("couchbase://localhost?operation_tracing=true&server_duration=true”) example of using connection string options
+cluster.Authenticate(gocb.PasswordAuthenticator{
+    Username: username,
+    Password: password,
+})
+
+tracer := gocb.ThresholdLoggingTracer{}
+tracer.Interval = 1 * time.Second
+tracer.KvThreshold = 500 * time.Millisecond
+tracer.ViewsThreshold = 1 * time.Second
+tracer.N1qlThreshold = 1 * time.Second
+tracer.SearchThreshold = 1 * time.Second
+tracer.AnalyticsThreshold = 1 * time.Second
+tracer.SampleSize = 20
+cluster.SetTracer(&tracer)  // Note that this must come before cluster.OpenBucket
+----

@@ -29,14 +29,8 @@ To get set up for the tutorial proper, follow these steps:
 
 NOTE: If you want to code it yourself, there's currently no "fill-in-the-blanks" branch so you'll have to delete method bodies and try to take it from there.
 
-[TIP]
-====
-This tutorial focuses on querying through N1QL and FTS rather than views.
-If you want information about using views, see the following resources:
-
-* General Information about views: xref:5.1@server:architecture:incremental-map-reduce-views.adoc[Incremental MapReduce Views]
-* Querying views: xref:5.1@server:indexes:querying-using-map-reduce-views.adoc[Querying using MapReduce views]
-====
+TIP: This tutorial focuses on querying through N1QL and FTS rather than views.
+If you want information about using views, see xref:6.0@server:understanding-couchbase:views/views-intro.adoc[Views].
 
 == Walking Through the API
 

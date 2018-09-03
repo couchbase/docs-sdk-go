@@ -1,1 +1,1 @@
-include::5.1@sdk:pages:partial$full-text-search-overview.adoc[]
+include::6.0@sdk:pages:partial$full-text-search-overview.adoc[]

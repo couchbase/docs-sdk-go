@@ -4,9 +4,9 @@
 RBAC requires that users pass appropriate _credentials_ to Couchbase Server in order to access cluster-resources.
 The SDK provides enhanced support for the passing of credentials.
 
-include::5.1@sdk:shared:partial$sdk-authentication-overview.adoc[tag=RBAC_and_the_SDK]
+include::6.0@sdk:shared:partial$sdk-authentication-overview.adoc[tag=RBAC_and_the_SDK]
 
-include::5.1@sdk:shared:partial$sdk-authentication-overview.adoc[tag=authenticating_with_legacy_sdk_versions]
+include::6.0@sdk:shared:partial$sdk-authentication-overview.adoc[tag=authenticating_with_legacy_sdk_versions]
 
 == Passing Credentials
 
@@ -24,16 +24,16 @@ With the most recent versions of the SDK, the legacy authentication interface an
 
 == Further Information on RBAC
 
-All aspects of the Couchbase RBAC system are covered in the section xref:5.1@server:security:security-authorization.adoc[Authorization].
+All aspects of the Couchbase RBAC system are covered in the section xref:6.0@server:security:security-authorization.adoc[Authorization].
 Specifically, for information on:
 
-* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:5.1@server:security:security-rbac-for-admins-and-apps.adoc[Creating and Managing Users with the UI].
-* _Roles_ required for resource-access, and the privileges they entail, see xref:5.1@server:security:concepts-rba-for-apps.adoc[RBAC for Applications].
-* _Resources_ controlled by Couchbase RBAC, see xref:5.1@server:security:security-resources-under-access-control.adoc[Resources Under Access Control].
+* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:6.0@server:security:security-rbac-for-admins-and-apps.adoc[Creating and Managing Users with the UI].
+* _Roles_ required for resource-access, and the privileges they entail, see xref:6.0@server:security:security-roles.adoc[Roles].
+* _Resources_ controlled by Couchbase RBAC, see xref:6.0@server:security:security-resources-under-access-control.adoc[Resources Under Access Control].
 
 == Certificate-Based Authentication
 
-Couchbase Server supports the use of X.509 certificates to authenticate clients.
+Couchbase Server supports the use of X.509 certificates to authenticate clients (only available in the Enterprise Edition, not the Community Edition).
 This allows authenticated users to access specific resources by means of the data service (no other service is currently available to clients through this form of authentication).
 
 The process relies on a certificate authority, for the issuing of certificates that validate identities.

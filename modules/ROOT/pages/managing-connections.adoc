@@ -28,7 +28,7 @@ Specifying multiple hosts may add xref:failure-considerations.adoc[additional re
 
 == Authenticating
 
-From Couchbase Server 5.0, you will need to authenticate the user, rather than against the bucket, as part of xref:5.1@server:security:security-authorization.adoc[Role-Based Access Control].
+From Couchbase Server 5.0, you will need to authenticate the user, rather than against the bucket, as part of xref:6.0@server:security:security-authorization.adoc[Role-Based Access Control].
 You will need to use `PasswordAuthenticator`:
 
 [source,go]
@@ -75,7 +75,7 @@ myCluster, _ := gocb.Connect("couchbases://10.1.1.1")
 myBucket, _ := myCluster.OpenBucket("default", "")
 ----
 
-include::5.1@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
+include::6.0@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
 To use DNS SRV in the Go SDK, simply pass the single bootstrap node (in this case `couchbase://example.com`).
 DNS SRV lookup will not be performed if there is more than a single node in the bootstrap list.

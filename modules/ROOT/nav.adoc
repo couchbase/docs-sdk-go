@@ -8,6 +8,8 @@
 * xref:sdk-authentication-overview.adoc[Authentication]
 * xref:sdk-user-management-overview.adoc[User Management]
  ** xref:sdk-user-management-example.adoc[Sample Code]
+* xref:encryption.adoc[Field Level Encryption]
+ ** xref:encrypting-using-sdk.adoc[Field Level Encryption from the Go SDK]
 
 .Working with Data
 * xref:core-operations.adoc[Core Operations]
@@ -26,6 +28,7 @@
 * xref:sdk-xattr-overview.adoc[Extended Attributes]
  ** xref:sdk-xattr-example.adoc[Sample Code]
 * xref:nonjson.adoc[Non-JSON Documents]
+* xref:compression-intro.adoc[Compression]
 
 .Deployment Environments
 * xref:managing-connections.adoc[Managing Connections]
@@ -37,3 +40,5 @@
 * xref:handling-error-conditions.adoc[Handling Errors]
 * xref:failure-considerations.adoc[Failure Considerations]
 * xref:collecting-information-and-logging.adoc[Collecting Information]
+* xref:threshold-logging.adoc[Threshold Logging]
+* xref:tracing-from-the-sdk.adoc[Tracing from the SDK]

@@ -3,15 +3,15 @@
 [abstract]
 The SDK now lets you create _users_, assign them _roles_ and associated _privileges_, and remove them from the system.
 
-include::5.1@sdk:shared:partial$sdk-user-management-overview.adoc[tag=users_resources_roles_and_privileges]
+include::6.0@sdk:shared:partial$sdk-user-management-overview.adoc[tag=users_resources_roles_and_privileges]
 
-include::5.1@sdk:shared:partial$sdk-user-management-overview.adoc[tag=creating_a_user]
+include::6.0@sdk:shared:partial$sdk-user-management-overview.adoc[tag=creating_a_user]
 
-include::5.1@sdk:shared:partial$sdk-user-management-overview.adoc[tag=listing_users]
+include::6.0@sdk:shared:partial$sdk-user-management-overview.adoc[tag=listing_users]
 
-include::5.1@sdk:shared:partial$sdk-user-management-overview.adoc[tag=getting_a_user]
+include::6.0@sdk:shared:partial$sdk-user-management-overview.adoc[tag=getting_a_user]
 
-include::5.1@sdk:shared:partial$sdk-user-management-overview.adoc[tag=removing_a_user]
+include::6.0@sdk:shared:partial$sdk-user-management-overview.adoc[tag=removing_a_user]
 
 == Listing Users
 
@@ -55,9 +55,9 @@ For Go examples, see xref:sdk-user-management-example.adoc[Sample Code].
 
 == Further Information on RBAC
 
-All aspects of the Couchbase RBAC system are covered in the section xref:5.1@server:security:security-authorization.adoc[Authorization].
+All aspects of the Couchbase RBAC system are covered in the section xref:6.0@server:security:security-authorization.adoc[Authorization].
 Specifically, for information on:
 
-* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:5.1@server:security:security-rbac-for-admins-and-apps.adoc[Creating and Managing Users with the UI].
-* _Roles_ required for resource-access, and the privileges they entail, see xref:5.1@server:security:concepts-rba-for-apps.adoc[RBAC for Applications].
-* _Resources_ controlled by Couchbase RBAC, see xref:5.1@server:security:security-resources-under-access-control.adoc[Resources Under Access Control].
+* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:6.0@server:security:security-rbac-for-admins-and-apps.adoc[Creating and Managing Users with the UI].
+* _Roles_ required for resource-access, and the privileges they entail, see xref:6.0@server:security:security-roles.adoc[Roles] .
+* _Resources_ controlled by Couchbase RBAC, see xref:6.0@server:security:security-resources-under-access-control.adoc[Resources Under Access Control].

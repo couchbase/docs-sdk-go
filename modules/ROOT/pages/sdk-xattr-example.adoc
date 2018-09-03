@@ -12,7 +12,7 @@ Extended attributes are handled by means of extensions to the _Subdocument API_.
 
 The following code demonstrates how extended attributes can be used.
 It assumes that Couchbase Server is established on `localhost`; that the Full Administrator username and password are `Administrator` and `password` respectively; and that the `travel-sample` bucket is installed.
-For information on installing the `travel-sample` bucket, see xref:5.1@server:settings:install-sample-buckets.adoc[Install Sample Buckets].
+For information on installing the `travel-sample` bucket, see xref:6.0@server:settings:install-sample-buckets.adoc[Install Sample Buckets].
 
 [source,go]
 ----

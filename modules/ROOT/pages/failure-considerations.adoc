@@ -1,17 +1,17 @@
 = Failure Considerations for the Go SDK in Couchbase
 :navtitle: Failure Considerations
 
-include::5.1@sdk:shared:partial$env-errors.adoc[tag=failover_definition]
+include::6.0@sdk:shared:partial$env-errors.adoc[tag=failover_definition]
 
-include::5.1@sdk:shared:partial$env-errors.adoc[tag=what_to_expect_in_application]
+include::6.0@sdk:shared:partial$env-errors.adoc[tag=what_to_expect_in_application]
 
-include::5.1@sdk:shared:partial$env-errors.adoc[tag=what_to_expect_during_failover]
+include::6.0@sdk:shared:partial$env-errors.adoc[tag=what_to_expect_during_failover]
 
-include::5.1@sdk:shared:partial$env-errors.adoc[tag=missing-nodes]
+include::6.0@sdk:shared:partial$env-errors.adoc[tag=missing-nodes]
 
-include::5.1@sdk:shared:partial$env-errors.adoc[tag=timeouts]
+include::6.0@sdk:shared:partial$env-errors.adoc[tag=timeouts]
 
-include::5.1@sdk:shared:partial$env-errors.adoc[tag=network_failures]
+include::6.0@sdk:shared:partial$env-errors.adoc[tag=network_failures]
 
 [#devguide-replica-read]
 == Reading from replicas

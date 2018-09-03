@@ -1,0 +1,142 @@
+= Tracing from the Go SDK with Couchbase Server
+:navtitle: Tracing from the SDK
+
+[abstract]
+Use tracing from the SDK to discover timeouts and bottlenecks across the netowrk and cluster.
+
+For our example, we will customize the threshold logging tracer settings with [.api]`CouchbaseEnvironment.Builder`.
+By default it will log every minute (if something is found) and only sample the top 10 slowest operations.
+The default threshold for key/value operation is 500 milliseconds.
+We shall set them so low that almost everything gets logged - not something you should do in production!
+
+[source,go]
+----
+tracer := gocb.ThresholdLoggingTracer{}
+tracer.Interval = 1 * time.Second // log every second
+tracer.KvThreshold = 1 * time.Microsecond
+Tracer.SampleSize = 100000 // log everything
+----
+
+This will set our threshold for key/value operations to one microsecond, log the found operations every second, and set the sample size to a very large value so everything will be logged.
+
+With these configs in place we are ready to run some operations.
+Below, we read some documents from the travel-sample bucket and, if found, write them back with an `upsert` - giving us both read and write operations to log.
+
+[source,go]
+----
+// Set the logger so that we see the output
+gocb.SetLogger(gocb.DefaultStdioLogger())
+
+// Connect
+cluster, _ := gocb.Connect("couchbase://localhost”)
+cluster.Authenticate(gocb.PasswordAuthenticator{
+    Username: username,
+    Password: password,
+})
+
+cluster.SetTracer(&tracer)
+bucket, _ := cluster.OpenBucket(“travel-sample”, “”)
+
+// Loads some docs and write them back
+for i := 0; i < 5; i++ {
+    airline := struct {
+        Type string `json:"type"`
+        ID   uint   `json:"id"`
+    }{}
+
+    key := fmt.Sprintf("airline_1%d", i)
+    cas, err := bucket.Get(key, &airline)
+    if err == nil {
+        bucket.Replace(key, airline, cas, 0)
+    }
+}
+
+// Leave a bit of time for the logger to output
+time.Sleep(5 * time.Second)
+----
+
+Run the code, and you will see something like the following in the logs:
+
+[source,json]
+----
+{
+  "service": "kv",
+  "count": 6,
+  "top": [
+    {
+      "operation_name": "Get",
+      "total_us": 31903,
+      "server_us": 22,
+      "decode_us": 91,
+      "last_operation_id": "0x5”,
+      "last_local_id": "2f87cf1799fe15fd\/cda32b624efa3e53"
+    },
+    {
+      "operation_name": "Get",
+      "total_us": 1204,
+      "server_us": 8,
+      "last_operation_id": "0x7",
+      "last_local_id": "2f87cf1799fe15fd\/cda32b624efa3e53"
+    },
+    {
+      "operation_name": "Get",
+      "total_us": 1166,
+      "server_us": 14,
+      "last_operation_id": "0xa",
+      "last_local_id": "2f87cf1799fe15fd\/cda32b624efa3e53"
+    },
+    {
+      "operation_name": "Replace",
+      "total_us": 422,
+      "encode_us": 15,
+      "server_us": 49,
+      "last_operation_id": "0x6",
+      "last_local_id": "2f87cf1799fe15fd\/cda32b624efa3e53"
+    },
+    {
+      "operation_name": "Get",
+      "total_us": 407,
+      "server_us": 8,
+      "last_operation_id": "0x9",
+      "last_local_id": "2f87cf1799fe15fd\/cda32b624efa3e53"
+    },
+    {
+      "operation_name": "Get",
+      "total_us": 385,
+      "server_us": 8,
+      "last_operation_id": "0x8",
+      "last_local_id": "2f87cf1799fe15fd\/cda32b624efa3e53"
+    }
+  ]
+}
+----
+
+For each service (only kv-based on this workload), the threshold log reporter will show you the total number of recorded ops (through count), and give you the top slowest ops sorted by their latency.
+Since only airline_10 exists in the bucket you will see five document fetches but only one mutation.
+
+[#threshold_log_reporter_output_fields]
+== Output fields in detail.
+
+Let's highlight a single operation, and explain each field in a little more detail:
+
+[source,json]
+----
+{
+      "operation_name": "Get",
+      "total_us": 31903,
+      "server_us": 22,
+      "decode_us": 91,
+      "last_operation_id": "0x5”,
+      "last_local_id": "2f87cf1799fe15fd\/cda32b624efa3e53"
+}
+----
+
+This tells us the following:
+
+* *total_us:* The total time it took to perform the full operation: here around 32 milliseconds.
+* *server_us:* The server reported that its work performed took 22 microseconds (this does not include network time or time in the buffer before picked up at the cluster).
+* *decode_us:* Decoding the response took the client 91 microseconds.
+* *last_operation_id:* A combination of type of operation and id (in this case the opaque value), useful for diagnosing and troubleshooting in combination with the last_local_id.
+* *last_local_id:* With Server 5.5 and later, this id is negotiated with the server and can be used to correlate logging information on both sides in a simpler fashion.
+
+You can see that if the thresholds are set the right way based on production requirements, without much effort slow operations can be logged and pinpointed more easily than before.

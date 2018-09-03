@@ -1,1 +1,1 @@
-include::5.1@sdk:pages:partial$core-operations.adoc[]
+include::6.0@sdk:pages:partial$core-operations.adoc[]
