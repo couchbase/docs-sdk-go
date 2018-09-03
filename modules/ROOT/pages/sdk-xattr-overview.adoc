@@ -1,0 +1,15 @@
+= Extended Attributes
+
+[abstract]
+Couchbase Server permits the definition of _extended attributes_.
+These allow application developers to define application-specific metadata that will only be visible to those applications that request it or attempt to modify it.
+This might be, for example, meta-data specific to a programming framework that should be hidden by default from other frameworks, or possibly from other versions of the same framework.
+
+include::5.1@sdk:shared:partial$sdk-xattr-overview.adoc[tag=using_extended_attributes]
+
+== Language-Specific Variations
+
+Each language supported by the Couchbase SDK implements extended-attribute support in a slightly different way.
+For Go examples, see xref:sdk-xattr-example.adoc[Sample Code].
+
+For detailed information on the Subdocument API, see xref:subdocument-operations.adoc[Subdocument Operations].

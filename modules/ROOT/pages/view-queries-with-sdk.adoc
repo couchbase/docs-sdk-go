@@ -4,9 +4,9 @@
 [abstract]
 You can use MapReduce views to create queryable secondary indexes in Couchbase Server.
 
-include::4.5@sdk:shared:partial$views.adoc[tag=views-intro]
+include::5.1@sdk:shared:partial$views.adoc[tag=views-intro]
 
-include::4.5@sdk:shared:partial$views.adoc[tag=example-beer]
+include::5.1@sdk:shared:partial$views.adoc[tag=example-beer]
 
 == Querying views through the Go SDK
 

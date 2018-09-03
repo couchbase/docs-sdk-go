@@ -6,23 +6,42 @@ The Go SDK offers simple logging of library internals to help debug issues.
 Logging may be configured on a global library-level basis.
 *Note that the logging API is subject to change*.
 
-You can configure logging using the [.api]`gocbcore.SetLogger`, which accepts an implementation of [.api]`gocbcore.Logger`.
+You can configure logging using the [.api]`gocb.SetLogger`, which accepts an implementation of [.api]`gocb.Logger`.
 The SDK comes with two built-in [.api]`Logger` implementations, which can be instantiated using the following _methods_:
 
-* [.api]`gocbcore.DefaultStdioLogger()` returns a logger that logs errors and warnings.
-This is fairly non-disruptive and does not produce a lot of output
-* [.api]`gocbcore.VerboseStdioLogger()` returns a logger that logs more detailed tracing information.
+[[gocb.logger_instantiation_methods]]
+* [.api]`gocb.DefaultStdioLogger()` returns a logger that logs errors and warnings.
+This is fairly non-disruptive and does not produce a lot of output.
+* [.api]`gocb.VerboseStdioLogger()` returns a logger that logs more detailed tracing information.
 This logger should only be used when trying to diagnose an issue.
 
 [source,go]
 ----
 import (
-        "github.com/couchbaselabs/gocb/gocbcore"
+        "github.com/couchbase/gocb"
 )
 
 func main() {
-        gocbcore.SetLogger(gocbcore.DefaultStdioLogger())
+        gocb.SetLogger(gocb.DefaultStdioLogger())
 
         // Use the gocb library.
 }
 ----
+
+It is also possible to provide other logger implementations to [.api]`gocb.SetLogger`.
+Implementations must satisify the [.api]`gocb.Logger` interface.
+
+[source,go]
+----
+  type Logger interface {
+	// Outputs logging information:
+	// level is the verbosity level
+	// offset is the position within the calling stack from which the message
+	// originated. This is useful for contextual loggers which retrieve file/line
+	// information.
+	Log(level LogLevel, offset int, format string, v ...interface{}) error
+}
+----
+
+The [.api]`gocb.DefaultStdioLogger()` and [.api]`gocb.VerboseStdioLogger()` wrap their [.api]`gocbcore` counterparts to provide a stable interface.
+The [.api]`gocb` versions should be used.

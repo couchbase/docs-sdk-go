@@ -22,11 +22,6 @@ Once you've installed the SDK you can run this simple code snippet showcasing so
 * Error checking has been omitted for brevity.
 * Replace [.in]`localhost` with the IP or hostname of a cluster node, if the host running the example is not also a Couchbase node.
 
-FASTPATH: Couchbase Server 5.0 introduces _Role-Based Access Control_ (RBAC), whereby bucket-access requires authentication by means of username and, typically, password.
-To access Couchbase Server 5.0-based clusters, you can continue using your existing SDK-version.
-Alternatively, you can upgrade to the most recent SDK-version, which provides an optimized authentication interface, for use with RBAC.
-See https://developer.couchbase.com/documentation/server/5.0/sdk/go/sdk-authentication-overview.html[Authentication^], for information.
-
 [source,go]
 ----
 package main
@@ -44,7 +39,11 @@ type User struct {
 
 func main() {
         cluster, _ := gocb.Connect("couchbase://localhost")
-        bucket, _ := cluster.OpenBucket("default", "")
+        cluster.Authenticate(gocb.PasswordAuthenticator{
+            Username: "USERNAME",
+            Password: "PASSWORD",
+        })
+        bucket, _ := cluster.OpenBucket("bucketname", "")
 
         bucket.Manager("", "").CreatePrimaryIndex("", true, false)
 
@@ -61,7 +60,7 @@ func main() {
         fmt.Printf("User: %v\n", inUser)
 
         // Use query
-        query := gocb.NewN1qlQuery("SELECT * FROM default WHERE $1 IN interests")
+        query := gocb.NewN1qlQuery("SELECT * FROM bucketname WHERE $1 IN interests")
         rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{"African Swallows"})
         var row interface{}
         for rows.Next(&row) {

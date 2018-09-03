@@ -1,0 +1,63 @@
+= User Management
+
+[abstract]
+The SDK now lets you create _users_, assign them _roles_ and associated _privileges_, and remove them from the system.
+
+include::5.1@sdk:shared:partial$sdk-user-management-overview.adoc[tag=users_resources_roles_and_privileges]
+
+include::5.1@sdk:shared:partial$sdk-user-management-overview.adoc[tag=creating_a_user]
+
+include::5.1@sdk:shared:partial$sdk-user-management-overview.adoc[tag=listing_users]
+
+include::5.1@sdk:shared:partial$sdk-user-management-overview.adoc[tag=getting_a_user]
+
+include::5.1@sdk:shared:partial$sdk-user-management-overview.adoc[tag=removing_a_user]
+
+== Listing Users
+
+The basic form of the method used to return currently defined users is as follows:
+
+----
+List<User>getUsers()
+----
+
+The method returns a list of _User_ objects, each of which takes the following form:
+
+----
+User {
+    String name;
+    String id;
+    String domain;
+    Role[] roles;
+}
+----
+
+The name is the full name of the user.
+The id is the user's ID.
+The domain is either `local` or `external`.
+Each Role object in the Role-array has the form described above, under _Creating a User_.
+
+== Removing Users
+
+The basic form of the method used to remove users is as follows:
+
+----
+booleanremoveUser (String userid)
+----
+
+The method's sole argument is the id of the user to be removed from the system, specified as a _String_.
+The method returns a _boolean_, which is `true` if the operation is successful, otherwise `false`.
+
+== Language-Specific Variations
+
+Each language supported by the Couchbase SDK implements the above methods in a slightly different way.
+For Go examples, see xref:sdk-user-management-example.adoc[Sample Code].
+
+== Further Information on RBAC
+
+All aspects of the Couchbase RBAC system are covered in the section xref:5.1@server:security:security-authorization.adoc[Authorization].
+Specifically, for information on:
+
+* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:5.1@server:security:security-rbac-for-admins-and-apps.adoc[Creating and Managing Users with the UI].
+* _Roles_ required for resource-access, and the privileges they entail, see xref:5.1@server:security:concepts-rba-for-apps.adoc[RBAC for Applications].
+* _Resources_ controlled by Couchbase RBAC, see xref:5.1@server:security:security-resources-under-access-control.adoc[Resources Under Access Control].

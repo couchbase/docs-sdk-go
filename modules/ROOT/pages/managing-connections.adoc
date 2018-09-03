@@ -26,6 +26,19 @@ cluster, err := gocb.Connect("couchbase://host1,host2,host3,hostN")
 
 Specifying multiple hosts may add xref:failure-considerations.adoc[additional redundancy] when bootstrapping.
 
+== Authenticating
+
+From Couchbase Server 5.0, you will need to authenticate the user, rather than against the bucket, as part of xref:5.1@server:security:security-authorization.adoc[Role-Based Access Control].
+You will need to use `PasswordAuthenticator`:
+
+[source,go]
+----
+cluster.Authenticate(gocb.PasswordAuthenticator{
+     Username: username,
+     Password: password,
+ })
+----
+
 == Opening a Bucket
 
 Once the [.api]`Cluster` object has been created, you may open one or more [.api]`Bucket` objects using [.api]`Cluster.OpenBucket`.
@@ -34,7 +47,7 @@ The first argument is the bucket name to use, and the second is the bucket passw
 [source,go]
 ----
 bucket1, err := cluster.OpenBucket("messages", nil)
-protectedBucket, err := cluster.openBucket("protected", "s3cr3t")
+protectedBucket, err := cluster.OpenBucket("protected", "s3cr3t")
 ----
 
 Note that the bucket password is _not_ the administrative password used to access the Couchbase Web UI.
@@ -51,9 +64,8 @@ When your application is done talking to Couchbase, you can issue the [.api]`Buc
 [#ssl]
 == Configuring SSL
 
-.SSL Verification not implemented in Go SDK
-CAUTION: Be aware that the Go SDK does not implement certificate validation when connecting to Couchbase using SSL.
-This means that SSL connections are subject to https://en.wikipedia.org/wiki/Man-in-the-middle_attack[man-in-the-middle^] attacks.
+WARNING: Be aware that certificate validation when connecting to Couchbase using SSL requires Go 1.6+ and gocb 1.2+.
+Otherwise SSL connections are subject to https://en.wikipedia.org/wiki/Man-in-the-middle_attack[man-in-the-middle^] attacks.
 
 To configure SSL, pass an SSL scheme with your connection string when creating your cluster object.
 
@@ -62,3 +74,8 @@ To configure SSL, pass an SSL scheme with your connection string when creating y
 myCluster, _ := gocb.Connect("couchbases://10.1.1.1")
 myBucket, _ := myCluster.OpenBucket("default", "")
 ----
+
+include::5.1@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
+
+To use DNS SRV in the Go SDK, simply pass the single bootstrap node (in this case `couchbase://example.com`).
+DNS SRV lookup will not be performed if there is more than a single node in the bootstrap list.

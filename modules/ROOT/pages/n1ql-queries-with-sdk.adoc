@@ -34,7 +34,7 @@ Placeholders allow you to specify variable constraints for an otherwise constant
 To use placeholders, insert the placeholders themselves in the query string - these may be positional (e.g.
 `$1`, `$2`, etc.) or named (e.g.
 `$age`, `$lname`, etc).
-A named or poditional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query.
+A named or positional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query.
 To set the value for the placeholders, construct an object of an appropriate type and pass it as the second argument to the [.api]`ExecuteN1qlQuery()` method:
 
 * For positional placeholders, pass an array.
@@ -72,4 +72,4 @@ query.Consistency(gocb.RequestPlus)
 
 In order to query a bucket, it must have an index defined.
 You can create indexes using raw N1QL statements (e.g.
-xref:4.5@server:n1ql:n1ql-language-reference/createindex.adoc[CREATE INDEX]) or via the Go SDK's xref:managing-clusters.adoc[cluster management interface]
+xref:5.1@server:n1ql:n1ql-language-reference/createindex.adoc[CREATE INDEX]) or via the Go SDK's xref:managing-clusters.adoc[cluster management interface]

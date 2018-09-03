@@ -22,4 +22,13 @@ func isTemporaryError(err error) bool {
 }
 ----
 
-include::4.5@sdk:shared:partial$couchbase-errors.adoc[tag=group]
+[#enhanced-errors]
+== Enhanced Errors
+
+The Go SDK has been updated to support Enhanced Error messages.
+Enhanced Errors are enabled at the cluster level, _before_ opening a bucket, with `cluster.SetEnhancedErrors(true)`.
+
+If you enable this, the errors that you get back from the library may not be directly comparable to the `+gocb.Err***+` constants, as they may have been dynamically generated to include additional error information.
+You can access the underlying error using the new API `gocb.ErrorCause(err)` to receive the underlying constants-comparable error object.
+
+include::5.1@sdk:shared:partial$couchbase-errors.adoc[tag=group]
