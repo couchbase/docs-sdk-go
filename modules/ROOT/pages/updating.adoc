@@ -1,0 +1,17 @@
+= Updating documents
+:page-topic-type: concept
+
+[abstract]
+You can update a document by using the `Upsert()` or `Replace()` methods.
+
+The `Replace()` method replaces a document that already exists with new contents.
+The `Upsert()` method creates the document if it does not already exist.
+
+The following example shows how to update a document by using the `Replace()` method:
+
+[source,go]
+----
+myBucket, _ := myCluster.OpenBucket("default", "")
+var testValue := "test content"
+cas, err := myBucket.Replace("document_name", &testValue, 0, 0)
+----

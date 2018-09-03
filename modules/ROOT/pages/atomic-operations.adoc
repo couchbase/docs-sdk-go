@@ -1,0 +1,58 @@
+= Atomic operations
+:page-topic-type: concept
+
+[abstract]
+The Go SDK supports several operations that allow one-step, atomic changes to documents.
+These operations include `counter`, `prepend` and `append` functions.
+
+== Counter operation
+
+The `Counter()` method enables you to implement an atomic counter as a Couchbase document.
+You can either execute this operation against a previously created document or create a new document by using the `initial` parameter.
+
+The following example shows how to use the `Counter()` method to increment your counter and get the value back:
+
+[source,go]
+----
+myBucket, _ := myCluster.OpenBucket("default", "")
+myBucket.Insert("document_name", "10", 0)
+value, _, _ := myBucket.Counter("document_name", 1, 0, 0)
+----
+
+The following example shows how to use the `Counter()` method to decrement your counter and get the value back:
+
+[source,go]
+----
+myBucket, _ := myCluster.OpenBucket("default", "")
+myBucket.Insert("document_name", "10", 0)
+value, _, _ := myBucket.Counter("document_name", -1, 0, 0)
+----
+
+You can additionally perform a counter operation with an initial value specified.
+In this case, the document will be created if it does not exist.
+The `initial` parameter will do nothing if the document already exists.
+
+[source,go]
+----
+myBucket, _ := myCluster.OpenBucket("default", "")
+value, _, _ := myBucket.Counter("document_name", 1, 10, 0)
+----
+
+NOTE: If a new counter document is created by using the `initial` parameter, the counter is set to the value of `initial`, not `initial+delta`.
+
+== Append and prepend operations
+
+The append and prepend operations allow you to perform a binary append or prepend to a Couchbase document.
+
+NOTE: This operation is performed without any consideration for the data type, thus appending a JSON document to a JSON document will result in an invalid object (for instance: `{}{}`).
+
+The following is an example of how to use the `append()` and `prepend()` methods to add further text to an already existing document:
+
+[source,go]
+----
+myBucket, _ := myCluster.OpenBucket("default", "")
+myBucket.Insert("document_name", "Beautiful", 0)
+myBucket.Append("document_name", " World!")
+myBucket.Prepend("document_name", "Hello ")
+// Document content is now "Hello Beautiful World!".
+----

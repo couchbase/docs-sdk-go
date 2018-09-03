@@ -1,0 +1,17 @@
+= Getting Started
+:page-topic-type: concept
+
+[abstract]
+To get started with the SDK, install it on your computer and then try a simple example, Hello Couchbase.
+
+The Hello Couchbase app shows how to perform some simple database operations.
+
+== Installing the Go SDK
+
+Installing the SDK is similar to installing most other Go modules.
+Use `go get` to install the [.api]`gocb` module:
+
+[source,bash]
+----
+$ go get gopkg.in/couchbaselabs/gocb.v0
+----

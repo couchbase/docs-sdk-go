@@ -1,0 +1,17 @@
+= Performance tuning
+:page-topic-type: concept
+
+[abstract]
+Follow the guidelines to effectively use your computing resources.
+
+Though the Go SDK and Couchbase Server are extremely performant, you can follow these guidelines to ensure the most effective use of your computing resources:
+
+[#ol_abl_mwq_t4]
+* Couchbase bucket connections are relatively expensive to establish compared to the operations performed on them.
+Therefore, you should open each bucket only once per application instance.
+Due to multiplexing performed within the SDK, opening multiple connections can cause issues and will not benefit performance in most cases.
+* Don't use too many views and buckets.
+A large number of buckets or views can negatively affect the performance of Couchbase Server and any connected clients.
+* Performing multiple operations simultaneously increases throughput and is important to achieve the best possible operation speeds.
+This is possible by using the `BulkOp` structures along with the `Do` method of a Bucket.
+These structures and method allow you to build a list of operations to perform, and execute them simultaneously (though not atomically).

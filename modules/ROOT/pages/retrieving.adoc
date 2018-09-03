@@ -1,0 +1,34 @@
+= Retrieving documents
+:page-topic-type: concept
+
+[abstract]
+You can retrieve documents by using regular reads or replica reads.
+
+== Regular reads
+
+Perform regular reads by using the `Get()` method.
+Regular reads enable you to retrieve a previously stored document from your active data set.
+
+The following example shows a regular read:
+
+[source,go]
+----
+myBucket, _ := myCluster.OpenBucket("default", "")
+var myValue interface{}
+cas, err := myBucket.Get("document_name", &myValue)
+----
+
+== Replica reads
+
+You perform replica reads by using the `GetReplica()` method.
+Replica reads enable you to retrieve a previously stored document by querying the replica copies of this document rather than the active one.
+This is not guaranteed to be consistent but does permit a level of recovery in case the primary server is not reachable.
+
+The following example shows a replica read, where the first responding server is the one used.
+
+[source,go]
+----
+myBucket, _ := myCluster.OpenBucket("default", "")
+var myValue interface{}
+cas, err := myBucket.GetReplica("document_name", &myValue, 0)
+----

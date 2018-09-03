@@ -1,0 +1,198 @@
+= Release notes
+:page-topic-type: concept
+
+[abstract]
+Release notes for the 1.0 version of the Go SDK.
+
+== Version 1.0.8 (May 2016)
+
+Version 1.0.8 is the 9th release of the Go SDK 1.0 0.
+
+*Enhancements and behavioral changes*
+
+* GOCBC-56: Added experimental support for CBFT.
+* GOCBC-59: Added support for `AT_PLUS` query consistency
+* Corrected issue with query row byte data access.
+* Corrected issue causing DCP streaming to behave incorrectly.
+* Improved API documentation.
+* Removed various error codes which could never be encountered.
+* Various minor bug fixes.
+
+*Known issues*
+
+* None
+
+== Version 1.0.7 (May 2016)
+
+Version 1.0.7 is the 8th release of the Go SDK 1.0 0.
+
+*Enhancements and behavioral changes*
+
+* GOCBC-95: Implemented Index Management API.
+* Various minor bug fixes.
+* Resolved issue with querying introduced in 1.0.6.
+
+*Known issues*
+
+* None
+
+== Version 1.0.6 (April 2016)
+
+Version 1.0.6 is the 7th release of the Go SDK 1.0 0.
+
+*Enhancements and behavioral changes*
+
+* GOCBC-107: Send client name to the server for logging purposes.
+* GOCBC-104: Added ability to grab raw bytes from the query result.
+* GOCBC-103: Breaking change to Counter operations to correct the logic bug.
+* GOCBC-90: Implemented experimental cluster-level authentication.
+* GOCBC-58: Implemented experimental cluster-level querying.
+* Various minor bug fixes.
+
+*Known issues*
+
+* None
+
+== Version 1.0.5 (March 2016)
+
+Version 1.0.5 is the 6th release of the Go SDK 1.0 0.
+
+*Enhancements and behavioral changes*
+
+* GOCBC-100: Offline clusters now correctly recover  when restarted.
+Improved logging capabilities of the SDK.
+* Improved logging capabilities of the SDK.
+* Various minor changes.
+
+*Known issues*
+
+* None
+
+== Version 1.0.4 (February 2016)
+
+Version 1.0.4 is the fifth release of the Go SDK 1.0 0.
+
+*Enhancements and behavioral changes*
+
+* GOCBC-55: Implemented an experimental API for sub-document operation support.
+* GOCBC-97: Resolved an issue with recovery from the server failure.
+* GOCBC-23: Added support for memcached buckets.
+* GOCBC-77: Implemented the [.cmd]`stats` operation.
+* GOCBC-98: Improved handling of common incorrect connection strings.
+* Various minor changes and documentation improvements.
+
+*Known issues*
+
+* None
+
+== Version 1.0.3 (January 2016)
+
+Version 1.0.3 is the fourth release of the Go SDK 1.0 0.
+
+*Enhancements and behavioral changes*
+
+* Fixed an issue that was causing internal requests to fail.
+* Improved error handling.
+* Improved handling of connection cleanup after client shutdown.
+* Improved behavior of the operation `retry` when a cluster node disconnects from the client.
+* Added support for running all tests without a Couchbase Cluster.
+* Various minor bug fixes.
+
+*Known issues*
+
+* None
+
+== Version 1.0.2 (December 2015)
+
+Version 1.0.2 is the third release of the Go SDK 1.0 0.
+
+*Enhancements and behavioral changes*
+
+* Various minor bug fixes.
+
+*Known issues*
+
+* None
+
+== Version 1.0.1 (November 17, 2015)
+
+Version 1.0.1 is the second release of the Go SDK 1.0 0.
+
+*Enhancements and behavioral changes*
+
+* GOCBC-70: Fixed the issue related to prepared statement execution.
+* GOCBC-68: Handle deleted buckets properly.
+* Fixed the bug related to passing interface pointers to storage methods.
+* Various other minor bug fixes.
+* Added ability to shut down connections.
+* Various performance improvements.
+
+*Known issues*
+
+* None
+
+== Version 1.0.0 (16 September 2015)
+
+Version 1.0.0 is the first GA release of the Go SDK.
+
+*Enhancements and behavioral changes*
+
+* Support for Couchbase Server 4.0 Enhanced Durability.
+* Support for Prepared Statements.
+* Corrected an issue where an incorrect value type passed to [.cmd]`Get` would panic.
+* Moved package to [.path]_github.com/couchbase_ rather than [.path]__github.com/couchbaselab__s.
+* Numerous minor bug fixes.
+
+*Known issues*
+
+* Mutation Tokens are disabled by default and cannot be enabled through [.cmd]`gocb` (only via [.cmd]`gocbcore`).
+
+== Version 1.0.0-beta [0.9.0] (7 July 2015)
+
+Version 1.0.0-beta is the beta pending our 1.0.0 GA release of the Go SDK.
+
+*Enhancements and behavioral changes*
+
+* Various minor bug fixes.
+
+*Known issues*
+
+* None
+
+== Version 0.3.0 (16 June 2015)
+
+Version 0.3.0 continues the progression towards a 1.0.0 GA release of our Go SDK.
+
+*Enhancements and behavioral changes*
+
+* Added support for performing bulk operations.
+* Added support for N1QL querying.
+* Added support for durability requirements.
+* Added support for GeoSpatial view queries.
+* Numerous performance enhancements.
+* Added additional user-oriented error handling functionality.
+* Added further options to GetReplica method.
+* Added support for specifying various internal timeouts.
+* Various minor bug fixes.
+
+*Known issues*
+
+* None
+
+== Version 0.2.0 (9 March 2015)
+
+Version 0.2.0 continues the progression towards a 1.0.0 GA release of our Go SDK.
+
+*Enhancements and behavioral changes*
+
+* Added support for performing management operations.
+* Significant refactoring of the code base to enhance performance and testability.
+* Various minor bug fixes.
+
+*Known issues*
+
+* None
+
+== Version 0.1.0 (25 February 2015)
+
+Version 0.1.0 was the first official release of our Go SDK.
