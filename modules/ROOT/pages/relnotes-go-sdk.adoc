@@ -1,0 +1,1 @@
+include::go-sdk::page$relnotes-go-sdk.adoc[]
