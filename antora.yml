@@ -1,5 +1,5 @@
 name: go-sdk
-version: '1.4'
+version: '1.5'
 title: Go SDK
 start_page: start-using-sdk.adoc
 nav:
