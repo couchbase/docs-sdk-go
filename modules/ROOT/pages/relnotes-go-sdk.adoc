@@ -1,0 +1,414 @@
+= Couchbase Go SDK Release Notes
+
+== SDK Installation
+
+Installing the Couchbase Go SDK is similar to installing most other Go projects:
+
+[source,bash]
+----
+$ go get gopkg.in/couchbase/gocb.v1
+----
+
+=== API Documentation
+
+The most current and up to date API Documentation is always available through the http://godoc.org/gopkg.in/couchbase/gocb.v1[godoc website].
+
+*Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
+
+== Version 1.4.2 (19 September 2018)
+
+Version 1.4.2 is a maintenance release for the1.4.x series.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-343[GOCBC-343], https://issues.couchbase.com/browse/GOCBC-342[GOCBC-342], https://issues.couchbase.com/browse/GOCBC-349[GOCBC-349]: 
+Updated Analytics support to include latest changes for GA. Including retrying on certain http error codes, parametrized queries and extra query options.
+* https://issues.couchbase.com/browse/GOCBC-347[GOCBC-347]: 
+Added support for retrying FTS queries on status code 429.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-350[GOCBC-350]: 
+Fixed issue so that requests for managing views only use basic authentication when a username or password are provided.
+* https://issues.couchbase.com/browse/GOCBC-345[GOCBC-345]: 
+Fixed issue where nodes in cluster config nodesExt list but not nodes list would be considered available for use.
+
+== Version 1.4.1 (21 August 2018)
+
+Version 1.4.1 is a maintenance release for the 1.4.x series.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-339[GOCBC-339]: 
+Fixed issue with leaking goroutines occuring intermittently in tests.
+* https://issues.couchbase.com/browse/GOCBC-341[GOCBC-341]: 
+Fixed issue where FTS ExecuteSearchQuery would return a JSON unmarshal error on invalid queries.
+
+== Version 1.4 (18 July 2018)
+
+Version 1.4 is the first release of our 1.4.x series.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-313[GOCBC-313]: 
+Added alternate name/alternate port config support.
+* https://issues.couchbase.com/browse/GOCBC-305[GOCBC-305]: 
+Added orphaned response logging.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-309[GOCBC-309]: 
+Updated ThresoldLoggingTracer configuration to match RFC.
+* https://issues.couchbase.com/browse/GOCBC-317[GOCBC-317]: 
+Fixed issue with Touch causing Invalid Parameters Error.
+* https://issues.couchbase.com/browse/GOCBC-323[GOCBC-323]: 
+Fixed issue where some log messages log the local address instead of remote address.
+* https://issues.couchbase.com/browse/GOCBC-325[GOCBC-325]: 
+Fixed issue where search Query sorting order should be "desc"
+* https://issues.couchbase.com/browse/GOCBC-327[GOCBC-327]: 
+Fixed issue causing data race on zombie logger.
+* https://issues.couchbase.com/browse/GOCBC-328[GOCBC-328]: 
+Fixed issue causing data race on memdopmap drain/add.
+* https://issues.couchbase.com/browse/GOCBC-329[GOCBC-329]: 
+Fixed issue where pipeline clients are sometimes created with no parent
+* https://issues.couchbase.com/browse/GOCBC-290[GOCBC-290]: 
+Fixed issue causing panic in pipeline client during consumer close.
+* https://issues.couchbase.com/browse/GOCBC-331[GOCBC-331]: 
+Fixed issue where SDK leaves goroutines running after closing.
+* https://issues.couchbase.com/browse/GOCBC-335[GOCBC-335]: 
+Fixed issue where SDK logs warnings when HTTP config poller intentionally disconnects.
+
+== Version 1.3.6 (15 May 2018)
+
+Version 1.3.6 is a maintenance release for the 1.3.x series.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-277[GOCBC-277]: Added
+FTS index management.
+* https://issues.couchbase.com/browse/GOCBC-288[GOCBC-288]: Added
+support for durability to sub-document operations.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-159[GOCBC-159]: Fixed
+issue causing a connection leak to happen when running N1QL queries
+concurrently.
+* https://issues.couchbase.com/browse/GOCBC-290[GOCBC-290]: Fixed
+issue where authentication credential provider errors are ignored.
+* https://issues.couchbase.com/browse/GOCBC-292[GOCBC-292]: Fixed
+issue where protocol errors cause panics.
+* https://issues.couchbase.com/browse/GOCBC-294[GOCBC-294]: Fixed
+issue where status code is not correctly parsed from altresponses.
+
+== Version 1.3.5 (6 April 2018)
+
+Version 1.3.5 is an unscheduled release for the 1.3.x series to fix a
+critical issue which was discovered.
+
+=== Fixed Issues
+
+* http://issues.couchbase.com/browse/GOCBC-289[GOCBC-289]: Corrected
+issue with Replace not respecting passed CAS values.
+
+== Version 1.3.4 (23 March 2018)
+
+Version 1.3.4 is a maintenance release for the 1.3.x series.
+
+=== New Features and Behavioral Changes
+
+* http://issues.couchbase.com/browse/GOCBC-264[GOCBC-264]: Added
+initial OpenTracing tracer support.
+* http://issues.couchbase.com/browse/GOCBC-267[GOCBC-267]:
+Implemented support for network compression.
+* http://issues.couchbase.com/browse/GOCBC-265[GOCBC-265]: Added
+built-in threshold logging tracer.
+* http://issues.couchbase.com/browse/GOCBC-278[GOCBC-278]: Added
+support for N1QL profiling mode option.
+* http://issues.couchbase.com/browse/GOCBC-276[GOCBC-276]: Added
+documentation for support connection string options.
+
+=== Fixed Issues
+
+* http://issues.couchbase.com/browse/GOCBC-280[GOCBC-280]: Fixed
+issue causing sub-document ops to sometimes panic.
+* http://issues.couchbase.com/browse/GOCBC-274[GOCBC-274]: Fixed
+issue with bad support for analytics host:port pairs.
+* http://issues.couchbase.com/browse/GOCBC-273[GOCBC-273]: Fixed
+issue with credentials not being sent to analytics service.
+* Fixed issue with SetRemove corrupting the list.
+* Added support for DCP flags.
+* Various minor fixes.
+
+== Version 1.3.3 (16 January 2018)
+
+Version 1.3.3 is a maintenance release for the 1.3.x series.
+
+Note that release 1.3.2 was skipped due to an internal versioning
+change.
+
+=== New Features and Behavioral Changes
+
+* http://issues.couchbase.com/browse/GOCBC-245[GOCBC-245]: Added
+initial support for Ping and HealthCheck.
+* http://issues.couchbase.com/browse/GOCBC-248[GOCBC-248]: Include
+gocb versions in gocbcore server HELLO.
+* http://issues.couchbase.com/browse/GOCBC-258[GOCBC-258]: Added
+support for client certificate authentication.
+
+=== Fixed Issues
+
+* http://issues.couchbase.com/browse/GOCBC-263[GOCBC-263]: Fixed
+issue with SetRemove corrupting the set.
+
+== Version 1.3.1 (29 December 2017)
+
+Version 1.3.1 is a maintenance release for the 1.3.x series.
+
+=== New Features and Behavioral Changes
+
+* http://issues.couchbase.com/browse/GOCBC-245[GOCBC-245]: Added
+initial APIs for Health Check.
+* http://issues.couchbase.com/browse/GOCBC-256[GOCBC-256]: Exposed
+dynamic authentication system.
+* http://issues.couchbase.com/browse/GOCBC-255[GOCBC-255]: Added
+initial APIs for generic HTTP requests.
+
+=== Fixed Issues
+
+* http://issues.couchbase.com/browse/GOCBC-262[GOCBC-262]: Correct
+issue with IPv6 config parsing.
+* Various minor bug fixes.
+
+== Version 1.3.0 (21 September 2017)
+
+Version 1.3.0 is the first release of our 1.3.x series.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-234[GOCBC-234]: Marked
+all Server 5.0 APIs as stable.
+* https://issues.couchbase.com/browse/GOCBC-176[GOCBC-176]: Made
+fast-failover enabled by default.
+* http://issues.couchbase.com/browse/GOCBC-227[GOCBC-227]: Mapped
+Server 5.0 LOCKED errors for backwards compatibility.
+* https://issues.couchbase.com/browse/GOCBC-233[GOCBC-233]: Ensure
+dead connections timeout in a reasonable time.
+
+=== Fixed Issues
+
+* Various minor bug fixes.
+
+== Version 1.2.5 (24 August 2017)
+
+=== New Features and Behavioral Changes
+
+* http://issues.couchbase.com/browse/GOCBC-226[GOCBC-226]: Added
+additional N1QL query parameters for 5.0.
+* http://issues.couchbase.com/browse/GOCBC-193[GOCBC-193]: Expose
+enhanced error messages in bucket API.
+
+=== Fixed Issues
+
+* http://issues.couchbase.com/browse/GOCBC-224[GOCBC-224]: Return
+partial view errors during Close call.
+* Various minor bug fixes
+
+== Version 1.2.4 (18 July 2017)
+
+=== New Features and Behavioral Changes
+
+* http://issues.couchbase.com/browse/GOCBC-208[GOCBC-208]:
+Implemented new RBAC user management features.
+* http://issues.couchbase.com/browse/GOCBC-162[GOCBC-162]: Added
+support for server-side error descriptions.
+* http://issues.couchbase.com/browse/GOCBC-215[GOCBC-215]:
+Implemented support for errors with context.
+* http://issues.couchbase.com/browse/GOCBC-216[GOCBC-216]: Added
+support for HTTP2.0 on TLS HTTP connections.
+* http://issues.couchbase.com/browse/GOCBC-209[GOCBC-209]: Added new
+error codes from Server 5.0.0.
+* http://issues.couchbase.com/browse/GOCBC-203[GOCBC-203]: Improved
+KeyExists error to be more descriptive.
+
+=== Fixed Issues
+
+* http://issues.couchbase.com/browse/GOCBC-221[GOCBC-221]: Fix issue
+with blank management credentials not working.
+* http://issues.couchbase.com/browse/GOCBC-220[GOCBC-220]: Fixed bug
+causing tests to sporadically fail.
+* http://issues.couchbase.com/browse/GOCBC-205[GOCBC-205]: Fixed bug
+causing memdClient goroutines to leak.
+* http://issues.couchbase.com/browse/GOCBC-219[GOCBC-219]: Fixed bug
+causing Stats command to sometimes fail.
+* http://issues.couchbase.com/browse/GOCBC-214[GOCBC-214]: Improved
+testing speed by using time-travel.
+* http://issues.couchbase.com/browse/GOCBC-217[GOCBC-217]: Fixed
+issue with FTS over HTTPS.
+* Fixed issue with GetDesignDocuments returning incorrect items.
+* Fixed issue causing DCP nop's to fail under load.
+* Various minor bug fixes
+
+== Version 1.2.3 (24 May 2017)
+
+=== New Features and Behavioral Changes
+
+* http://issues.couchbase.com/browse/GOCBC-189[GOCBC-189]:
+Implemented document-level sub-document flags.
+* http://issues.couchbase.com/browse/GOCBC-188[GOCBC-188]:
+Implemented support for fast-failover.
+* http://issues.couchbase.com/browse/GOCBC-196[GOCBC-196]:
+Implemented DCP No-Op.
+* http://issues.couchbase.com/browse/GOCBC-138[GOCBC-138]:
+Implemented DCP Flow Control.
+* http://issues.couchbase.com/browse/GOCBC-197[GOCBC-197]: Added
+method to fetch bucket UUID.
+* http://issues.couchbase.com/browse/GOCBC-199[GOCBC-199]: Added new
+sub-document error codes.
+* http://issues.couchbase.com/browse/GOCBC-140[GOCBC-140]: Added
+support for Ephemeral Buckets.
+* http://issues.couchbase.com/browse/GOCBC-191[GOCBC-191]: Updated
+to latest RBAC management spec.
+* http://issues.couchbase.com/browse/GOCBC-184[GOCBC-184]:
+Implemented FTS sorting and geo querying.
+* http://issues.couchbase.com/browse/GOCBC-198[GOCBC-198]: Renamed
+`RbacAuthenticator` to `PasswordAuthenticator`.
+* http://issues.couchbase.com/browse/GOCBC-201[GOCBC-201]:
+Implemented sub-document GET_COUNT operation.
+
+=== Fixed Issues
+
+* Fixed issue where InsertBucket could return nil when errors occured.
+* Fixed bug with Stats call never returning in some instances.
+* Correctly handle access errors during authentication on Server
+5.0.0.
+* Fixed issue where missing buckets caused OpenBucket to hang.
+* Various minor bug fixes
+
+== Version 1.2.2 (18 April 2017)
+
+=== New Features and Behavioral Changes
+
+* http://issues.couchbase.com/browse/GOCBC-135[GOCBC-135]: Implement
+experimental support for Analytics service.
+* http://issues.couchbase.com/browse/GOCBC-183[GOCBC-183]: Added
+support for fetching raw data from sub-document operations.
+* http://issues.couchbase.com/browse/GOCBC-182[GOCBC-182]: Added
+more connection string configurable options.
+* http://issues.couchbase.com/browse/GOCBC-181[GOCBC-181]: Added
+support for full-document sub-document operations.
+
+=== Fixed Issues
+
+* Various Minor Refactors
+* Various Minor Bug Fixes
+
+== Version 1.2.1 (28 March 2017)
+
+=== New Features and Behavioral Changes
+
+* Project has been refactored to support connection pooling.
+* Added experimental support for Extended Attributes.
+* Added experimental support for Role-Based User Management.
+* Added experimental support for Role-Based Authentication.
+* Improved logging integration between gocb and gocbcore.
+
+=== Fixed Issues
+
+* http://issues.couchbase.com/browse/GOCBC-155[GOCBC-155]: Fixed
+race condition in Stats operation.
+* http://issues.couchbase.com/browse/GOCBC-154[GOCBC-154]: Exposed
+SASL auth methods from gocbcore.
+* http://issues.couchbase.com/browse/GOCBC-153[GOCBC-153]: Corrected
+missing message for invalid arguments error.
+* http://issues.couchbase.com/browse/GOCBC-151[GOCBC-151]: Improved
+handling of configuration revisions.
+* http://issues.couchbase.com/browse/GOCBC-149[GOCBC-149]: Fixed
+issue with Sub-Document store flags being ignored.
+* http://issues.couchbase.com/browse/GOCBC-137[GOCBC-137]: Avoid
+crash in DCP handling.
+* http://issues.couchbase.com/browse/GOCBC-143[GOCBC-143]: Attempt
+to recover from most internal errors. 
+* http://issues.couchbase.com/browse/GOCBC-147[GOCBC-147]: Fixed
+incorrect feature codes being sent to server.
+* http://issues.couchbase.com/browse/GOCBC-151[GOCBC-151]:
+Implemented additional linting and static code validation.
+* Various Minor Bug Fixes
+
+== Version 1.2.0 (21 December 2016)
+
+=== New Features and Behavioral Changes
+
+* All server 4.6 feature APIs have been moved from uncommitted to
+committed.
+* Added support for missing data-structure queue operations.
+
+=== Fixed Issues
+
+None. 
+
+== Version 1.1.3 (14 December 2016)
+
+=== New Features and Behavioral Changes
+
+* Project has been restructured so dependant packages are contained in
+their own repository, this is to correct the issue below.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-134[GOCBC-134]: Fixed issue causing `go get` installation to fail.
+
+== Version 1.1.2 (14 November 2016)
+
+=== New Features and Behavioral Changes
+
+* http://issues.couchbase.com/browse/GOCBC-127[GOCBC-127]: Implement
+configurable bulk operation timeouts. 
+
+=== Fixed Issues
+
+* Fixed minor issue with sub-document array operations.
+
+== Version 1.1.1 (20 September 2016)
+
+=== New Features and Behavioral Changes {#new-features-and-behavioral-changes-14 style="text-align:left"}
+
+* http://issues.couchbase.com/browse/GOCBC-88[GOCBC-88]: Implement
+Data Structures as per current RFC. ...
+* http://issues.couchbase.com/browse/GOCBC-121[GOCBC-121]: Implement
+latest changes to FTS RFC. ...
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-124[GOCBC-124]: Properly
+close connections after shutdown. ...
+
+== Version 1.1.0 (21 June 2016)
+
+Version 1.1.0 is the first general availability release of the 1.1
+series. It adds new features for N1QL query and supports the developer
+preview full text search available in Couchbase Server 4.5. A number of
+these features were added as uncomitted API in the 1.0 series and are
+now promoted to committed API.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-56[GOCBC-56]: Added
+support for Full Text Search service in Couchbase 4.5.
+* https://issues.couchbase.com/browse/GOCBC-109[GOCBC-109]: Added
+support for X.509 Certificates.
+* https://issues.couchbase.com/browse/GOCBC-95[GOCBC-95]: Extend
+BucketManager to support Index Management.
+* https://issues.couchbase.com/browse/GOCBC-90[GOCBC-90]: Add
+cluster level authenticator interface.
+* https://issues.couchbase.com/browse/GOCBC-89[GOCBC-89]: Improve
+vbucket retry logic for increased reliability with large
+deployments.
+* https://issues.couchbase.com/browse/GOCBC-59[GOCBC-59]: Include
+support for AT_PLUS N1QL Queries with Mutation Tokens.
+* https://issues.couchbase.com/browse/GOCBC-58[GOCBC-58]: Added
+support for Cross Bucket Joins.
+
+=== Fixed Issues
+
+None.
