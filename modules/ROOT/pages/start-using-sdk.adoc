@@ -13,7 +13,7 @@ You can install the SDK via `go get`
 $ go get gopkg.in/couchbase/gocb.v1
 ----
 
-Information on new features, fixes, known issues as well as information on how to install older release versions is link:/server/other-products/release-notes-archives/go-sdk[in the release notes].
+Information on new features, fixes, known issues as well as information on how to install older release versions is xref:relnotes-go-sdk.adoc[in the release notes].
 
 == Hello Couchbase
 
