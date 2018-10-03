@@ -37,3 +37,10 @@
 * xref:handling-error-conditions.adoc[Handling Errors]
 * xref:failure-considerations.adoc[Failure Considerations]
 * xref:collecting-information-and-logging.adoc[Collecting Information]
+
+.Project Docs
+* xref:relnotes-go-sdk.adoc[Release Notes]
+* xref:compatibility-versions-features.adoc[Compatibility]
+* xref:sdk-licenses.adoc[Licenses]
+* xref:get-involved.adoc[Get involved]
+ ** https://docs.couchbase.com/home/contribute/index.html[Improve the Docs]
