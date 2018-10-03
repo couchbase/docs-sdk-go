@@ -1,7 +1,1 @@
-= Software Licences
-
-The Couchbase Go SDK is licensed under the https://github.com/couchbase/go-couchbase/blob/master/LICENSE[Apache Software License, v2.0].
-
-== Third Party Licenses
-
-A complete list of licenses for all Couchbase components and third-party dependencies can be found https://www.couchbase.com/legal/agreements[here].
+include::go-sdk::page$sdk-licenses.adoc[]
