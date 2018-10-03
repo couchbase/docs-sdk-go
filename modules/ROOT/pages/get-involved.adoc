@@ -1,0 +1,1 @@
+include::go-sdk::page$get-involved.adoc[]
