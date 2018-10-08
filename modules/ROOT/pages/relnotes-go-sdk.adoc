@@ -44,9 +44,9 @@ Fixed issue with leaking goroutines occuring intermittently in tests.
 * https://issues.couchbase.com/browse/GOCBC-341[GOCBC-341]: 
 Fixed issue where FTS ExecuteSearchQuery would return a JSON unmarshal error on invalid queries.
 
-== Version 1.4 (18 July 2018)
+== Version 1.4.0 (18 July 2018)
 
-Version 1.4 is the first release of our 1.4.x series.
+Version 1.4.0 is the first release of our 1.4.x series.
 
 === New Features and Behavioral Changes
 
