@@ -15,9 +15,26 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 1.5.0 (16 October 2018)
+
+Version 1.5.0 is is the first release of our 1.5.x series.
+
+=== New Features and Behavioral Changes
+
+* Analytics features now marked as committed.
+* https://issues.couchbase.com/browse/GOCBC-351[GOCBC-351]:
+Add the document key to tracing spans when log redaction set to none.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-353[GOCBC-353]: 
+Fixed issue where raw IPv6 addresses were parsed incorrectly.
+* https://issues.couchbase.com/browse/GOCBC-359[GOCBC-359]: 
+Fixed issue where MatchAll and MatchNone search queries did not work correctly.
+
 == Version 1.4.2 (19 September 2018)
 
-Version 1.4.2 is a maintenance release for the1.4.x series.
+Version 1.4.2 is a maintenance release for the 1.4.x series.
 
 === New Features and Behavioral Changes
 
