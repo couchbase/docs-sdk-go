@@ -126,7 +126,7 @@ Even if the [.api]`Do` method returns `nil` as its error, some errors may have s
 
 == Modifying Expiration
 
-A document's xref:core-operations.adoc#expiry[expiration] time may be modified using the [.api]`Bucket.Touch` method
+A document's xref:core-operations.adoc#expiry[expiration] time (in seconds) may be modified using the [.api]`Bucket.Touch` method
 
 [source,go]
 ----
