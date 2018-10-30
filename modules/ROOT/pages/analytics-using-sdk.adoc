@@ -7,7 +7,7 @@ Parallel data management for complex queries over many records, using a familiar
 
 
 For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operations, Couchbase Data Platform introduces the xref:6.0@server:analytics:introduction.adoc[Couchbase Analytics Service]. 
-After familiarising yourself with our xref:6.0@server:analytics:primer-beer.adoc[introductory primer], try Couchbase Analytics using the Go SDK.
+After familiarising yourself with our xref:6.0@server:analytics:primer-beer.adoc[introductory primer], in particular creating a dataset and linking it to a bucket to shadow the operational data, try Couchbase Analytics using the Go SDK.
 
 == Availability
 
