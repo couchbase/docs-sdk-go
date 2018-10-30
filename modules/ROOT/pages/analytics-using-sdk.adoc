@@ -1,0 +1,124 @@
+= Analytics using the Go SDK
+:page-topic-type: howto
+:page-edition: Enterprise Edition:
+
+[abstract]
+Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
+
+
+For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operations, Couchbase Data Platform introduces the xref:6.0@server:analytics:introduction.adoc[Couchbase Analytics Service]. 
+After familiarising yourself with our xref:6.0@server:analytics:primer-beer.adoc[introductory primer], try Couchbase Analytics using the Go SDK.
+
+== Availability
+
+The analytics service is available in Couchbase Data Platform 6.0 and later (developer preview in 5.5). While earlier Go SDK versions provide some support, we strongly recommend to use at least version 1.5.0, which provides a committed and stable interface for it.
+
+== Usage: Performing a Request
+
+Intentionally, the API for analytics is very similar to the query service one:
+
+[source,golang]
+----
+func (b *Bucket) ExecuteAnalyticsQuery(q *AnalyticsQuery, params interface{}) (AnalyticsResults, error)
+----
+
+To perform a query, you need to create an `AnalyticsQuery`. If parameters are used, they can either be `positional` or `named`. Here is one example of each:
+
+[source,golang]
+----
+query := gocb.NewAnalyticsQuery("select airportname, country from airports where country = 'France'")
+res, err := bucket.ExecuteAnalyticsQuery(q, nil)
+----
+
+[source,golang]
+----
+query := gocb.NewAnalyticsQuery("select airportname, country from airports where country = ?")
+res, err := bucket.ExecuteAnalyticsQuery(q, []interface{}{"France"})
+----
+
+[source,golang]
+----
+query := gocb.NewAnalyticsQuery("select airportname, country from airports where country = $country")
+params := make(map[string]interface{})
+params["country"] = "France"
+res, err := bucket.ExecuteAnalyticsQuery(q, params)
+----
+
+Additional options are available at query time which can be passed in through the `AnalyticsQuery` object:
+
+.Analytics Params Reference
+[#go-analytics-params-ref]
+|===
+| Name | Builder | Default | Description
+
+| Client Context ID
+| `ContextId(string)`
+| Random UUID
+| Sets a context ID that is returned back as part of the result.
+
+| Server Side Timeout
+| `ServerSideTimeout(time.Duration)`
+| Analytics timeout set on the client (75s)
+| Customizes the timeout sent to the server. Usually does not have to be set because the client sets it based on the timeout on the operation.
+
+| Pretty
+| `Pretty(bool)`
+| false
+| If the returned result should be prettified JSON.
+
+| Priority
+| `Priority(bool)`
+| false
+| If this request should have priority over others.
+
+| Raw Param
+| `RawParam(string, interface{})`
+| none
+| Allows to send arbitrary params to the analytics service which are not part of the builder API.
+
+|===
+
+These params must be sent as part of the query:
+
+[source,golang]
+----
+query := gocb.NewAnalyticsQuery("select airportname, country from airports where country = 'France'").Priority(true).ServerSideTimeout(1 * time.Second)
+----
+
+The timeout is always propagated to the server, so when a timeout happens on the client side the server can also stop processing the request and save resources.
+
+== Usage: Handling the Response
+
+Once the request has been executed, results are sent back to the client and it will return an `AnalyticsResults`:
+
+[source,golang]
+----
+result, err = bucket.ExecuteAnalyticsQuery(query, params)
+----
+
+The result contains all kinds of actual data and metadata which might or might not be set, depending on the query response. 
+The resulting rows can be accessed through `Next(valuePtr interface{}) bool`, `NextBytes() []byte` or `One(valuePtr interface{}) error`. Here is an example:
+
+[source,golang]
+----
+result, err = bucket.ExecuteAnalyticsQuery(
+    "SELECT airportname, country FROM airports WHERE country = 'France' LIMIT 5",
+    nil)
+if (err != nil) {
+    panic(err)
+}
+
+var row interface{}
+for result.Next(&row) {
+    fmt.Printf("%+v", row)
+}
+
+err := result.Close()
+if (err != nil) {
+    panic(err)
+}
+----
+
+Always be sure to check `Close()` for any errors.
+
+Additional metrics can be accessed through the `Metrics()` function, such as `ElapsedTime` or the `ResultCount`.
