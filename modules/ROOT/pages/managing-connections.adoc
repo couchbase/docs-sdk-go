@@ -28,7 +28,7 @@ Specifying multiple hosts may add xref:failure-considerations.adoc[additional re
 
 == Authenticating
 
-From Couchbase Server 5.0, you will need to authenticate the user, rather than against the bucket, as part of xref:6.0@server:security:security-authorization.adoc[Role-Based Access Control].
+From Couchbase Server 5.0, you will need to authenticate the user, rather than against the bucket, as part of xref:6.0@server:learn:security/authorization-overview.adoc[Role-Based Access Control].
 You will need to use `PasswordAuthenticator`:
 
 [source,go]
