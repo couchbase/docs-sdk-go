@@ -15,9 +15,27 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 1.5.1 (21 November 2018)
+
+Version 1.5.1 is a maintenance release for the 1.5.x series.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-356[GOCBC-356]:
+Expose a way for creation of DCP agents to set DCP priority.
+* https://issues.couchbase.com/browse/GOCBC-361[GOCBC-361]:
+Add support for Analytics KV Ingest as  https://docs.couchbase.com/go-sdk/1.5/compatibility-versions-features.html#interface-stability[uncommitted].
+* https://issues.couchbase.com/browse/GOCBC-362[GOCBC-362]:
+Add Analytics Deferred Queries as https://docs.couchbase.com/go-sdk/1.5/compatibility-versions-features.html#interface-stability[volatile].
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-363[GOCBC-363]: 
+Fixed issue where the Stats call could hang when in a multi-node cluster a single node does not respond in a timely manner.
+
 == Version 1.5.0 (16 October 2018)
 
-Version 1.5.0 is is the first release of our 1.5.x series.
+Version 1.5.0 is the first release of our 1.5.x series.
 
 === New Features and Behavioral Changes
 
