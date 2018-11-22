@@ -119,11 +119,11 @@ The following matrix shows which versions of the Couchbase Go SDK support the ma
 
 | Extended Attributes
 2+| Not Supported
-2+| Since 1.2
+2+| Since 1.2.1
 
 | RBAC
 2+| Not Supported
-2+| Since 1.2
+2+| Since 1.2.3
 
 | Analytics
 2+| Not supported
