@@ -93,7 +93,7 @@ fmt.Printf("Country: %s, Exists: %t", country, exists)
 == Mutating
 
 Mutation operations modify one or more paths in the document.
-The simplest of these operations is _subdoc-upsert_, which, just like the fulldoc-level _upsert_, this will either modify the value of an existing path or create it if it does not exist. As well as the document key `MutateIn` takes a Cas value and an expiry. The `Upsert` operation can, optionally, also create the parent elements of a path, this is done using the third parameter:
+The simplest of these operations is _subdoc-upsert_, which, just like the fulldoc-level _upsert_, this will either modify the value of an existing path or create it if it does not exist. As well as the document key `MutateIn` takes a CAS value and an expiry. The `Upsert` operation can, optionally, also create the parent elements of a path, this is done using the third parameter:
 
 .Upserting a new sub-document
 [source,golang]
