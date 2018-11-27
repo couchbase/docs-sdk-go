@@ -18,7 +18,7 @@ IMPORTANT: The sub-document operations described on this page are for _Key-Value
 (Sub-document N1QL queries are explained in the section xref:n1ql-query.adoc[Querying with N1QL].)
 
 In order to use sub-document operations you need to specify a _path_ indicating the location of the sub-document.
-The _path_ follows N1QL syntax (see https://developer.couchbase.com/documentation/server/current/sdk/subdocument-operations.html#story-h2-12[below^], and xref:{version-server}@server:n1ql:n1ql-intro/queriesandresults.adoc[N1QL Queries and Results]).
+The _path_ follows N1QL syntax (see xref#path-syntax[below], and xref:server:n1ql:n1ql-intro/queriesandresults.adoc[N1QL Queries and Results]).
 Considering the document:
 
 .customer123.json
