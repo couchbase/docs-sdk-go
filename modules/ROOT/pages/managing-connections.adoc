@@ -26,6 +26,13 @@ cluster, err := gocb.Connect("couchbase://host1,host2,host3,hostN")
 
 Specifying multiple hosts may add xref:failure-considerations.adoc[additional redundancy] when bootstrapping.
 
+[NOTE]
+====
+From Couchbase Go SDK 1.4.0, [.api]`AlternateAddress` is implemented, for connecting to nodes in a NATed environment, such as Docker containers using portmapping. It is on by default, if the server provides a topology that includes a multi-network configuration. Whichever network is selected at bootstrap will be logged.
+
+Note that any SSL/TLS certificates must be set up at the point where the connections are being made.  The Couchbase SDKs will honor any valid SSL/TLS certificates.
+ ====
+
 == Authenticating
 
 From Couchbase Server 5.0, you will need to authenticate the user, rather than against the bucket, as part of xref:6.0@server:learn:security/authorization-overview.adoc[Role-Based Access Control].
