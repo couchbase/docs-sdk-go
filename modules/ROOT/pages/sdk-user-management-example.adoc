@@ -13,7 +13,7 @@ A high-level summary of the APIs can be found in xref:sdk-user-management-overvi
 
 The following code-example demonstrates how the user-management APIs can be used.
 It assumes that Couchbase Server is established on `localhost`; that the Full Administrator username and password are `Administrator` and `password` respectively; and that the `travel-sample` bucket is installed.
-For information on installing the `travel-sample` bucket, see xref:6.0@server:settings:install-sample-buckets.adoc[Install Sample Buckets].
+For information on installing the `travel-sample` bucket, see xref:6.0@server:manage:manage-settings/install-sample-buckets.adoc[Sample Buckets].
 
 IMPORTANT: Use of the Full Administrator username and password gives an application complete access to all resources within the Couchbase Server-environment: use of the Full Administrator username and password may therefore be useful during code-development.
 However, for production purposes, the Full Administrator username and password should only be used when absolutely essential: in all other circumstances, the specified username and password should correspond to some lesser role, which appropriately delimits access to server-resources.
