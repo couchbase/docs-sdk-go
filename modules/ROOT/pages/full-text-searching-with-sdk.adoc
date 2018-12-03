@@ -67,7 +67,7 @@ The code example below demonstrates the Go SDK Full Text Search API.
 The example assumes that Couchbase Server is running, and that the username `Administrator` and the password `password` provide authorization for performing the searches.
 It also assumes that the `travel-sample` bucket has been installed.
 For information on creating users and managing roles, see xref:5.1@server:security:security-authorization.adoc[Authorization].
-For information on installing sample buckets, see xref:5.1@server:settings:settings.adoc[Settings].
+For information on installing sample buckets, see xref:5.1@server:settings:install-sample-buckets.adoc[Settings].
 
 The example also assumes the existence of three specific Full Text Indexes, defined on the `travel-sample` bucket.
 These are:
