@@ -1,1 +1,45 @@
-include::6.0@sdk:pages:partial$batching-operations.adoc[]
+= Batching Operations
+
+include::6.0@sdk:pages:partial$batching-operations.adoc[tag=intro]
+include::6.0@sdk:pages:partial$batching-operations.adoc[tag=async]
+include::6.0@sdk:pages:partial$batching-operations.adoc[tag=perf]
+include::6.0@sdk:pages:partial$batching-operations.adoc[tag=err]
+include::6.0@sdk:pages:partial$batching-operations.adoc[tag=guide]
+include::6.0@sdk:pages:partial$batching-operations.adoc[tag=size]
+
+== Batching operations using SDK
+
+The following code generates a number of fake documents and inserts them in one batch. It does this by building up a list of `BulkOps` which are then executed using the `Do` command on the bucket. Take note of the `op.Err` field which is populated if there was an error during `Do`.
+
+[source,golang]
+----
+// Generate a number of bulk upsert ops
+type simpleDoc struct {
+    counter int
+    name    string
+}
+numDocs := 100
+var ops []gocb.BulkOp
+for i := 0; i < numDocs; i++ {
+    doc := simpleDoc{
+        counter: i,
+        name:    "Foo Bar",
+    }
+    op := gocb.UpsertOp{
+        Key:   fmt.Sprintf("%d", i),
+        Value: doc,
+    }
+    ops = append(ops, &op)
+}
+
+// Execute the bulk ops
+err = bucket.Do(ops)
+if err != nil {
+    panic(err)
+}
+
+for i := 0; i < len(ops); i++ {
+    op := ops[i].(*gocb.UpsertOp)
+    fmt.Println(op.Key, op.Value, op.Err)
+}
+----
