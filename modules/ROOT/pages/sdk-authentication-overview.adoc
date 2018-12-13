@@ -34,7 +34,7 @@ Specifically, for information on:
 == Certificate-Based Authentication
 
 Couchbase Server supports the use of X.509 certificates to authenticate clients (only available in the Enterprise Edition, not the Community Edition).
-This allows authenticated users to access specific resources by means of the data service (no other service is currently available to clients through this form of authentication).
+This allows authenticated users to access specific resources by means of the data service, in Couchbase Server 5.1 and up, and all other services in more recent releases of Couchbase Data Platform.
 
 The process relies on a certificate authority, for the issuing of certificates that validate identities.
 A certificate includes information such as the name of the entity it identifies, an expiration date, the name of the authority that issued the certificate, and the digital signature of the authority.
