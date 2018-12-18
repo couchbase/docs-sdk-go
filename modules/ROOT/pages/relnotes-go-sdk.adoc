@@ -15,6 +15,15 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 1.5.2 (18 December 2018)
+
+Version 1.5.2 is a maintenance release for the 1.5.x series.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-380[GOCBC-380]:
+Fixed issue where the SDK was ignoring the network type set by the user.
+
 == Version 1.5.1 (21 November 2018)
 
 Version 1.5.1 is a maintenance release for the 1.5.x series.
