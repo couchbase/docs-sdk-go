@@ -31,7 +31,7 @@ Specifying multiple hosts may add xref:failure-considerations.adoc[additional re
 From Couchbase Go SDK 1.4.0, [.api]`AlternateAddress` is implemented, for connecting to nodes in a NATed environment, such as Docker containers using portmapping. It is on by default, if the server provides a topology that includes a multi-network configuration. Whichever network is selected at bootstrap will be logged.
 
 Note that any SSL/TLS certificates must be set up at the point where the connections are being made.  The Couchbase SDKs will honor any valid SSL/TLS certificates.
- ====
+====
 
 == Authenticating
 
