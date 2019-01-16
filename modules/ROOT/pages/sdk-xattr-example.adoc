@@ -64,3 +64,89 @@ func main() {
     }
 }
 ----
+
+== Virtual Extended Attributes Example
+
+Using the Sub-Document API, xref:sdk-xattr-overview.adoc#_virtual_extended_attributes[Virtual XATTR] can be used to fetch metadata about a document, via the `$document` virtual XATTR.
+A common use case is discovering documentation expiration metadata, or TTL:
+
+[source,go]
+----
+package main
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/couchbase/gocb"
+)
+
+func main() {
+	cluster, err := gocb.Connect("couchbase://localhost")
+	if err != nil {
+		panic("Error connecting to cluster:" + err.Error())
+	}
+	err = cluster.Authenticate(gocb.PasswordAuthenticator{
+		Username: "test",
+		Password: "password",
+	})
+	if err != nil {
+		panic("Error creating authenticator:" + err.Error())
+	}
+
+	bucket, err := cluster.OpenBucket("travel-sample", "")
+	if err != nil {
+		panic("Error opening bucket:" + err.Error())
+	}
+
+	key := "airline_17628"
+
+	// Store the document
+	_, err = bucket.Touch(key, 0, 300)
+	if err != nil {
+		panic("Error performing touch:" + err.Error())
+	}
+
+	lookup := bucket.LookupIn(key).GetEx("$document.exptime", gocb.SubdocFlagXattr)
+	frag, err := lookup.Execute()
+	if err != nil {
+		panic(err)
+	}
+
+	var ttl uint32
+	err = frag.Content("$document.exptime", &ttl)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Expiry value is %s\n", time.Unix(int64(ttl), 0).String())
+
+	// Reset the expiry so that the document does not expire.
+	_, err = bucket.Touch(key, 0, 0)
+	if err != nil {
+		panic("Error performing touch:" + err.Error())
+	}
+
+	// Multiple paths can be access at once via subdoc. It's limited to 16 paths and xattrs have to be first.
+	multiLookup := bucket.LookupIn(key).
+		GetEx("$document.exptime", gocb.SubdocFlagXattr).
+		GetEx("$document.value_bytes", gocb.SubdocFlagXattr).
+		Get("callsign")
+	multiFrag, err := multiLookup.Execute()
+	if err != nil {
+		panic(err)
+	}
+
+	// Errors ignored for brevity.
+	var size int
+	var callsign string
+	multiFrag.Content("$document.exptime", &ttl)
+	multiFrag.Content("$document.value_bytes", &size)
+	multiFrag.Content("callsign", &callsign)
+
+	fmt.Printf("Expiry value is %s\n", time.Unix(int64(ttl), 0).String())
+	fmt.Printf("Size is %d\n", size)
+	fmt.Printf("Callsign is %s\n", callsign)
+}
+----
+

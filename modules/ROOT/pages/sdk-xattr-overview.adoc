@@ -1,15 +1,31 @@
 = Extended Attributes
 
 [abstract]
-Couchbase Server permits the definition of _extended attributes_.
-These allow application developers to define application-specific metadata that will only be visible to those applications that request it or attempt to modify it.
-This might be, for example, meta-data specific to a programming framework that should be hidden by default from other frameworks, or possibly from other versions of the same framework.
+Extended Attributes (XATTR) are metadata that can be provided on a per-application basis.
+
+include::6.0@sdk:shared:partial$sdk-xattr-overview.adoc[tag=intro_extended_attributes]
 
 include::6.0@sdk:shared:partial$sdk-xattr-overview.adoc[tag=using_extended_attributes]
 
-== Language-Specific Variations
 
-Each language supported by the Couchbase SDK implements extended-attribute support in a slightly different way.
-For Go examples, see xref:sdk-xattr-example.adoc[Sample Code].
+== Virtual Extended Attributes
 
-For detailed information on the Subdocument API, see xref:subdocument-operations.adoc[Subdocument Operations].
+_Virtual_ extended attributes consist of metadata on an individual document: this can be retrieved by specifying `$document` as a search-path.
+For example:
+
+[source,go]
+----
+`frag, err := bucket.LookupIn("test").Get("$document", gocb.SubdocFlagXattr").Execute()
+----
+
+See xref:6.0@server:learn:data/extended-attributes-fundamentals.adoc#virtual-extended-attributes[the Virtual XATTR Section] for more information on the metadata that they expose.
+
+These attributes are generated on-demand to expose storage-level document metadata, such as TTL to expose document expiration.
+For TTL using Virtual XATTR, use the following:
+
+[source,go]
+----
+frag, err := bucket.LookupIn("test").Get("$document.exptime", gocb.SubdocFlagXattr").Execute()
+----
+
+See the xref:sdk-xattr-example.adoc#virtual-extended-attributes-example[example page] for a complete code sample.
