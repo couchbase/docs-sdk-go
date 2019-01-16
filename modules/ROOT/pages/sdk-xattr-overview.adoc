@@ -15,7 +15,7 @@ For example:
 
 [source,go]
 ----
-`frag, err := bucket.LookupIn("test").Get("$document", gocb.SubdocFlagXattr").Execute()
+frag, err := bucket.LookupIn("test").Get("$document", gocb.SubdocFlagXattr").Execute()
 ----
 
 See xref:6.0@server:learn:data/extended-attributes-fundamentals.adoc#virtual-extended-attributes[the Virtual XATTR Section] for more information on the metadata that they expose.
