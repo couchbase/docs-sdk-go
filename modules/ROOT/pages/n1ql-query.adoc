@@ -1,1 +1,393 @@
-include::6.0@sdk:pages:partial$n1ql-query.adoc[]
+= Querying with N1QL
+include::partial$attributes.adoc[]
+
+[abstract]
+You can query for documents in Couchbase using the N1QL query language, a language based on SQL, but designed for structured and flexible JSON documents.
+Querying can solve typical programming tasks such as finding a user profile by email address, facebook login, or user ID.
+
+== Query Execution
+
+You can issue N1QL queries using either a Couchbase SDK, the _cbq_ shell, the _cbc_ command line tool, the REST API, or the xref:{version-server}@server:tools:query-workbench.adoc[Query workbench].
+
+A N1QL query is a string parsed by the query service.
+The result for each query is JSON and as a result queries will function the same regardless whether they are executed using the [.cmd]`cbq` shell, an SDK, or using the REST API directly.
+Nevertheless, the result format received using an SDK may be a bit different than that received using [.cmd]`cbq` or the REST API.
+
+== Running cbq
+
+The interactive shell xref:{version-server}@server:tools:cbq-shell.adoc[[.cmd]`cbq`] for executing N1QL queries is shipped with Couchbase Server and designed to be run on a cluster node.
+It is xref:{version-server}@server:cli:cli-intro.adoc[located alongside the other Couchbase tools] (by default, `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows).
+
+== Issuing Queries
+
+Queries are issued in the SDK using the _query_ operation.
+This API accepts a string which is the statement to execute, and returns the rows (or an iterable object which returns rows) representing the query’s result.
+Here is an example of a query executed in Python:
+
+....
+>>> for row in cb.n1ql_query('SELECT type FROM `travel-sample` LIMIT 4'):
+...   print(row)
+...
+{'type': 'airline'}
+{'type': 'airline'}
+{'type': 'airline'}
+{'type': 'airport'}
+....
+
+The above query using _cbq_ (some output truncated for clarity):
+
+....
+cbq> SELECT type FROM `travel-sample` LIMIT 4;
+{
+    ...
+    "results": [
+        {
+            "type": "airport"
+        },
+        {
+            "type": "airport"
+        },
+        {
+            "type": "airport"
+        },
+        {
+            "type": "airport"
+        }
+    ],
+    "status": "success",
+    "metrics": {
+    ...
+    }
+}
+....
+
+The result is a JSON object.
+The important field within the object is the `results` property, which contains an array of results (a result set).
+Each item within the result set may be considered as a _row_.
+Each row contains those document fields selected in the xref:{version-server}@server:n1ql:n1ql-language-reference/selectclause.adoc[`SELECT`] clause.
+
+NOTE: Couchbase SDKs provide a row-based API, which returns an object which can be iterated over.
+Internally, however, the response looks like the _cbq_ output above.
+
+If you use aliases in your query, then the returned rows contain the aliased name rather than the original one.
+For example:
+
+[source,python]
+----
+>>> for row in cb.n1ql_query('SELECT airportname as n FROM `travel-sample` where type="airport" LIMIT 4'):
+...   print(row)
+...
+{'n': 'Calais Dunkerque'}
+{'n': 'Peronne St Quentin'}
+{'n': 'Les Loges'}
+{'n': 'Couterne'}
+----
+
+== Specifying Query Criteria
+
+N1QL's true strength is the ability to query documents satisfying a given criteria or querying for documents whose properties evaluate to certain values or expressions.
+You specify criteria in the same manner as in SQL by using a xref:{version-server}@server:n1ql:n1ql-language-reference/where.adoc[`WHERE`] clause.
+Specify multiple predicates using the `AND` or `OR` keywords.
+
+The following example selects all documents that have a `type` of _airport_ and a `city` of _Reno_.
+
+....
+cbq> SELECT airportname, city, country FROM `travel-sample` WHERE type="airport" AND city="Reno";
+{
+    ...
+    "results": [
+        {
+            "airportname": "Reno Tahoe Intl",
+            "city": "Reno",
+            "country": "United States"
+        }
+    ],
+    "status": "success",
+    "metrics": {
+    ...
+    }
+}
+....
+
+Note that you should use <<topic_kgx_xdp_1w/devguide-named-placeholders,query placeholders>>, as it is not only more secure, but also allows your query to be prepared and optimized for reuse.
+
+== Querying Nested Documents
+
+The above queries showed how to query top-level fields within a document.
+One of the main differences between JSON and flat rows is that JSON supports a nested structure, allowing documents to contain other documents, also known as sub-documents.
+In N1QL, you can use the path syntax to query and address sub-documents.
+See xref:{version-server}@server:n1ql:n1ql-intro/queriesandresults.adoc[N1QL Queries and Results] for more information on the path syntax.
+
+[caption=Attention]
+IMPORTANT: N1QL sub-document queries are not related to _Key-Value_ sub-document operations.
+(Key-Value sub-document operations are explained in the section xref:subdocument-operations.adoc[Sub-Document Operations]).
+
+....
+cbq> SELECT airportname, city, country, geo.alt FROM `travel-sample` WHERE type="airport" AND geo.alt > 4000 AND country="United States" LIMIT 3;
+{
+    ...
+    "results": [
+        {
+            "airportname": "Cheyenne Rgnl Jerry Olson Fld",
+            "alt": 6156,
+            "city": "Cheyenne",
+            "country": "United States"
+        },
+        {
+            "airportname": "Pueblo Memorial",
+            "alt": 4726,
+            "city": "Pueblo",
+            "country": "United States"
+        },
+        {
+            "airportname": "Cedar City Rgnl",
+            "alt": 5622,
+            "city": "Cedar City",
+            "country": "United States"
+        }
+    ],
+    "status": "success",
+    "metrics": {
+    ...
+    }
+}
+....
+
+The actual airport document looks like this.
+Note that the `geo` field itself contains a JSON object.
+In couchbase, this is known as a _sub-document_.
+
+[source,json]
+----
+{
+   "geo" : {
+      "lat" : 37.700967,
+      "alt" : 5622,
+      "lon" : -113.098847
+   },
+   "tz" : "America/Denver",
+   "id" : 3824,
+   "type" : "airport",
+   "city" : "Cedar City",
+   "country" : "United States",
+   "icao" : "KCDC",
+   "faa" : "CDC",
+   "airportname" : "Cedar City Rgnl"
+}
+----
+
+[#devguide-named-placeholders]
+== Parameterized Queries
+
+Query parameters allow your application to securely use dynamic query arguments for your application.
+In this section, the parameter feature is demonstrated using the SDK.
+
+Consider a function which returns all airports located within a given city (passed as input).
+The query may be divided into a _fixed_ or _static_ part (select all airports in a city) and a _dynamic_ part (the actual city to search, specified via user input).
+
+A naive implementation of this function might look something like this:
+
+[source,python]
+----
+def airports_in_city(city):
+  query_string = "SELECT airportname FROM `travel-sample` WHERE city="
+  query_string += '"' + city + '"'
+  return cb.n1ql_query(query_string)
+----
+
+The approach above is both unwieldy and insecure (subject to SQL injection attacks).
+
+N1QL allows the use of placeholders to declare dynamic query parameters.
+Here's a version of the above using placeholders:
+
+[source,python]
+----
+def airports_in_city(city):
+  query_string = "SELECT airportname FROM `travel-sample` WHERE city=$1"
+  query = N1QLQuery(query_string, city)
+  return cb.n1ql_query(query)
+----
+
+The `$1` is a positional placeholder.
+When the query is constructed, it may receive arguments, with each argument being used as the placeholder value in the query.
+Thus, `$1` refers to the first argument,`$2` to the second, and so on.
+
+Placeholders may also be _named_.
+This is particularly useful when there are many query parameters and ensuring that they are all in the correct order may be cumbersome.
+Name query placeholders take the form of `$name`.
+
+[source,python]
+----
+query_string = (
+"SELECT airportname FROM `travel-sample`"
+"WHERE country=$country "
+"AND geo.alt > $altitude "
+"AND (geo.lat BETWEEN $min_lat AND $max_lat) "
+"AND (geo.lon BETWEEN $min_lon AND $max_lon "
+)
+----
+
+Then to issue the actual query:
+
+[source,python]
+----
+query = N1QLQuery(
+    query_string,
+    country="United States",
+    altitude=500, min_lat=-50, max_lat=50, min_lon=-180, max_lon=0)
+----
+
+[#prepare-stmts]
+== Query Optimization Using Prepared (Optimized) Statements
+
+When a N1QL query string is sent to the server, the server will inspect the string and parse it, planning which indexes to query.
+Once this is done, it generates a _query plan_.
+The computation for the plan adds some additional processing time and overhead for the query.
+
+Often-used queries can be _prepared_ so that its _plan_ is generated only once.
+Subsequent queries using the same query string will use the pre-generated _plan_ instead, saving on the overhead and processing of the plan each time.
+
+You can indicate to the SDK that a given query should be optimized in the above fashion.
+When an SDK sees that a query should be optimized, it will internally prepare the statement and store the plan in an internal cache.
+When issuing the query again, the SDK will check to see if a plan exists in its cache, and will send the plan to the server.
+
+To indicate that an SDK should optimize a query, the [.param]`adhoc` parameter should be set to false.
+When a query is not _ad-hoc_, the SDK will fetch the plan (if it does not already have it).
+Do not turn off the _adhoc_ flag for each query since only a finite number of query plans (currently 5000) can be stored in the SDK.
+
+[source,python]
+----
+query = N1QLQuery("SELECT airportname FROM `travel-sample` WHERE country=$1", "USA")
+q.adhoc = False
+----
+
+NOTE: Parameterized queries are considered the same query for caching and planning purposes, even if the supplied parameters are different.
+
+For more information on how to optimize queries using prepared statements, see xref:{version-server}@server:n1ql:n1ql-language-reference/prepare.adoc[PREPARE] statement in [.cite]_N1QL language reference_.
+
+== Indexes
+
+The Couchbase query service makes use of _indexes_ in order to do its work.
+Indexes replicate subsets of documents from data nodes over to index nodes, allowing specific data (for example, specific document properties) to be retrieved quickly, (and to distribute load away from data nodes in MDS topologies).
+
+In order to make a bucket queryable, it must have at least one index defined.
+
+You can define a _primary index_ on a bucket.
+When a _primary_ index is defined you can issue non-covered queries on the bucket as well.
+This includes using the `META` function in the queries.
+
+[source,sql]
+----
+CREATE PRIMARY INDEX ON `users`
+----
+
+You can also define indexes over given document fields and then use those fields in the query:
+
+[source,sql]
+----
+CREATE INDEX ix_name ON `users`(name);
+CREATE INDEX ix_email ON `users`(email);
+----
+
+Would allow you to query the _users_ bucket regarding a document's `name` or `email` properties, so e.g.
+
+[source,sql]
+----
+SELECT name, email FROM `users` WHERE name="Monty Python" OR email="monty@python.org";
+----
+
+Indexes help improve the performance of a query.
+When an index includes the actual values of all the fields specified in the query, the index covers the query and eliminates the need to fetch the actual values from the Data Service.
+An index, in this case, is called a covering index and the query is called a covered query.
+For more information, see xref:{version-server}@server:indexes:covering-indexes.adoc[Covering Indexes].
+
+You can also create and define indexes in the SDK using
+
+[source,python]
+----
+cb.bucket_manager().create_n1ql_primary_index(ignore_exists=True)
+cb.bucket_manager().create_n1ql_index('index_name', fields['name'])
+cb.bucket_manager().create_n1ql_index('index_email', fields['email'])
+----
+
+== Index Building
+
+Creating indexes can take a long time on buckets with lots of existing documents.
+You can build indexes in the background, creating _deferred_ indexes and then building all deferred indexes at once.
+This allows multiple indexes to be built at once rather than having to re-scan the entire bucket for each index.
+
+[source,sql]
+----
+CREATE PRIMARY INDEX ON `users` WITH {"defer_build": true};
+CREATE INDEX ix_name ON `users`(name) WITH {"defer_build": true};
+CREATE INDEX ix_email ON `users`(email) WITH {"defer_build": true};
+BUILD INDEX ON `users`(`#primary`, `ix_name`, `ix_email`);
+----
+
+The indexes are actually built when the `BUILD INDEX` statement is executed.
+At this point, the server scans all the documents in the `users` bucket and indexes it for all of the applicable indexes (i.e.
+if it has a `name` or `email`) field.
+
+Building deferred indexes can also be done via the SDK:
+
+[source,python]
+----
+mgr.create_n1ql_primary_index(ignore_exists=True, defer=True)
+mgr.create_n1ql_index('ix_name', fields=['name'], defer=True)
+mgr.create_n1ql_index('ix_email', fields=['email'], defer=True)
+mgr.build_n1ql_deferred_indexes()
+mgr.watch_n1ql_indexes(('ix_name', 'ix_email', '#primary'), timeout=120)
+----
+
+== Index Consistency
+
+Because indexes are by design outside the data service, they are eventually consistent with respect to changes to documents and, depending on how you issue the query, may at times not contain the most up-to-date information.
+This may especially be the case when deployed in a write-heavy environment: changes may take some time to propagate over to the index nodes.
+
+The asynchronous updating nature of global secondary indexes means that they can be very quick to query and do not require the additional overhead of index recaclculations at the time documents are modified.
+N1QL queries are forwarded to the relevant indexes and the queries are done based on indexed information, rather than the documents as they exist in the data service.
+
+With default query options, the query service will rely on the current index state: the most up-to-date document versions are not retrieved, and only the indexed versions are queried.
+This provides the best performance.
+Only updates occurring with a small time frame may not yet have been indexed.
+
+The query service can use the latest versions of documents by modifying the [.api]`consistency` of the query.
+This is done by setting the [.api]`consistency` or [.api]`scan_consistency` property of the query to [.api]`REQUEST_PLUS`.
+When using this consistency mode, the query service will ensure that the indexes are synchronized with the data service before querying.
+
+Consider the following snippet:
+
+[source,python]
+----
+from couchbase.n1ql import N1QLQuery, CONSISTENCY_REQUEST
+
+# Ensure there is a primary index on the default bucket!
+RANDOM_NUMBER = random.randint(0, 10000000)
+
+cb = Bucket('couchbase://10.0.0.31/default')
+cb.upsert('user:{}'.format(RANDOM_NUMBER), {
+    'name': ['Brass', 'Doorknob'],
+    'email': ['brass.doorknob@juno.com'],
+    'random': RANDOM_NUMBER
+})
+
+query = N1QLQuery(
+    'SELECT name, email, random, META(default).id FROM default WHERE $1 IN name', 'Brass')
+row = cb.n1ql_query(query).get_single_result()
+----
+
+The above query may not return the newly inserted document because it has not yet been indexed.
+The query is issued immediately after document creation, and in this case the query engine may process the query before the index has been updated.
+
+If the above code is modified to use _request_plus_ (currently mapped to the [.api]`CONSISTENT_REQUEST` constant in the Python SDK), query processing will wait until all updates have been processed and recalculated into the index from the point in time the query was received:
+
+[source,python]
+----
+query = N1QLQuery(
+    'SELECT name, email, random, META(default).id FROM default WHERE $1 IN name', 'Brass')
+# If this line is removed, the latest 'random' field might not be present
+query.consistency = CONSISTENCY_REQUEST
+row = cb.n1ql_query(query).get_single_result()
+----
+
+This gives you as an application developer more control over the balance between performance and consistency with respect to other actions on your distributed database.
