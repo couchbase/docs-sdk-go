@@ -1,1 +1,61 @@
-include::6.0@sdk:pages:partial$nonjson.adoc[]
+include::6.0@sdk:shared:partial$nonjson.adoc[tag=nonjson_intro]
+
+== Using the _RAW_ format
+
+Manually serialize your document to a raw buffer, store the document using the _RAW_ format, and manually deserialize your document upon retrieval, reading and decoding the retrieved buffer manually.
+Here is an example in Python of manually encoding and decoding a UTF-16 string (note that the Python SDK names the _RAW_ format as [.param]`FMT_BYTES`):
+
+[source,python]
+----
+>>> from couchbase import FMT_BYTES
+>>> cb.upsert('utf16_doc',
+              'Hello, UTF-16 World!'.encode('utf16'),
+              format=FMT_BYTES)
+OperationResult<RC=0x0, Key=u'utf16_doc', CAS=0x35cc17c7f213>
+>>> raw_buf = cb.get('utf16_doc').value
+>>> raw_buf
+'\xff\xfeH\x00e\x00l\x00l\x00o\x00,\x00 \x00U\x00T\x00F\x00-\x001\x006\x00 \x00W\x00o\x00r\x00l\x00d\x00!\x00'
+>>> utf16_doc = raw_buf.decode('utf16')
+>>> utf16_doc
+u'Hello, UTF-16 World!'
+----
+
+[#transcoders]
+== Using transcoders
+
+NOTE: Not all SDKs support transcoders.
+Refer to your SDK documentation to determine whether and how transcoders are supported.
+
+A Transcoder refers to a pair of functions which are responsible for serializing (encoding) a document before sending it to the server and de-serializing (decoding) a document to a suitable application type when it is retrieved.
+
+Using transcoders is preferred over RAW serialization when possible, as it provides a cleaner interface as well as allows it to work in a mixed type environment (if there are multiple custom types) without having to encode the document type within the document itself.
+
+The _encoding_ function in the transcoder accepts a native Document type as input (as created by your application), encodes it as a byte buffer, and returns the byte buffer along with a type code.
+
+The _decoding_ function accepts a buffer (as fetched from the server) and a type code (the flags from the metadata) and returns the intended type to be used for the Document within the application.
+
+The following shows an implementation of the encoding ([.api]`encode_value`) and decoding ([.api]`decode_value`) functions in Python:
+
+[source,python]
+----
+from couchbase.transcoder import Transcoder
+UTF16_TYPECODE = 0x0A000000
+class Utf16Transcoder(Transcoder):
+    def encode_value(self, value, format):
+        if (format == UTF16_TYPECODE):
+            return value.encode('utf16'), UTF16_TYPECODE
+        else:  # Call default implementation
+            return super(Utf16Transcoder, self).encode_value(value, format)
+
+    def decode_value(self, value, flags):
+        if flags == UTF16_TYPECODE:
+            return value.decode('utf16')
+        else:  # Call default implementation
+            return super(Utf16Transcoder, self).decode_value(value, flags)
+
+cb.transcoder = Utf16Transcoder()
+cb.upsert('utf16_doc', 'Hello, UTF-16 World!', format=UTF16_TYPECODE)
+cb.get('utf16_doc')
+----
+
+include::6.0@sdk:shared:partial$nonjson.adoc[tag=nonjson_flags]
