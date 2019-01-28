@@ -80,7 +80,7 @@ Retrieving the document again yields:
 Note that `field1` is not present, even though the application inserted it into the document.
 The reason is because the replace on Thread #2 happened to run after the replace on Thread #1, however Thread #1’s replace was executed after Thread #2’s get: Since the local version of the document on Thread #2 did not contain field1 (because Thread #1’s update was not stored on the server yet), by executing the replace, it essentially overrode the replace performed by Thread #1.
 
-[cols="50,719"]
+[cols="1,4"]
 |===
 | 0.00ms
 | (#2): `new_doc = get("docid").value`
