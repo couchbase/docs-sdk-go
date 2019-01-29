@@ -22,17 +22,23 @@ It is xref:{version-server}@server:cli:cli-intro.adoc[located alongside the othe
 
 Queries are issued in the SDK using the _query_ operation.
 This API accepts a string which is the statement to execute, and returns the rows (or an iterable object which returns rows) representing the query’s result.
-Here is an example of a query executed in Python:
 
-....
->>> for row in cb.n1ql_query('SELECT type FROM `travel-sample` LIMIT 4'):
-...   print(row)
-...
-{'type': 'airline'}
-{'type': 'airline'}
-{'type': 'airline'}
-{'type': 'airport'}
-....
+Here is an example of a query:
+
+[source,go]
+----
+myQuery := gocb.NewN1qlQuery("SELECT type FROM `travel-sample` LIMIT 4")
+rows, err := cluster.ExecuteN1qlQuery(myQuery, nil)
+var row interface{}
+for rows.Next(&row) {
+    fmt.Println(row)
+}
+
+map[type:airline]
+map[type:airline]
+map[type:airline]
+map[type:airline]
+----
 
 The above query using _cbq_ (some output truncated for clarity):
 
@@ -72,15 +78,19 @@ Internally, however, the response looks like the _cbq_ output above.
 If you use aliases in your query, then the returned rows contain the aliased name rather than the original one.
 For example:
 
-[source,python]
+[source,go]
 ----
->>> for row in cb.n1ql_query('SELECT airportname as n FROM `travel-sample` where type="airport" LIMIT 4'):
-...   print(row)
-...
-{'n': 'Calais Dunkerque'}
-{'n': 'Peronne St Quentin'}
-{'n': 'Les Loges'}
-{'n': 'Couterne'}
+myQuery := gocb.NewN1qlQuery("SELECT airportname as n FROM `travel-sample` where type=\"airport\" LIMIT 4")
+rows, err := cluster.ExecuteN1qlQuery(myQuery, nil)
+var row interface{}
+for rows.Next(&row) {
+    fmt.Println(row)
+}
+
+map[n:Calais Dunkerque]
+map[n:Peronne St Quentin]
+map[n:Les Loges]
+map[n:Couterne]
 ----
 
 == Specifying Query Criteria
@@ -187,12 +197,13 @@ The query may be divided into a _fixed_ or _static_ part (select all airports in
 
 A naive implementation of this function might look something like this:
 
-[source,python]
+[source,go]
 ----
-def airports_in_city(city):
-  query_string = "SELECT airportname FROM `travel-sample` WHERE city="
-  query_string += '"' + city + '"'
-  return cb.n1ql_query(query_string)
+func airportsInCity(city string) {
+	myQuery := "SELECT airportname FROM `travel-sample` WHERE city="
+	myQuery += `" + city + "`
+	rows, err := cluster.ExecuteN1qlQuery(gocb.NewN1qlQuery(myQuery), nil)
+}
 ----
 
 The approach above is both unwieldy and insecure (subject to SQL injection attacks).
@@ -200,12 +211,12 @@ The approach above is both unwieldy and insecure (subject to SQL injection attac
 N1QL allows the use of placeholders to declare dynamic query parameters.
 Here's a version of the above using placeholders:
 
-[source,python]
+[source,go]
 ----
-def airports_in_city(city):
-  query_string = "SELECT airportname FROM `travel-sample` WHERE city=$1"
-  query = N1QLQuery(query_string, city)
-  return cb.n1ql_query(query)
+func airportsInCity(city string) {
+	myQuery := "SELECT airportname FROM `travel-sample` WHERE city=$1"
+	rows, err := cluster.ExecuteN1qlQuery(gocb.NewN1qlQuery(myQuery), []interface{}{city})
+}
 ----
 
 The `$1` is a positional placeholder.
@@ -216,25 +227,27 @@ Placeholders may also be _named_.
 This is particularly useful when there are many query parameters and ensuring that they are all in the correct order may be cumbersome.
 Name query placeholders take the form of `$name`.
 
-[source,python]
+[source,go]
 ----
-query_string = (
-"SELECT airportname FROM `travel-sample`"
-"WHERE country=$country "
-"AND geo.alt > $altitude "
-"AND (geo.lat BETWEEN $min_lat AND $max_lat) "
-"AND (geo.lon BETWEEN $min_lon AND $max_lon "
-)
+queryString := "SELECT airportname FROM `travel-sample`"
+queryString += "WHERE country=$country "
+queryString += "AND geo.alt > $altitude "
+queryString += "AND (geo.lat BETWEEN $min_lat AND $max_lat) "
+queryString += "AND (geo.lon BETWEEN $min_lon AND $max_lon "
 ----
 
 Then to issue the actual query:
 
-[source,python]
+[source,go]
 ----
-query = N1QLQuery(
-    query_string,
-    country="United States",
-    altitude=500, min_lat=-50, max_lat=50, min_lon=-180, max_lon=0)
+params := make(map[string]interface{})
+params["country"] = "United States"
+params["altitude"] = 500
+params["min_lat"] = 50
+params["max_lat"] = 50
+params["min_lon"] = -180
+params["max_lon"] = 0
+rows, err := cluster.ExecuteN1qlQuery(gocb.NewN1qlQuery(queryString), params)
 ----
 
 [#prepare-stmts]
@@ -255,10 +268,9 @@ To indicate that an SDK should optimize a query, the [.param]`adhoc` parameter s
 When a query is not _ad-hoc_, the SDK will fetch the plan (if it does not already have it).
 Do not turn off the _adhoc_ flag for each query since only a finite number of query plans (currently 5000) can be stored in the SDK.
 
-[source,python]
+[source,go]
 ----
-query = N1QLQuery("SELECT airportname FROM `travel-sample` WHERE country=$1", "USA")
-q.adhoc = False
+query = gocb.NewN1qlQuery("SELECT airportname FROM `travel-sample` WHERE country=$1", "USA").AdHoc(false)
 ----
 
 NOTE: Parameterized queries are considered the same query for caching and planning purposes, even if the supplied parameters are different.
@@ -303,11 +315,12 @@ For more information, see xref:{version-server}@server:indexes:covering-indexes.
 
 You can also create and define indexes in the SDK using
 
-[source,python]
+[source,go]
 ----
-cb.bucket_manager().create_n1ql_primary_index(ignore_exists=True)
-cb.bucket_manager().create_n1ql_index('index_name', fields['name'])
-cb.bucket_manager().create_n1ql_index('index_email', fields['email'])
+mgr := bucket.Manager("user", "password")
+err := mgr.CreatePrimaryIndex("", true, false)
+err = mgr.CreateIndex("indexName", []string{"name"}, true, false)
+err = mgr.CreateIndex("indexEmail", []string{"email"}, true, false)
 ----
 
 == Index Building
@@ -330,13 +343,14 @@ if it has a `name` or `email`) field.
 
 Building deferred indexes can also be done via the SDK:
 
-[source,python]
+[source,go]
 ----
-mgr.create_n1ql_primary_index(ignore_exists=True, defer=True)
-mgr.create_n1ql_index('ix_name', fields=['name'], defer=True)
-mgr.create_n1ql_index('ix_email', fields=['email'], defer=True)
-mgr.build_n1ql_deferred_indexes()
-mgr.watch_n1ql_indexes(('ix_name', 'ix_email', '#primary'), timeout=120)
+mgr := bucket.Manager("user", "password")
+err := mgr.CreatePrimaryIndex("", true, true)
+err = mgr.CreateIndex("ixName", []string{"name"}, true, true)
+err = mgr.CreateIndex("ixEmail", []string{"email"}, true, true)
+building, err := mgr.BuildDeferredIndexes()
+err = mgr.WatchIndexes(building, true, 120 *time.Second)
 ----
 
 == Index Consistency
@@ -357,37 +371,33 @@ When using this consistency mode, the query service will ensure that the indexes
 
 Consider the following snippet:
 
-[source,python]
+[source,golang]
 ----
-from couchbase.n1ql import N1QLQuery, CONSISTENCY_REQUEST
+randNum := rand.Intn(1000)
+_, err = bucket.Upsert(fmt.Sprintf("user:%d", randNum), struct {
+    Name   []string `json:"name"`
+    Email  []string `json:"email"`
+    Random int      `json:"random"`
+}{
+    Name:   []string{"Brass", "Doorknob"},
+    Email:  []string{"brass.doorknob@juno.com"},
+    Random: randNum,
+}, 0)
 
-# Ensure there is a primary index on the default bucket!
-RANDOM_NUMBER = random.randint(0, 10000000)
-
-cb = Bucket('couchbase://10.0.0.31/default')
-cb.upsert('user:{}'.format(RANDOM_NUMBER), {
-    'name': ['Brass', 'Doorknob'],
-    'email': ['brass.doorknob@juno.com'],
-    'random': RANDOM_NUMBER
-})
-
-query = N1QLQuery(
-    'SELECT name, email, random, META(default).id FROM default WHERE $1 IN name', 'Brass')
-row = cb.n1ql_query(query).get_single_result()
+query := gocb.NewN1qlQuery("SELECT name, email, random, META(default).id FROM default WHERE $1 IN name")
+result, err := cluster.ExecuteN1qlQuery(query, []interface{}{"Brass"})
 ----
 
 The above query may not return the newly inserted document because it has not yet been indexed.
 The query is issued immediately after document creation, and in this case the query engine may process the query before the index has been updated.
 
-If the above code is modified to use _request_plus_ (currently mapped to the [.api]`CONSISTENT_REQUEST` constant in the Python SDK), query processing will wait until all updates have been processed and recalculated into the index from the point in time the query was received:
+If the above code is modified to use _request_plus_B, query processing will wait until all updates have been processed and recalculated into the index from the point in time the query was received:
 
-[source,python]
+[source,golang]
 ----
-query = N1QLQuery(
-    'SELECT name, email, random, META(default).id FROM default WHERE $1 IN name', 'Brass')
-# If this line is removed, the latest 'random' field might not be present
-query.consistency = CONSISTENCY_REQUEST
-row = cb.n1ql_query(query).get_single_result()
+query := gocb.NewN1qlQuery("SELECT name, email, random, META(default).id FROM default WHERE $1 IN name").
+    Consistency(gocb.RequestPlus)
+result, err := cluster.ExecuteN1qlQuery(query, []interface{}{"Brass"})
 ----
 
 This gives you as an application developer more control over the balance between performance and consistency with respect to other actions on your distributed database.
