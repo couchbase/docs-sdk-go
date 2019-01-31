@@ -54,27 +54,33 @@ Assume the following two blocks of code are executing concurrently in different 
 | Thread #1 | Thread #2
 
 a|
-....
->>> result = cb1.get('docid')
->>> new_doc = result.value
->>> new_doc['field1'] = 'value1'
->>> cb1.replace('docid', new_doc)
-....
+[source,golang]
+----
+var doc map[string]string
+bucket.Get("docid", &doc)
+doc["field1"] = "value2"
+bucket.Replace("docid", doc, 0, 0)
+----
 a|
-....
->>> result = cb2.get('docid')
->>> new_doc = result.value
->>> new_doc['field2'] = 'value2'
->>> cb2.replace('docid', new_doc)
-....
+[source,golang]
+----
+var doc map[string]string
+bucket.Get("docid", &doc)
+doc["field2"] = "value2"
+bucket.Replace("docid", doc, 0, 0)
+----
 |===
 
 Retrieving the document again yields:
 
-[source,python]
+[source,golang]
 ----
->>> cb1.get('docid').value
-{u'field2': u'value2', u'a_field': u'a_value'}
+var doc map[string]string
+bucket.Get("docid", &doc)
+----
+
+----
+map[field2:value2,a_field:a_value]
 ----
 
 Note that `field1` is not present, even though the application inserted it into the document.
@@ -83,22 +89,22 @@ The reason is because the replace on Thread #2 happened to run after the replace
 [cols="1,4"]
 |===
 | 0.00ms
-| (#2): `new_doc = get("docid").value`
+| (#2): `bucket.Get("docid", &doc)`
 
 | 0.00ms
-| (#1): `new_doc = get("docid").value`
+| (#1): `bucket.Get("docid", &doc)`
 
 | 0.00ms
-| (#1): `new_doc["field1"] = "value1"`
+| (#1): `doc["field1"] = "value1"`
 
 | 0.00ms
-| (#2): `new_doc["field2"] = "value2"`
+| (#2): `doc["field2"] = "value2"`
 
 | 0.01ms
-| (#1): `cb.replace("docid", new_doc)`
+| (#1): `bucket.Replace("docid", doc, 0, 0)`
 
 | 0.02ms
-| (#2): `cb.replace("docid", new_doc)`
+| (#2): `bucket.Replace("docid", doc, 0, 0)`
 |===
 
 == Using CAS - Example
@@ -111,43 +117,41 @@ This is not because Couchbase itself has lost the updates, but because the appli
 | |
 
 a|
-....
->>> result = cb1.get('docid')
->>> new_doc = result.value
->>> print new_doc
-{u'a_field': u'a_value'}
->>> cur_cas = result.cas
->>> print cur_cas
-272002471883283
->>> new_doc['field1'] = 'value1'
->>> new_result = cb1.replace(
-       'docid',
-       new_doc,
-       cas=cur_cas)
-....
+[source,golang]
+----
+cas, _ := bucket.Get("docid", &doc)
+fmt.Printf("%+v", doc)
+map[a_field:a_value]
 
-NOTE: Server's CAS matches `cur_cas`.
+fmt.Println(cas)
+272002471883283
+
+doc["field1"] = "value1"
+cas, _ = bucket.Replace("docid", doc, cas, 0)
+----
+
+NOTE: Server's CAS matches `cas`.
 New CAS assigned
 
-....
->>> print new_result.cas
-195896137937427
-....
+[source,golang]
+----
+fmt.Println(cas)
+// 195896137937427
+----
+
 a|
-....
->>> result = cb2.get('docid')
->>> new_doc = result.value
->>> print new_doc
-{u'a_field': u'a_value'}
->>> cur_cas = result.cas
->>> print cur_cas
-272002471883283
->>> new_doc['field2'] = 'value2'
->>> new_result = cb2.replace(
-       'docid',
-       new_doc,
-       cas=cur_cas)
-....
+[source,golang]
+----
+cas, _ := bucket.Get("docid", &doc)
+fmt.Printf("%+v", doc)
+map[a_field:a_value]
+
+fmt.Println(cas)
+// 272002471883283
+
+doc["field2"] = "value2"
+cas, _ = bucket.Replace("docid", doc, cas, 0)
+----
 
 WARNING: CAS on server differs: `195896137937427` vs `272002471883283`!
 |===
@@ -165,19 +169,23 @@ How to handle this error depends on the application logic.
 If the application wishes to simply insert a new property within the document (which is not dependent on other properties within the document), then it may simply retry the read-update cycle by retrieving the item (and thus getting the new CAS), performing the local modification and then uploading the change to the server.
 For example, if a document represents a user, and the application is simply updating a user’s information (like an email field), the method to update this information may look like this:
 
-[source,python]
+[source,golang]
 ----
-def update_email(cb, user_id, email):
-    while True:
-        result = cb.get(user_id)
-        user_doc = result.value
-        user_doc['email'] = email
-        cb.upsert(user_id, user_doc, cas=result.cas)
-        break # Mutation succeeded
-    except KeyExistsError:
-        # This means the CAS has been modified. We still need to
-        # insert the email field, but do not want to override new changes
-        continue
+func updateEmail(b *gocb.Bucket, userID, email string) {
+	for {
+		var userDoc map[string]string
+		cas, _ := b.Get(userID, &userDoc)
+		userDoc["email"] = email
+		_, err := b.Replace(userID, userDoc, cas, 0)
+		if err != nil {
+			if err == gocb.ErrKeyExists {
+				continue
+			}
+			panic(err)
+		}
+		break // Mutation succeeded
+	}
+}
 ----
 
 Sometimes more logic is needed when performing updates, for example, if a property is mutually exclusive with another property; only one or the other can exist, but not both.
@@ -236,49 +244,26 @@ You can modify the time the lock is held for (though it can be no longer than 15
 
 Be sure to keep note of the _cas_ value when locking a document.
 You will need it when unlocking.
-The following blocks show how to use [.api]`lock` and [.api]`unlock` with the C SDK.
-This process should be similar for other SDKs.
+The following blocks show how to use [.api]`lock` and [.api]`unlock`.
 
-[source,c]
+[source,golang]
 ----
-lcb_CMDGET cmd = { 0 };
-LCB_CMD_SET_KEY(&cmd, "key", 3);
-cmd.lock = 1;
-cmd.exptime = 5;
-lcb_get3(instance, NULL, &cmd);
-lcb_wait(instance);
-----
-
-----
-static int unlock_only = 0;
-
-void get_handler(lcb_t instance, int cbtype, const lcb_RESPBASE *rb)
-{
-    const lcb_RESPGET *resp = (const lcb_RESPGET *)rb;
-
-    union {
-        lcb_CMDBASE base;
-        lcb_CMDSTORE store;
-        lcb_CMDUNLOCK unlock;
-    } u;
-
-    if (rb->rc == LCB_ETMPFAIL) {
-        printf("Key already locked!");
-    } else if (rb->rc == LCB_SUCCESS) {
-        memset(&u, 0, sizeof u);
-        LCB_CMD_SET_KEY(&u.base, rb->key, rb->nkey);
-        u.base.cas = rb->cas;
-        if (unlock_only) {
-            lcb_unlock3(instance, NULL, &u.unlock);
-        } else {
-            LCB_CMD_SET_VALUE(&u.store, "value", 5);
-            u.store.operation = LCB_REPLACE;
-            lcb_store3(instance, NULL, &u.store);
-        }
+var doc interface{}
+cas, err := bucket.GetAndLock("key", 5, &doc)
+if err != nil {
+    if err == gocb.ErrTmpFail {
+        // key already locked
+    } else {
+        // react to error
     }
 }
+// performing a mutation unlocks the document
+_, err := b.Replace("key", doc, cas, 0)
+
+// or, you can manually unlock a document
+cas, err = bucket.Unlock(key, cas)
 ----
 
-The handler will unlock the item either via an explicit unlock operation ([.api]`lcb_unlock3`) or implicitly via modifying the item with the correct CAS.
+The handler will unlock the item either via an explicit unlock operation ([.api]`Unlock`) or implicitly via modifying the item with the correct CAS.
 
-If the item has already been locked, the server will respond with [.var]`LCB_ETMPFAIL` which means that the operation could not be executed temporarily, but may succeed later on.
+If the item has already been locked, the server will respond with [.var]`ErrTmpFail` which means that the operation could not be executed temporarily, but may succeed later on.
