@@ -275,7 +275,7 @@ query = gocb.NewN1qlQuery("SELECT airportname FROM `travel-sample` WHERE country
 
 NOTE: Parameterized queries are considered the same query for caching and planning purposes, even if the supplied parameters are different.
 
-For more information on how to optimize queries using prepared statements, see xref:{version-server}@server:n1ql:n1ql-language-reference/prepare.adoc[PREPARE] statement in [.cite]_N1QL language reference_.
+For more information on how to optimize queries using prepared statements, see xref:6.0@server:n1ql:n1ql-language-reference/prepare.adoc[PREPARE] statement in [.cite]_N1QL language reference_.
 
 == Indexes
 
