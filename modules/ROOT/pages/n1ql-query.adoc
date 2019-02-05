@@ -7,7 +7,7 @@ Querying can solve typical programming tasks such as finding a user profile by e
 
 == Query Execution
 
-You can issue N1QL queries using either a Couchbase SDK, the _cbq_ shell, the _cbc_ command line tool, the REST API, or the xref:{version-server}@server:tools:query-workbench.adoc[Query workbench].
+You can issue N1QL queries using either a Couchbase SDK, the _cbq_ shell, the _cbc_ command line tool, the REST API, or the xref:6.0@server:tools:query-workbench.adoc[Query workbench].
 
 A N1QL query is a string parsed by the query service.
 The result for each query is JSON and as a result queries will function the same regardless whether they are executed using the [.cmd]`cbq` shell, an SDK, or using the REST API directly.
@@ -15,8 +15,8 @@ Nevertheless, the result format received using an SDK may be a bit different tha
 
 == Running cbq
 
-The interactive shell xref:{version-server}@server:tools:cbq-shell.adoc[[.cmd]`cbq`] for executing N1QL queries is shipped with Couchbase Server and designed to be run on a cluster node.
-It is xref:{version-server}@server:cli:cli-intro.adoc[located alongside the other Couchbase tools] (by default, `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows).
+The interactive shell xref:6.0@server:tools:cbq-shell.adoc[[.cmd]`cbq`] for executing N1QL queries is shipped with Couchbase Server and designed to be run on a cluster node.
+It is xref:6.0@server:cli:cli-intro.adoc[located alongside the other Couchbase tools] (by default, `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows).
 
 == Issuing Queries
 
@@ -70,7 +70,7 @@ cbq> SELECT type FROM `travel-sample` LIMIT 4;
 The result is a JSON object.
 The important field within the object is the `results` property, which contains an array of results (a result set).
 Each item within the result set may be considered as a _row_.
-Each row contains those document fields selected in the xref:{version-server}@server:n1ql:n1ql-language-reference/selectclause.adoc[`SELECT`] clause.
+Each row contains those document fields selected in the xref:6.0@server:n1ql:n1ql-language-reference/selectclause.adoc[`SELECT`] clause.
 
 NOTE: Couchbase SDKs provide a row-based API, which returns an object which can be iterated over.
 Internally, however, the response looks like the _cbq_ output above.
@@ -96,7 +96,7 @@ map[n:Couterne]
 == Specifying Query Criteria
 
 N1QL's true strength is the ability to query documents satisfying a given criteria or querying for documents whose properties evaluate to certain values or expressions.
-You specify criteria in the same manner as in SQL by using a xref:{version-server}@server:n1ql:n1ql-language-reference/where.adoc[`WHERE`] clause.
+You specify criteria in the same manner as in SQL by using a xref:6.0@server:n1ql:n1ql-language-reference/where.adoc[`WHERE`] clause.
 Specify multiple predicates using the `AND` or `OR` keywords.
 
 The following example selects all documents that have a `type` of _airport_ and a `city` of _Reno_.
@@ -126,7 +126,7 @@ Note that you should use <<topic_kgx_xdp_1w/devguide-named-placeholders,query pl
 The above queries showed how to query top-level fields within a document.
 One of the main differences between JSON and flat rows is that JSON supports a nested structure, allowing documents to contain other documents, also known as sub-documents.
 In N1QL, you can use the path syntax to query and address sub-documents.
-See xref:{version-server}@server:n1ql:n1ql-intro/queriesandresults.adoc[N1QL Queries and Results] for more information on the path syntax.
+See xref:6.0@server:n1ql:n1ql-intro/queriesandresults.adoc[N1QL Queries and Results] for more information on the path syntax.
 
 [caption=Attention]
 IMPORTANT: N1QL sub-document queries are not related to _Key-Value_ sub-document operations.
@@ -311,7 +311,7 @@ SELECT name, email FROM `users` WHERE name="Monty Python" OR email="monty@python
 Indexes help improve the performance of a query.
 When an index includes the actual values of all the fields specified in the query, the index covers the query and eliminates the need to fetch the actual values from the Data Service.
 An index, in this case, is called a covering index and the query is called a covered query.
-For more information, see xref:{version-server}@server:indexes:covering-indexes.adoc[Covering Indexes].
+For more information, see xref:6.0@server:indexes:covering-indexes.adoc[Covering Indexes].
 
 You can also create and define indexes in the SDK using
 
