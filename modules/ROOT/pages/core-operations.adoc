@@ -107,7 +107,7 @@ The ID of the document is `docid` and its value is JSON containing a single fiel
 
 ....
 # When storing JSON data using cbc, ensure it is properly quoted for your shell:
-$ cbc create docid -V '{"json":"value"}' -M upsert -U couchbase://cluster-node/bucket-name
+$ cbc create -u Administrator -P password docid -V '{"json":"value"}' -M upsert -U couchbase://cluster-node/bucket-name
 docid               Stored. CAS=0x8234c3c0f213
 ....
 
