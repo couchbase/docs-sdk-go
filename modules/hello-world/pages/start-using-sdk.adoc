@@ -4,17 +4,17 @@
 [abstract]
 The Couchbase Go SDK allows you to connect to a Couchbase cluster from Go. It is a native Go library and uses the high-performance gocbcore to handle communicating to the cluster over Couchbase’s binary protocols
 
-WARNING: These pages cover the first _Developer Preview_ of the Couchbase .NET SDK 3.0 (DP1).
+WARNING: These pages cover the first _Developer Preview_ of the Couchbase Golang SDK 2.0 (DP1).
 As such they are likely to change without notice.
 The DP1 code _should not_ be used in production.
 
 == Installing the SDK
 
-You can install the SDK via go get
+You can install the SDK via go get, note that the _Developer Preview_ is not available via gopkg.
 
 [source,go]
 ----
-$ go get gopkg.in/couchbase/gocb.v3
+$ go get github.com/couchbase/gocb
 ----
 
 Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref:https://docs.couchbase.com/go-sdk/1.5/relnotes-go-sdk.html[release notes].
@@ -22,73 +22,61 @@ Information on new features, fixes, and known issues -- as well as information o
 
 == Hello Couchbase
 
-/localise to Go!
-
-Now you have the .NET client installed grab the code from link:href://devguideexamples or open a fresh project in VS Code and try out the following:
+Now you have the Go client installed grab the code from link:href://devguideexamples or open a fresh project in VS Code and try out the following:
 
 [source,csharp]
 ----
-var config = new Configuration
-{
-    Servers = new List<Uri> {new Uri("http://10.112.180.101:8091")},
-    UserName = "username",
-    Password = "password"
-};
+import "gopkg.in/couchbase/gocb.v2"
+...
+
+opts := gocb.ClusterOptions{
+    Authenticator: gocb.PasswordAuthenticator{
+        "Administrator",
+        "password",
+    }
+}
+cluster, _ := gocb.NewCluster("10.112.180.101", opts)
 ----
 
 Couchbase uses xref:6.5@server:learn/security:roles.adoc[Role Based Access Control (RBAC) to control access to resources.
 Here we will use the _Full Admin_ role created during installation of the Couchbase Data Platform.
-For production client code, you will want to use xref:3.0dp1@net-sdk:howtos:managing-connections.adoc#rbac[more appropriate, restrictive settings], but here we want to get you up and running quickly.
+For production client code, you will want to use xref:3.0dp1@go-sdk:howtos:managing-connections.adoc#rbac[more appropriate, restrictive settings], but here we want to get you up and running quickly.
 If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _localhost_.
 
-
-// initialize cluster
-
-[source,csharp]
-----
-var cluster = new Cluster();
-await cluster.Initialize(config)
-
-// possible alternative (doesn't currently work)
-//var cluster = await Cluster.Connect(config);
-----
-
 Connection to the cluster is initialized by
-// to be filled in when above is clarified.
 
-// Mike: ideal is for socket / http client init during cluster connect, but we typically require a bucket, so may be delated until a bucket instance is requested, like it is in 2.x.
-
-[source,csharp]
+[source,golang]
 ----
 // get a bucket reference
-var bucket = await cluster.Bucket("bucket-name");
+bucket, _ := cluster.Bucket("bucket-name", &gocb.BucketOptions{});
 ----
 
 If you installed the travel sample data bucket, substitute _travel-sample_ for _bucket-name_.
 
-[source,csharp]
+[source,golang]
 ----
 // get a collection reference
-var collection = await bucket.DefaultCollection;
-var myCollection = bucket.Scope("my-collection");
+collection, _ := bucket.DefaultCollection(&gocb.CollectionOptions{})
+// for a named collection and scope
+// myCollection, err := bucket.Scope("my-scope").Collection("my-collection", &gocb.CollectionOptions{})
 ----
 
-The 3.0 SDK is ready for the introduction of xref:#[Collections] in Cheshire Cat, the next release of the Couchbase Data Platform.
+The 2.0 SDK is ready for the introduction of xref:#[Collections] in Cheshire Cat, the next release of the Couchbase Data Platform.
 The latest release, Mad Hatter, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
 Here we will use the `DefaultCollection`, which covers the whole Bucket.
 
-[source,csharp]
+[source,golang]
 ----
-// upsert document
-var upsertResult = await collection.Binary.Upsert("my-document", new {name = "mike"});
+// Upsert Document
+upsertResult, _ := col.Upsert("my-document", map[string]string{"name": "mike"}, &gocb.UpsertOptions{})
 
-// get document
-var getResult = await collection.Binary.Get("my-document");
+ // Get Document
+getResult, _ := collection.Get("my-document", &gocb.GetOptions{})
 ----
 
-The `Binary` service is a wrapper for the core Key Value (KV) database service.
 KV Operations are described in detail on the xref:net-sdk:howtos:kv-operations.adoc[KV Operations page].
-Now that you know the basics, you may wish to go straight to that page -- or first see a complete worked example of using the Couchbase .NET client, our xref:3.0dp1@sample-application.adoc[Travel Sample Application].
+Now that you know the basics, you may wish to go straight to that page -- or first see a complete worked example of 
+using the Couchbase Go client, our xref:3.0dp1@sample-application.adoc[Travel Sample Application].
 
 == Additional Resources
 
