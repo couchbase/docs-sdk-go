@@ -22,7 +22,7 @@ Information on new features, fixes, and known issues -- as well as information o
 
 == Hello Couchbase
 
-Now you have the Go client installedopen your favourite text editor and try out the following:
+Now you have the Go client installed, open your favourite text editor and try out the following:
 
 [source,golang]
 ----
@@ -43,7 +43,7 @@ Here we will use the _Full Admin_ role created during installation of the Couchb
 For production client code, you will want to use xref:3.0dp1@go-sdk:howtos:managing-connections.adoc#rbac[more appropriate, restrictive settings], but here we want to get you up and running quickly.
 If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _localhost_.
 
-Connection to the cluster is initialized by
+Connection to the cluster is initialized by:
 
 [source,golang]
 ----
@@ -63,7 +63,7 @@ collection, _ := bucket.DefaultCollection(&gocb.CollectionOptions{})
 
 The 2.0 SDK is ready for the introduction of xref:#[Collections] in an upcoming release of the Couchbase Data Platform.
 The latest release, Mad Hatter, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
-Here weve used the `DefaultCollection`, which covers the whole Bucket.
+Here we've used the `DefaultCollection`, which covers the whole Bucket.
 
 [source,golang]
 ----
