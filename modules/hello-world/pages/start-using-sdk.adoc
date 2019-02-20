@@ -10,21 +10,21 @@ The DP1 code _should not_ be used in production.
 
 == Installing the SDK
 
-You can install the SDK via go get, note that the _Developer Preview_ is not available via gopkg.
+You can install the SDK via `go get`, note that the _Developer Preview_ is not available via `gopkg`.
 
 [source,go]
 ----
 $ go get github.com/couchbase/gocb
 ----
 
-Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref:https://docs.couchbase.com/go-sdk/1.5/relnotes-go-sdk.html[release notes].
+Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref::project-docs:relnotes-go-sdk.html[release notes].
 
 
 == Hello Couchbase
 
-Now you have the Go client installed grab the code from link:href://devguideexamples or open a fresh project in VS Code and try out the following:
+Now you have the Go client installedopen your favourite text editor and try out the following:
 
-[source,csharp]
+[source,golang]
 ----
 import "gopkg.in/couchbase/gocb.v2"
 ...
@@ -61,9 +61,9 @@ collection, _ := bucket.DefaultCollection(&gocb.CollectionOptions{})
 // myCollection, err := bucket.Scope("my-scope").Collection("my-collection", &gocb.CollectionOptions{})
 ----
 
-The 2.0 SDK is ready for the introduction of xref:#[Collections] in Cheshire Cat, the next release of the Couchbase Data Platform.
+The 2.0 SDK is ready for the introduction of xref:#[Collections] in an upcoming release of the Couchbase Data Platform.
 The latest release, Mad Hatter, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
-Here we will use the `DefaultCollection`, which covers the whole Bucket.
+Here weve used the `DefaultCollection`, which covers the whole Bucket.
 
 [source,golang]
 ----
@@ -82,7 +82,7 @@ using the Couchbase Go client, our xref:3.0dp1@sample-application.adoc[Travel Sa
 
 The API reference is generated for each release and can be found xref:http://docs.couchbase.com/sdk-api/couchbase-go-client-3.0.0dp1/[here].
 
-xref:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
+xref::project-docs:migrating-sdk-code-to-2.n.adoc[The Migrating from SDK1 to 2 page] highlights the main differences to be aware of when migrating your code.
 
 Couchbase welcomes community contributions to the Go SDK.
 The Go SDK source code is available on xref:https://github.com/couchbase/couchbase-go-client[GitHub].
