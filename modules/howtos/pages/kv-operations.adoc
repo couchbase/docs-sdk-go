@@ -97,7 +97,7 @@ result, err := col.Replace("document-key", &document, &gocb.ReplaceOptions{
 })
 ----
 
-As well as explicitly setting the _Timeout_ value for an operation the Go SDK also supports setting timeouts via `context.Context`.
+As well as explicitly setting the _Timeout_ value for an operation, the Go SDK also supports setting timeouts via `context.Context`.
 
 [source,golang]
 ----
@@ -113,7 +113,7 @@ result, err := col.Upsert("document-key", &document, &gocb.UpsertOptions{
 })
 ----
 
-Here, we have add _Durability_ options, namely `PersistTo` and `ReplicateTo`.
+Here we have added _Durability_ options, namely `PersistTo` and `ReplicateTo`.
 In Couchbase Server releases before 6.5, Durability was set with these two options -- see the xref:https://docs.couchbase.com/go-sdk/1.5/durability.html[6.0 Durability documentation] -- covering  how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist. 
 Couchbase Data Platform 6.5 refines these two options, with xref:synchronous-replication.adoc[Synchronous Replication] -- although they remain essentially the same in use -- as well as adding the option of xref:transactions.adoc[atomic document transactions].
 
@@ -140,7 +140,7 @@ var content doc
 err = result.Content(&content)
 ----
 
-Timeout can also be set - as in the earlier `Insert` example:
+Timeout can also be set, as in the earlier `Insert` example:
 
 [source,golang]
 ----
