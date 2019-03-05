@@ -177,27 +177,78 @@ result, err := col.Remove("document-key", &gocb.RemoveOptions{
 By default, Couchbase documents do not expire, but transient or temporary data may be needed for user sessions, caches, or other temporary documents. 
 You can use expiration values on documents to handle transient data.
 
-
-//// TODO  Mike writing code sample
- 
+[source,golang]
 ----
-    Expiry = expiry,
-...
-//will be expired, thus KeyNotFound
-Console.WriteLine(bucket.GetDocument<dynamic>("expires").Status);
+result, err := collection.Touch("document-key", 600, nil)
 ----
 
+A network timeout can be set with the optional `TouchOptions{}`, in the same fashion as earlier examples on this page:
+
+[source,golang]
+----
+result, err := collection.Touch("document-key", 600, &gocb.TouchOptions{
+    Timeout: 5 * time.Second,
+})
+----
+
+== Atomic document modifications
+
+The value of a document can be increased or decreased atomically using `Binary().Increment()` and `Binary().Decrement()`.
+
+.Increment
+[source,golang]
+----
+// increment binary value by 1, if document doesn’t exist, seed it at 1000
+collection.Binary().Increment("document-key", &gocb.CounterOptions{
+    Initial: 1000,
+    Delta:   1,
+})
+----
+
+.Increment (with options)
+[source,golang]
+----
+collection.Binary().Increment("document-key", &gocb.CounterOptions{
+    Initial:    1000,
+    Delta:      1,
+    Timeout:    5 * time.Second,
+    Expiration: 3600,
+    Cas:        cas,
+})
+----
+
+.Decrement
+[source,golang]
+----
+// decrement binary value by 1, if document doesn’t exist, seed it at 1000
+collection.Binary().Decrement("document-key", &gocb.CounterOptions{
+    Initial: 1000,
+    Delta:   1,
+})
+----
+
+.Decrement (with options)
+[source,golang]
+----
+// decrement binary value by 1, if document doesn’t exist, seed it at 1000
+collection.Binary().Decrement("document-key", &gocb.CounterOptions{
+    Initial:    1000,
+    Delta:      1,
+    Timeout:    5 * time.Second,
+    Expiration: 3600,
+    Cas:        cas,
+})
+----
+
+NOTE: Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change
 
 == Additional Resources
 
-// links
+Working on just a specific path within a JSON document will reduce network bandwidth requirements - see the xref:subdocument-operations.adoc[Sub-Document] pages.
+For working with metadata on a document, reference our xref:sdk-xattr-example.adoc[Extended Attributes] pages.
 
-Sub-Document & XATTR
+Another way of increasing network performance is to _pipeline_ operations with xref:batching-operations.adoc[Batching Operations].
 
-Batching
+As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:non-json.adoc[arbitary bytes, or binary format].
 
-Formats
-
-Non-JSON
-
-Query Engine
+Our xref:n1ql-queries-with-sdk.adoc[Query Engine] enables retrieval of information using the SQL-like syntax of N1QL.
