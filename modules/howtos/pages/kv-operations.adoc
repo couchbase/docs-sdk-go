@@ -205,9 +205,9 @@ collection.Binary().Increment("document-key", &gocb.CounterOptions{
 })
 ----
 
+.Increment (with options)
 [source,golang]
 ----
-// .Increment (with options)
 collection.Binary().Increment("document-key", &gocb.CounterOptions{
     Initial:    1000,
     Delta:      1,
@@ -227,7 +227,7 @@ collection.Binary().Decrement("document-key", &gocb.CounterOptions{
 })
 ----
 
-.Increment (with options)
+.Decrement (with options)
 [source,golang]
 ----
 // decrement binary value by 1, if document doesn’t exist, seed it at 1000
@@ -240,7 +240,7 @@ collection.Binary().Decrement("document-key", &gocb.CounterOptions{
 })
 ----
 
-NOTE: Increment & Decrement are considered part of the ‘binary’ API and as such may still be subject to change
+NOTE: Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change
 
 == Additional Resources
 
