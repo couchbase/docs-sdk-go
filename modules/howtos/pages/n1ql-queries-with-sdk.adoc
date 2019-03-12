@@ -7,9 +7,9 @@
 You can query for documents in Couchbase using the N1QL query language, a language based on SQL, but designed for structured and flexible JSON documents. 
 Querying can solve typical programming tasks such as finding a user profile by email address, facebook login, or user ID.
 
-WARNING: These pages cover the first _Developer Preview_ of the Couchbase Go SDK 2.0 (DP1).
+WARNING: These pages cover the first _Developer Preview_ of the Couchbase Go SDK -- 2.0 _alpha_.
 As such they are likely to change without notice.
-The DP1 code _should not_ be used in production.
+The _alpha_ code _should not_ be used in production.
 
 Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
 xref:#additional-resources[Further resources] for learning about N1QL are listed at the bottom of the page.

@@ -3,14 +3,9 @@
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
 
-WARNING: These pages cover the first _Developer Preview_ of the Couchbase Go SDK 2.0 (DP1).
+WARNING: These pages cover the first _Developer Preview_ of the Couchbase Go SDK -- 2.0 _alpha_.
 As such they are likely to change without notice.
-The DP1 code _should not_ be used in production.
-
-//////////////////////////////////////////////
-///////////////// Unfinished /////////////////
-//////////////////////////////////////////////
-
+The _alpha_ code _should not_ be used in production.
 
 The complete code sample used on this page can be downloaded from
 ///  xref::example$document.cs[here]
