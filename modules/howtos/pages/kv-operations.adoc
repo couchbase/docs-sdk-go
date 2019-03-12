@@ -17,13 +17,13 @@ The _alpha_ code _should not_ be used in production.
 A _document_ refers to an entry in the database (other databases may refer to the same concept as a _row_).
 A document has an ID (_primary key_ in other databases), which is unique to the document and by which it can be located.
 The document also has a value which contains the actual application data.
-See xref::concept-docs:documents.adoc[the concept guide to _Documents_] for a deeper dive into documents in the Couchbase Data Platform.
+See xref:concept-docs:documents.adoc[the concept guide to _Documents_] for a deeper dive into documents in the Couchbase Data Platform.
 Or read on, for a hands-on introduction to working with documents from the Go SDK.
 
 == CRUD Operations
 
 The core interface to Couchbase Server is simple KV operations on full documents.
-Make sure you're familiar with the basics of authorization and connecting to a Cluster from the xref::hello-world:start-using-sdk.adoc[Start Using the SDK section].
+Make sure you're familiar with the basics of authorization and connecting to a Cluster from the xref:hello-world:start-using-sdk.adoc[Start Using the SDK section].
 We're going to expand on the short _Upsert_ example we used there, adding options as we move through the various CRUD operations.
 Here is the _Insert_ operation at its simplest:
 
@@ -76,7 +76,7 @@ result, err := col.Replace("document-key", &document, &gocb.ReplaceOptions{
 Expiration sets an explicit time to live (TTL) for a document in seconds, for which you can also xref:sdk-xattr-example.adoc[see a more detailed example of TTL discovery] later in the docs.
 We'll discuss modifying `Expiration` in more details xref:#net-modifying-expiration[below].
 For a discussion of item (Document) _vs_ Bucket expiration, see the 
-xref:6.5@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
+xref:6.0@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
 
 [source,golang]
 ----
@@ -110,7 +110,11 @@ result, err := col.Upsert("document-key", &document, &gocb.UpsertOptions{
 
 Here we have added _Durability_ options, namely `PersistTo` and `ReplicateTo`.
 In Couchbase Server releases before 6.5, Durability was set with these two options -- see the xref:https://docs.couchbase.com/go-sdk/1.5/durability.html[6.0 Durability documentation] -- covering  how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist. 
-Couchbase Data Platform 6.5 refines these two options, with xref:synchronous-replication.adoc[Synchronous Replication] -- although they remain essentially the same in use -- as well as adding the option of xref:transactions.adoc[atomic document transactions].
+Couchbase Data Platform 6.5 refines these two options, with xref:synchronous-replication.adoc[Synchronous Replication] -- although they remain essentially the same in use.
+//
+//
+//
+// -- as well as adding the option of xref:transactions.adoc[atomic document transactions].
 
 
 [TIP]
