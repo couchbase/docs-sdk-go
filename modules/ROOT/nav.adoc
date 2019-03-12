@@ -1,52 +1,40 @@
 .Hello World!
-* xref:start-using-sdk.adoc[Start Using the SDK]
-* xref:sample-application.adoc[Sample Application]
- ** xref:sample-app-backend.adoc[Sample App Backend]
-* xref:webui-cli-access.adoc[Browser and CLI Access]
-
-.Users and Security
-* xref:sdk-authentication-overview.adoc[Authentication]
-* xref:sdk-user-management-overview.adoc[User Management]
- ** xref:sdk-user-management-example.adoc[Sample Code]
-* xref:encryption.adoc[Field Level Encryption]
- ** xref:encrypting-using-sdk.adoc[Field Level Encryption from the Go SDK]
+* xref:hello-world:start-using-sdk.adoc[Start Using the SDK]
+// * xref:hello-world:sample-application.adoc[Sample Application]
 
 .Working with Data
-* xref:core-operations.adoc[Core Operations]
-* xref:document-operations.adoc[Document Operations]
-* xref:subdocument-operations.adoc[Sub-Document Operations]
-* xref:datastructures.adoc[Data Structures]
-* xref:n1ql-query.adoc[Querying with N1QL]
-* xref:n1ql-queries-with-sdk.adoc[N1QL from the SDK]
-* xref:analytics-using-sdk.adoc[Analytics from the SDK]
-* xref:full-text-search-overview.adoc[Full Text Search]
-* xref:full-text-searching-with-sdk.adoc[Searching from the SDK]
-* xref:view-queries-with-sdk.adoc[MapReduce Views]
-* xref:async-programming.adoc[Asynchronous Programming]
-* xref:batching-operations.adoc[Batching Operations]
-* xref:durability.adoc[Durability]
-* xref:concurrent-mutations-cluster.adoc[Concurrent Document Mutations]
-* xref:sdk-xattr-overview.adoc[Extended Attributes]
- ** xref:sdk-xattr-example.adoc[Sample Code]
-* xref:nonjson.adoc[Non-JSON Documents]
-* xref:compression-intro.adoc[Compression]
+* xref:howtos:kv-operations.adoc[Key Value Operations]
+// * xref:howtos:subdocument-operations.adoc[Sub-Document Operations]
+//  ** xref:howtos:sdk-xattr-example.adoc[Extended Attributes]
+* xref:howtos:n1ql-queries-with-sdk.adoc[N1QL from the SDK]
+////
+* xref:howtos:analytics-using-sdk.adoc[Analytics from the SDK]
+ ** xref:howtos:advanced-analytics-querying.adoc[Advanced Analytics Querying]
+* xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search from the SDK]
+* xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
 
-.Deployment Environments
-* xref:managing-connections.adoc[Managing Connections]
-* xref:managing-clusters.adoc[Managing Clusters]
-* xref:compatibility-versions-features.adoc[Compatibility]
+.Advanced Working with Data
+* xref:howtos:durability.adoc[Durability]
+ ** * xref:howtos:transactions.adoc[ACID Transactions]
 
-.Settings, Error Handling & Diagnostics
-* xref:client-settings.adoc[Client Settings]
-* xref:handling-error-conditions.adoc[Handling Errors]
-* xref:failure-considerations.adoc[Failure Considerations]
-* xref:collecting-information-and-logging.adoc[Collecting Information]
-* xref:threshold-logging.adoc[Threshold Logging]
-* xref:tracing-from-the-sdk.adoc[Tracing from the SDK]
+.Managing Couchbase
+* User Management
+ ** xref:howtos:sdk-authentication-overview.adoc[Authentication]
+////
+.Errors & Diagnostics
+* xref:howtos:health-check.adoc[Health Check]
+
+.Concepts
+* xref:concept-docs:concepts.adoc[Concepts]
+ ** xref:concept-docs:document-operations.adoc[Documents & Doc Ops]
+// ** xref:concept-docs:collections.adoc[Collections]
 
 .Project Docs
-* xref:relnotes-go-sdk.adoc[Release Notes]
-* xref:compatibility-versions-features.adoc[Compatibility]
-* xref:sdk-licenses.adoc[Licenses]
-* xref:get-involved.adoc[Get involved]
+////
+* xref:project-docs:relnotes-go-sdk.adoc[Release Notes]
+* xref:project-docs:compatibility-versions-features.adoc[Compatibility]
+ ** xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migrating to SDK 3 API]
+////
+* xref:project-docs:sdk-licenses.adoc[Licenses]
+* xref:project-docs:get-involved.adoc[Get involved]
  ** https://docs.couchbase.com/home/contribute/index.html[Improve the Docs]
