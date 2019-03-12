@@ -1,0 +1,25 @@
+= Document 
+:nav-title: Documents & Doc Ops
+:page-topic-type: concept
+:page-aliases: core-operations
+
+[abstract]
+Couchbase supports CRUD operations, various data structures, and binary documents.
+
+Although query and path-based (Sub-Document) services are available, the simplicity of the document-based kv interface is the fastest way to perform operations involving single documents.
+
+
+// use the simplicity of https://developer.couchbase.com/documentation/server/3.x/developer/dev-guide-3.0/read-write.html possibly?
+// don't forget https://docs-staging.couchbase.com/dotnet-sdk/2.7/datastructures.html - and Go equiv?
+
+////
+== Documents
+
+== Input and Output Types
+
+== Counters
+
+== Data Structures
+
+== Raw Byte Concatenation
+////
