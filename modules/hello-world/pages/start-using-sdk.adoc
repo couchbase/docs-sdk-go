@@ -80,9 +80,9 @@ using the Couchbase Go client, our xref:3.0dp1@sample-application.adoc[Travel Sa
 
 == Additional Resources
 
-The API reference is generated for each release and can be found xref:http://docs.couchbase.com/sdk-api/couchbase-go-client-3.0.0dp1/[here].
+The API reference is generated for each release and can be found xref:http://docs.couchbase.com/sdk-api/couchbase-go-client-2.0.0/[here].
 
-xref::project-docs:migrating-sdk-code-to-2.n.adoc[The Migrating from SDK1 to 2 page] highlights the main differences to be aware of when migrating your code.
+// xref::project-docs:migrating-sdk-code-to-2.n.adoc[The Migrating from SDK1 to 2 page] highlights the main differences to be aware of when migrating your code.
 
 Couchbase welcomes community contributions to the Go SDK.
 The Go SDK source code is available on xref:https://github.com/couchbase/couchbase-go-client[GitHub].
