@@ -1,0 +1,7 @@
+= SDK Licence
+
+The Couchbase Go Client is distributed as source under the xref:https://www.apache.org/licenses/LICENSE-2.0[Apache License, Version 2.0].
+Any dependencies may have their xref:https://www.couchbase.com/legal/agreements[own, separate licenses].
+
+Binary distributions are made under Couchbase's own license agreements. 
+See xref:https://blog.couchbase.com/couchbase-server-editions-explained-open-source-community-edition-and-enterprise-edition/[this page] for more information on the Couchbase Data Platform Community and Enterprise Editions.
