@@ -12,9 +12,8 @@ As such they are likely to change without notice.
 The _alpha_ code _should not_ be used in production.
 
 Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
-xref:#additional-resources[Further resources] for learning about N1QL are listed at the bottom of the page.
-You may wish to  //// ............link Server N1QL intro pages.............
-or just dive in with a query against our travel sample data set.
+xref:#_additional_resources[Further resources] for learning about N1QL are listed at the bottom of the page.
+Before you get started you may wish to checkout the xref:6.0@server:n1ql:n1ql-language-reference/index.adoc[N1QL intro page], or just dive in with a query against our travel sample data set.
 In this case, the one thing that you need to know is that in order to make a Bucket queryable, it must have at least one index defined.
 You can define a _primary_ index on a bucket. 
 When a primary index is defined you can issue non-covered queries on the bucket as well.
@@ -57,7 +56,7 @@ params["type"] = "hotel"
 rows, err := globalCluster.Query(query, &QueryOptions{NamedParameters: params})
 ----
 
-The complete code for this page's example can be found at xref:[??]
+// The complete code for this page's example can be found at xref:[??]
 
 
 == Handling Results
@@ -84,7 +83,7 @@ for rows.Next(&hotel) {
 == Scan Consistency
 
 
-Setting a xref:????[staleness parameter for queries], with `scan_consistency`, enables a tradeoff between latency and (eventual) consistency.
+Setting a staleness parameter for queries, with `scan_consistency`, enables a tradeoff between latency and (eventual) consistency.
 
 * A N1QL query using the default *Not Bounded* Scan Consistency will not wait for any indexes to finish updating before running the query and returning results, meaning that results are returned quickly, but the query will not return any documents that are yet to be indexed.
 
@@ -118,15 +117,15 @@ rows, err := cluster.Query("SELECT x.* FROM `travel-sample` x WHERE x.`type`=\"h
 == Additional Resources
 
 NOTE: N1QL is not the only query option in Couchbase.
-Be sure to xref:??[check that your use case fits your selection of query service].
+Be sure to check that your use case fits your selection of query service.
 
-For a deeper dive into N1QL from the SDK, refer to our xref:[N1QL SDK concept doc].
+// For a deeper dive into N1QL from the SDK, refer to our xref:[N1QL SDK concept doc].
 
-The xref:[Server doc N1QL intro] and xref:[N1QL pages] make up a complete guide to the N1QL language, including all of the latest additions.
+The xref:6.0@server:n1ql:n1ql-language-reference/index.adoc[Server doc N1QL intro] introduces up a complete guide to the N1QL language, including all of the latest additions.
 
 The xref:http://query.pub.couchbase.com/tutorial/#1[N1QL interactive tutorial] is a good introduction to the basics of N1QL use.
 
-Indexes / GSI links?
+// Indexes / GSI links?
 
-SQL++ / Analytics.
+// SQL++ / Analytics.
 
