@@ -7,9 +7,9 @@ WARNING: These pages cover the first _Developer Preview_ of the Couchbase Go SDK
 As such they are likely to change without notice.
 The _alpha_ code _should not_ be used in production.
 
-The complete code sample used on this page can be downloaded from
-///  xref::example$document.cs[here]
-- from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Bucket operations.
+//The complete code sample used on this page can be downloaded from
+//  xref::example$document.cs[here]
+//- from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Bucket operations.
 
 
 == Documents
@@ -242,8 +242,8 @@ NOTE: Increment & Decrement are considered part of the 'binary' API and as such 
 Working on just a specific path within a JSON document will reduce network bandwidth requirements - see the xref:subdocument-operations.adoc[Sub-Document] pages.
 For working with metadata on a document, reference our xref:sdk-xattr-example.adoc[Extended Attributes] pages.
 
-Another way of increasing network performance is to _pipeline_ operations with xref:batching-operations.adoc[Batching Operations].
+// Another way of increasing network performance is to _pipeline_ operations with xref:batching-operations.adoc[Batching Operations].
 
-As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:non-json.adoc[arbitary bytes, or binary format].
+// As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:non-json.adoc[arbitary bytes, or binary format].
 
 Our xref:n1ql-queries-with-sdk.adoc[Query Engine] enables retrieval of information using the SQL-like syntax of N1QL.
