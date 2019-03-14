@@ -26,39 +26,26 @@ Now you have the Go client installed, open your favourite text editor and try ou
 
 [source,golang]
 ----
-import "github.com/couchbaselabs/gocb2alpha"
-...
-
-opts := gocb.ClusterOptions{
-    Authenticator: gocb.PasswordAuthenticator{
-        "Administrator",
-        "password",
-    }
-}
-cluster, _ := gocb.NewCluster("10.112.180.101", opts)
+include::example$startusing.go[tag=connect]
 ----
 
-Couchbase uses xref:6.0@server:learn/security:roles.adoc[Role Based Access Control (RBAC) to control access to resources.
+Couchbase uses xref:6.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
 Here we will use the _Full Admin_ role created during installation of the Couchbase Data Platform.
-For production client code, you will want to use xref:3.0dp1@go-sdk:howtos:managing-connections.adoc#rbac[more appropriate, restrictive settings], but here we want to get you up and running quickly.
+For production client code, you will want to use more appropriate, restrictive settings -- but here we want to get you up and running quickly.
 If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _localhost_.
 
 Connection to the cluster is initialized by:
 
 [source,golang]
 ----
-// get a bucket reference
-bucket, _ := cluster.Bucket("bucket-name", &gocb.BucketOptions{});
+include::example$startusing.go[tag=bucket]
 ----
 
 If you installed the travel sample data bucket, substitute _travel-sample_ for _bucket-name_.
 
 [source,golang]
 ----
-// get a collection reference
-collection, _ := bucket.DefaultCollection(&gocb.CollectionOptions{})
-// for a named collection and scope
-// myCollection, err := bucket.Scope("my-scope").Collection("my-collection", &gocb.CollectionOptions{})
+include::example$startusing.go[tag=bucket]
 ----
 
 The 2.0 SDK is ready for the introduction of xref:#[Collections] in an upcoming release of the Couchbase Data Platform.
@@ -67,27 +54,17 @@ Here we've used the `DefaultCollection`, which covers the whole Bucket.
 
 [source,golang]
 ----
-// Upsert Document
-upsertResult, _ := col.Upsert("my-document", map[string]string{"name": "mike"}, &gocb.UpsertOptions{})
-
- // Get Document
-getResult, _ := collection.Get("my-document", &gocb.GetOptions{})
+include::example$startusing.go[tag=upsert-get]
 ----
 
-KV Operations are described in detail on the xref:net-sdk:howtos:kv-operations.adoc[KV Operations page].
+KV Operations are described in detail on the xref:howtos:kv-operations.adoc[KV Operations page].
 Now that you know the basics, you may wish to go straight to that page.
-//
-//
-//
-//
-// -- or first see a complete worked example of 
-using the Couchbase Go client, our xref:3.0dp1@sample-application.adoc[Travel Sample Application].
 
 == Additional Resources
 
-The API reference is generated for each release and can be found xref:http://docs.couchbase.com/sdk-api/couchbase-go-client-2.0.0/[here].
+// The API reference is generated for each release and can be found http://docs.couchbase.com/sdk-api/couchbase-java-client-3.0.0/[here].
 
-// xref::project-docs:migrating-sdk-code-to-2.n.adoc[The Migrating from SDK1 to 2 page] highlights the main differences to be aware of when migrating your code.
+// xref:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
 
 Couchbase welcomes community contributions to the Go SDK.
-The Go SDK source code is available on xref:https://github.com/couchbase/couchbase-go-client[GitHub].
+The Go SDK source code is available on https://github.com/couchbaselabs/gocb2alpha[GitHub].
