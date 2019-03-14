@@ -91,7 +91,7 @@ Setting a staleness parameter for queries, with `scan_consistency`, enables a tr
 Select this when consistency is always more important than performance.
 
 * For a middle ground, *AtPlus* is a "read your own write" (RYOW) option, which means it just waits for the new documents that you specify to be indexed, rather than an entire index of multiple documents.
-See the xref:scan-consistency-examples.adoc[examples] for how to use *AtPlus* for the best performance balance for many circumstances.
+// See the xref:scan-consistency-examples.adoc[examples] for how to use *AtPlus* for the best performance balance for many circumstances.
 
 .ScanConsisteny (RYOW)
 [source,golang]
