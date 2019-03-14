@@ -1,9 +1,0 @@
-= Asynchronous Progamming Using the Go SDK with Couchbase Server
-:navtitle: Asynchronous Programming
-
-The Go SDK offers a synchronous blocking interface for single operations.
-You can also xref:document-operations.adoc#bulk-ops[batch multiple operations] using the [.api]`Bucket.Do()` interface.
-In addition to providing a batch methods for use within a single goroutine, the Go SDK is also designed to be highly performant when used across numerous goroutines, this allows you to start numerous asynchronous goroutines which can all perform operations on the same Bucket and Cluster objects.
-
-Internally, the Go SDK is based upon the [.api]`gocbcore` package.
-The [.api]`gocbcore` interface is considered volatile but contains a callback-based API that does not block the application.

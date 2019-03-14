@@ -1,8 +1,0 @@
-= Get Involved
-:navtitle: Get Involved
-
-== Contributing
-
-Couchbase welcomes community contributions to the Go SDK.
-The https://github.com/couchbase/go-couchbase[Go SDK source code^] is available on GitHub.
-Please see the https://github.com/couchbase/go-couchbase/blob/master/CONTRIBUTING.md[CONTRIBUTING^] file for further information.

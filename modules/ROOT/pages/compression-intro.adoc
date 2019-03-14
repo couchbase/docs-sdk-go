@@ -1,1 +1,0 @@
-include::6.0@sdk:pages:partial$compression-intro.adoc[]
