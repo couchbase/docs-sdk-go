@@ -4,18 +4,17 @@
 [abstract]
 The Couchbase Go SDK allows you to connect to a Couchbase cluster from Go. It is a native Go library and uses the high-performance gocbcore to handle communicating to the cluster over Couchbase’s binary protocols
 
-WARNING: These pages cover the first _Developer Preview_ of the Couchbase Go SDK -- 2.0 _alpha_.
+WARNING: These pages cover the first _alpha_ of the Couchbase Go SDK -- 2.0 _alpha_.
 As such they are likely to change without notice.
 The _alpha_ code _should not_ be used in production.
-The DP1 code _should not_ be used in production.
 
 == Installing the SDK
 
-You can install the SDK via `go get`, note that the _Developer Preview_ is not available via `gopkg`.
+You can install the SDK via `go get`, note that the _alpha_ is in a different repository from the stable package.
 
 [source,go]
 ----
-$ go get github.com/couchbase/gocb
+$ go get github.com/couchbaselabs/gocb2alpha
 ----
 
 Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref:1.5@go-sdk:project-docs:relnotes-go-sdk.html[release notes].
@@ -27,7 +26,7 @@ Now you have the Go client installed, open your favourite text editor and try ou
 
 [source,golang]
 ----
-import "gopkg.in/couchbase/gocb.v2"
+import "github.com/couchbaselabs/gocb2alpha"
 ...
 
 opts := gocb.ClusterOptions{
