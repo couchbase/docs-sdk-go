@@ -10,7 +10,7 @@ The _alpha_ code _should not_ be used in production.
 
 == Installing the SDK
 
-You can install the SDK via `go get`, note that the _alpha_ is a different repository from the stable package.
+You can install the SDK via `go get`, note that the _alpha_ is in a different repository from the stable package.
 
 [source,go]
 ----
