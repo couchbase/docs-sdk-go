@@ -17,7 +17,7 @@ You can install the SDK via `go get`, note that the _alpha_ is in a different re
 $ go get github.com/couchbaselabs/gocb2alpha
 ----
 
-Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref:1.5@go-sdk:project-docs:relnotes-go-sdk.html[release notes].
+Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref:1.5@go-sdk:relnotes-go-sdk.html[release notes].
 
 
 == Hello Couchbase
