@@ -24,7 +24,7 @@ Information on new features, fixes, and known issues -- as well as information o
 
 Now you have the Go client installed, open your favourite text editor and try out the following:
 
-[source,golang]
+[source,golang,indent=0]
 ----
 include::example$startusing.go[tag=connect]
 ----
