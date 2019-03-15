@@ -36,14 +36,14 @@ If you're developing client code on the same VM or machine as the Couchbase Serv
 
 Connection to the cluster is initialized by:
 
-[source,golang]
+[source,golang,indent=0]
 ----
 include::example$startusing.go[tag=bucket]
 ----
 
 If you installed the travel sample data bucket, substitute _travel-sample_ for _bucket-name_.
 
-[source,golang]
+[source,golang,indent=0]
 ----
 include::example$startusing.go[tag=bucket]
 ----
@@ -52,7 +52,7 @@ The 2.0 SDK is ready for the introduction of xref:#[Collections] in an upcoming 
 The latest release, Mad Hatter, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
 Here we've used the `DefaultCollection`, which covers the whole Bucket.
 
-[source,golang]
+[source,golang,indent=0]
 ----
 include::example$startusing.go[tag=upsert-get]
 ----
