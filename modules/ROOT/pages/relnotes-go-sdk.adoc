@@ -15,6 +15,15 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 1.6.0 (19 March 2019)
+
+Version 1.6.0 is first release for the 1.6.x series.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-401[GOCBC-401]:
+Fixed issue where search results containing non-string hit results could not be unmarshaled. This change deprecates the Fields property of SearchResultHit and adds a new AllFields property.
+
 == Version 1.5.2 (18 December 2018)
 
 Version 1.5.2 is a maintenance release for the 1.5.x series.
