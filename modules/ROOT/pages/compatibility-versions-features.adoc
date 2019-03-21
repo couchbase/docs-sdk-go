@@ -17,9 +17,9 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
-[cols="40,25,25,20,20"]
+[cols="40,25,20,20,25"]
 |===
-| | SDK 1.1, 1.2 | SDK 1.3 | SDK 1.4 | SDK 1.5
+| | SDK 1.1, 1.2 | SDK 1.3 | SDK 1.4 | SDK 1.5, 1.6
 
 | *Server 4.0-4.5*
 | ◎
