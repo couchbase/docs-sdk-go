@@ -19,6 +19,9 @@ $ go get github.com/couchbase/gocb
 
 Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref::project-docs:relnotes-go-sdk.html[release notes].
 
+NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
+Currently we support using the Couchbase Go Client with Go releases 1.12 and 1.11.
+Older versions may work, but are not supported.
 
 == Hello Couchbase
 
