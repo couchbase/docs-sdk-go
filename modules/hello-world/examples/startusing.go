@@ -1,14 +1,14 @@
 package main
 
+// #tag::connect[]
 import (
 	"fmt"
 
-	"github.com/couchbaselabs/gocb2alpha"
+	"github.com/couchbase/gocb"
 )
 
 func main() {
 
-	// #tag::connect[]
 	opts := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
 			"Administrator",
