@@ -12,6 +12,7 @@ The _alpha_ code _should not_ be used in production.
 
 Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. If you are using Go 1.11.1+ with https://github.com/golang/go/wiki/Modules#how-to-install-and-activate-module-support[modules enabled and setup] then you can use `go get`:
 
+[source,bash]
 ----
 $ go get github.com/couchbase/gocb/v2@v2.0.0-alpha.1
 ----
@@ -22,6 +23,7 @@ Older versions may work, but are not supported.
 
 To use an older version of Go, for now, you will need to manually clone the repository:
 
+[source,bash]
 ----
 $ git clone https://github.com/couchbase/gocb/ $GOPATH/src/github.com/couchbase/gocb
 $ cd $GOPATH/src/github.com/couchbase/gocb
