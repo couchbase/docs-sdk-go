@@ -39,7 +39,7 @@ The _name_ column displays the format name; the _native type_ column displays th
 The format code is discussed more in depth below.
 
 .Built-in format types
-[cols="20,35,103,21"]
+[cols="28,43,88,21"]
 |===
 | Name | Native Type | Description | Flags value (see below)
 
