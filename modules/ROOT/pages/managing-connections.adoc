@@ -64,6 +64,8 @@ Buckets are thread-safe and need not be locked or otherwise protected to be used
 
 You should only need to open one [.api]`Bucket` object for each Couchbase Bucket in your application, and you should attempt to keep the [.api]`Bucket` object available and open for as long as you plan to access Couchbase within your application.
 
+include::6.0@sdk:pages:partial$max-connections.adoc[tag=limits]
+
 == Closing a Bucket
 
 When your application is done talking to Couchbase, you can issue the [.api]`Bucket.Close()` call on the bucket, which will disconnect your application from the given bucket.
