@@ -15,6 +15,10 @@ $ go get gopkg.in/couchbase/gocb.v1
 
 Information on new features, fixes, known issues as well as information on how to install older release versions is xref:relnotes-go-sdk.adoc[in the release notes].
 
+NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
+Currently we support using the Couchbase Go Client with Go releases 1.12 and 1.11.
+Older versions may work, but are not supported.
+
 == Hello Couchbase
 
 Once you've installed the SDK you can run this simple code snippet showcasing some of its features.
