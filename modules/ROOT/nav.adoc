@@ -30,8 +30,8 @@
 // ** xref:concept-docs:collections.adoc[Collections]
 
 .Project Docs
+* xref:project-docs:sdk-release-notes.adoc[Release Notes]
 ////
-* xref:project-docs:relnotes-go-sdk.adoc[Release Notes]
 * xref:project-docs:compatibility-versions-features.adoc[Compatibility]
  ** xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migrating to SDK 3 API]
 ////
