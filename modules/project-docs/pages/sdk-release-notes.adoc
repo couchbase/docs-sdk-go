@@ -5,16 +5,17 @@
 
 == SDK Installation
 
-Installing the Couchbase Go SDK is similar to installing most other Go projects:
+If you are using Go 1.11+ then installing the Couchbase Go SDK is similar to installing most other Go projects:
 
 [source,bash]
 ----
-$ go get gopkg.in/couchbase/gocb.v2
+$ go get github.com/couchbase/gocb/v2@v2.0.0-alpha.2
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
 Currently we support using the Couchbase Go Client with Go releases 1.12 and 1.11.
-Older versions may work, but are not supported.
+Older versions may work, but are not supported. 
+For details on installation using older versions please see xref:hello-world:start-using-sdk.adoc[Start Using the SDK]
 
 === API Documentation
 
@@ -22,6 +23,36 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
-== Version 2.0alpha2 (16 April 2019)
+== Version 2.0 Alpha2 (16 April 2019)
 
-This is 
+Version 2.0.0-alpha.2 is the second alpha release for the Go SDK 2.0.0.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-407[GOCBC-407]; 
+https://issues.couchbase.com/browse/GOCBC-418[GOCBC-418]; 
+https://issues.couchbase.com/browse/GOCBC-419[GOCBC-419]; 
+https://issues.couchbase.com/browse/GOCBC-420[GOCBC-420]:
+Added support for http streaming to the n1ql, analytics, search, and view APIs. 
+These changes do not alter the public API but work implicitly with requests. 
+This means that requests can be made for large amounts of data without hitting memory issues.
+* https://issues.couchbase.com/browse/GOCBC-414[GOCBC-414]:
+Updated the subdocument API so that full document operations are explicit rather than implicit.
+* https://issues.couchbase.com/browse/GOCBC-415[GOCBC-415]:
+Updated the subdocument API to enable to use of custom encoding/decoding options.
+* https://issues.couchbase.com/browse/GOCBC-416[GOCBC-416]:
+Updated the n1ql, analytics, search, and view APIs to move all metadata calls below a *Metadata type. 
+* https://issues.couchbase.com/browse/GOCBC-422[GOCBC-422]:
+Change gocb.NewCluster to gocb.Connect.
+* https://issues.couchbase.com/browse/GOCBC-423[GOCBC-423]:
+Updated the search API so that the Status type no longer exists and, instead, there are SuccessCount and ErrorCount functions.
+* https://issues.couchbase.com/browse/GOCBC-424[GOCBC-424]:
+Updated the _ErrNoResults_ error that can occur when using n1ql, analytics, search, and view APIs to be an actual error type which can be checked for using _IsNoResultsError(err)_.
+* https://issues.couchbase.com/browse/GOCBC-425[GOCBC-425]:
+Updated how errors are handled in the n1ql, analytics, search, and view APIs so that if errors are known at execution time then they are returned straight away.
+
+== Fixed Issues
+* https://issues.couchbase.com/browse/GOCBC-413[GOCBC-413]:
+Fixed issue where the SDK can get into a state where all future requests timeout following certain circumstances where a request times out whilst it is being sent.
+* https://issues.couchbase.com/browse/GOCBC-431[GOCBC-431]:
+Fixed issue where the SDK would fail to connect to some external network types such as a publicly addressable Kubernetes cluster. 
