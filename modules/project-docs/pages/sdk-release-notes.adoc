@@ -14,7 +14,8 @@ $ go get github.com/couchbase/gocb/v2@v2.0.0-alpha.2
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
 Currently we support using the Couchbase Go Client with Go releases 1.12 and 1.11.
-Older versions may work, but are not supported. For details on installation using older versions please see xref:hello-world:start-using-sdk.adoc[Start Using SDK]
+Older versions may work, but are not supported. 
+For details on installation using older versions please see xref:hello-world:start-using-sdk.adoc[Start Using the SDK]
 
 === API Documentation
 
@@ -28,11 +29,13 @@ Version 2.0.0-alpha.2 is the second alpha release for the Go SDK 2.0.0.
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/GOCBC-407[GOCBC-407]:
-* https://issues.couchbase.com/browse/GOCBC-418[GOCBC-418]:
-* https://issues.couchbase.com/browse/GOCBC-419[GOCBC-419]:
-* https://issues.couchbase.com/browse/GOCBC-420[GOCBC-420]:
-Added support for http streaming to the n1ql, analytics, search, and view APIs. These changes do not alter the public API but work implicitly with requests. This means that requests can be made for large amounts of data without hitting memory issues.
+* https://issues.couchbase.com/browse/GOCBC-407[GOCBC-407]; 
+https://issues.couchbase.com/browse/GOCBC-418[GOCBC-418]; 
+https://issues.couchbase.com/browse/GOCBC-419[GOCBC-419]; 
+https://issues.couchbase.com/browse/GOCBC-420[GOCBC-420]:
+Added support for http streaming to the n1ql, analytics, search, and view APIs. 
+These changes do not alter the public API but work implicitly with requests. 
+This means that requests can be made for large amounts of data without hitting memory issues.
 * https://issues.couchbase.com/browse/GOCBC-414[GOCBC-414]:
 Updated the subdocument API so that full document operations are explicit rather than implicit.
 * https://issues.couchbase.com/browse/GOCBC-415[GOCBC-415]:
