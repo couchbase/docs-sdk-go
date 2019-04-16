@@ -1,0 +1,27 @@
+= Couchbase Go SDK Release Notes
+:navtitle: Release Notes
+:page-topic-type: project-doc
+:page-aliases: relnotes-go-sdk
+
+== SDK Installation
+
+Installing the Couchbase Go SDK is similar to installing most other Go projects:
+
+[source,bash]
+----
+$ go get gopkg.in/couchbase/gocb.v2
+----
+
+NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
+Currently we support using the Couchbase Go Client with Go releases 1.12 and 1.11.
+Older versions may work, but are not supported.
+
+=== API Documentation
+
+The most current and up to date API Documentation is always available through the http://godoc.org/gopkg.in/couchbase/gocb.v1[godoc website].
+
+*Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
+
+== Version 2.0alpha2 (16 April 2019)
+
+This is 
