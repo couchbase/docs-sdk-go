@@ -15,9 +15,22 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 1.6.1 (16 April 2019)
+
+Version 1.6.1 is a maintenance for the 1.6.x series.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-421[GOCBC-421]:
+Fixed issue where the threshold logging tracer would log “Threshold Log:” messages at INFO level even when there were no threshold logs to report.
+* https://issues.couchbase.com/browse/GOCBC-413[GOCBC-413]:
+Fixed issue where the SDK can get into a state where all future requests timeout following certain circumstances where a request times out whilst it is being sent.
+* https://issues.couchbase.com/browse/GOCBC-431[GOCBC-431]:
+Fixed issue where the SDK would fail to connect to some external network types such as a publically addressable Kubernetes cluster. 
+
 == Version 1.6.0 (19 March 2019)
 
-Version 1.6.0 is first release for the 1.6.x series.
+Version 1.6.0 is the first release for the 1.6.x series.
 
 === Fixed Issues
 
