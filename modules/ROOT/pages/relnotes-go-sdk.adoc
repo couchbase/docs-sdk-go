@@ -26,7 +26,7 @@ Fixed issue where the threshold logging tracer would log “Threshold Log:” me
 * https://issues.couchbase.com/browse/GOCBC-413[GOCBC-413]:
 Fixed issue where the SDK can get into a state where all future requests timeout following certain circumstances where a request times out whilst it is being sent.
 * https://issues.couchbase.com/browse/GOCBC-431[GOCBC-431]:
-Fixed issue where the SDK would fail to connect to some external network types such as a publically addressable Kubernetes cluster. 
+Fixed issue where the SDK would fail to connect to some external network types such as a publicly addressable Kubernetes cluster. 
 
 == Version 1.6.0 (19 March 2019)
 
