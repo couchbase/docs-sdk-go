@@ -51,7 +51,7 @@ Updated the _ErrNoResults_ error that can occur when using n1ql, analytics, sear
 * https://issues.couchbase.com/browse/GOCBC-425[GOCBC-425]:
 Updated how errors are handled in the n1ql, analytics, search, and view APIs so that if errors are known at execution time then they are returned straight away.
 
-== Fixed Issues
+=== Fixed Issues
 * https://issues.couchbase.com/browse/GOCBC-413[GOCBC-413]:
 Fixed issue where the SDK can get into a state where all future requests timeout following certain circumstances where a request times out whilst it is being sent.
 * https://issues.couchbase.com/browse/GOCBC-431[GOCBC-431]:
