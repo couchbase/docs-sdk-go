@@ -1,5 +1,5 @@
 = Couchbase Go SDK Release Notes
-:page-aliases: relnotes-go-sdk,sdk-release-notes
+:page-aliases: relnotes-go-sdk
 
 == SDK Installation
 
