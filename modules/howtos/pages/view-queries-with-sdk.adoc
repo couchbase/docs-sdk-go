@@ -1,2 +1,122 @@
-= Map Reduce Views
+= MapReduce Views Using the .NET SDK with Couchbase Server
+:navtitle: MapReduce Views
+:page-topic-type: howto
+:page-aliases: view-queries-with-sdk
+
+[abstract]
+You can use MapReduce views to create queryable indexes in Couchbase Data Platform.
+
+include::6.5@sdk:shared:partial$views.adoc[tag=views-intro]
+
+include::6.5@sdk:shared:partial$views.adoc[tag=example-beer]
+
+
+[source,csharp]
+----
+var result = bucket.ViewQuery<Beer>("beers", "by_name", options => {
+    options.WithStartKey("A");
+    options.WithLimit(10);
+});
+----
+
+include::6.5@sdk:shared:partial$views.adoc[tag=example-travel]
+
+
+[source,csharp]
+----
+var result = bucket.ViewQuery<Landmark>("landmarks", "by_name", options => {
+    options.WithKey("<landmark-name>");
+});
+----
+
+include::6.5@sdk:shared:partial$views.adoc[tag=example-geo-travel]
+
+
+(10)
+);
+
+foreach (var row in result.Rows)
+{
+    var id = row.Id;
+    var key = row.Key;
+    var value = row.Value;
+}
+----
+
+// We only need the briefest of samples - the content brought in at the top of the page will recommend avoiding Views.[source,javascript]
+----
+function (doc, meta) {
+    if (doc.type && doc.type == "landmark" && doc.geo) {
+        emit([doc.geo.lon, doc.geo.lat], null);
+    }
+}
+----
+
+
+== Querying Views through the .NET SDK
+
+
+
+
+Once you have a view defined, it can be queried from the .NET SDK by using the `ViewQuery` method on a Bucket instance.
+
+Here is an example:
+
+[source,csharp]
+----
+var result = bucket.ViewQuery<Type>(“design-doc”, “view-name”, options =>
+    options.WithLimit
+
+// also need sdk-common file below
+
+
+*******************************************************************************************************
+********************************** Those partial files include **************************************
+*******************************************************************************************************
+ 
+docs-sdk-common/modules/shared/partials/views.adoc
+
+
+= MapReduce Views
+
+[abstract]
+You can use MapReduce views to create queryable indexes in Couchbase Server.
+
+// tag::views-intro[]
+WARNING: Although still maintained and supported for legacy use, Views date from the earliest days of Couchbase Server development, and as such are rarely the best choice over, say, xref:[our Query service] for your application, see xref:dotnet-sdk:concept-docs:http-services.adoc[our guide to choosing the right service].
+
+The normal CRUD methods allow you to look up a document by its ID.
+A MapReduce (_view_ query) allows you to lookup one or more documents based on various criteria.
+MapReduce views are comprised of a _map_ function that is executed once per document (this is done incrementally, so this is not run each time you query the view) and an optional _reduce_ function that performs aggregation on the results of the _map_ function.
+The _map_ and _reduce_ functions are stored on the server and written in JavaScript.
+
+MapReduce queries can be further customized during query time to allow only a subset (or range) of the data to be returned.
+
+TIP: See the xref:6.0@server:learn:views/views-writing.adoc[Incremental MapReduce Views] and xref:6.0@server:learn:views/views-querying.adoc[Querying Data with Views] sections of the general documentation to learn more about views and their architecture.
+// end::views-intro[]
+
+// tag::example-beer[]
+
+== By Name Views
+
+The following example is the definition of a `by_name` view in a _"beer"_ design document.
+This view checks whether a document is a beer and has a name.
+If it does, it emits the beer's name into the index.
+This view allows beers to be queried for by name.
+For example, it's now possible to ask the question "What beers start with A?"
+// end::example-beer[]
+
+// tag::example-travel[]
+The following example is the definition of a `by_name` view in a _"landmarks"_ design document in the _"travel-sample"_ sample dataset.
+This view checks whether a document is a landmark and has a name.
+If it does, it emits the landmark's name into the index.
+This view allows landmarks to be queried for by its _"name"_ field.
+// end::example-travel[]
+
+// tag::example-geo-travel[]
+A Spatial View can instead be queried with a [.param]`range` or _bounding box_.
+For example, let's imagine we have stored landmarks with coordinates for their home city (eg.
+Paris, Vienna, Berlin and New York) under [.param]`geo`, and each city's coordinates is represented as two attributes, [.param]`lon` and [.param]`lat`.
+The following spatial view map function could be used to find landmarks within Europe, as a _"by_location"_ view in a _"spatial"_ design document:
+// end::example-geo-travel[]
 
