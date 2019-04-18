@@ -1,7 +1,7 @@
 = MapReduce Views Using the .NET SDK with Couchbase Server
 :navtitle: MapReduce Views
 :page-topic-type: howto
-:page-aliases: view-queries-with-sdk
+:page-aliases: ROOT:view-queries-with-sdk
 
 [abstract]
 You can use MapReduce views to create queryable indexes in Couchbase Data Platform.
