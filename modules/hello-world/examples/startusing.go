@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-
 	opts := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
 			"Administrator",

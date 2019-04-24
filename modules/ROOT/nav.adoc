@@ -4,7 +4,7 @@
 
 .Working with Data
 * xref:howtos:kv-operations.adoc[Key Value Operations]
-// * xref:howtos:subdocument-operations.adoc[Sub-Document Operations]
+* xref:howtos:subdocument-operations.adoc[Sub-Document Operations]
 //  ** xref:howtos:sdk-xattr-example.adoc[Extended Attributes]
 * xref:howtos:n1ql-queries-with-sdk.adoc[N1QL from the SDK]
 ////

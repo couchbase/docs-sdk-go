@@ -1,0 +1,6 @@
+// Required attributes:
+// :lang: Go
+// :version: 2.0.0 alpha
+WARNING: These pages cover the second _Alpha_ of the Couchbase {lang} SDK -- {version}.
+As such they are likely to change without notice.
+This alpha code _should not_ be used in production.
