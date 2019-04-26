@@ -81,4 +81,4 @@ Now that you know the basics, you may wish to go straight to that page.
 // xref:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
 
 Couchbase welcomes community contributions to the Go SDK.
-The Go SDK source code is available on https://github.com/couchbaselabs/gocb2alpha[GitHub].
+The Go SDK source code is available on https://github.com/couchbase/gocb[GitHub].

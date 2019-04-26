@@ -4,18 +4,17 @@ package main
 import (
 	"fmt"
 
-	"github.com/couchbase/gocb"
+	gocb "github.com/couchbase/gocb/v2"
 )
 
 func main() {
-
 	opts := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
 			"Administrator",
 			"password",
 		},
 	}
-	cluster, err := gocb.NewCluster("localhost", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		// handle err
 	}

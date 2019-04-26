@@ -2,24 +2,36 @@
 :navtitle: Sub-Doc Operations
 :page-topic-type: howto
 include::partial$attributes.adoc[]
+:lang: Go
+:version: 2.0.0 alpha.2
 
 [abstract]
-_Sub-document_ operations can be used to efficiently access _parts_ of documents.
-Sub-document operations may be quicker and more network-efficient than _full-document_ operations such as _upsert_, _replace_ and _get_ because they only transmit the accessed sections of the document over the network.
-Sub-document operations are also atomic, allowing safe modifications to documents with built-in concurrency control.
+Sub-Document operations can be used to efficiently access and change parts of documents.
+
+include::partial$alpha-warning.adoc[]
+
+Sub-Document operations may be quicker and more network-efficient than _full-document_ operations such as _Upsert_, _Replace_ and _Get_ because they only transmit the accessed sections of the document over the network.
+
+Sub-Document operations are also atomic, in that if one Sub-Document mutation fails then all will, allowing safe modifications to documents with built-in concurrency control.
+
 
 == Sub-documents
 
 Starting with Couchbase Server 4.5 you can atomically and efficiently update and retrieve _parts_ of a document.
-These parts are called _sub-documents_.
-While full-document retrievals retrieve the entire document and full document updates require sending the entire document, sub-document retrievals only retrieve relevant parts of a document and sub-document updates only require sending the updated portions of a document.
-You should use sub-document operations when you are modifying only portions of a document, and full-document operations when the contents of a document is to change significantly.
 
-IMPORTANT: The sub-document operations described on this page are for _Key-Value_ requests only: they are not related to sub-document N1QL queries.
-(Sub-document N1QL queries are explained in the section xref:n1ql-query.adoc[Querying with N1QL].)
+These parts are called _Sub-Documents_.
 
-In order to use sub-document operations you need to specify a _path_ indicating the location of the sub-document.
-The _path_ follows N1QL syntax (see https://developer.couchbase.com/documentation/server/current/sdk/subdocument-operations.html#story-h2-12[below^], and xref:6.0@server:n1ql:n1ql-intro/queriesandresults.adoc[N1QL Queries and Results]).
+While full-document retrievals retrieve the entire document and full document updates require sending the entire document, Sub-Document retrievals only retrieve relevant parts of a document and Sub-Document updates only require sending the updated portions of a document.
+
+You should use sub-document operations when you are modifying only portions of a document, and full-document operations when the contents of a document is to change significantly.	
+
+
+IMPORTANT: The Sub-Document operations described on this page are for _Key-Value_ requests only: they are not related to Sub-Document N1QL queries.
+(Sub-document N1QL queries are explained in the section xref:n1ql-query.adoc[Querying with N1QL].)	
+
+In order to use Sub-Document operations you need to specify a _path_ indicating the location of the Sub-Document.
+The _path_ follows <<Path syntax,N1QL syntax>>.
+
 Considering the document:
 
 .customer123.json
@@ -55,203 +67,153 @@ The paths `name`, `addresses.billing.country` and `purchases.complete[0]` are al
 
 == Retrieving
 
-
-The _lookup-in_ operations query the document for certain path(s); these path(s) are then returned.
-You have a choice of actually retrieving the document path using the _subdoc-get_ sub-document operation, or simply querying the existence of the path using the _subdoc-exists_ sub-document operation.
+The _lookupIn_ operations query the document for certain path(s); these path(s) are then returned.
+You have a choice of actually retrieving the document path using the _Get_ Sub-Document operation, or simply querying the existence of the path using the _Exists_ Sub-Document operation.
 The latter saves even more bandwidth by not retrieving the contents of the path if it is not needed.
 
-.Retrieve sub-document value
-[source,csharp]
+.Retrieve Sub-Document value
+[source,golang,indent=0]
 ----
-var result = collection.LookupIn("customer123", ops =>
-    ops.Get("addresses.delivery.country")
-);
-var country = result.ContentAs<string>(0); //"United Kingdom"
+include::example$subdoc.go[tag=lookupInGet]
 ----
 
-.Check existence of sub-document path
-[source,csharp]
+.Check existence of Sub-Document path
+[source,golang,indent=0]
 ----
-var result = collecton.LookupIn("customer123", ops =>
-    ops.Exists("purchases.pending[-1]")
-);
-Console.WriteLine("Path exists? {0}", result.ContentAs<bool>(0));
+include::example$subdoc.go[tag=lookupInExists]
+----
 
-# Path exists? false
-----
+NOTE: LookupInResult has an `Exists` method, but this should not be confused with the exists __operation__.  The `Exists` method
+is used to check if anything was returned by the server for a given operation.  The result of the exists operation should
+be checked with `ContentAt(X, &boolVariable)`, as in the example.
 
 Multiple operations can be combined as well:
 
 .Combine multiple lookup operations
-[source,csharp]
+[source,golang,indent=0]
 ----
-var result = collection.LookupIn("customer123", ops => {
-    ops.Get("addresses.delivery.country");
-    ops.Exists("purchases.pending[-1]");
-});
+include::example$subdoc.go[tag=lookupInMulti]
+----
 
-Console.WriteLine("{0}", result.ContentAs<string>(0));
-Console.WriteLine("Path exists? {0}", result.ContentAs<bool>(1));
-----
 
 == Mutating
 
 Mutation operations modify one or more paths in the document.
-The simplest of these operations is _subdoc-upsert_, which, similar to the fulldoc-level _upsert_, will either modify the value of an existing path or create it if it does not exist:
+The simplest of these operations is _Upsert_, which, similar to the fulldoc-level _Upsert_, will either modify the value of an existing path or create it if it does not exist:
 
-.Upserting a new sub-document
-[source,csharp]
+.Upserting a new Sub-Document
+[source,golang,indent=0]
 ----
-bucket.MutateIn("customer123", ops =>
-    ops.Upsert("fax", "311-555-0151")
-);
+include::example$subdoc.go[tag=mutateInUpsert]
 ----
 
-Likewise, the _subdoc-insert_ operation will only add the new value to the path if it does not exist:
+Likewise, the _insert_ operation will only add the new value to the path if it does not exist:
 
-.Inserting a sub-document
-[source,csharp]
+.Inserting a Sub-Document
+[source,golang,indent=0]
 ----
-bucket.MutateIn("customer123", ops =>
-    ops.Insert("purchases.complete", new List<dynamic>{42, true, "None"})
-);
-
-# SubdocPathExistsError
+include::example$subdoc.go[tag=mutateInInsert]
 ----
 
-Dictionary values can also be replaced or removed, and you may combine any number of mutation operations within the same general _mutate-in_ API.
+Dictionary values can also be replaced or removed, and you may combine any number of mutation operations within the same general _mutateIn_ API.
 Here's an example of one which replaces one path and removes another.
 
-[source,csharp]
+.Combine multiple mutate operations
+[source,golang,indent=0]
 ----
-bucket.MutateIn("customer123", ops => {
-    ops.Remove("addresses.billing");
-    ops.Replace("email", "dougr96@hotmail.com")
-});
+include::example$subdoc.go[tag=mutateInMulti]
 ----
 
-NOTE: `mutateIn` is an _atomic_ operation.
+NOTE: `MutateIn` is an _atomic_ operation.
 If any single `ops` fails, then the entire document is left unchanged.
 
-== Array append and prepend
+== Array Append and Prepend
 
-The _subdoc-array-prepend_ and _subdoc-array-append_ operations are true array prepend and append operations.
-Unlike fulldoc _append_/_prepend_ operations (which simply concatenate bytes to the existing value), _subdoc-array-append_ and _subdoc-array-prepend_ are JSON-aware:
+The _ArrayPrepend_ and _ArrayAppend_ operations are true array prepend and append operations.
+Unlike fulldoc _Append_/_Prepend_ operations (which simply concatenate bytes to the existing value), _ArrayAppend_ and _ArrayPrepend_ are JSON-aware:
 
-[source,csharp]
+.Array appending a sub-document
+[source,golang,indent=0]
 ----
-bucket.MutateIn("customer123",  ops =>
-    ops.ArrayAppend("purchases.complete", 777)
-);
-
-# purchases.complete is now [339, 976, 442, 666, 777]
+include::example$subdoc.go[tag=mutateInArrayAppend]
 ----
 
-[source,csharp]
+.Array prepending a sub-document
+[source,golang,indent=0]
 ----
-bucket.MutateIn("customer123", ops =>
-    ops.ArrayPrepend("purchases.abandoned", 18)
-);
-
-# purchases.abandoned is now [18, 157, 49, 999]
+include::example$subdoc.go[tag=mutateInArrayPrepend]
 ----
 
 If your document only needs to contain an array, you do not have to create a top-level object wrapper to contain it.
-Simply initialize the document with an empty array and then use the empty path for subsequent sub-document array operations:
+Simply initialize the document with an empty array and then use the empty path for subsequent Sub-Document array operations:
 
 .Creating and populating an array document
-[source,csharp]
+[source,golang,indent=0]
 ----
-bucket.Upsert("my_array", new List<int>());
-bucket.MutateIn("my_array", ops =>
-    ops.ArrayAppend("", "some element")
-);
-
-# the document my_array is now ["some element"]
+include::example$subdoc.go[tag=mutateInArrayDoc]
 ----
 
-If you wish to add multiple values to an array, you may do so by passing multiple values to the _array-append_, _array-prepend_, or _array-insert_ operations.
-Be sure to know the difference between passing a collection of multiple elements (in which case the collection is inserted as a single element in the array, as a sub-array) and passing multiple elements (in which case the elements are appended individually to the array):
+If you wish to add multiple values to an array, you may do so by passing multiple values to the _ArrayAppend_, _ArrayPrepend_, or _ArrayInsert_ operations.
+
+Be sure to know the difference between the use of the _HasMultiple_ option being false (in which case the collection is inserted as a single element in the array, as a sub-array) and it being true (in which case the elements are appended individually to the array):
 
 .Add multiple elements to an array
-[source,csharp]
+[source,golang,indent=0]
 ----
-bucket.MutateIn("my_array", ops =>
-    ops.ArrayAppend(false, "", "elem1", "elem2", "elem3")
-);
-
-# the document my_array is now ["some_element", "elem1", "elem2", "elem3"]
+include::example$subdoc.go[tag=mutateInArrayDocMulti]
 ----
 
 .Add single array as element to existing array
-[source,csharp]
+[source,golang,indent=0]
 ----
-bucket.MutateIn(“my_array”, ops =>
-    ops.ArrayAppend('', ['elem1', 'elem2', 'elem3']”)
-);
-# the document my_array is now ["some_element", ["elem1", "elem2", "elem3"]]
+include::example$subdoc.go[tag=mutateInArrayDocMultiSingle]
 ----
 
-Note that passing multiple values to a single _array-append_ operation results in greater performance increase and bandwidth savings than simply specifying a single _array-append_ for each element.
+Note that using _HasMultiple_ with a single _ArrayAppend_ operation results in greater performance increase and bandwidth savings than simply specifying a single _ArrayAppend_ for each element.
 
 .Adding multiple elements to array (slow)
-[source,csharp]
+[source,golang,indent=0]
 ----
-bucket.MutateIn("my_array", ops => {
-    ops.ArrayAppend("", "elem1");
-    ops.ArrayAppend("", "elem2");
-    ops.ArrayAppend("", "elem3");
-});
+include::example$subdoc.go[tag=mutateInArrayAppendMulti]
 ----
 
-If you wish to create an array if it does not exist and also push elements to it within the same operation you may use the <<subdoc-create-parents,_create-path_>> option:
+If you wish to create an array if it does not exist and also push elements to it within the same operation you may use the <<subdoc_create_path,_CreateParents_>> option:
 
-[source,csharp]
+.Array appending a sub-document with create path
+[source,golang,indent=0]
 ----
-bucket.MutateIn("some_doc", ops =>
-    ops.ArrayAppend("some.array", "Hello", "World", 
-        options => options.WithCreateParents(true)
-    )
-);
+include::example$subdoc.go[tag=mutateInArrayAppendCreateParents]
 ----
 
 == Arrays as Unique Sets
 
-Limited support also exists for treating arrays like unique sets, using the _subdoc-array-addunique_ command.
+Limited support also exists for treating arrays like unique sets, using the _ArrayAddUnique_ command.
 This will do a check to determine if the given value exists or not before actually adding the item to the array:
 
-[source,csharp]
+.Adding unique elements to arrays
+[source,golang,indent=0]
 ----
-bucket.MutateIn("customer123", ops =>
-    ops.ArrayAddUnique("purchases.complete", 95)
-);
-
-# => Success
-
-bucket.MutateIn("customer123", ops =>
-    ops.ArrayAddUnique("purchases.complete", 95)
-);
-
-# => SubdocPathExists exception!
+include::example$subdoc.go[tag=mutateInArrayAddUnique]
 ----
 
-Note that currently the _addunique_ will fail with a _Path Mismatch_ error if the array contains JSON _floats_, _objects_, or _arrays_.
-The _addunique_ operation will also fail with _Cannot Insert_ if the value to be added is one of those types as well.
+Note that currently the _ArrayAddUnique_ will fail with a _Path Mismatch_ error if the array contains JSON _floats_, _objects_, or _arrays_.
+The _ArrayAddUnique_ operation will also fail with _Cannot Insert_ if the value to be added is one of those types as well.
 
 Note that the actual position of the new element is undefined, and that the array is not ordered.
 
-== Array insertion
+== Array Insertion
 
 New elements can also be _inserted_ into an array.
-While _append_ will place a new item at the _end_ of an array and _prepend_ will place it at the beginning, _insert_ allows an element to be inserted at a specific _position_.
-The position is indicated by the last path component, which should be an array index.
-For example, to insert `"cruel"` as the second element in the array `["Hello", "world"]`, the code would look like:
 
-[source,csharp]
+While _append_ will place a new item at the _end_ of an array and _prepend_ will place it at the beginning, _insert_ allows an element to be inserted at a specific _position_.
+
+The position is indicated by the last path component, which should be an array index.
+For example, to insert `"Cruel"` as the second element in the array `["Hello", "world"]`, the code would look like:
+
+.Inserting elements into arrays
+[source,golang,indent=0]
 ----
-bucket.MutateIn("array", ops =>
-    ops.ArrayInsert("[1]", "cruel")
-);
+include::example$subdoc.go[tag=mutateInArrayInsert]
 ----
 
 // for your examples, above, CD: “I feel like somewhere in this we should also just a an example path like "my.path[1]" too, just to show how to use the index with a nested path. I don't think it's necessarily clear.”
@@ -259,64 +221,56 @@ bucket.MutateIn("array", ops =>
 Note that the array must already exist and that the index must be valid (i.e.
 it must not point to an element which is out of bounds).
 
-== Counters and numeric fields
+== Counters and Numeric Fields
 
 Counter operations allow the manipulation of a _numeric_ value inside a document.
 These operations are logically similar to the _counter_ operation on an entire document:
 
-[source,csharp]
+.Incrementing a counter
+[source,golang,indent=0]
 ----
-var result = bucket.MutateIn("customer123", ops =>
-    ops.Counter("logins", 1)
-);
-
-Console.WriteLine(result.Content(0));//1
+include::example$subdoc.go[tag=mutateInIncrement]
 ----
 
-The _subdoc-counter_ operation performs simple arithmetic against a numeric value, either incrementing or decrementing the existing value.
-The new value is returned.
+The _Increment_ and _Decrement_ operations perform simple arithmetic against a numeric value.
+The updated value is returned.
 
-[source,csharp]
+.Decrementing a counter
+[source,golang,indent=0]
 ----
-bucket.Upsert("player432", new
-{
-    gold = 1000
-});
-
-var result = bucket.MutateIn("player432", ops =>
-    ops.Counter("gold", -150)
-);
-# => player 432 now has 850 gold remaining
+include::example$subdoc.go[tag=mutateInDecrement]
 ----
 
-The existing value for _subdoc-counter_ operations must be within range of a 64 bit signed integer.
-If the value does not exist, the _subdoc-counter_ operation will create it (and its parents, if _create-path_ is enabled).
+The existing value for _counter_ operations must be within range of a 64 bit signed integer.
+If the value does not exist, the operation will create it (and its parents, if _CreateParents_ is enabled).
 
-Note that there are several differences between _subdoc-counter_ and the full-document _counter_ operations:
+Note that there are several differences as compared the full-document _counter_ operations:
 
-* Sub-document counters have a range of -9223372036854775807 to 9223372036854775807 (i.e. `Iint64.MinValue` and `Int64.MaxValue), whereas full-document counters have a range of 0 to 18446744073709551615 (`UInt64.MaxValue`)
-* Sub-document counter operations protect against overflow and underflow, returning an error if the operation would exceed the range.
+* Sub-Document counters have a range of -9223372036854775807 to 9223372036854775807 (i.e. `Iint64.MinValue` and `Int64.MaxValue), whereas full-document counters have a range of 0 to 18446744073709551615 (`UInt64.MaxValue`)
+
+* Sub-Document counter operations protect against overflow and underflow, returning an error if the operation would exceed the range.
 Full-document counters will use normal C semantics for overflow (in which the overflow value is carried over above 0), and will silently fail on underflow, setting the value to 0 instead.
-* Sub-document counter operations can operate on any numeric value within a document, while full-document counter operations require a specially formatted counter document with only the counter value.
 
-== Executing multiple operations
+* Sub-Document counter operations can operate on any numeric value within a document, while full-document counter operations require a specially formatted counter document with only the counter value.
 
-Multiple sub-document operations can be executed at once on the same document, allowing you to retrieve or modify several sub-documents at once.
-When multiple operations are submitted within the context of a single _lookup-in_ or _mutate-in_ command, the server will execute all the operations with the same version of the document.
+== Executing Multiple Operations
 
-NOTE: Unlike _batched operations_ which is simply a way of sending multiple individual operations efficiently on the network, multiple subdoc operations are formed into a single command packet, which is then executed atomically on the server.
+Multiple Sub-Document operations can be executed at once on the same document, allowing you to retrieve or modify several Sub-Documents at once.
+When multiple operations are submitted within the context of a single _LookupIn_ or _MutateIn_ command, the server will execute all the operations with the same version of the document.
+
+NOTE: Unlike _batched operations_ which is simply a way of sending multiple individual operations efficiently on the network, multiple Sub-Document operations are formed into a single command packet, which is then executed atomically on the server.
 You can submit up to 16 operations at a time.
 
-When submitting multiple _mutation_ operations within a single _mutate-in_ command, those operations are considered to be part of a single transaction: if any of the mutation operations fail, the server will logically roll-back any other mutation operations performed within the _mutate-in_, even if those commands would have been successful had another command not failed.
+When submitting multiple _mutation_ operations within a single _MutateIn_ command, those operations are considered to be part of a single transaction: if any of the mutation operations fail, the server will logically roll-back any other mutation operations performed within the _MutateIn_, even if those commands would have been successful had another command not failed.
 
-When submitting multiple _retrieval_ operations within a single _lookup-in_ command, the status of each command does not affect any other command.
+When submitting multiple _retrieval_ operations within a single _LookupIn_ command, the status of each command does not affect any other command.
 This means that it is possible for some retrieval operations to succeed and others to fail.
-While their statuses are independent of each other, you should note that operations submitted within a single _lookup-in_ are all executed against the same _version_ of the document.
+While their statuses are independent of each other, you should note that operations submitted within a single _LookupIn_ are all executed against the same _version_ of the document.
 
-[#subdoc-create-parents]
-== Creating parents
+[#subdoc-create-path]
+== Creating Paths
 
-Sub-document mutation operations such as _subdoc-upsert_ or _subdoc-insert_ will fail if the _immediate parent_ is not present in the document.
+Sub-Document mutation operations such as _Upsert_ or _Insert_ will fail if the _immediate parent_ is not present in the document.
 Consider:
 
 [source,json]
@@ -335,70 +289,62 @@ Consider:
 ----
 
 Looking at the `some_field` field (which is really `level_0.level_1.level_2.level_3.some_field`), its _immediate_ parent is `level_3`.
+
 If we were to attempt to insert another field, `level_0.level_1.level_2.level_3.another_field`, it would succeed because the immediate parent is present.
-However if we were to attempt to _subdoc-insert_ to `level_1.level_2.foo.bar` it would fail, because `level_1.level_2.foo` (which would be the immediate parent) does not exist.
+
+However if we were to attempt to _Insert_ to `level_1.level_2.foo.bar` it would fail, because `level_1.level_2.foo` (which would be the immediate parent) does not exist.
+
 Attempting to perform such an operation would result in a Path Not Found error.
 
 By default the automatic creation of parents is disabled, as a simple typo in application code can result in a rather confusing document structure.
 Sometimes it is necessary to have the server create the hierarchy however.
-In this case, the _create-path_ option may be used.
 
-[source,csharp]
+In this case, the _CreateParents_ option may be used.
+
+.Upsert with CreateParents
+[source,golang,indent=0]
 ----
-bucket.MutateIn("customer123", ops =>
-    ops.Upsert("level_0.level_1.foo.bar.phone",
-         new
-         {
-            num = "311-555-0101",
-            ext = 16
-        },
-        options => options.WithCreateParents(true)
-    )
-);
+include::example$subdoc.go[tag=mutateInCreateParents]
 ----
 
-== CAS Semantics
+== Concurrent Modifications
 
-Subdoc mostly eliminates the need for tracking the xref:concurrent-mutations-cluster.adoc[CAS] value.
-Subdoc operations are atomic and therefore if two different threads access two different sub-documents then no conflict will arise.
+Concurrent Sub-Document operations on different parts of a document will not conflict.
 For example the following two blocks can execute concurrently without any risk of conflict:
 
-[source,csharp]
+.Performing concurrent Sub Document mutations
+[source,golang,indent=0]
 ----
-bucket.MutateIn("customer123", ops =>
-    ops.ArrayAppend("purchases.complete",
-        options => ops.WithCas(999)
-    )
-);
-----
-
-[source,csharp]
-----
-bucket.MutateIn("customer123", ops =>
-    ops.ArrayAppend("purchases.abandoned",
-        options => options.WithCas(998)
-    )
-);
+include::example$subdoc.go[tag=concurrent]
 ----
 
 Even when modifying the _same_ part of the document, operations will not necessarily conflict.
-For example, two concurrent _subdoc-array-append_ operations to the same array will both succeed, never overwriting the other.
+For example, two concurrent _ArrayAppend_ operations to the same array will both succeed, never overwriting the other.
 
-While CAS is no longer so strongly required to ensure document updates are preserved, as Sub-Doc reduces the chance of losing a mutation, it may still be needed to ensure document state remains consistent over multiple invocations of _mutate-in_: Sometimes it's important to ensure the entire document didn't change state since the last operation, such as in the case _subdoc-remove_ operations to ensure that the element being removed was not already replaced by something else.
+So in some cases the application will not need to supply a xref:concurrent-mutations-cluster.adoc[CAS] value to protect against concurrent modifications.
+If CAS is required then it can be provided like this:
+
+.Performing concurrent Sub Document mutations with CAS
+[source,golang,indent=0]
+----
+include::example$subdoc.go[tag=cas]
+----
 
 == Error handling
 
 Subdoc operations have their own set of errors.
 When programming with subdoc, be prepared for any of the full-document errors (such as _Document Not Found_) as well as special sub-document errors which are received when certain constraints are not satisfied.
+
 Some of the errors include:
 
 * *Path does not exist*: When retrieving a path, this means the path does not exist in the document.
 When inserting or upserting a path, this means the _immediate parent_ does not exist.
-* *Path already exists*: In the context of an _insert_, it means the given path already exists.
-In the context of _array-add-unique_, it means the given value already exists.
+* *Path already exists*: In the context of an _Insert_, it means the given path already exists.
+In the context of _ArrayAddUnique_, it means the given value already exists.
 * *Path mismatch*: This means the path may exist in the document, but that there is a type conflict between the path in the document and the path in the command.
+
 Consider the document:
-+
+
 [source,json]
 ----
 { "tags": ["reno", "nevada", "west", "sierra"] }
@@ -408,12 +354,12 @@ The path `tags.sierra` is a mismatch, since `tags` is actually an array, while t
 
 * *Document not JSON*: This means you are attempting to modify a binary document using sub-document operations.
 * *Invalid path*: This means the path is invalid for the command.
-Certain commands such as _subdoc-array-insert_ expect array elements as their final component, while others such as _subdoc-upsert_ and _subdoc-insert_ expect dictionary (object) keys.
+Certain commands such as _ArrayInsert_ expect array elements as their final component, while others such as _Upsert_ and _Insert_ expect dictionary (object) keys.
 
 If a Sub-Document command fails a top-level error is reported (_Multi Command Failure_), rather than an individual error code (e.g. _Path Not Found_).
 When receiving a top-level error code, you should traverse the results of the command to see which individual code failed.
 
-== Path syntax
+== Path Syntax
 
 Path syntax largely follows N1QL conventions: A path is divided into components, with each component referencing a specific _level_ in a document hierarchy.
 Components are separated by dots (`.`) in the case where the element left of the dot is a dictionary, or by brackets (`[n]`) where the element left of the bracket is an array and `n` is the index within the array.
@@ -429,6 +375,7 @@ Use `some.array[-1]` as the path, which will return the element `0`.
 
 Each path component must conform as a JSON string, as if it were surrounded by quotes, and any character in the path which may invalidate it as a JSON string must be escaped by a backslash (`\`).
 In other words, the path component must match exactly the path inside the document itself.
+
 For example:
 
 [source,json]
@@ -438,8 +385,8 @@ For example:
 
 must be referenced as `literal\"quote.array`.
 
-If the path also has special path characters (i.e.
-a dot or brackets) it may be escaped using N1QL escapes.
+If the path also has special path characters (i.e. a dot or brackets) it may be escaped using N1QL escapes.
+
 Considering the document
 
 [source,json]
@@ -447,17 +394,10 @@ Considering the document
 {"literal[]bracket": {"literal.dot": true}}
 ----
 
-A path such as
- \`literal[]bracket`.\`literal.dot`.
+A path such as \`literal[]bracket`.\`literal.dot`.
 You can use double-backticks (pass:c[``]) to reference a literal backtick.
 
 If you need to combine both JSON _and_ path-syntax literals you can do so by escaping the component from any JSON string characters (e.g.
 a quote or backslash) and then encapsulating it in backticks (`pass:c[`path`]`).
 
 NOTE: Currently, paths cannot exceed 1024 characters, and cannot be more than 32 levels deep.
-
-== XDCR
-
-XDCR only replicates full documents.
-Sub-documents are only replicated as part of the full document.
-
