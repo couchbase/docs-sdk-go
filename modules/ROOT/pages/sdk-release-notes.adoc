@@ -1,6 +1,8 @@
 = Couchbase Go SDK Release Notes
+:page-partial:
 :page-aliases: relnotes-go-sdk
 
+// tag::latest[]
 == SDK Installation
 
 Installing the Couchbase Go SDK is similar to installing most other Go projects:
@@ -479,3 +481,4 @@ support for Cross Bucket Joins.
 === Fixed Issues
 
 None.
+// end::latest[]
