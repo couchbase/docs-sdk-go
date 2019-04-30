@@ -1,1 +1,1 @@
-include::go-sdk::page$relnotes-go-sdk.adoc[]
+include::go-sdk::page$sdk-release-notes.adoc[tag=latest]
