@@ -3,7 +3,7 @@
 :page-topic-type: howto
 include::partial$attributes.adoc[]
 :lang: Go
-:version: 2.0.0 alpha.2
+:version: 2.0.0 alpha.3
 
 [abstract]
 Sub-Document operations can be used to efficiently access and change parts of documents.

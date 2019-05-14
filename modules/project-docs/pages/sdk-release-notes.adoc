@@ -9,7 +9,7 @@ If you are using Go 1.11+ then installing the Couchbase Go SDK is similar to ins
 
 [source,bash]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.0.0-alpha.2
+$ go get github.com/couchbase/gocb/v2@v2.0.0-alpha.3
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
