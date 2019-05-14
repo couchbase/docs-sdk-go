@@ -14,7 +14,7 @@ Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/
 
 [source,bash]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.0.0-alpha.2
+$ go get github.com/couchbase/gocb/v2@v2.0.0-alpha.3
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -27,7 +27,7 @@ To use an older version of Go, for now, you will need to manually clone the repo
 ----
 $ git clone https://github.com/couchbase/gocb/ $GOPATH/src/github.com/couchbase/gocb
 $ cd $GOPATH/src/github.com/couchbase/gocb
-$ git checkout v2.0.0-alpha.2
+$ git checkout v2.0.0-alpha.3
 ----
 
 There is no need to run `go get` because of the inclusion of the `vendor` directory, which is created using the version information from the Go SDK `go.mod` file.

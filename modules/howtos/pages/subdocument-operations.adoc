@@ -177,12 +177,12 @@ Note that using _HasMultiple_ with a single _ArrayAppend_ operation results in g
 include::example$subdoc.go[tag=mutateInArrayAppendMulti]
 ----
 
-If you wish to create an array if it does not exist and also push elements to it within the same operation you may use the <<subdoc_create_path,_CreateParents_>> option:
+If you wish to create an array if it does not exist and also push elements to it within the same operation you may use the <<subdoc_create_path,_CreatePath_>> option:
 
 .Array appending a sub-document with create path
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInArrayAppendCreateParents]
+include::example$subdoc.go[tag=mutateInArrayAppendCreatePath]
 ----
 
 == Arrays as Unique Sets
@@ -242,7 +242,7 @@ include::example$subdoc.go[tag=mutateInDecrement]
 ----
 
 The existing value for _counter_ operations must be within range of a 64 bit signed integer.
-If the value does not exist, the operation will create it (and its parents, if _CreateParents_ is enabled).
+If the value does not exist, the operation will create it (and its parents, if _CreatePath_ is enabled).
 
 Note that there are several differences as compared the full-document _counter_ operations:
 
@@ -299,12 +299,12 @@ Attempting to perform such an operation would result in a Path Not Found error.
 By default the automatic creation of parents is disabled, as a simple typo in application code can result in a rather confusing document structure.
 Sometimes it is necessary to have the server create the hierarchy however.
 
-In this case, the _CreateParents_ option may be used.
+In this case, the _CreatePath_ option may be used.
 
-.Upsert with CreateParents
+.Upsert with CreatePath
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInCreateParents]
+include::example$subdoc.go[tag=mutateInCreatePath]
 ----
 
 == Concurrent Modifications

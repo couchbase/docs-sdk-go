@@ -158,15 +158,15 @@ func main() {
 	collection.MutateIn("my_array", mops, &gocb.MutateInOptions{})
 	// #end::mutateInArrayAppendMulti[]
 
-	// #tag::mutateInArrayAppendCreateParents[]
+	// #tag::mutateInArrayAppendCreatePath[]
 	mops = []gocb.MutateInOp{
 		mSpec.ArrayAppend("some.array", []string{"Hello", "World"}, &gocb.MutateInSpecArrayAppendOptions{
-			HasMultiple:   true,
-			CreateParents: true,
+			HasMultiple: true,
+			CreatePath:  true,
 		}),
 	}
 	collection.MutateIn("my_array", mops, &gocb.MutateInOptions{})
-	// #end::mutateInArrayAppendCreateParents[]
+	// #end::mutateInArrayAppendCreatePath[]
 
 	// #tag::mutateInArrayAddUnique[]
 	mops = []gocb.MutateInOp{
@@ -213,17 +213,17 @@ func main() {
 	// player 432 now has 850 gold remaining
 	// #end::mutateInDecrement[]
 
-	// #tag::mutateInCreateParents[]
+	// #tag::mutateInCreatePath[]
 	mops = []gocb.MutateInOp{
 		mSpec.Upsert("level_0.level_1.foo.bar.phone", map[string]interface{}{
 			"num": "311-555-0101",
 			"ext": 16,
 		}, &gocb.MutateInSpecUpsertOptions{
-			CreateParents: true,
+			CreatePath: true,
 		}),
 	}
 	collection.MutateIn("customer123", mops, &gocb.MutateInOptions{})
-	// #end::mutateInCreateParents[]
+	// #end::mutateInCreatePath[]
 
 	// #tag::concurrent[]
 	mops = []gocb.MutateInOp{
