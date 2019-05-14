@@ -23,6 +23,27 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 2.0 Alpha3 (14 May 2019)
+
+Version 2.0.0-alpha.3 is the third alpha release for the Go SDK 2.0.0.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-411[GOCBC-411]:
+Split GetFromReplica into two new functions - GetAnyReplica and GetAllReplicas. 
+GetAnyReplica will send requests to all servers to Get a document and return the first result received. 
+GetAllReplicas returns a cancellable stream of documents from all servers.
+* https://issues.couchbase.com/browse/GOCBC-429[GOCBC-429]:
+* https://issues.couchbase.com/browse/GOCBC-430[GOCBC-430]:
+Update how timeouts are selected when multiple are provided for an operation. 
+If only Timeout is set on the options then use that value.
+If Timeout and Context are set then take the shortest of the two.
+If only Context is set then take the shortest of Context and cluster level timeout.
+* https://issues.couchbase.com/browse/GOCBC-437[GOCBC-437]:
+Add client side timeout to views.
+* https://issues.couchbase.com/browse/GOCBC-441[GOCBC-441]:
+Ensure that all durable operations have DurabilityLevel options.
+
 == Version 2.0 Alpha2 (16 April 2019)
 
 Version 2.0.0-alpha.2 is the second alpha release for the Go SDK 2.0.0.
