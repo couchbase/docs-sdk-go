@@ -29,9 +29,10 @@ Version 2.0.0-alpha.3 is the third alpha release for the Go SDK 2.0.0.
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/GOCBC-411[GOCBC-411];
-Split GetFromReplica into two new functions - GetAnyReplica and GetAllReplicas. GetAnyReplica will send requests to all servers to Get a document and
-return the first result received. GetAllReplicas returns a cancellable stream of documents from all servers.
+* https://issues.couchbase.com/browse/GOCBC-411[GOCBC-411]:
+Split GetFromReplica into two new functions - GetAnyReplica and GetAllReplicas. 
+GetAnyReplica will send requests to all servers to Get a document and return the first result received. 
+GetAllReplicas returns a cancellable stream of documents from all servers.
 * https://issues.couchbase.com/browse/GOCBC-429[GOCBC-429]:
 * https://issues.couchbase.com/browse/GOCBC-430[GOCBC-430]:
 Update how timeouts are selected when multiple are provided for an operation. 
