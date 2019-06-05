@@ -1,0 +1,253 @@
+= Handling Errors
+:navtitle: Handling Errors
+:page-topic-type: howto
+:page-aliases: handling-error-conditions.adoc
+:source-language: go
+
+include::partial$alpha-warning.adoc[]
+
+[abstract]
+Errors are inevitable.
+The developer’s job is to be prepared for whatever is likely to come up -- and to try and be prepared for anything that conceivably could come up.
+Couchbase gives you a lot of flexibility, but it is recommended that you equip yourself with an understanding of the possibilities.
+
+== How the SDK handles errors
+
+The SDK will internally handle some errors and automatically try to recover from them. Errors that cannot be recovered by the SDK will be returned to the application. 
+These unrecoverable errors are left to the application developer to handle -- this section covers handling many of the common error scenarios.
+
+== Handling Errors
+
+The approach will depend upon the type of error thrown.
+Is it transient?
+Is it even recoverable?
+Below we examine error handling strategies in relation to the Couchbase SDKs, then take a practical walk through some common error scenarios you are likely to have to handle when working with a Couchbase cluster.
+
+The Go SDK exposes a couple of ways to interrogate errors - type assertion and helper functions. Of course, you can also just log them and fail the operation.
+
+The first way to use the information embedded into these errors (each error type contains different information) is to use type assertion:
+
+[source,golang,indent=0]
+----
+include::example$errors.go[tag=typeassert]
+----
+
+This approach can be difficult to use as you need to know the Status Code for the error that you want to find. This is why we have created another approach for the most common errors that you are likely
+to encounter:
+
+[source,golang,indent=0]
+----
+include::example$errors.go[tag=helperfunc]
+----
+
+This approach requires far less knowledge about the low level information within the Go SDK. You can, of course, just log or print out the error as usual and the SDK will try to include as much information
+as it can in the error message logged (via the usual `err.Error()`).
+
+We will cover more of the helper functions later.
+
+The type of operation will influence the type of the underlying error returned. The primary error types are listed below, this is not an exhaustive list of the Go SDK error types. 
+
+=== Service Specific Errors
+
+* Key Value errors are of the type `KeyValueError`.
+* Query errors are of the type `QueryError`.
+* Analytics errors are of the type `AnalyticsError`.
+* Search errors are of the type `SearchErrors`/`SearchError`.
+* View errors are of the type `ViewErrors`/`ViewError`.
+
+Note how the Search and View services return error types slightly different to other services, we'll cover this later.
+
+=== Shared Errors
+
+These errors can occur across all of the services.
+
+* `TimeoutError` signifies that the operation did not complete within the time limit specified.
+* `TemporaryFailureError` signifies that the operation failed for a temporary reason, such as a bucket still being in warm up.
+* `ServiceNotAvailableError` signifies that the operation has been performed on a service that is currently unavailable.
+* `ServiceNotConfiguredError` signifies that the operation has been performed on a service that has not be set up on the cluster.
+* `AuthenticationError` signifies that the operation has failed due to failed authentication.
+
+=== Failing
+
+While most of the time you want more sophisticated error handling strategies, sometimes you just need to fail. 
+It makes no sense for some errors to be retried, either because they are not transient, or because you already tried everything to make it work and it still keeps failing.
+If containment is not able to handle the error, then it needs to propagate up to a parent component that can handle it.
+
+=== Logging
+
+It is always important to log errors.
+
+
+=== Retries
+
+Transient errors, such as those caused by resource starvation, are best tackled with one of the following retry strategies:
+
+* Retry immediately.
+* Retry with a fixed delay.
+* Retry with a linearly increasing delay.
+* Retry with an exponentially increasing delay.
+* Retry with a random delay.
+
+// Add a bit about retry behaviours within the SDK.
+
+Below is an example of how you could retry an idempotent operation (on a full-doc update):
+
+[source,golang,indent=0]
+----
+include::example$errors.go[tag=retries]
+----
+
+=== Fallback
+
+Instead of (or in addition to) retrying, another valid option is falling back to either a different codepath, or to a default value.
+
+== Shared Error Handling
+
+=== Timeout
+
+[source,golang,indent=0]
+----
+if gocb.IsTimeoutError(err) {
+   // the error is a timeout error.
+}
+----
+
+=== Temporary Failure
+
+[source,golang,indent=0]
+----
+if gocb.IsTemporaryFailureError(err) {
+   // the error is temporary and could be retried.
+}
+----
+
+=== Service Not Available
+
+[source,golang,indent=0]
+----
+if gocb.IsServiceNotAvailableError(err) {
+   // the requested service is not available, the operation could be retried.
+}
+----
+
+=== Service Not Configured
+
+[source,golang,indent=0]
+----
+if gocb.IsServiceNotConfiguredError(err) {
+   // the requested service hasn't been configured on the server.
+}
+----
+
+=== Authentication
+
+[source,golang,indent=0]
+----
+if gocb.IsAuthenticationError(err) {
+   // the operation failed due to authentication failing.
+}
+----
+
+== Key Value Errors
+
+[source,golang,indent=0]
+----
+if gocb.IsKeyValueError(err) {
+   // the error is a KV error, this is a catch all for any KV errors.
+}
+----
+
+=== Document does not exist
+
+[source,golang,indent=0]
+----
+if gocb.IsKeyNotFoundError(err) {
+   // key does not exist maybe do something like return a 404 to your user.
+}
+----
+
+=== Document already exists
+
+[source,golang,indent=0]
+----
+if gocb.IsKeyExistsError(err) {
+   // key already exists, could be something like username is already taken.
+}
+----
+
+=== Document too large
+
+[source,golang,indent=0]
+----
+if gocb.IsValueTooLargeError(err) {
+   // the document size is too big.
+}
+----
+
+=== CAS mismatch
+
+[source,golang,indent=0]
+----
+if gocb.IsCasMismatchError(err) {
+   // cas mismatch, the cas supplied does not match the one on the document, has someone else modified it?
+}
+----
+
+== Query and Analytics Errors
+
+The Query and Analytics services either return results or an error. If there is an error then, unlike Key Value errors, the best way to access the underlying information
+is to use type assertion. As these services return either an error or a result it means that any errors that occur at query time will be immediately returned.
+
+[source,golang,indent=0]
+----
+include::example$errors.go[tag=queryerror]
+----
+
+Analytics errors look very similar:
+
+[source,golang,indent=0]
+----
+include::example$errors.go[tag=analyticserror]
+----
+
+Much like the Key Value value error if you log or print the error then it will contain some of this information.
+
+== Search and View Errors
+
+Search and Views errors are bit different to what we've just seen, they can return multiple errors as well as also returning errors and partial results. 
+As such these services return errors that contain a collection of errors within them. 
+
+The top level error contains HTTP information about the errors, whilst
+each individual error contains more specific information. You can also get errors for these services whilst receiving partial results at the same time. For
+this reason a call to these services may not immediately return query time errors. 
+
+If the query function returns errors immediately then there it means that there are be no results, however
+if you do get results then you should be sure to check the returned error for `result.Close()` because that is where any errors will be returned when you have partial
+results.
+
+With these services you only need to type assert the top level error, a call to `Errors()` on the top level error will return
+a list of already typed errors.
+
+[source,golang,indent=0]
+----
+include::example$errors.go[tag=searcherror]
+----
+
+View errors look similar to Search:
+
+[source,golang,indent=0]
+----
+include::example$errors.go[tag=viewerror]
+----
+
+== Additional Resources
+Errors & Exception handling is an expansive topic.
+Here, we have covered examples of the kinds of exception scenarios that you are most likely to face.
+More fundamentally, you also need to weigh up xref:concept-docs:failure-considerations.adoc[concepts of durability].
+
+Diagnostic methods are available to check on the xref:health-check.adoc[health if the cluster], and the xref:tracing-from-the-sdk.adoc[health of the network].
+
+Logging methods are dependent upon the platform and SDK used.
+We offer xref:collecting-information.adoc[recommendations and practical examples].
+
+We have a xref:ref:exceptions.adoc[listing of error messages], with some pointers to what to do when you encounter them.
