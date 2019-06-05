@@ -1,7 +1,7 @@
 = Handling Errors
 :navtitle: Handling Errors
 :page-topic-type: howto
-:page-aliases: handling-error-conditions.adoc
+:page-aliases: handling-error-conditions
 :source-language: go
 
 include::partial$alpha-warning.adoc[]
@@ -13,7 +13,8 @@ Couchbase gives you a lot of flexibility, but it is recommended that you equip y
 
 == How the SDK handles errors
 
-The SDK will internally handle some errors and automatically try to recover from them. Errors that cannot be recovered by the SDK will be returned to the application. 
+The SDK will internally handle some errors and automatically try to recover from them. 
+Errors that cannot be recovered by the SDK will be returned to the application. 
 These unrecoverable errors are left to the application developer to handle -- this section covers handling many of the common error scenarios.
 
 == Handling Errors
@@ -21,9 +22,11 @@ These unrecoverable errors are left to the application developer to handle -- th
 The approach will depend upon the type of error thrown.
 Is it transient?
 Is it even recoverable?
-Below we examine error handling strategies in relation to the Couchbase SDKs, then take a practical walk through some common error scenarios you are likely to have to handle when working with a Couchbase cluster.
+Below we examine error handling strategies in relation to the Couchbase SDKs, 
+then take a practical walk through some common error scenarios you are likely to have to handle when working with a Couchbase cluster.
 
-The Go SDK exposes a couple of ways to interrogate errors - type assertion and helper functions. Of course, you can also just log them and fail the operation.
+The Go SDK exposes a couple of ways to interrogate errors - type assertion and helper functions. 
+Of course, you can also just log them and fail the operation.
 
 The first way to use the information embedded into these errors (each error type contains different information) is to use type assertion:
 
@@ -40,12 +43,14 @@ to encounter:
 include::example$errors.go[tag=helperfunc]
 ----
 
-This approach requires far less knowledge about the low level information within the Go SDK. You can, of course, just log or print out the error as usual and the SDK will try to include as much information
-as it can in the error message logged (via the usual `err.Error()`).
+This approach requires far less knowledge about the low level information within the Go SDK. 
+You can, of course, just log or print out the error as usual 
+and the SDK will try to include as much information as it can in the error message logged (via the usual `err.Error()`).
 
 We will cover more of the helper functions later.
 
-The type of operation will influence the type of the underlying error returned. The primary error types are listed below, this is not an exhaustive list of the Go SDK error types. 
+The type of operation will influence the type of the underlying error returned. 
+The primary error types are listed below, this is not an exhaustive list of the Go SDK error types. 
 
 === Service Specific Errors
 
@@ -55,7 +60,7 @@ The type of operation will influence the type of the underlying error returned. 
 * Search errors are of the type `SearchErrors`/`SearchError`.
 * View errors are of the type `ViewErrors`/`ViewError`.
 
-Note how the Search and View services return error types slightly different to other services, we'll cover this later.
+Note how the Search and View services return slightly different error types from other services, we'll cover this later.
 
 === Shared Errors
 
@@ -70,7 +75,8 @@ These errors can occur across all of the services.
 === Failing
 
 While most of the time you want more sophisticated error handling strategies, sometimes you just need to fail. 
-It makes no sense for some errors to be retried, either because they are not transient, or because you already tried everything to make it work and it still keeps failing.
+It makes no sense for some errors to be retried, either because they are not transient, 
+or because you already tried everything to make it work and it still keeps failing.
 If containment is not able to handle the error, then it needs to propagate up to a parent component that can handle it.
 
 === Logging
@@ -195,8 +201,9 @@ if gocb.IsCasMismatchError(err) {
 
 == Query and Analytics Errors
 
-The Query and Analytics services either return results or an error. If there is an error then, unlike Key Value errors, the best way to access the underlying information
-is to use type assertion. As these services return either an error or a result it means that any errors that occur at query time will be immediately returned.
+The Query and Analytics services either return results or an error. 
+If there is an error then, unlike Key Value errors, the best way to access the underlying information is to use type assertion. 
+As these services return either an error or a result it means that any errors that occur at query time will be immediately returned.
 
 [source,golang,indent=0]
 ----
@@ -214,19 +221,20 @@ Much like the Key Value value error if you log or print the error then it will c
 
 == Search and View Errors
 
-Search and Views errors are bit different to what we've just seen, they can return multiple errors as well as also returning errors and partial results. 
+Search and Views errors are bit different from what we've just seen, 
+they can return multiple errors as well as also returning errors and partial results. 
 As such these services return errors that contain a collection of errors within them. 
 
-The top level error contains HTTP information about the errors, whilst
-each individual error contains more specific information. You can also get errors for these services whilst receiving partial results at the same time. For
-this reason a call to these services may not immediately return query time errors. 
+The top level error contains HTTP information about the errors, whilst each individual error contains more specific information. 
+You can also get errors for these services whilst receiving partial results at the same time. 
+For this reason a call to these services may not immediately return query time errors. 
 
-If the query function returns errors immediately then there it means that there are be no results, however
-if you do get results then you should be sure to check the returned error for `result.Close()` because that is where any errors will be returned when you have partial
-results.
+If the query function returns errors immediately then there it means that there are be no results, 
+however if you do get results then you should be sure to check the returned error for `result.Close()` 
+because that is where any errors will be returned when you have partial results.
 
-With these services you only need to type assert the top level error, a call to `Errors()` on the top level error will return
-a list of already typed errors.
+With these services you only need to type assert the top level error, 
+a call to `Errors()` on the top level error will return a list of already typed errors.
 
 [source,golang,indent=0]
 ----
@@ -248,6 +256,6 @@ More fundamentally, you also need to weigh up xref:concept-docs:failure-consider
 Diagnostic methods are available to check on the xref:health-check.adoc[health if the cluster], and the xref:tracing-from-the-sdk.adoc[health of the network].
 
 Logging methods are dependent upon the platform and SDK used.
-We offer xref:collecting-information.adoc[recommendations and practical examples].
+We offer xref:collecting-information-and-logging.adoc[recommendations and practical examples].
 
 We have a xref:ref:exceptions.adoc[listing of error messages], with some pointers to what to do when you encounter them.
