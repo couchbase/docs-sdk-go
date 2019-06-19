@@ -1,5 +1,8 @@
 = Couchbase Go SDK Release Notes
+:page-partial:
+:page-aliases: relnotes-go-sdk
 
+// tag::latest[]
 == SDK Installation
 
 Installing the Couchbase Go SDK is similar to installing most other Go projects:
@@ -37,7 +40,7 @@ Fixed issue where the threshold logging tracer would log “Threshold Log:” me
 * https://issues.couchbase.com/browse/GOCBC-413[GOCBC-413]:
 Fixed issue where the SDK can get into a state where all future requests timeout following certain circumstances where a request times out whilst it is being sent.
 * https://issues.couchbase.com/browse/GOCBC-431[GOCBC-431]:
-Fixed issue where the SDK would fail to connect to some external network types such as a publically addressable Kubernetes cluster. 
+Fixed issue where the SDK would fail to connect to some external network types such as a publicly addressable Kubernetes cluster. 
 
 == Version 1.6.0 (19 March 2019)
 
@@ -489,3 +492,4 @@ support for Cross Bucket Joins.
 === Fixed Issues
 
 None.
+// end::latest[]

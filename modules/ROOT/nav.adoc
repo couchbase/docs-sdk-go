@@ -45,7 +45,7 @@
 * xref:tracing-from-the-sdk.adoc[Tracing from the SDK]
 
 .Project Docs
-* xref:relnotes-go-sdk.adoc[Release Notes]
+* xref:sdk-release-notes.adoc[Release Notes]
 * xref:compatibility-versions-features.adoc[Compatibility]
 * xref:sdk-licenses.adoc[Licenses]
 * xref:get-involved.adoc[Get involved]
