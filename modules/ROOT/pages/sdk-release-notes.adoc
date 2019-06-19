@@ -18,6 +18,17 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 1.6.2 (19 June 2019)
+
+Version 1.6.2 is a maintenance for the 1.6.x series.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-468[GOCBC-468]:
+Fixed issue where the Ping function would not ping Analytics when no services were selected (and so all available services should be pinged).
+* https://issues.couchbase.com/browse/GOCBC-489[GOCBC-489]:
+Fixed issue where Search errors were not correctly read from the HTTP response.
+
 == Version 1.6.1 (16 April 2019)
 
 Version 1.6.1 is a maintenance for the 1.6.x series.
