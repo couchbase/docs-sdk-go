@@ -7,8 +7,8 @@
 * xref:howtos:subdocument-operations.adoc[Sub-Document Operations]
 //  ** xref:howtos:sdk-xattr-example.adoc[Extended Attributes]
 * xref:howtos:n1ql-queries-with-sdk.adoc[N1QL from the SDK]
-////
 * xref:howtos:analytics-using-sdk.adoc[Analytics from the SDK]
+////
  ** xref:howtos:advanced-analytics-querying.adoc[Advanced Analytics Querying]
 * xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search from the SDK]
 * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
