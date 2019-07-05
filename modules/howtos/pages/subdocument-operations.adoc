@@ -330,6 +330,25 @@ If CAS is required then it can be provided like this:
 include::example$subdoc.go[tag=cas]
 ----
 
+== Durability
+
+Couchbase's xref:1.6@go-sdk::durability.adoc[traditional durability], using `PersistTo` and `ReplicateTo`, is still available, particuarly for talking to Couchbase Server 6.0 and earlier:
+
+.Performing Sub Document mutations with traditional durability
+[source,golang,indent=0]
+----
+include::example$subdoc.go[tag=traddurability]
+----
+
+In Couchbase Server 6.5 and up, this is built upon with xref:concept-docs:durability.adoc#synchronous-durability[Synchronous Replication], 
+which uses the concept of xref:6.5@server:learn:data/durability.adoc#majority[majority] to indicate the number of configured Data Service nodes to which commitment is required:
+
+.Performing Sub Document mutations with synchronous durability
+[source,golang,indent=0]
+----
+include::example$subdoc.go[tag=newdurability]
+----
+
 == Error handling
 
 Subdoc operations have their own set of errors.
