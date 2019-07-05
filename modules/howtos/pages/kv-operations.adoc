@@ -111,11 +111,22 @@ result, err := col.Upsert("document-key", &document, &gocb.UpsertOptions{
 Here we have added _Durability_ options, namely `PersistTo` and `ReplicateTo`.
 In Couchbase Server releases before 6.5, Durability was set with these two options -- see the xref:1.5@durability.adoc[6.0 Durability documentation] -- covering  how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist. 
 Couchbase Data Platform 6.5 refines these two options, with xref:synchronous-replication.adoc[Synchronous Replication] -- although they remain essentially the same in use.
-//
-//
-//
 // -- as well as adding the option of xref:transactions.adoc[atomic document transactions].
 
+The following example demonstrates using the newer durability features available in Couchbase server 6.5 onwards.
+
+[source,golang]
+----
+document := struct {
+    Foo string `json:"foo"`
+    Bar string `json:"bar"`
+}{Foo: "foo", Bar: "bar"}
+result, err := col.Upsert("document-key", &document, &gocb.UpsertOptions{
+    Timeout:     3 * time.Second,
+    Expiration:  60,
+    DurabilityLevel: gocb.DurabilityLevelMajority,
+})
+----
 
 [TIP]
 .Sub-Document Operations

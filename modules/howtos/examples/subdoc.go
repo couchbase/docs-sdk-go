@@ -250,4 +250,23 @@ func main() {
 		Cas: getRes.Cas(),
 	})
 	// #end::cas[]
+
+	// #tag::traddurability[]
+	mops = []gocb.MutateInOp{
+		mSpec.Insert("name", "mike", nil),
+	}
+	collection.MutateIn("key", mops, &gocb.MutateInOptions{
+		PersistTo:   1,
+		ReplicateTo: 1,
+	})
+	// #end::traddurability[]
+
+	// #tag::newdurability[]
+	mops = []gocb.MutateInOp{
+		mSpec.Insert("name", "mike", nil),
+	}
+	collection.MutateIn("key", mops, &gocb.MutateInOptions{
+		DurabilityLevel: gocb.DurabilityLevelMajority,
+	})
+	// #end::newdurability[]
 }
