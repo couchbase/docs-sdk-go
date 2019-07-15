@@ -25,6 +25,11 @@ func main() {
 	bucket := cluster.Bucket("bucket-name", &gocb.BucketOptions{})
 	// #end::bucket[]
 
+	// #tag::named-bucket[]
+	// get a bucket reference
+	bucket := cluster.Bucket("travel-sample", &gocb.BucketOptions{})
+	// #end::named-bucket[]
+
 	// #tag::collection[]
 	// get a collection reference
 	collection := bucket.DefaultCollection(&gocb.CollectionOptions{})
