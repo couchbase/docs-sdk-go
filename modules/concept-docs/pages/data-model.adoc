@@ -1,0 +1,18 @@
+= The Data Model
+:nav-title: Data Model
+:page-topic-type: concept
+:page-aliases: ROOT:core-operations, ROOT:datastructures
+
+[abstract]
+Couchbase's use of JSON as a storage format allows powerful search and query over documents.
+Several data structures are supported by the SDK, including map, list, queue, and set.
+
+
+include::partial$alpha-warning.adoc[]
+
+include::6.5@sdk:shared:partial$data-model.adoc[tag=intro]
+
+include::6.5@sdk:shared:partial$data-model.adoc[tag=structures]
+
+== Creating a Data Structure
+

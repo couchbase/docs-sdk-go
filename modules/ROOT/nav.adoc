@@ -1,5 +1,7 @@
-.Hello World!
-* xref:hello-world:start-using-sdk.adoc[Start Using the SDK]
+.Couchbase Go SDK
+
+.Getting Started
+* xref:hello-world:start-using-sdk.adoc[Start Using the Go SDK]
 // * xref:hello-world:sample-application.adoc[Sample Application]
 
 .Working with Data
@@ -13,7 +15,7 @@
 * xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search from the SDK]
 * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
 
-.Advanced Working with Data
+.Advanced Data Operations
 * xref:howtos:durability.adoc[Durability]
  ** * xref:howtos:transactions.adoc[ACID Transactions]
 
@@ -25,10 +27,13 @@
 * xref:howtos:error-handling.adoc[Handling Errors]
 * xref:howtos:health-check.adoc[Health Check]
 
-.Concepts
-* xref:concept-docs:concepts.adoc[Concepts]
- ** xref:concept-docs:document-operations.adoc[Documents & Doc Ops]
-// ** xref:concept-docs:collections.adoc[Collections]
+
+.Learn
+* xref:concept-docs:concepts.adoc[Overview]
+// ** xref:concept-docs:collections.adoc[Collections & Scope]
+* xref:concept-docs:data-model.adoc[Data Model]
+* xref:concept-docs:encryption.adoc[Field Level Encryption]
+* xref:concept-docs:http-services.adoc[Service Selection]
 
 .Project Docs
 * xref:project-docs:sdk-release-notes.adoc[Release Notes]
