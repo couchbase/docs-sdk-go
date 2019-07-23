@@ -34,6 +34,9 @@
 * xref:concept-docs:encryption.adoc[Field Level Encryption]
 * xref:concept-docs:http-services.adoc[Service Selection]
 
+.Reference
+* https://godoc.org/gopkg.in/couchbase/gocb.v1[Go API Reference]
+
 .Project Docs
 * xref:project-docs:sdk-release-notes.adoc[Release Notes]
 ////
