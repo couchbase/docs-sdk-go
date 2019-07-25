@@ -1,0 +1,34 @@
+= Choosing an API
+:navtitle: Choosing an API
+:page-topic-type: howto
+:page-aliases: ROOT:async-programming,ROOT:batching-operations
+
+[abstract]
+Go's default blocking API can be used efficiently for bulk operations.
+Asynchronous operations can be simulated through multiple operations, or diving down into gocbcore.
+
+
+The Go SDK offers a synchronous blocking interface for single operations.
+You can also batch multiple operations, using the `Bucket.Do()` interface -- _see below_.
+
+== Asynchronous API
+
+In addition to providing a batch methods for use within a single goroutine, the Go SDK is also designed to be highly performant when used across numerous goroutines,
+this allows you to start numerous asynchronous goroutines which can all perform operations on the same Bucket and Cluster objects.
+
+Internally, the Go SDK is based upon the `gocbcore` package.
+The [.api]`gocbcore` interface is considered volatile but contains a callback-based API that does not block the application.
+
+
+== Reactive
+
+There is no reactive library -- streaming results are best dealt with by
+???
+
+
+== Batching
+
+include::6.5@sdk:pages:partial$batching-operations.adoc[tag=intro] // ??
+
+Building up a list of `BulkOps`...
+
