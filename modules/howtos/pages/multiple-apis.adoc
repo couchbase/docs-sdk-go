@@ -32,3 +32,4 @@ include::6.5@sdk:pages:partial$batching-operations.adoc[tag=intro] // ??
 
 Building up a list of `BulkOps`...
 
+// use case bulk loader for data integration
