@@ -4,4 +4,5 @@ The Couchbase Go Client is distributed as source under the https://www.apache.or
 Any dependencies may have their https://www.couchbase.com/legal/agreements[own, separate licenses].
 
 Binary distributions are made under Couchbase's own license agreements. 
-See https://blog.couchbase.com/couchbase-server-editions-explained-open-source-community-edition-and-enterprise-edition/[this Couchbase blog page] for more information on the Couchbase Data Platform Community and Enterprise Editions.
+* https://www.couchbase.com/LA03262019[Enterprise License Agreement]
+* https://www.couchbase.com/binaries/content/assets/website/legal/ce-license-agreement.pdf[Community License Agreement (PDF)]
