@@ -1,7 +1,7 @@
 = Choosing an API
 :navtitle: Choosing an API
 :page-topic-type: howto
-:page-aliases: ROOT:async-programming,ROOT:batching-operations
+:page-aliases: ROOT:async-programming,ROOT:batching-operations,multiple-apis
 
 [abstract]
 Go's default blocking API can be used efficiently for bulk operations.
