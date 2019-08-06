@@ -1,5 +1,6 @@
 = Tracing from the Go SDK with Couchbase Server
 :navtitle: Tracing from the SDK
+:page-aliases: howtos:tracing-from-the-sdk
 
 [abstract]
 Use tracing from the SDK to discover timeouts and bottlenecks across the netowrk and cluster.

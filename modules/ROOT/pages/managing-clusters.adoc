@@ -1,5 +1,6 @@
 = Managing Clusters Using the Go SDK with Couchbase Server
 :navtitle: Managing Clusters
+:page-aliases: concept-docs:buckets-and-clusters,concept-docs:collections,howtos:provisioning-cluster-resources
 
 include::6.0@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
 

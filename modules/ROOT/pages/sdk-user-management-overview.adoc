@@ -1,4 +1,5 @@
 = User Management
+:page-aliases: concept-docs:sdk-user-management-overview
 
 [abstract]
 The SDK now lets you create _users_, assign them _roles_ and associated _privileges_, and remove them from the system.

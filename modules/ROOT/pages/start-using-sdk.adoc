@@ -1,5 +1,6 @@
 = Install and Start Using the Go SDK with Couchbase Server
 :navtitle: Start Using the SDK
+:page-aliases: overview,getting-started,hello-couchbase,go-intro,hello-world:start-using-sdk,concept-docs:http-services
 
 The Couchbase Go SDK allows you to connect to a Couchbase cluster from Go.
 It is a native Go library and uses the high-performance gocbcore to handle communicating to the cluster over Couchbase’s binary protocols

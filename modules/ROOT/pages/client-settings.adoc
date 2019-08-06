@@ -1,4 +1,5 @@
 = Client Settings
+:page-aliases: env-config,ref:client-settings
 
 You may adjust some settings on the [.api]`Cluster` and [.api]`Bucket` objects.
 Settings set on a [.api]`Cluster` object applies to any subsequently created [.api]`Bucket` objects (though not on ones created before the setting was modified).

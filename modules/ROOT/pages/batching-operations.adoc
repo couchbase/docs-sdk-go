@@ -1,4 +1,5 @@
 = Batching Operations
+:page-aliases: documents-bulk
 
 include::6.0@sdk:pages:partial$batching-operations.adoc[tag=intro]
 include::6.0@sdk:pages:partial$batching-operations.adoc[tag=async]

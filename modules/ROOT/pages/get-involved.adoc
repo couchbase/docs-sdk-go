@@ -1,5 +1,6 @@
 = Get Involved
 :navtitle: Get Involved
+:page-aliases: project-docs:get-involved
 
 == Contributing
 

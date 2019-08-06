@@ -1,5 +1,6 @@
 = Asynchronous Progamming Using the Go SDK with Couchbase Server
 :navtitle: Asynchronous Programming
+:page-aliases: reactive-apps,observables,rxjava,howtos:concurrent-async-apis
 
 The Go SDK offers a synchronous blocking interface for single operations.
 You can also xref:document-operations.adoc#bulk-ops[batch multiple operations] using the [.api]`Bucket.Do()` interface.

@@ -1,5 +1,6 @@
 = Compatibility of Couchbase Features, Couchbase Versions and the Couchbase Go SDK
 :navtitle: Compatibility
+:page-aliases: overview,migrate,project-docs:compatibility,project-docs:integrations
 
 [abstract]
 Compatibility Information for the Couchbase Go SDK

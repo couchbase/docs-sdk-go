@@ -1,6 +1,7 @@
 = Handling Exceptions and Other Errors with the Go SDK in Couchbase
 :navtitle: Handling Errors
 :page-topic-type: concept
+:page-aliases: howtos:handling-errors,concept-docs:errors,ref:errors
 
 [abstract]
 All methods within the SDK, which are capable of returning errors, utilize the Go standard of returning an error object as the last return value.

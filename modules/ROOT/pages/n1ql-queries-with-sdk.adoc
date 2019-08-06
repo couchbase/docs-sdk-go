@@ -1,6 +1,7 @@
 = N1QL Queries Using the Go SDK with Couchbase Server
 :navtitle: N1QL from the SDK
 :page-topic-type: concept
+:page-aliases: querying-n1ql,howtos:n1ql-queries-with-sdk
 
 NOTE: See xref:n1ql-query.adoc[Couchbase Developer documentation for a quick intro to developing with N1QL]
 

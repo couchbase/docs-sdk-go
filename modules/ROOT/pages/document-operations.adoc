@@ -1,5 +1,6 @@
 = CRUD Document Operations using the Go SDK with Couchbase Server
 :navtitle: Document Operations
+:page-aliases: documents-creating,documents-updating,documents-retrieving,documents-deleting,howtos:kv-operations
 
 [abstract]
 This topic covers the basic CRUD operations of creating, retrieving, updating, and deleting documents.

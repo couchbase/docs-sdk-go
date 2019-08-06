@@ -1,6 +1,7 @@
 = Collecting Information and Logging in the Go SDK with Couchbase Server
 :navtitle: Collecting Information
 :page-topic-type: concept
+:page-aliases: event-bus-metrics,logging,howtos:collecting-information-and-logging
 
 The Go SDK offers simple logging of library internals to help debug issues.
 Logging may be configured on a global library-level basis.

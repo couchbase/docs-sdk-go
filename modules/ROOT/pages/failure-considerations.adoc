@@ -1,5 +1,6 @@
 = Failure Considerations for the Go SDK in Couchbase
 :navtitle: Failure Considerations
+:page-aliases: concept-docs:durability-replication-failure-considerations.adoc
 
 include::6.0@sdk:shared:partial$env-errors.adoc[tag=failover_definition]
 

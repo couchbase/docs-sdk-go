@@ -1,4 +1,5 @@
 = Data Structures
+:page-aliases: concept-docs:data-model,ref:data-structures
 
 [abstract]
 You can use complex data structures such as dictionaries and lists in Couchbase.

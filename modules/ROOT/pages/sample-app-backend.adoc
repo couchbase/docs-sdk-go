@@ -1,5 +1,6 @@
 = Go Sample App Backend Tutorial
 :navtitle: Sample App Backend
+:page-aliases: tutorial4,hello-world:sample-application.adoc
 
 [abstract]
 The Go SDK tutorial bridges the gap between simple and advanced concepts by walking through a complete web application.

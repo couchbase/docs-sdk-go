@@ -1,4 +1,5 @@
 = Authentication
+:page-aliases: howtos:sdk-authentication,concept-docs:certificate-based-authentication,concept-docs:rbac
 
 [abstract]
 RBAC requires that users pass appropriate _credentials_ to Couchbase Server in order to access cluster-resources.

@@ -1,5 +1,6 @@
 = Threshold Logging Tracing through the SDK
 :navtitle: Threshold Logging
+:page-aliases: concept-docs:response-time-observability,concept-docs:tracing
 
 include::6.0@sdk:shared:partial$tracing.adoc[tag=why_tracing]
 

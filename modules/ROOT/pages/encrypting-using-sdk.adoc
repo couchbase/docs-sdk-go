@@ -1,5 +1,6 @@
 = Field Level Encryption from the Go SDK
 :page-topic-type: concept
+:page-aliases: howtos:encrypting-using-sdk
 
 [abstract]
 Field Level Encryption is available in Couchbase Data Platform 5.5.

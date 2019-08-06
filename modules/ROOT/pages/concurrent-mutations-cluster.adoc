@@ -1,5 +1,6 @@
 = Concurrent Document Mutations
 :page-topic-type: concept
+:page-aliases: howtos:concurrent-document-mutations
 include::partial$attributes.adoc[]
 
 [abstract]

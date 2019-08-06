@@ -1,4 +1,5 @@
 = Software Licences
+:page-aliases: project-docs:sdk-licenses
 
 The Couchbase Go SDK is licensed under the https://github.com/couchbase/go-couchbase/blob/master/LICENSE[Apache Software License, v2.0].
 

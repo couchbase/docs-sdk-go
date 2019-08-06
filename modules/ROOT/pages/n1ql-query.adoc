@@ -1,4 +1,5 @@
 = Querying with N1QL
+:page-aliases: querying,concept-docs:n1ql-query
 include::partial$attributes.adoc[]
 
 [abstract]

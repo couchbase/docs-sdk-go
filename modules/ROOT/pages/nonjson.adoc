@@ -1,4 +1,5 @@
 = Non-JSON Documents
+:page-aliases: concept-docs:nonjson
 
 // tag::nonjson_intro[]
 [abstract]

@@ -1,4 +1,5 @@
 = Sub-Document Operations
+:page-aliases: howtos:subdocument-operations,concept-docs:subdocument-operations
 include::partial$attributes.adoc[]
 
 [abstract]
