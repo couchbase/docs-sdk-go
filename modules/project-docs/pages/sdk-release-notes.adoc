@@ -23,6 +23,47 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 2.0 Alpha5 (25 July 2019)
+
+Version 2.0.0-alpha.5 is the fifth alpha release for the Go SDK 2.0.0.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-451[GOCBC-451]:
+Create search index manager.
+* https://issues.couchbase.com/browse/GOCBC-478[GOCBC-478]:
+* https://issues.couchbase.com/browse/GOCBC-513[GOCBC-513]:
+* https://issues.couchbase.com/browse/GOCBC-515[GOCBC-515]:
+Various updates to the analytics index manager including:
+Add support for custom (de)serializers in analytics queries.
+Add Dataverse functions to analytics index manager.
+* https://issues.couchbase.com/browse/GOCBC-478[GOCBC-507]:
+Mark up APIs with stability levels.
+* https://issues.couchbase.com/browse/GOCBC-508[GOCBC-508]:
+Add groups to user manager.
+* https://issues.couchbase.com/browse/GOCBC-516[GOCBC-516]:
+Add bulk operations API.
+* https://issues.couchbase.com/browse/GOCBC-519[GOCBC-519]:
+Add IsQueueOverloadError function for detecting when the dispatch queue is full.
+* https://issues.couchbase.com/browse/GOCBC-503[GOCBC-503]:
+Various updates to the bucket manager including:
+Add Bucket suffix to function names.
+Update CreateBucket to take a CreateBucketSettings.
+* https://issues.couchbase.com/browse/GOCBC-511[GOCBC-511]:
+Remove DefaultCollection from Scope. Only the DefaultScope has DefaultCollection so it doesn't make sense to have it.
+* https://issues.couchbase.com/browse/GOCBC-520[GOCBC-520]:
+Add DesignDocument suffix to view manager function names.
+* https://issues.couchbase.com/browse/GOCBC-521[GOCBC-521]:
+Add Index suffix to search index manager function names.
+* https://issues.couchbase.com/browse/GOCBC-522[GOCBC-522]:
+Add AnalyzeDoc function to search index manager to allow users to test how a document will be analyzed by an index.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-514[GOCBC-514]:
+Don't add clients that failed to connect to the cluster connections cache.
+
+
 == Version 2.0 Alpha4 (25 July 2019)
 
 Version 2.0.0-alpha.4 is the fourth alpha release for the Go SDK 2.0.0.
