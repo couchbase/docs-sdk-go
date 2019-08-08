@@ -68,8 +68,7 @@ Version 2.0.0-alpha.4 is the fourth alpha release for the Go SDK 2.0.0.
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/GOCBC-412[GOCBC-412]:
-* https://issues.couchbase.com/browse/GOCBC-439[GOCBC-439]:
+* https://issues.couchbase.com/browse/GOCBC-412[GOCBC-412], https://issues.couchbase.com/browse/GOCBC-439[GOCBC-439]:
 Update error handling to be more consistent with other SDKs.
 * https://issues.couchbase.com/browse/GOCBC-436[GOCBC-436]:
 Changed subdoc options blocks to use CreatePath rather than CreateParents.
@@ -111,9 +110,7 @@ Remove all references to OpenTracing API, easier to add whatever it turns into t
 Fixed issue where search was calculating timeouts incorrectly.
 * https://issues.couchbase.com/browse/GOCBC-466[GOCBC-466]:
 Fixed issue where the context deadline was being updated evenwhen the durability deadline wasn't coerced upward.
-* https://issues.couchbase.com/browse/GOCBC-473[GOCBC-473]:
-* https://issues.couchbase.com/browse/GOCBC-474[GOCBC-474]:
-* https://issues.couchbase.com/browse/GOCBC-486[GOCBC-486]:
+* https://issues.couchbase.com/browse/GOCBC-473[GOCBC-473], https://issues.couchbase.com/browse/GOCBC-474[GOCBC-474], https://issues.couchbase.com/browse/GOCBC-486[GOCBC-486]:
 Fixed issue where a panic could arise if a cluster level service was used before a bucket was opened.
 
 == Version 2.0 Alpha3 (14 May 2019)
@@ -126,8 +123,7 @@ Version 2.0.0-alpha.3 is the third alpha release for the Go SDK 2.0.0.
 Split GetFromReplica into two new functions - GetAnyReplica and GetAllReplicas. 
 GetAnyReplica will send requests to all servers to Get a document and return the first result received. 
 GetAllReplicas returns a cancellable stream of documents from all servers.
-* https://issues.couchbase.com/browse/GOCBC-429[GOCBC-429]:
-* https://issues.couchbase.com/browse/GOCBC-430[GOCBC-430]:
+* https://issues.couchbase.com/browse/GOCBC-429[GOCBC-429], https://issues.couchbase.com/browse/GOCBC-430[GOCBC-430]:
 Update how timeouts are selected when multiple are provided for an operation. 
 If only Timeout is set on the options then use that value.
 If Timeout and Context are set then take the shortest of the two.
