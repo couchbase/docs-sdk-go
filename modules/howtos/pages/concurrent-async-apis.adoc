@@ -4,16 +4,18 @@
 :page-aliases: ROOT:async-programming,ROOT:batching-operations,multiple-apis
 
 [abstract]
-The Go SDK offers a synchronous blocking interface but this does not stop you from using it asynchronously, or from performing
-bulk operations concurrently. By using goroutines you can call into the SDK aynchronously and by using the `BulkOp` API you
+The Go SDK offers a synchronous blocking interface but this does not stop you from using it asynchronously, 
+or from performing bulk operations concurrently. 
+By using goroutines you can call into the SDK aynchronously and by using the `BulkOp` API you
 can batch multiple operations into a single SDK call which executes concurrently behind the scenes.
 
 == Goroutines
-The Go SDK is designed to be highly performant when used across numerous goroutines, this allows you to start numerous asynchronous goroutines which can all perform operations on the same SDK objects. Using goroutines to perform parallel operations against the SDK means that you can continue to call into the SDK via the standard API and you have all of
-the operation features available, such as durability. 
+The Go SDK is designed to be highly performant when used across numerous goroutines, this allows you to start numerous asynchronous goroutines which can all perform operations on the same SDK objects. 
+Using goroutines to perform parallel operations against the SDK means that you can continue to call into the SDK via the standard API and you have all of the operation features available, such as durability. 
 
 In the following examples we'll look at loading the data from one of the Couchbase sample datasets, the beer dataset. 
-This dataset is around 7300 JSON files, each file representing a document.  This sample looks for the dataset in the default location for a Linux install, 
+This dataset is around 7300 JSON files, each file representing a document.  
+This sample looks for the dataset in the default location for a Linux install, 
 you can find the default locations for other operation systems in our xref:https://docs.couchbase.com/server/6.0/cli/cli-intro.html[CLI reference].
 
 First we need to connect to the server and create a cluster object:
@@ -23,10 +25,11 @@ First we need to connect to the server and create a cluster object:
 include::example$async.go[tag=connect]
 ----
 
-Once we have that in place then we can setup our goroutines. We're using 24 goroutines so we can do up to 24 concurrent upsert operations. The `workChan` is used by the main
-goroutine to send documents to the "worker" goroutines which will perform the upserts. When all of the work is done and the `workChan` is exhausted the main goroutine will
-send on the `shutdownChan` before waiting for the `wg` `sync.WaitGroup` to complete. This allows us to wait for any work being performed in a "worker" to fully complete so we don't
-accidentally drop any upserts.
+Once we have that in place then we can set up our goroutines. 
+We're using 24 goroutines so we can do up to 24 concurrent upsert operations. 
+The `workChan` is used by the main goroutine to send documents to the "worker" goroutines which will perform the upserts. 
+When all of the work is done and the `workChan` is exhausted the main goroutine will send on the `shutdownChan` before waiting for the `wg` `sync.WaitGroup` to complete. 
+This allows us to wait for any work being performed in a "worker" to fully complete so we don't accidentally drop any upserts.
 
 Here we can see setting up the goroutines ready to receive any work:
 
@@ -51,13 +54,23 @@ include::example$async.go[tag=wait]
 
 
 == Bulk Operations API
-Batching operations allows you to make better utilization of your network and speed up your application by increasing network throughput and reducing latency. Batched operations work by pipelining requests over the network. When requests are pipelined, they are sent in one large group to the cluster. The cluster in turn pipelines responses back to the client. When operations are batched, there are fewer IP packets to be sent over the network (since there are fewer individual TCP segments).
+Batching operations allows you to make better utilization of your network and speed up your application by increasing network throughput and reducing latency. 
+Batched operations work by pipelining requests over the network. 
+When requests are pipelined, they are sent in one large group to the cluster. 
+The cluster in turn pipelines responses back to the client. 
+When operations are batched, there are fewer IP packets to be sent over the network 
+(since there are fewer individual TCP segments).
 
-The bulk operations API allows you to send a batch of operations to the server in one SDK call. The SDK sends end all of these operations sequentially but does not
-wait for responses between sending each request e.g. rather than the typical request-response, request-response pattern that you might be used to, behind the scenes the SDK will do request, request, request - response, response, reponse. From your point of view as the user of the SDK this single SDK call will just be a normal blocking call. As well as the performance benefits of being able to pipeline another main tradeoff between using the bulk operations
-API and using goroutines is that of complexity (of handling channels and goroutines) against available operation options. The bulk API does not expose options per operation like the standard API, nor does it support features like durability.
+The bulk operations API allows you to send a batch of operations to the server in one SDK call. 
+The SDK sends all of these operations sequentially but does not wait for responses between sending each request; 
+e.g. rather than the typical request-response, request-response pattern that you might be used to, behind the scenes the SDK will do request, request, request -- response, response, reponse. 
+From your point of view as the user of the SDK this single SDK call will just be a normal blocking call. 
+As well as the performance benefits of being able to pipeline another main tradeoff between using the bulk operations
+API and using goroutines is that of complexity 
+(of handling channels and goroutines) against available operation options. 
+The bulk API does not expose options per operation like the standard API, nor does it support features like durability.
 
-Using the same example as before (we'll skip the connecting bit as that's the same) we'll see that in the following examples we batch up the documents and then send them sequentially via the bulk API.
+Using the same example as before (we'll skip the connecting code as that's the same) we'll see that in the following examples we batch up the documents and then send them sequentially via the bulk API.
 
 Here we can see that we create a map containing 8 batches of documents which we populate instead of sending on a channel:
 
@@ -66,8 +79,9 @@ Here we can see that we create a map containing 8 batches of documents which we 
 include::example$batch.go[tag=loadData]
 ----
 
-Once we've built up our batches we can send them via the `collection.Do` interface. We don't need to wait for anything to finish in this example because we've used the blocking
-API. Note that we're checking each individual operation for errors as well as the call to `Do`, this is because individual operations can either succeed or fail.
+Once we've built up our batches we can send them via the `collection.Do` interface. 
+We don't need to wait for anything to finish in this example because we've used the blocking API. 
+Note that we're checking each individual operation for errors as well as the call to `Do`, this is because individual operations can either succeed or fail.
 
 [source,golang,indent=0]
 ----
@@ -78,7 +92,9 @@ include::example$batch.go[tag=send]
 
 === Batching guidelines
 Batching improves network utilization.
-However there is a batching threshold at which the maximum network efficiency is gained - and batching beyond this amount will simply increase memory and CPU usage on the client, and in some cases cause operations to prematurely time-out or otherwise fail.
+However there is a batching threshold at which the maximum network efficiency is gained -- 
+and batching beyond this amount will simply increase memory and CPU usage on the client, 
+and in some cases cause operations to prematurely time-out or otherwise fail.
 
 As a guideline, applications should batch no more than 1MB before sending to the server.
 Calculating the 1 MB value is dependent on the length of the key and value (where applicable) of each operation.
@@ -117,5 +133,8 @@ Assuming an average key size of 5 and an average value size of 50:
  ** Batch Size: 14169
 
 == Limitations
-Both of these approaches have the same limitation - the dispatch queue size. This is the limit of the number of operations (the bulk API treats each `BulkOp` as 1 operation, rather than each call to `Do`) that can be queued up waiting to send to Couchbase Server at any time. If your batches are too big or you are concurrently sending too many
-requests at a time then the queue can overload, which can be checked for using `IsQueueOverloadError(err)`. If this occurs then you could try using more, smaller batches or adding failed ops to a new batch and repeatedly doing that until none have failed.
+
+Both of these approaches have the same limitation - the dispatch queue size. 
+This is the limit of the number of operations (the bulk API treats each `BulkOp` as 1 operation, rather than each call to `Do`) that can be queued up waiting to send to Couchbase Server at any time. 
+If your batches are too big or you are concurrently sending too many requests at a time then the queue can overload, which can be checked for using `IsQueueOverloadError(err)`. 
+If this occurs then you could try using more, smaller batches or adding failed ops to a new batch and repeatedly doing that until none have failed.
