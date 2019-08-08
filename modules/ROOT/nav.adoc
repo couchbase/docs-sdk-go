@@ -16,7 +16,8 @@
 * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
 
 .Advanced Data Operations
-* xref:howtos:durability.adoc[Durability]
+* xref:howtos:concurrent-async-apis.adoc[Async & Batching APIs]
+// * xref:howtos:durability.adoc[Durability]
 
 .Managing Couchbase
 * User Management
