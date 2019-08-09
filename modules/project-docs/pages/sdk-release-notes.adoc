@@ -23,7 +23,7 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
-== Version 2.0 Alpha5 (25 July 2019)
+== Version 2.0 Alpha5 (8 August 2019)
 
 Version 2.0.0-alpha.5 is the fifth alpha release for the Go SDK 2.0.0.
 
@@ -31,9 +31,7 @@ Version 2.0.0-alpha.5 is the fifth alpha release for the Go SDK 2.0.0.
 
 * https://issues.couchbase.com/browse/GOCBC-451[GOCBC-451]:
 Create search index manager.
-* https://issues.couchbase.com/browse/GOCBC-478[GOCBC-478]:
-* https://issues.couchbase.com/browse/GOCBC-513[GOCBC-513]:
-* https://issues.couchbase.com/browse/GOCBC-515[GOCBC-515]:
+* https://issues.couchbase.com/browse/GOCBC-478[GOCBC-478], https://issues.couchbase.com/browse/GOCBC-513[GOCBC-513],  https://issues.couchbase.com/browse/GOCBC-515[GOCBC-515]:
 Various updates to the analytics index manager including:
 Add support for custom (de)serializers in analytics queries.
 Add Dataverse functions to analytics index manager.
@@ -70,8 +68,7 @@ Version 2.0.0-alpha.4 is the fourth alpha release for the Go SDK 2.0.0.
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/GOCBC-412[GOCBC-412]:
-* https://issues.couchbase.com/browse/GOCBC-439[GOCBC-439]:
+* https://issues.couchbase.com/browse/GOCBC-412[GOCBC-412], https://issues.couchbase.com/browse/GOCBC-439[GOCBC-439]:
 Update error handling to be more consistent with other SDKs.
 * https://issues.couchbase.com/browse/GOCBC-436[GOCBC-436]:
 Changed subdoc options blocks to use CreatePath rather than CreateParents.
@@ -113,9 +110,7 @@ Remove all references to OpenTracing API, easier to add whatever it turns into t
 Fixed issue where search was calculating timeouts incorrectly.
 * https://issues.couchbase.com/browse/GOCBC-466[GOCBC-466]:
 Fixed issue where the context deadline was being updated evenwhen the durability deadline wasn't coerced upward.
-* https://issues.couchbase.com/browse/GOCBC-473[GOCBC-473]:
-* https://issues.couchbase.com/browse/GOCBC-474[GOCBC-474]:
-* https://issues.couchbase.com/browse/GOCBC-486[GOCBC-486]:
+* https://issues.couchbase.com/browse/GOCBC-473[GOCBC-473], https://issues.couchbase.com/browse/GOCBC-474[GOCBC-474], https://issues.couchbase.com/browse/GOCBC-486[GOCBC-486]:
 Fixed issue where a panic could arise if a cluster level service was used before a bucket was opened.
 
 == Version 2.0 Alpha3 (14 May 2019)
@@ -128,8 +123,7 @@ Version 2.0.0-alpha.3 is the third alpha release for the Go SDK 2.0.0.
 Split GetFromReplica into two new functions - GetAnyReplica and GetAllReplicas. 
 GetAnyReplica will send requests to all servers to Get a document and return the first result received. 
 GetAllReplicas returns a cancellable stream of documents from all servers.
-* https://issues.couchbase.com/browse/GOCBC-429[GOCBC-429]:
-* https://issues.couchbase.com/browse/GOCBC-430[GOCBC-430]:
+* https://issues.couchbase.com/browse/GOCBC-429[GOCBC-429], https://issues.couchbase.com/browse/GOCBC-430[GOCBC-430]:
 Update how timeouts are selected when multiple are provided for an operation. 
 If only Timeout is set on the options then use that value.
 If Timeout and Context are set then take the shortest of the two.
