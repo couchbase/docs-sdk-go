@@ -1,6 +1,6 @@
 = Durability & Failure
 :page-topic-type: concept
-:page-aliases: ROOT:failure-considerations,ROOT:durability;ROOT:enhanced-durability
+// :page-aliases: ROOT:failure-considerations,ROOT:durability;ROOT:enhanced-durability
 
 
 [abstract]
