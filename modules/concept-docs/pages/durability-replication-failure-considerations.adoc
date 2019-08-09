@@ -1,0 +1,25 @@
+= Durability & Failure
+:page-topic-type: concept
+:page-aliases: ROOT:failure-considerations,ROOT:durability;ROOT:enhanced-durability
+
+
+[abstract]
+Data durability refers to the fault tolerance and persistence of data in the face of software or hardware failure.
+Even the most reliable software and hardware might fail at some point, and along with the failures, introduce a chance of data loss.
+Couchbase’s durability features include Synchronous Replication, and the possibility to use distributed, multi-document ACID transactions.
+It is the responsibility of the development team and the software architect to evaluate the best choice for each use case.
+
+include::partial$alpha-warning.adoc[]
+
+include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=intro]
+
+include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep]
+
+include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=older]
+
+include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=performance]
+
+// include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=txns]
+
+// include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=failover]
+
