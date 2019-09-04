@@ -14,11 +14,13 @@
  ** xref:howtos:advanced-analytics-querying.adoc[Advanced Analytics Querying]
 * xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search]
 * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
+////
 
 .Advanced Data Operations
 * xref:howtos:concurrent-async-apis.adoc[Async & Batching APIs]
 // * xref:howtos:durability.adoc[Durability]
 
+////
 .Managing Couchbase
 * User Management
  ** xref:howtos:sdk-authentication-overview.adoc[Authentication]
