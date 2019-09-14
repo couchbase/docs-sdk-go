@@ -1,0 +1,12 @@
+= Client Settings
+:nav-title: Client Settings
+:page-topic-type: reference
+:page-aliases: ROOT:client-settings
+
+[abstract]
+Client settings
+
+include::partial$alpha-warning.adoc[]
+
+== Timeout Options
+
