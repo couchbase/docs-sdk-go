@@ -1,0 +1,12 @@
+= Extended Attributes Overview
+:nav-title: XATTR
+:page-topic-type: concept
+:page-aliases: sdk-xattr-overview,ROOT:sdk-xattr-overview
+
+[abstract]
+Extended attributes.
+
+include::partial$alpha-warning.adoc[]
+
+
+

@@ -1,0 +1,8 @@
+= Full Text Search Overview
+:nav-title: Search Overview
+:page-topic-type: concept
+
+[abstract]
+FTS.
+
+include::partial$alpha-warning.adoc[]

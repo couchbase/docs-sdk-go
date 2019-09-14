@@ -1,0 +1,8 @@
+= Error Codes
+:nav-title: Error Codes
+:page-topic-type: ref
+
+[abstract]
+The standardized error codes returned by the Couchbase Go SDK.
+
+include::partial$alpha-warning.adoc[]

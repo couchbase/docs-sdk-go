@@ -1,0 +1,8 @@
+= Understanding Views 
+:nav-title: Understanding Views
+:page-topic-type: concept
+
+[abstract]
+MapReduce Views.
+
+include::partial$alpha-warning.adoc[]

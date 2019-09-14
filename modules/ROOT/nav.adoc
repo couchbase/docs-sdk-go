@@ -32,11 +32,26 @@
 
 .Learn
 * xref:concept-docs:concepts.adoc[Overview]
+* xref:concept-docs:buckets-and-clusters.adoc[Buckets & Clusters]
 * xref:concept-docs:collections.adoc[Collections & Scope]
+* xref:concept-docs:compression.adoc[Compression]
 * xref:concept-docs:data-model.adoc[Data Model]
+** xref:concept-docs:documents.adoc[Documents]
+** xref:concept-docs:nonjson.adoc[Non-json Docs]
+** xref:concept-docs:subdocument-operations.adoc[Sub-Documents]
+** xref:concept-docs:xattr.adoc[XATTR & Virtual XATTR]
+* xref:concept-docs:durability-replication-failure-considerations.adoc[Failure Considerations]
+* xref:concept-docs:encryption.adoc[Field Level Encryption]
+* xref:concept-docs:errors.adoc[Errors and Diagnostics]
+** xref:concept-docs:health-check.adoc[Health Check]
+** xref:concept-docs:response-time-observability.adoc[Tracing]
 * xref:concept-docs:durability-replication-failure-considerations.adoc[Failure Considerations]
 * xref:concept-docs:encryption.adoc[Field Level Encryption]
 * xref:concept-docs:http-services.adoc[Service Selection]
+** xref:concept-docs:analytics-for-sdk-users.adoc[Analytics]
+** xref:concept-docs:understanding-views.adoc[Map Reduce Views]
+** xref:concept-docs:n1ql-query.adoc[Query]
+** xref:concept-docs:full-text-search-overview.adoc[Search]
 
 .Reference
 * https://godoc.org/gopkg.in/couchbase/gocb.v1[Go API Reference]

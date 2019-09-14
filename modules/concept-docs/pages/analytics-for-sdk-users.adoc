@@ -1,0 +1,26 @@
+= Analytics
+:nav-title: Analytics for SDK Users
+:page-topic-type: concept
+:page-aliases: analytics,
+
+[abstract]
+Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
+
+include::partial$alpha-warning.adoc[]
+
+
+For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operation.
+
+
+////
+== MetaData
+
+=== List of Metrics
+
+////
+
+
+== Additional Resources
+
+* Start with our  xref:6.5@server:analytics:primer-beer.adoc[introductory primer].
+* Read the practical introduction xref:howtos:analytics-using-sdk.adoc[using analytics from the SDK].
