@@ -1,0 +1,8 @@
+= Collecting Information & Logging
+:nav-title: Logging
+:page-topic-type: howto
+
+[abstract]
+Logging
+
+include::partial$alpha-warning.adoc[]
