@@ -68,7 +68,7 @@ Uses `ClientContextID string` default is a random UUID
 Does not usually have to be set, as the client sets it based on the timeout on the operation. 
 Uses `ServerSideTimeout time.Duration`, and defaults to the Analytics timeout set on the client (75s).
 Note that any timeout set using `context.Context` will also be used to set this value.
-This can be adjusted at the xref:project-docs:client-settings.html#timeout-options[cluster global config level].
+This can be adjusted at the xref:ref:client-settings.html#timeout-options[cluster global config level].
 * *Priority*, set if the request should have priority over others.
 The `Priority bool` option defaults to `false`.
 
