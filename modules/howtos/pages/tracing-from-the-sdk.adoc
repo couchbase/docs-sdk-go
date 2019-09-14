@@ -1,0 +1,18 @@
+= Tracing from the Go SDK
+:navtitle: Tracing from the SDK
+:page-topic-type: howto
+
+[abstract]
+Threshold logging and Response Time Observability.
+
+// https://issues.couchbase.com/browse/DOC-4791 - 
+
+
+== Opentelemetry
+
+This feature is awaiting upstream implementation in the OpenTelemetry project -- which combines OpenTracing with OpenCensus.
+
+
+// need KV _and_ query examples - with note on what it *doesn't* tell you (server-side timings).
+
+
