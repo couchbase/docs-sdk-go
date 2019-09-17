@@ -18,6 +18,20 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 1.6.3 (17 September 2019)
+
+Version 1.6.3 is a maintenance for the 1.6.x series.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-595[GOCBC-595]: 
+Improved bucket manager error messages.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-592[GOCBC-592]:
+Fixed issue where the deprecated CertificateAuthenticator could not be used without a runtime error.
+
 == Version 1.6.2 (19 June 2019)
 
 Version 1.6.2 is a maintenance for the 1.6.x series.
