@@ -27,7 +27,7 @@ You should use sub-document operations when you are modifying only portions of a
 
 
 IMPORTANT: The Sub-Document operations described on this page are for _Key-Value_ requests only: they are not related to Sub-Document N1QL queries.
-(Sub-document N1QL queries are explained in the section xref:n1ql-query.adoc[Querying with N1QL].)	
+(Sub-document N1QL queries are explained in the section xref:n1ql-queries-with-sdk.adoc[Querying with N1QL].)	
 
 In order to use Sub-Document operations you need to specify a _path_ indicating the location of the Sub-Document.
 The _path_ follows <<Path syntax,N1QL syntax>>.
@@ -321,7 +321,7 @@ include::example$subdoc.go[tag=concurrent]
 Even when modifying the _same_ part of the document, operations will not necessarily conflict.
 For example, two concurrent _ArrayAppend_ operations to the same array will both succeed, never overwriting the other.
 
-So in some cases the application will not need to supply a xref:concurrent-mutations-cluster.adoc[CAS] value to protect against concurrent modifications.
+So in some cases the application will not need to supply a xref:concurrent-document-mutations.adoc[CAS] value to protect against concurrent modifications.
 If CAS is required then it can be provided like this:
 
 .Performing concurrent Sub Document mutations with CAS
@@ -340,7 +340,7 @@ Couchbase's xref:1.6@go-sdk::durability.adoc[traditional durability], using `Per
 include::example$subdoc.go[tag=traddurability]
 ----
 
-In Couchbase Server 6.5 and up, this is built upon with xref:concept-docs:durability.adoc#synchronous-durability[Synchronous Replication], 
+In Couchbase Server 6.5 and up, this is built upon with xref:concept-docs:durability-replication-failure-considerations.adoc[Synchronous Replication], 
 which uses the concept of xref:6.5@server:learn:data/durability.adoc#majority[majority] to indicate the number of configured Data Service nodes to which commitment is required:
 
 .Performing Sub Document mutations with synchronous durability

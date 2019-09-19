@@ -1,0 +1,8 @@
+= Response Time Observability with Open Telemetry
+:nav-title: Response Time Observability
+:page-topic-type: concept
+
+[abstract]
+RTO - open tracing using the Open Telemetry API.
+
+include::partial$alpha-warning.adoc[]

@@ -1,0 +1,11 @@
+= Errors, Exceptions, and Diagnostics
+:nav-title: Errors & Diagnostics
+:page-topic-type: concept
+:page-aliases: 
+
+[abstract]
+When the unexpected happens.
+
+
+include::partial$alpha-warning.adoc[]
+

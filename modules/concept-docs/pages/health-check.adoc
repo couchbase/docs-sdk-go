@@ -1,0 +1,8 @@
+= Health Check Diagnostics
+:nav-title: Health Check
+:page-topic-type: concept
+
+[abstract]
+Health Check: ping, diagnostics.
+
+include::partial$alpha-warning.adoc[]
