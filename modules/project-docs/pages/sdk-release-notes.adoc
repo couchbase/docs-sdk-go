@@ -13,7 +13,7 @@ $ go get github.com/couchbase/gocb/v2@v2.0.0-beta.1
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-Currently we support using the Couchbase Go Client with Go releases 1.12 and 1.11.
+Currently we support using the Couchbase Go Client with Go releases 1.13 and 1.12.
 Older versions may work, but are not supported. 
 For details on installation using older versions please see xref:hello-world:start-using-sdk.adoc[Start Using the SDK]
 
@@ -23,6 +23,7 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+
 == Version 2.0 Beta1 (3 October 2019)
 
 Version 2.0.0-beta1 is the first beta release for the Go SDK 2.0.0.
@@ -30,16 +31,16 @@ Version 2.0.0-beta1 is the first beta release for the Go SDK 2.0.0.
 === New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-485[GOCBC-485]:
-Add support for GCCCP meaning the ability to execute cluster level queries without first opening a bucket.
+Added support for GCCCP meaning the ability to execute cluster level queries without first opening a bucket.
 * https://issues.couchbase.com/browse/GOCBC-479[GOCBC-479], https://issues.couchbase.com/browse/GOCBC-480[GOCBC-480], https://issues.couchbase.com/browse/GOCBC-480[GOCBC-619]:
-Update transcoders to add several new transcoders out of the box as well as changing the default behaviour.
-Add Serializer support to views and search.
+Updated transcoders to add several new transcoders out of the box as well as changing the default behaviour.
+Added Serializer support to views and search.
 * https://issues.couchbase.com/browse/GOCBC-524[GOCBC-524]:
-Fail fast if both synchronous and observability based durability are set.
+Now fails fast if both synchronous and observability based durability are set.
 * https://issues.couchbase.com/browse/GOCBC-535[GOCBC-535]:
-Add data structures API.
+Added data structures API.
 * https://issues.couchbase.com/browse/GOCBC-536[GOCBC-536]:
-Add query fast prepare support.
+Added query fast prepare support.
 * https://issues.couchbase.com/browse/GOCBC-540[GOCBC-540]:
 Enabled mutation tokens by default and removed CAS based observability based durability.
 * https://issues.couchbase.com/browse/GOCBC-560[GOCBC-560], https://issues.couchbase.com/browse/GOCBC-563[GOCBC-563]:
@@ -47,18 +48,19 @@ Changed the subdoc API to be simpler and easier to use.
 * https://issues.couchbase.com/browse/GOCBC-603[GOCBC-603]:
 Changed geo search query functions so that parameters are ordered lon, lat rather than lat,lon.
 * https://issues.couchbase.com/browse/GOCBC-520[GOCBC-520]:
-Add DesignDocument suffix to view manager function names.
+Added DesignDocument suffix to view manager function names.
 * https://issues.couchbase.com/browse/GOCBC-521[GOCBC-521]:
-Add Index suffix to search index manager function names.
+Added Index suffix to search index manager function names.
 * https://issues.couchbase.com/browse/GOCBC-522[GOCBC-522]:
-Add AnalyzeDoc function to search index manager to allow users to test how a document will be analyzed by an index.
+Added AnalyzeDoc function to search index manager to allow users to test how a document will be analyzed by an index.
 
-A large number of minor changes updating names and behavioural tweaks to improve cross SDK consistency.
+A large number of minor changes updating names and behavioural tweaks to improve cross-SDK consistency.
 
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-591[GOCBC-591]:
 Fixed issue that was causing authentication errors for view queries during a graceful failover.
+
 
 == Version 2.0 Alpha5 (8 August 2019)
 
