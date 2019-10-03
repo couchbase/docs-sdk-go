@@ -1,6 +1,6 @@
 name: go-sdk
 version: '2.0'
-prerelease: ALPHA
+prerelease: BETA
 title: Go SDK
 start_page: hello-world:start-using-sdk.adoc
 nav:
