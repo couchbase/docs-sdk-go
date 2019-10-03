@@ -25,7 +25,7 @@ func main() {
 	}
 
 	bucket := cluster.Bucket("default", &gocb.BucketOptions{})
-	collection := bucket.DefaultCollection(nil)
+	collection := bucket.DefaultCollection()
 	// #end::connect[]
 
 	// #tag::loadData[]
@@ -74,7 +74,7 @@ func main() {
 			batches[i%numBatches] = []gocb.BulkOp{}
 		}
 		batches[i%numBatches] = append(batches[i%numBatches], &gocb.UpsertOp{
-			Key:   f.Name,
+			ID:    f.Name,
 			Value: docContent,
 		})
 		numDocs++

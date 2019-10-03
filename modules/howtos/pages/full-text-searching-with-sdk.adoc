@@ -1,4 +1,157 @@
-= Full Text Search from the SDK
+= Full Text Search (FTS) Using the .Go SDK with Couchbase Server
+:navtitle: Searching from the SDK
+:page-topic-type: howto
 
-(FTS)
+
+[abstract]
+You can use the Full Text Search service (FTS) to create queryable full-text indexes in Couchbase Server.
+
+include::partial$beta-warning.adoc[]
+
+Full Text Search or FTS allows you to create, manage, and query full text indexes on JSON documents stored in Couchbase buckets.
+It uses natural language processing for querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
+Some of the supported query types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
+The Go SDK exposes an API for performing FTS queries which abstracts some of the complexity of using the underlying REST API.
+
+
+// As of Couchbase Server 6.5, FTS...
+
+== Examples
+
+For the purposes of the below examples we will use the Travel Sample sample bucket with the below Full Text Search index.
+
+----
+{
+  "name": "travel-sample-index-hotel-description",
+  "type": "fulltext-index",
+  "params": {
+    "doc_config": {
+      "mode": "type_field",
+      "type_field": "type"
+    },
+    "mapping": {
+      "analysis": {
+        "analyzers": {
+          "myUnicodeAnalyzer": {
+            "tokenizer": "unicode",
+            "type": "custom"
+          }
+        }
+      },
+      "default_analyzer": "standard",
+      "default_datetime_parser": "dateTimeOptional",
+      "default_field": "_all",
+      "default_mapping": {
+        "dynamic": true,
+        "enabled": false
+      },
+      "default_type": "_default",
+      "index_dynamic": true,
+      "store_dynamic": true,
+      "type_field": "type",
+      "types": {
+        "hotel": {
+          "dynamic": false,
+          "enabled": true,
+          "properties": {
+            "description": {
+              "enabled": true,
+              "dynamic": false,
+              "fields": [
+                {
+                  "include_in_all": true,
+                  "include_term_vectors": true,
+                  "index": true,
+                  "name": "description",
+                  "store": true,
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "store": {
+      "kvStoreName": "mossStore"
+    }
+  },
+  "sourceType": "couchbase",
+  "sourceName": "travel-sample",
+  "sourceUUID": "",
+  "sourceParams": {},
+  "planParams": {
+    "maxPartitionsPerPIndex": 171,
+    "numReplicas": 0
+  },
+    "uuid": ""
+}
+----
+
+Search queries are executed at Cluster level (not bucket or collection).
+As of Couchbase Server 6.5+ they do also not require a bucket to be opened first.
+In older versions of Couchbase Server, even though executed at Cluster level, a bucket must be opened before performing queries.
+Here is a simple MatchQuery that looks for the text “swanky” using a defined index:
+
+[source,golang,indent=0]
+----
+include::example$fts.go[tag=matchquery]
+----
+
+All simple query types are created in the same manner, some have additional properties, which can be seen in common query type descriptions.
+Couchbase FTS's xref:6.5@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the range wanted.
+Here is a date range query that looks for dates between 1st January 2019 and 31st January, the second parameter is whether the date should be considered inclusive:
+
+[source,golang,indent=0]
+----
+include::example$fts.go[tag=daterangequery]
+----
+
+Queries can also be combined together.
+A conjunction query contains multiple child queries; its result documents must satisfy all of the child queries:
+
+[source,golang,indent=0]
+----
+include::example$fts.go[tag=conjunctionquery]
+----
+
+== Working with Results
+
+The result of a search query has three components: rows, facets, and metdata. 
+Rows are the documents that match the query. 
+Facets allow the aggregation of information collected on a particular result set. 
+Metdata holds additional information not directly related to your query, 
+such as success total hits and how long the query took to execute in the cluster.
+
+.Iterating Rows
+Here we are iterating over the rows that were returned in the results.
+Note that `Fields` is a special case, where it's a function.
+`Fields` will include any fields that were requested as part of the SearchQuery (`Fields` option within the options block).
+
+[source,golang,indent=0]
+----
+include::example$fts.go[tag=iteratingrows]
+----
+
+Take care to ensure you call `Close` after accessing rows and check for any errors returned.
+This will also close the HTTP stream if a large resultset was requested.
+
+.Iterating facets
+Facets can only be accessed once `Close` has been called on rows.
+
+[source,golang,indent=0]
+----
+include::example$fts.go[tag=iteratingfacets]
+----
+
+
+== Consistency
+
+Like the Couchbase Query Service,
+FTS allows `RequestPlus` queries -- _Read-Your-Own_Writes (RYOW)_ consistency, ensuring results contain information from updated indexes:
+
+[source,golang,indent=0]
+----
+include::example$fts.go[tag=consistency]
+----
 

@@ -27,7 +27,7 @@ func main() {
 	}
 
 	bucket := cluster.Bucket("default", &gocb.BucketOptions{})
-	collection := bucket.DefaultCollection(nil)
+	collection := bucket.DefaultCollection()
 	// #end::connect[]
 
 	// #tag::workers[]
