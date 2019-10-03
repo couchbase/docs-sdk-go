@@ -4,9 +4,7 @@
 [abstract]
 The Couchbase Go SDK allows you to connect to a Couchbase cluster from Go. It is a native Go library and uses the high-performance gocbcore to handle communicating to the cluster over Couchbase’s binary protocols
 
-WARNING: These pages cover the _beta_ of the Couchbase Go SDK -- 2.0.
-As such they are likely to change without notice.
-The _beta_ code _should not_ be used in production.
+include::partial$beta-warning.adoc[]
 
 == Installing the SDK
 
