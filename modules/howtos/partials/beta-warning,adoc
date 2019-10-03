@@ -1,7 +1,7 @@
 // Required attributes:
 [WARNING]
 ====
-These pages cover the _Beta_ release of the Couchbase Java SDK.
+These pages cover the _Beta_ release of the Couchbase Go SDK.
 The API interface is stable, but could change for bug fixes during the Beta process.
 New features are likely to be added.
 
