@@ -4,7 +4,7 @@
 :page-aliases: handling-error-conditions
 :source-language: go
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]
 
 [abstract]
 Errors are inevitable.

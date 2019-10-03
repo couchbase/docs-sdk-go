@@ -40,6 +40,8 @@ Timeout sets the timeout value for the underlying network connection.
 include::example$kv.go[tag=insertoptions]
 ----
 
+=== Timeouts
+
 As well as explicitly setting the _Timeout_ value for an operation, the Go SDK also supports setting timeouts via the Golang https://golang.org/pkg/context/[`context.Context`] mechanism.
 Using `context.Context` also provides a means to abort requests on the fly, the SDK itself does expose a way to abort requests other than this mechanism.
 There are three different ways of setting a timeout on an operation: operation level timeout, `context.Context`, and the global level `KVTimeout`.
@@ -59,6 +61,8 @@ Below we'll set `Context` with a _Replace_ operation.
 include::example$kv.go[tag=replacecontext]
 ----
 
+=== CAS
+
 Setting a Compare and Swap (CAS) value is a form of optimistic locking - dealt with in depth in the xref:concurrent-document-mutations.adoc[CAS page].
 Here we just note that the CAS is a value representing the current state of an item; each time the item is modified, its CAS changes.
 The CAS value is returned as part of a document’s metadata whenever a document is accessed.
@@ -70,12 +74,14 @@ include::example$kv.go[tag=replacecas]
 ----
 
 Typically we would want to use CAS for something more meaningful like performing a Get, modifying the result and updating the document.
-By using the CAS value we know that no-one else can have modified this document and updated it before our update.
+By using the CAS value we know that if anyone else modified this document and updated it before our update then ours will error.
 
 [source,golang,indent=0]
 ----
 include::example$kv.go[tag=update]
 ----
+
+=== Durability
 
 Expiry sets an explicit time to live (TTL) for a document in seconds, for which you can also xref:sdk-xattr-example.adoc[see a more detailed example of TTL discovery] later in the docs.
 For a discussion of item (Document) _vs_ Bucket expiration, see the 

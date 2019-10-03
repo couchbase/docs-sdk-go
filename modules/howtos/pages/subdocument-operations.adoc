@@ -3,12 +3,11 @@
 :page-topic-type: howto
 include::partial$attributes.adoc[]
 :lang: Go
-:version: 2.0.0 alpha.3
 
 [abstract]
 Sub-Document operations can be used to efficiently access and change parts of documents.
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]
 
 Sub-Document operations may be quicker and more network-efficient than _full-document_ operations such as _Upsert_, _Replace_ and _Get_ because they only transmit the accessed sections of the document over the network.
 
@@ -65,9 +64,18 @@ Considering the document:
 
 The paths `name`, `addresses.billing.country` and `purchases.complete[0]` are all valid paths.
 
+== LookupIn and MutateIn
+
+The _LookupIn_ and _MutateIn_ operations the executors for subdocument specifications.
+These two functions are located on the `Collection` and both accept a list of "Specs" which describe what work needs to be done.
+Each different type of operation has a corresponding "spec", for example `GetSpec` or `UpsertSpec`.
+Other than specs which are unique to subdoc the naming should be very similar to corresponding KV operations with "Spec" added on the end.
+Note: Unlike KV or the _LookupIn_ and _MutateIn_ operations the "Spec" functions live on the root level, i.e. `gocb.GetSpec`
+These specs can be combined to fetch or mutate multiple fields in a document, more detail can be seen in <<executing-multiple-operations,_Executing Multiple Documents_>>. 
+
 == Retrieving
 
-The _lookupIn_ operations query the document for certain path(s); these path(s) are then returned.
+The _LookupIn_ operations query the document for certain path(s); these path(s) are then returned.
 You have a choice of actually retrieving the document path using the _Get_ Sub-Document operation, or simply querying the existence of the path using the _Exists_ Sub-Document operation.
 The latter saves even more bandwidth by not retrieving the contents of the path if it is not needed.
 
@@ -107,7 +115,7 @@ The simplest of these operations is _Upsert_, which, similar to the fulldoc-leve
 include::example$subdoc.go[tag=mutateInUpsert]
 ----
 
-Likewise, the _insert_ operation will only add the new value to the path if it does not exist:
+Likewise, the _Insert_ operation will only add the new value to the path if it does not exist:
 
 .Inserting a Sub-Document
 [source,golang,indent=0]
@@ -153,6 +161,9 @@ Simply initialize the document with an empty array and then use the empty path f
 include::example$subdoc.go[tag=mutateInArrayDoc]
 ----
 
+Note that in the above we carried over the CAS value from the Upsert operation to ensure that if someone else modified the document first then our change would error.
+You can read more about CAS in the xref:concurrent-document-mutations.adoc[CAS page].
+
 If you wish to add multiple values to an array, you may do so by passing multiple values to the _ArrayAppend_, _ArrayPrepend_, or _ArrayInsert_ operations.
 
 Be sure to know the difference between the use of the _HasMultiple_ option being false (in which case the collection is inserted as a single element in the array, as a sub-array) and it being true (in which case the elements are appended individually to the array):
@@ -170,6 +181,7 @@ include::example$subdoc.go[tag=mutateInArrayDocMultiSingle]
 ----
 
 Note that using _HasMultiple_ with a single _ArrayAppend_ operation results in greater performance increase and bandwidth savings than simply specifying a single _ArrayAppend_ for each element.
+Below we set elements individually to achieve the same as the `HasMultiple` example above:
 
 .Adding multiple elements to array (slow)
 [source,golang,indent=0]
@@ -253,6 +265,7 @@ Full-document counters will use normal C semantics for overflow (in which the ov
 
 * Sub-Document counter operations can operate on any numeric value within a document, while full-document counter operations require a specially formatted counter document with only the counter value.
 
+[#executing-multiple-operations]
 == Executing Multiple Operations
 
 Multiple Sub-Document operations can be executed at once on the same document, allowing you to retrieve or modify several Sub-Documents at once.
@@ -358,9 +371,12 @@ Some of the errors include:
 
 * *Path does not exist*: When retrieving a path, this means the path does not exist in the document.
 When inserting or upserting a path, this means the _immediate parent_ does not exist.
+This can be detected with `gocb.IsPathNotFoundError(err)`.
 * *Path already exists*: In the context of an _Insert_, it means the given path already exists.
 In the context of _ArrayAddUnique_, it means the given value already exists.
+This can be detected with `gocb.IsPathExistsError(err)`.
 * *Path mismatch*: This means the path may exist in the document, but that there is a type conflict between the path in the document and the path in the command.
+This can be detected with `gocb.IsPathMismatchError(err)`.
 
 Consider the document:
 
