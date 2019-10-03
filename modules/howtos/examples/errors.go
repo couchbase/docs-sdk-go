@@ -27,7 +27,7 @@ func main() {
 
 	// #tag::collection[]
 	// get a collection reference
-	collection := bucket.DefaultCollection(&gocb.CollectionOptions{})
+	collection := bucket.DefaultCollection()
 	// for a named collection and scope
 	// collection := bucket.Scope("my-scope").Collection("my-collection", &gocb.CollectionOptions{})
 	// #end::collection[]
@@ -152,11 +152,10 @@ func main() {
 		}
 	}
 	indexName := "my-index"
-	query := gocb.SearchQuery{Name: indexName, Query: gocb.NewMatchQuery("matchme")}
-	searchResult, err := cluster.SearchQuery(query, nil)
+	searchResult, err := cluster.SearchQuery(indexName, gocb.NewMatchQuery("matchme"), nil)
 	maybePrintSearchError(err)
 
-	var searchRow gocb.SearchResultHit
+	var searchRow gocb.SearchRow
 	for searchResult.Next(&searchRow) {
 		// ...
 	}
