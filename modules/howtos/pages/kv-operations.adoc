@@ -3,13 +3,12 @@
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
 
-WARNING: These pages cover the first _Developer Preview_ of the Couchbase Go SDK -- 2.0 _alpha_.
+WARNING: These pages cover the first _beta_ of the Couchbase Go SDK -- 2.0.
 As such they are likely to change without notice.
-The _alpha_ code _should not_ be used in production.
+The _beta_ code _should not_ be used in production.
 
-//The complete code sample used on this page can be downloaded from
-//  xref::example$document.cs[here]
-//- from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Bucket operations.
+The complete code sample used on this page can be downloaded from xref::example$kv.go[here]
+- from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Collection operations.
 
 
 == Documents
@@ -27,105 +26,100 @@ Make sure you're familiar with the basics of authorization and connecting to a C
 We're going to expand on the short _Upsert_ example we used there, adding options as we move through the various CRUD operations.
 Here is the _Insert_ operation at its simplest:
 
-[source,golang]
+[source,golang,indent=0]
 ----
-Insert
-document := struct {
-    Foo string `json:"foo"`
-    Bar string `json:"bar"`
-}{Foo: "bar", Bar: "foo"}
-result, err := col.Insert("document-key", &document, nil)
+include::example$kv.go[tag=insert]
 ----
 
-Options may be added to operations:
-
-[source,golang]
-----
-Insert (with options)
-document := struct {
-    Foo string `json:"foo"`
-    Bar string `json:"bar"`
-}{Foo: "bar", Bar: "foo"}
-result, err := col.Insert("document-key", &document, &gocb.InsertOptions{
-    Timeout: 3 * time.Second,
-})
-----
-
-_Timeout_ is an optional parameter which in the Go SDK has a type value of `time.Duration`.
+Options like timeout may also be added to operations.
+_Timeout_ in the Go SDK has a type value of `time.Duration`.
 Timeout sets the timeout value for the underlying network connection.
-We will add to these options for the _Replace_ example:
+
+[source,golang,indent=0]
+----
+include::example$kv.go[tag=insertoptions]
+----
+
+As well as explicitly setting the _Timeout_ value for an operation, the Go SDK also supports setting timeouts via the Golang https://golang.org/pkg/context/[`context.Context`] mechanism.
+Using `context.Context` also provides a means to abort requests on the fly, the SDK itself does expose a way to abort requests other than this mechanism.
+There are three different ways of setting a timeout on an operation: operation level timeout, `context.Context`, and the global level `KVTimeout`.
+All three could be set at the same time for a given operation so the following rules are followed for picking a timeout to use:
+
+1) If the operation level timeout is set then that will be selected over the global timeout.
+2a) If `Context` is set then the shortest of the `Context` deadline and the timeout from 1 will be selected.
+2b) If `Context` is not set then the timeout from 1 will be selected.
+
+Under the hood the SDK uses `context.Context` for all timeouts and will return a gocb timeout error for timeouts for all 3 of these options.
+Timeouts can be checked for with the `gocb.IsTimeoutError(err)` function.
+
+Below we'll set `Context` with a _Replace_ operation.
+
+[source,golang]
+----
+include::example$kv.go[tag=replacecontext]
+----
 
 Setting a Compare and Swap (CAS) value is a form of optimistic locking - dealt with in depth in the xref:concurrent-document-mutations.adoc[CAS page].
 Here we just note that the CAS is a value representing the current state of an item; each time the item is modified, its CAS changes.
 The CAS value is returned as part of a document’s metadata whenever a document is accessed.
 Without explicitly setting it, a newly-created document would have a CAS value of _0_.
 
-[source,golang]
+[source,golang,indent=0]
 ----
-document := struct {
-    Foo string `json:"foo"`
-    Bar string `json:"bar"`
-}{Foo: "foo", Bar: "bar"}
-result, err := col.Replace("document-key", &document, &gocb.ReplaceOptions{
-    Timeout:    3 * time.Second,
-    Cas:        12345,
-    Expiration: 60,
-})
+include::example$kv.go[tag=replacecas]
 ----
 
-Expiration sets an explicit time to live (TTL) for a document in seconds, for which you can also xref:sdk-xattr-example.adoc[see a more detailed example of TTL discovery] later in the docs.
-We'll discuss modifying `Expiration` in more details xref:#net-modifying-expiration[below].
+Typically we would want to use CAS for something more meaningful like performing a Get, modifying the result and updating the document.
+By using the CAS value we know that no-one else can have modified this document and updated it before our update.
+
+[source,golang,indent=0]
+----
+include::example$kv.go[tag=update]
+----
+
+Expiry sets an explicit time to live (TTL) for a document in seconds, for which you can also xref:sdk-xattr-example.adoc[see a more detailed example of TTL discovery] later in the docs.
 For a discussion of item (Document) _vs_ Bucket expiration, see the 
 xref:6.0@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
 
-[source,golang]
+[source,golang,indent=0]
 ----
-document := struct {
-    Foo string `json:"foo"`
-    Bar string `json:"bar"`
-}{Foo: "foo", Bar: "bar"}
-ctx, cancelFunc := context.WithTimeout(context.Background(), 3*time.Second)
-result, err := col.Replace("document-key", &document, &gocb.ReplaceOptions{
-    Context:    ctx,
-    Cas:        12345,
-    Expiration: 60,
-})
+include::example$kv.go[tag=expiry]
 ----
 
-As well as explicitly setting the _Timeout_ value for an operation, the Go SDK also supports setting timeouts via `context.Context`.
-
-[source,golang]
-----
-document := struct {
-    Foo string `json:"foo"`
-    Bar string `json:"bar"`
-}{Foo: "foo", Bar: "bar"}
-result, err := col.Upsert("document-key", &document, &gocb.UpsertOptions{
-    Timeout:     3 * time.Second,
-    Expiration:  60,
-    ReplicateTo: 1,
-    PersistTo:   1,
-})
-----
-
-Here we have added _Durability_ options, namely `PersistTo` and `ReplicateTo`.
-In Couchbase Server releases before 6.5, Durability was set with these two options -- see the xref:1.6@go-sdk::durability.adoc[6.0 Durability documentation] -- covering  how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist. 
+In Couchbase Server releases before 6.5, Durability was set with two options -- see the xref:1.6@go-sdk::durability.adoc[6.0 Durability documentation] -- covering how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist. 
 Couchbase Data Platform 6.5 refines these two options, with xref:6.5@server:learn:data/durability.adoc[Synchronous Replication] -- although they remain essentially the same in use.
 // -- as well as adding the option of xref:transactions.adoc[atomic document transactions].
+The Go SDK exposes both of these forms of Durability.
 
-The following example demonstrates using the newer durability features available in Couchbase server 6.5 onwards.
+First we will cover the newer durability features available in Couchbase server 6.5 onwards.
+The SDK exposes three durability levels:
 
-[source,golang]
 ----
-document := struct {
-    Foo string `json:"foo"`
-    Bar string `json:"bar"`
-}{Foo: "foo", Bar: "bar"}
-result, err := col.Upsert("document-key", &document, &gocb.UpsertOptions{
-    Timeout:     3 * time.Second,
-    Expiration:  60,
-    DurabilityLevel: gocb.DurabilityLevelMajority,
-})
+// DurabilityLevelMajority specifies that a mutation must be replicated (held in memory) to a majority of nodes.
+DurabilityLevelMajority = DurabilityLevel(1)
+
+// DurabilityLevelMajorityAndPersistOnMaster specifies that a mutation must be replicated (held in memory) to a
+// majority of nodes and also persisted (written to disk) on the active node.
+DurabilityLevelMajorityAndPersistOnMaster = DurabilityLevel(2)
+
+// DurabilityLevelPersistToMajority specifies that a mutation must be persisted (written to disk) to a majority
+// of nodes.
+DurabilityLevelPersistToMajority = DurabilityLevel(3)
+----
+
+Below we can see how to set this on an operation:
+
+[source,golang,indent=0]
+----
+include::example$kv.go[tag=durability]
+----
+
+The older type of durability, observe based durability, works by monitoring the server to ensure that the change has been replicated or persisted to the required number of nodes within
+the timeout specified on the operation. Here we can see how that is set:
+
+[source,golang,indent=0]
+----
+include::example$kv.go[tag=observebased]
 ----
 
 [TIP]
@@ -139,66 +133,44 @@ Where the number of operations or other circumstances make bandwidth a significa
 
 Using the `Get()` method with the document key can be done in a similar fashion to the other operations:
 
-[source,golang]
+[source,golang,indent=0]
 ----
-type doc struct {
-    Foo string `json:"foo"`
-    Bar string `json:"bar"`
-}
-result, err := col.Get("document-key", nil)
-var content doc
-err = result.Content(&content)
+include::example$kv.go[tag=get]
 ----
 
 Timeout can also be set, as in the earlier `Insert` example:
 
-[source,golang]
+[source,golang,indent=0]
 ----
-type doc struct {
-    Foo string `json:"foo"`
-    Bar string `json:"bar"`
-}
-result, err := col.Get("document-key", &gocb.GetOptions{
-    Timeout: 3 * time.Second,
-})
-var content doc
-err = result.Content(&content)
+include::example$kv.go[tag=gettimeout]
 ----
-
 
 == Removing
 
 When removing a document, you will have the same concern for durability as with any additive modification to the Bucket:
 
-Remove (with options)
-[source,golang]
+[source,golang,indent=0]
 ----
-result, err := col.Remove("document-key", &gocb.RemoveOptions{
-    Timeout:     5 * time.Second,
-    ReplicateTo: 1,
-    PersistTo:   1,
-    Cas:         12345,
-})
+include::example$kv.go[tag=remove]
 ----
 
 == Expiration / TTL
 
-
+We already touched on how to set `Expiry` on an operation but we didn't discuss how to handle extending that expiry time.
 By default, Couchbase documents do not expire, but transient or temporary data may be needed for user sessions, caches, or other temporary documents. 
 You can use expiration values on documents to handle transient data.
+To prevent a document that already has expiry from expiring you can use `Touch` operations which will extend the expiry by the time specified.
 
-[source,golang]
+[source,golang,indent=0]
 ----
-result, err := collection.Touch("document-key", 600, nil)
+include::example$kv.go[tag=touch]
 ----
 
-A network timeout can be set with the optional `TouchOptions{}`, in the same fashion as earlier examples on this page:
+If you want to get the document at the same time as extending expiry then you can use `GetAndTouch`.
 
-[source,golang]
+[source,golang,indent=0]
 ----
-result, err := collection.Touch("document-key", 600, &gocb.TouchOptions{
-    Timeout: 5 * time.Second,
-})
+include::example$kv.go[tag=getandtouch]
 ----
 
 == Atomic document modifications
@@ -206,51 +178,18 @@ result, err := collection.Touch("document-key", 600, &gocb.TouchOptions{
 The value of a document can be increased or decreased atomically using `Binary().Increment()` and `Binary().Decrement()`.
 
 .Increment
-[source,golang]
+[source,golang,indent=0]
 ----
-// increment binary value by 1, if document doesn’t exist, seed it at 1000
-collection.Binary().Increment("document-key", &gocb.CounterOptions{
-    Initial: 1000,
-    Delta:   1,
-})
-----
-
-.Increment (with options)
-[source,golang]
-----
-collection.Binary().Increment("document-key", &gocb.CounterOptions{
-    Initial:    1000,
-    Delta:      1,
-    Timeout:    5 * time.Second,
-    Expiration: 3600,
-    Cas:        cas,
-})
+include::example$kv.go[tag=increment]
 ----
 
 .Decrement
-[source,golang]
+[source,golang,indent=0]
 ----
-// decrement binary value by 1, if document doesn’t exist, seed it at 1000
-collection.Binary().Decrement("document-key", &gocb.CounterOptions{
-    Initial: 1000,
-    Delta:   1,
-})
+include::example$kv.go[tag=decrement]
 ----
 
-.Decrement (with options)
-[source,golang]
-----
-// decrement binary value by 1, if document doesn’t exist, seed it at 1000
-collection.Binary().Decrement("document-key", &gocb.CounterOptions{
-    Initial:    1000,
-    Delta:      1,
-    Timeout:    5 * time.Second,
-    Expiration: 3600,
-    Cas:        cas,
-})
-----
-
-NOTE: Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change
+NOTE: Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change.
 
 == Additional Resources
 
