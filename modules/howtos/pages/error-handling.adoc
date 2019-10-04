@@ -251,11 +251,11 @@ include::example$errors.go[tag=viewerror]
 == Additional Resources
 Errors & Exception handling is an expansive topic.
 Here, we have covered examples of the kinds of exception scenarios that you are most likely to face.
-More fundamentally, you also need to weigh up xref:concept-docs:failure-considerations.adoc[concepts of durability].
+More fundamentally, you also need to weigh up xref:concept-docs:durability-replication-failure-considerations.adoc[concepts of durability].
 
 Diagnostic methods are available to check on the xref:health-check.adoc[health if the cluster], and the xref:tracing-from-the-sdk.adoc[health of the network].
 
 Logging methods are dependent upon the platform and SDK used.
 We offer xref:collecting-information-and-logging.adoc[recommendations and practical examples].
 
-We have a xref:ref:exceptions.adoc[listing of error messages], with some pointers to what to do when you encounter them.
+We have a xref:ref:error-codes.adoc[listing of error messages], with some pointers to what to do when you encounter them.
