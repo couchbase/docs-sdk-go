@@ -6,7 +6,7 @@
 [abstract]
 Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]
 
 The N1QL Query Language provides a familiar, SQL-like experience for querying documents stored in Couchbase.
 You can xref:6.5@server:n1ql:n1ql-language-reference/index.adoc[read up on the language in our reference guide], 

@@ -6,7 +6,7 @@
 [abstract]
 Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]
 
 
 For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operation.

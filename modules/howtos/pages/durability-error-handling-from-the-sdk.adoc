@@ -5,7 +5,7 @@
 Data durability is handled by Couchbase Server, but the application programmer needs to code for the best way of handling problems for their particular application.
 This example case covers timeouts, node failures, and how to deal with both Couchbase Server's Synchronous Replication, and the older Server versions' Enhanced Durability.
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]
 
 _Code sample will be here shortly after the Retry API stabilizes._
 

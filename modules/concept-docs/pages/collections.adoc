@@ -3,6 +3,6 @@
 [abstract]
 Available as a _Developer Preview_ in Couchbase Server 6.5.
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]
 
 Please see the xref:6.5@server:developer-preview:collections/collections-overview.adoc[Collections Overview documents] in the Server docs.

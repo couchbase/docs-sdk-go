@@ -8,7 +8,7 @@ Couchbase's use of JSON as a storage format allows powerful search and query ove
 Several data structures are supported by the SDK, including map, list, queue, and set.
 
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]
 
 include::6.5@sdk:shared:partial$data-model.adoc[tag=intro]
 

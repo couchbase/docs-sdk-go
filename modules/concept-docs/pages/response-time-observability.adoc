@@ -5,4 +5,4 @@
 [abstract]
 RTO - open tracing using the Open Telemetry API.
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]

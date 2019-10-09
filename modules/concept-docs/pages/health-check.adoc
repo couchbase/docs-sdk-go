@@ -5,4 +5,4 @@
 [abstract]
 Health Check: ping, diagnostics.
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]

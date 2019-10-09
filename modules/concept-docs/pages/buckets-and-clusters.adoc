@@ -6,7 +6,7 @@
 [abstract]
 The Couchbase Go SDK provides an API for managing a Couchbase cluster programmatically.
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]
 
 
 Management operations in the Go SDK may be performed through several interfaces depending on the object:

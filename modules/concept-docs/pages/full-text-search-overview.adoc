@@ -5,4 +5,4 @@
 [abstract]
 FTS.
 
-include::partial$alpha-warning.adoc[]
+include::partial$beta-warning.adoc[]
