@@ -6,6 +6,11 @@ The Couchbase Go SDK allows you to connect to a Couchbase cluster from Go. It is
 
 include::partial$beta-warning.adoc[]
 
+
+The Couchbase Go SDK 3.0 is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, and adding support for future Couchbase Server features like Collections and Scopes (available in Couchbase Server 6.5 as a xref:concept-docs:collections.adoc[developer preview]).
+The Go 2.0 SDK introduces support for `context.Context` across all operations and improved error handling providing extra error information.
+
+
 == Installing the SDK
 
 Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. If you are using Go 1.11.1+ with https://github.com/golang/go/wiki/Modules#how-to-install-and-activate-module-support[modules enabled and setup] then you can use `go get`:
