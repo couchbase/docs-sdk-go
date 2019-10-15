@@ -131,7 +131,7 @@ If you wish to only modify certain parts of a document, you can use xref:subdocu
 bucket.MutateIn("docid", 0, 0).ArrayAddUnique("tags", "fast", true).Execute()
 ----
 
-or xref:{version-server}@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
+or xref:6.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
 
 [source,sql]
 ----
