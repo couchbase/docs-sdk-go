@@ -225,7 +225,7 @@ func (u *UserIntermediary) CreateUser() bool{
 }
 ----
 
-To learn more about working with documents, see xref:op-basics.adoc[Operation basics], xref:storing.adoc[Creating documents], xref:retrieving.adoc[Retrieving documents], and xref:updating.adoc[Updating documents].
+To learn more about working with documents, see xref:documents.adoc[Working with Documents], xref:storing.adoc[Creating documents], xref:retrieving.adoc[Retrieving documents], and xref:updating.adoc[Updating documents].
 
 == Finding airports by using N1QL queries
 
@@ -292,7 +292,7 @@ We then loop through the results, and return the results in JSON format back in 
 	w.Write(bytes)
 ----
 
-To learn more about writing N1QL queries, see xref:n1ql-queries.adoc[Working with N1QL queries].
+To learn more about writing N1QL queries, see xref:querying.adoc[Working with N1QL queries].
 
 == Finding routes by using complex queries
 
