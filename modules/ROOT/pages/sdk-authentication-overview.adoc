@@ -28,7 +28,7 @@ All aspects of the Couchbase RBAC system are covered in the section xref:5.1@ser
 Specifically, for information on:
 
 * Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:5.1@server:security:security-rbac-for-admins-and-apps.adoc[Creating and Managing Users with the UI].
-* _Roles_ required for resource-access, and the privileges they entail, see xref:5.1@server:security:concepts-rba-for-apps.adoc[RBAC for Applications].
+* _Roles_ required for resource-access, and the privileges they entail, see xref:5.1@server:security:concepts-rbac-for-apps.adoc[RBAC for Applications].
 * _Resources_ controlled by Couchbase RBAC, see xref:5.1@server:security:security-resources-under-access-control.adoc[Resources Under Access Control].
 
 == Certificate-Based Authentication
