@@ -68,7 +68,7 @@ Uses `ClientContextID string` default is a random UUID
 Does not usually have to be set, as the client sets it based on the timeout on the operation. 
 Uses `ServerSideTimeout time.Duration`, and defaults to the Analytics timeout set on the client (75s).
 Note that any timeout set using `context.Context` will also be used to set this value.
-This can be adjusted at the xref:ref:client-settings.html#timeout-options[cluster global config level].
+This can be adjusted at the xref:ref:client-settings.adoc#timeout-options[cluster global config level].
 * *Priority*, set if the request should have priority over others.
 The `Priority bool` option defaults to `false`.
 
@@ -97,7 +97,7 @@ include::example$analytics.go[tag=results]
 ----
 
 // Move these to Error reference doc?
-Common errors are listed in our xref:ref:errors-and-exceptions.adoc#analytics-errors[Errors Reference doc], with errors caused by resource unavailability (such as timeouts and _Operation cannot be performed during rebalance_ messages) leading to an xref:howtos:error-handling.adoc#retry[automatic retry] by the SDK.
+Common errors are listed in our xref:ref:error-codes.adoc#analytics-errors[Errors Reference doc], with errors caused by resource unavailability (such as timeouts and _Operation cannot be performed during rebalance_ messages) leading to an xref:howtos:error-handling.adoc#retry[automatic retry] by the SDK.
 
 ////
 Moving these to error reference doc
@@ -121,4 +121,4 @@ include::example$analytics.go[tag=metadata]
 ----
 
 
-For a listing of available `Metrics` in `MetaData`, see the xref:concept-docs:analytics-for-SDK-users.adoc[Understanding Analytics] SDK doc.
+For a listing of available `Metrics` in `MetaData`, see the xref:concept-docs:analytics-for-sdk-users.adoc[Understanding Analytics] SDK doc.
