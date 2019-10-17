@@ -18,6 +18,20 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 1.6.4 (17 October 2019)
+
+Version 1.6.4 is a maintenance for the 1.6.x series.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-634[GOCBC-634]: 
+Added profile to query results.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-591[GOCBC-591]:
+Fixed issue where authentication errors were occurring during a graceful failover due to Go HTTP library retries not carrying over headers from original request.
+
 == Version 1.6.3 (17 September 2019)
 
 Version 1.6.3 is a maintenance for the 1.6.x series.
