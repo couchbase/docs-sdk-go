@@ -46,7 +46,7 @@
 ** xref:concept-docs:response-time-observability.adoc[Tracing]
 * xref:concept-docs:durability-replication-failure-considerations.adoc[Failure Considerations]
 * xref:concept-docs:encryption.adoc[Field Level Encryption]
-* xref:concept-docs:http-services.adoc[Service Selection]
+* xref:concept-docs:data-services.adoc[Service Selection]
 ** xref:concept-docs:analytics-for-sdk-users.adoc[Analytics]
 ** xref:concept-docs:understanding-views.adoc[Map Reduce Views]
 ** xref:concept-docs:n1ql-query.adoc[Query]
