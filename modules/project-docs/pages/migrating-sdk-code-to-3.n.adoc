@@ -1,2 +1,122 @@
-= Migrating to Go 2.0 SDK
+= Migrating from Go SDK 1.x to SDK 2.0
+:nav-title: Migrating to the SDK 3.0 API
+:page-topic-type: concept
+:page-aliases: ROOT:migrate
+
+[abstract]
+The SDK 3.0 API used in Go SDK 2.0 breaks the existing 2.0 APIs (used in Go SDK 1.6) in order to provide a number of improvements.
+Collections and Scopes are introduced.
+The Document class and structure has been completely removed from the API, and the returned value is now `Result`.
+Retry behaviour is more proactive, and lazy bootstrapping moves all error handling to a single place.
+Individual behaviour changes across services are explained here.
+
+
+include::partial$beta-warning.adoc[]
+
+Go SDK 2.0 implements the SDK 3.0 API found in the _3.0_ versions of the C, .NET, Java, PHP, and Python SDKs.
+
+include::6.5@sdk:shared:migration.adoc[tag=intro]
+
+
+include::6.5@sdk:shared:migration.adoc[tag=terms]
+
+As an example here is a KeyValue document fetch:
+
+// change to $Your_language
+[source,java]
+----
+GetResult getResult = collection.get("key", getOptions().timeout(Duration.ofSeconds(3));
+----
+
+Compare this to a N1QL query:
+
+// change to $Your_language
+[source,java]
+----
+QueryResult queryResult = cluster.query("select 1=1", queryOptions().timeout(Duration.ofSeconds(3));
+----
+
+include::6.5@sdk:shared:migration.adoc[tag=terms2]
+
+
+include::6.5@sdk:shared:migration.adoc[tag=new]
+
+
+include::6.5@sdk:shared:migration.adoc[tag=lang]
+
+
+
+// Outline below for individual SDKs -- please expand as appropriate, many topics can be covered lightly
+//
+// Please use before(2.n) / after (3.0) snippets in all cases where it is helpful
+// (probably nearly everywhere, I'm afraid)
+
+
+===  Installation and Configuration
+
+ - where to get the new artifacts / vs old place
+ - discuss new dependencies if needed
+ - discuss configuration old and new, especially if certain
+   custom options are not present anymore (why they are not used)
+   and how users might want to transfer this config over to the
+   new one
+ - discuss cert auth
+ - discuss encryption config
+
+===  Connection Lifecycle
+
+ - discuss bootstrapping
+ - important: bootstrapping is now "lazy" so also discuss how to do the eager
+   checks and any impact it might have on the first op being slow?
+ - discuss shutdown
+ - if external state is passed in optionally, discuss
+   management of this state
+ - discuss the impact of 6.5 "gcccp" and cluster level queries
+ - SASL by default on non-PLAIN (if applicable)
+
+===  Exception Handling
+
+ - discuss new exception hierachy in principle and how users should
+   approach it when migrating
+ - explain maybe new error handling strategies that are in place,
+   around retry strategies especially and their behavior
+
+=== Serialization and Transcoding
+
+ - describe how it works for your language, how to override and any platform-specific
+   encoding and decoding guidelines. 
+ - Also important how to convert from the document types to the new approach
+
+=== Logging and Events
+
+ - discuss any changes to the logging infrastructure or event system if made
+
+===  Migrating Services
+
+ - one section for each service that goes in-depth on each command 
+   and discusses old vs. new
+
+==== Key Value
+
+ - don't forget the get replica changes!
+
+==== Query
+
+==== Analytics
+
+=== Search
+
+ - especial focus, since the API has been reordered quite a bit
+ - if applicable: Change in FTS Geospatial Lat/Lon ordering (i.e. node)
+
+=== Views
+
+ - don't forget that the consistency bit has been renamed, biggest change there
+
+== Management APIs
+
+ - discusses how to migrate from each old management api to the new one
+ - where it is found, what exceptions it throws, etc.
+
+
 
