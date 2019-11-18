@@ -8,7 +8,7 @@ You can use MapReduce views to create queryable indexes in Couchbase Server.
 
 include::partial$beta-warning.adoc[]
 
-WARNING: Although still maintained and supported for legacy use, Views date from the earliest days of Couchbase Server development, and as such are rarely the best choice over, say, xref:n1ql-queries-with-sdk.adoc[our Query service] for your application, see xref:concept-docs:http-services.adoc[our guide to choosing the right service].
+WARNING: Although still maintained and supported for legacy use, Views date from the earliest days of Couchbase Server development, and as such are rarely the best choice over, say, xref:n1ql-queries-with-sdk.adoc[our Query service] for your application, see xref:concept-docs:data-services.adoc[our guide to choosing the right service].
 
 = MapReduce Views
 
@@ -34,7 +34,7 @@ For example, it's now possible to ask the question "What beers start with A?"
 
 [source,golang,indent=0]
 ----
-include::example$views.go[tag=beers]
+include::example$views.go[tag=beerview]
 ----
 
 The following example is the definition of a `by_name` view in a _"landmarks"_ design document in the _"travel-sample"_ sample dataset.
@@ -44,7 +44,7 @@ This view allows landmarks to be queried for by its _"name"_ field.
 
 [source,golang,indent=0]
 ----
-include::example$views.go[tag=landmarks]
+include::example$views.go[tag=landmarksview]
 ----
 
 Once a view result is obtained then it can be iterated over and the ID, keys and values extracted.
