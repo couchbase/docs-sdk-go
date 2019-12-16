@@ -18,6 +18,7 @@ To create a cluster, construct it using a _connection string_, specifying the sc
 cluster, err := gocb.Connect("couchbase://localhost")
 ----
 
+Any Cluster node host addresses passed in to establish (bootstrap) the connection should be for data (KV) nodes.
 You can also specify multiple hosts in the connection string by separating each host with a comma:
 
 [source,go]
