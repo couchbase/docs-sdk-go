@@ -91,7 +91,7 @@ include::example$kv.go[tag=expiry]
 ----
 
 In Couchbase Server releases before 6.5, Durability was set with two options -- see the xref:1.6@go-sdk::durability.adoc[6.0 Durability documentation] -- covering how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist. 
-Couchbase Data Platform 6.5 refines these two options, with xref:6.5@server:learn:data/durability.adoc[Synchronous Replication] -- although they remain essentially the same in use.
+Couchbase Data Platform 6.5 refines these two options, with xref:6.5@server:learn:data/durability.adoc[Durable Writes] -- although they remain essentially the same in use.
 // -- as well as adding the option of xref:transactions.adoc[atomic document transactions].
 The Go SDK exposes both of these forms of Durability.
 
@@ -102,9 +102,9 @@ The SDK exposes three durability levels:
 // DurabilityLevelMajority specifies that a mutation must be replicated (held in memory) to a majority of nodes.
 DurabilityLevelMajority = DurabilityLevel(1)
 
-// DurabilityLevelMajorityAndPersistOnMaster specifies that a mutation must be replicated (held in memory) to a
+// DurabilityLevelMajorityAndPersistToActive specifies that a mutation must be replicated (held in memory) to a
 // majority of nodes and also persisted (written to disk) on the active node.
-DurabilityLevelMajorityAndPersistOnMaster = DurabilityLevel(2)
+DurabilityLevelMajorityAndPersistToActive = DurabilityLevel(2)
 
 // DurabilityLevelPersistToMajority specifies that a mutation must be persisted (written to disk) to a majority
 // of nodes.
