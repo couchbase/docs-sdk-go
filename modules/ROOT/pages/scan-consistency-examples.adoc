@@ -1,0 +1,75 @@
+= Scan Consistency Using the Go SDK with Couchbase Server
+:navtitle: Using Scan Consistency
+:page-topic-type: concept
+
+[abstract]
+You can balance performance against consistency in N1QL queries via the Couchbase Go client and the AtPlus option.
+
+[#scan_consistency]
+--
+Setting a https://developer.couchbase.com/documentation/server/5.1/architecture/querying-data-with-n1ql.html#story-h2-2[Scan Consistency^], lets you choose between `NOT_BOUNDED` (the default), for sharpest performance; `REQUEST_PLUS`, for strongest consistency; and `AT_PLUS`, for a good balance between increased performance and completeness of results.
+
+The following example -- for which mutation tokens must be enabled during connection -- shows AT_PLUS in action:
+
+[source,golang]
+----
+package main
+
+import (
+	"fmt"
+	"math/rand"
+	"time"
+
+	"github.com/couchbase/gocb"
+)
+
+var cluster *gocb.Cluster
+var bucket *gocb.Bucket
+
+func main() {
+	cluster, _ = gocb.Connect("couchbase://10.111.180.101")
+	cluster.Authenticate(gocb.PasswordAuthenticator{
+		Username: "Administrator",
+		Password: "password",
+	})
+	// Note here the use of OpenBucketWithMt
+	bucket, _ = cluster.OpenBucketWithMt("travel-sample", "")
+
+	AtPlusExample()
+}
+
+func AtPlusExample() {
+	getResult, _ := bucket.ExecuteN1qlQuery(
+		gocb.NewN1qlQuery("SELECT COUNT(1) as airportCount FROM `travel-sample` WHERE type='airport'"),
+		nil,
+	)
+
+	type count struct {
+		AirportCount int `json:"airportCount"`
+	}
+	getCount := count{}
+	getResult.One(&getCount)
+	fmt.Println("Initial count:", getCount)
+
+	randSrc := rand.NewSource(time.Now().UnixNano())
+	randGen := rand.New(randSrc)
+	doc := struct {
+		ID   string `json:"id"`
+		Type string `json:"type"`
+	}{
+		fmt.Sprintf("ScanConsistency::airport::%d", randGen.Intn(10000)),
+		"airport",
+	}
+
+	_, mt, _ := bucket.InsertMt(doc.ID, doc, 0)
+
+	state := gocb.NewMutationState(mt)
+	insertQ := gocb.NewN1qlQuery("SELECT COUNT(1) as airportCount FROM `travel-sample` WHERE type='airport'").
+		ConsistentWith(state)
+	queryRes, _ := bucket.ExecuteN1qlQuery(insertQ, nil)
+
+	queryCount := count{}
+	queryRes.One(&queryCount)
+	fmt.Println("Count after insert with AtPlus:", queryCount)
+}
+----
