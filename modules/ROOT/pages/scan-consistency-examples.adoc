@@ -1,6 +1,6 @@
 = Scan Consistency Using the Go SDK with Couchbase Server
 :navtitle: Using Scan Consistency
-:page-topic-type: concept
+:page-topic-type: howto
 
 [abstract]
 You can balance performance against consistency in N1QL queries via the Couchbase Go client and the AtPlus option.
