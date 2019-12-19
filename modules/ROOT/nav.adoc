@@ -18,6 +18,7 @@
 * xref:datastructures.adoc[Data Structures]
 * xref:n1ql-query.adoc[Querying with N1QL]
 * xref:n1ql-queries-with-sdk.adoc[N1QL from the SDK]
+ ** xref:scan-consistency-examples.adoc[Using Scan Consistency]
 * xref:analytics-using-sdk.adoc[Analytics from the SDK]
 * xref:full-text-search-overview.adoc[Full Text Search]
 * xref:full-text-searching-with-sdk.adoc[Searching from the SDK]
