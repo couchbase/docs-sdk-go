@@ -158,6 +158,49 @@ When removing a document, you will have the same concern for durability as with 
 include::example$kv.go[tag=remove]
 ----
 
+
+== Durability
+Writes in Couchbase are written to a single node, and from there the Couchbase Server will take care of sending that mutation to any configured replicas.
+
+The optional `durability` parameter, which all mutating operations accept, allows the application to wait until this replication (or persistence) is successful before proceeding.
+
+It can be used like this:
+
+[source,golang]
+----
+// durability kv snippet
+----
+
+If no argument is provided the application will report success back as soon as the primary node has acknowledged the mutation in its memory. 
+However, we recognize that there are times when the application needs that extra certainty that especially vital mutations have been successfully replicated, 
+and the other durability options provide the means to achieve this.
+
+The options differ depend on what Couchbase Server version is in use. 
+If 6.5 or above is being used, you can take advantage of the xref:concept-docs:durability-replication-failure-considerations.adoc#durable-writes[Durable Write] feature, 
+in which Couchbase Server will only return success to the SDK after the requested replication level has been achieved. 
+The three replication levels are:
+
+ * `Majority` - The server will ensure that the change is available in memory on the majority of configured replicas.
+ * `MajorityAndPersistToActive` - Majority level, plus persisted to disk on the active node.
+ * `PersistToMajority` - Majority level, plus persisted to disk on the majority of configured replicas.
+
+The options are in increasing levels of safety. 
+Note that nothing comes for free - for a given node, waiting for writes to storage is considerably slower than waiting for it to be available in-memory.
+These trade offs, as well as which settings may be tuned, are discussed in the xref:concept-docs:durability-replication-failure-considerations.adoc#durable-writes[durability page].
+
+In a version of Couchbase Server lower than 6.5 is being used then the application can fall-back to 'client verified' durability. 
+Here the SDK will do a simple poll of the replicas and only return once the requested durability level is achieved. 
+This can be achieved like this:
+
+[source,golang]
+----
+// Durability observed snippet
+----
+
+To stress, durability is a useful feature but should not be the default for most applications, as there is a performance consideration, 
+and the default level of safety provided by Couchbase will be reasonable for the majority of situations.
+
+
 == Expiration / TTL
 
 We already touched on how to set `Expiry` on an operation but we didn't discuss how to handle extending that expiry time.
