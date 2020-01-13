@@ -353,10 +353,10 @@ Couchbase's xref:1.6@go-sdk::durability.adoc[traditional durability], using `Per
 include::example$subdoc.go[tag=traddurability]
 ----
 
-In Couchbase Server 6.5 and up, this is built upon with xref:concept-docs:durability-replication-failure-considerations.adoc[Synchronous Replication], 
+In Couchbase Server 6.5 and up, this is built upon with xref:concept-docs:durability-replication-failure-considerations.adoc#durable-writes[Durable Writes], 
 which uses the concept of xref:6.5@server:learn:data/durability.adoc#majority[majority] to indicate the number of configured Data Service nodes to which commitment is required:
 
-.Performing Sub Document mutations with synchronous durability
+.Performing Sub Document mutations with Durable Writes
 [source,golang,indent=0]
 ----
 include::example$subdoc.go[tag=newdurability]
