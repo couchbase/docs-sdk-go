@@ -1,0 +1,7 @@
+:go-api-link: http://docs.couchbase.com/sdk-api/couchbase-go-client-2.0.0
+:go-current-version: 2.0.0
+////
+use -
+
+The API reference for version `{lcb-current-version}` is at {lcb-api-link}[]
+////
