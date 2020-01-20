@@ -5,6 +5,4 @@
 [abstract]
 RTO - Observability using the Open Telemetry API.
 
-include::partial$beta-warning.adoc[]
-
-include::6.5@sdk:pages:partial$rto.adoc[tag=placeholder]
+include::6.5@sdk:shared:partial$rto.adoc[tag=placeholder]
