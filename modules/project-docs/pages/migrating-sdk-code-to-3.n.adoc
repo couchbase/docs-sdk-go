@@ -6,12 +6,9 @@
 [abstract]
 The SDK 3.0 API used in Go SDK 2.0 breaks the existing 2.0 APIs (used in Go SDK 1.6) in order to provide a number of improvements.
 Collections and Scopes are introduced.
-The Document class and structure has been completely removed from the API, and the returned value is now `Result`.
+The Document class and structure has been completely removed from the API, and the returned values are now typically `Result` type objects.
 Retry behaviour is more proactive, and lazy bootstrapping moves all error handling to a single place.
 Individual behaviour changes across services are explained here.
-
-
-include::partial$beta-warning.adoc[]
 
 Go SDK 2.0 implements the SDK 3.0 API found in the _3.0_ versions of the C, .NET, Java, PHP, and Python SDKs.
 
@@ -22,18 +19,16 @@ include::6.5@sdk:shared:partial$migration.adoc[tag=terms]
 
 As an example here is a KeyValue document fetch:
 
-// change to $Your_language
-[source,java]
+[source,golang]
 ----
-GetResult getResult = collection.get("key", getOptions().timeout(Duration.ofSeconds(3));
+include::example$migrating.go[tag=getresult,indent=0]
 ----
 
 Compare this to a N1QL query:
 
-// change to $Your_language
-[source,java]
+[source,golang]
 ----
-QueryResult queryResult = cluster.query("select 1=1", queryOptions().timeout(Duration.ofSeconds(3));
+include::example$migrating.go[tag=queryresult,indent=0]
 ----
 
 include::6.5@sdk:shared:partial$migration.adoc[tag=terms2]
@@ -44,79 +39,134 @@ include::6.5@sdk:shared:partial$migration.adoc[tag=new]
 
 include::6.5@sdk:shared:partial$migration.adoc[tag=lang]
 
-
-
-// Outline below for individual SDKs -- please expand as appropriate, many topics can be covered lightly
-//
-// Please use before(2.n) / after (3.0) snippets in all cases where it is helpful
-// (probably nearly everywhere, I'm afraid)
-
-
 ===  Installation and Configuration
 
- - where to get the new artifacts / vs old place
- - discuss new dependencies if needed
- - discuss configuration old and new, especially if certain
-   custom options are not present anymore (why they are not used)
-   and how users might want to transfer this config over to the
-   new one
- - discuss cert auth
- - discuss encryption config
+The Go SDK 2.x is available for download using the go modules system.  All releases are posted to the couchbase/gocb
+GitHub repository and can be used by simply importing `github.com/couchbase/gocb/v2` and invoking `go get`.
+
+IMPORTANT: Go SDK 2.x has a minimum required Go version of 1.13, although we recommend running the latest LTS version with the highest patch version available.
+
+Almost all configuration for the SDK can be specified through the ConnectOptions which are passed to the
+`gocb.Connect` call in the SDK.  In addition to this, as with SDK 2.0, the majority of these options can
+also be specified through the connection string.  See the appropriate documentation for more information.
+
+==== Authentication
+
+Since Go SDK 1.x supports  Couchbase Server clusters older than 5.0, it had to support both Role-Based access control
+as well as bucket-level passwords. The minimum cluster version supported by SDK 3 is Server 5.0, which means that only
+RBAC is supported. This is why you can set the username and password when directly connecting:
+
+[source,golang]
+----
+include::example$migrating.go[tag=basicconnecting,indent=0]
+----
+
+This is just shorthand for:
+
+[source,golang]
+----
+include::example$migrating.go[tag=passauthenticator,indent=0]
+----
+
+The reason why you can pass in a specific authenticator is that you can also use the same approach to configure certificate-based authentication:
+
+[source,golang]
+----
+include::example$migrating.go[tag=certauthenticator,indent=0]
+----
+
+Please see the documentation on certificate-based authentication for detailed information on how to configure this properly.
+
 
 ===  Connection Lifecycle
 
- - discuss bootstrapping
- - important: bootstrapping is now "lazy" so also discuss how to do the eager
-   checks and any impact it might have on the first op being slow?
- - discuss shutdown
- - if external state is passed in optionally, discuss
-   management of this state
- - discuss the impact of 6.5 "gcccp" and cluster level queries
- - SASL by default on non-PLAIN (if applicable)
+From a high-level perspective, bootstrapping and shutdown is very similar to Go 1.x. 
+One notable difference is that the `Collection` is introduced and that the individual methods like `Bucket` immediately return, and cannot error. 
+Compare SDK 2: the `OpenBucket` method would return an error if it could not open the bucket.
 
-===  Exception Handling
+The reason behind this change is that even if a bucket can be opened, a millisecond later it may not be available any more. 
+All this state has been moved into the actual operation so there is only a single place where the error handling needs to take place. 
+This simplifies error handling and retry logic for an application.
 
- - discuss new exception hierachy in principle and how users should
-   approach it when migrating
- - explain maybe new error handling strategies that are in place,
-   around retry strategies especially and their behavior
+In SDK 2, you connected, opened a bucket, performed a KV op, and disconnected like this:
+
+[source,golang]
+----
+cluster, _ := gocb.Connect("127.0.0.1")
+cluster.Authenticate(PasswordAuthenticator{
+    Username: "user",
+    Password: "pass"
+})
+
+bucket, _ := cluster.OpenBucket("travel-sample")
+
+getResult, _ := bucket.Get("airline_10", nil)
+
+bucket.Close()
+----
+
+Here is the SDK 3 equivalent:
+
+[source,golang]
+----
+include::example$migrating.go[tag=getresult,indent=0]
+----
+
+`Collections` will be generally available with an upcoming Couchbase Server release, but the SDK already encodes it in its API to be future-proof.
+If you are using a Couchbase Server version which does not support `Collections`, always use the `DefaultCollection()` method to access the KV API; it will map to the full bucket.
+
+IMPORTANT: You'll notice that `Bucket(string)` returns immediately, even if the bucket resources are not completely opened. 
+This means that the subsequent `Get` operation may be dispatched even before the socket is open in the background. 
+The SDK will handle this case transparently, and reschedule the operation until the bucket is opened properly. 
+This also means that if a bucket could not be opened (say, because no server was reachable) the operation will time out.
+Please check the logs to see the cause of the timeout (in this case, you'll see socket connect rejections).
+
+Also note, you will now find Query, Search, and Analytics at the `Cluster` level.
+This is where they logically belong.
+If you are using Couchbase Server 6.5 or later, you will be able to perform cluster-level queries even if no bucket is open. 
+If you are using an earlier version of the cluster you must open at least one bucket, otherwise cluster-level queries will fail.
+
 
 === Serialization and Transcoding
 
- - describe how it works for your language, how to override and any platform-specific
-   encoding and decoding guidelines. 
- - Also important how to convert from the document types to the new approach
+In SDK 2 the main method to control transcoding was through specfying unique Transcoder instances at the top-level.  This concept
+has been extended to enable developers to specify per-operation Transcoder instances.
 
-=== Logging and Events
+Additionally, the default transcoder has been modified to no longer transcoder byte-arrays as a precaution against accidentally
+encoding strings as JSON or JSON as strings.  A new LegacyTranscoder has been implemented which mirrors Go SDK 1.x's behaviour.
 
- - discuss any changes to the logging infrastructure or event system if made
 
-===  Migrating Services
+===  Error Handling
 
- - one section for each service that goes in-depth on each command 
-   and discusses old vs. new
+How to handle errors has remained relatively unchanged from Go SDK 1.x and continues to follow the idiomatic Go ideology of
+returning errors via a parameter.
 
-==== Key Value
+However in Go SDK 2.x, we have updated our code to follow the latest Go error handling best practices and provide an improved
+error interface using the `errors.As` and `errors.Is` methods.
 
- - don't forget the get replica changes!
+In version 1.x of the SDK, you may receive an error and compare it directly to one of the `gocb.ErrSomething` errors:
 
-==== Query
+[source,golang]
+----
+res, err := bucket.Get("airline_10", nil)
+if err == gocb.ErrKeyNotFound {
+  // handle the error
+}
+----
 
-==== Analytics
+In version 2.x of the SDK, you should instead now check using the `errors.Is` method:
 
-=== Search
+[source,golang]
+----
+include::example$migrating.go[tag=handleerror,indent=0]
+----
 
- - especial focus, since the API has been reordered quite a bit
- - if applicable: Change in FTS Geospatial Lat/Lon ordering (i.e. node)
+In addition, 2.x of the SDK provides the ability to gather additional contextual information about
+why your operation failed through the various error types:
 
-=== Views
-
- - don't forget that the consistency bit has been renamed, biggest change there
-
-== Management APIs
-
- - discusses how to migrate from each old management api to the new one
- - where it is found, what exceptions it throws, etc.
-
+[source,golang]
+----
+include::example$migrating.go[tag=handleerrorext,indent=0]
+----
 
 
