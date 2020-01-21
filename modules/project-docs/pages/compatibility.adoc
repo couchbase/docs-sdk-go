@@ -1,0 +1,88 @@
+= Compatibility of Couchbase Features, Couchbase Server Versions, and the Couchbase Go SDK
+:navtitle: Compatibility
+:page-aliases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
+
+[abstract]
+Features available in different SDK versions, and compatibility between Server and SDK.
+
+Couchbase Go SDK 2.0 requires Go version 1.11, or later.
+
+
+== Couchbase Version/SDK Version Matrix
+
+Couchbase SDKs are tested against a variety of different environments to ensure both backward and forward compatibility with different versions of Couchbase Server.
+The matrix below denotes the version of Couchbase Server, the version of the .NET SDK and whether the SDK is:
+
+* ✖ *Unsupported*: This combination is not tested, and is not within the scope of technical support if you have purchased a support agreement.
+* ◎ *Compatible*: This combination has been tested previously, and should be compatible.
+This combination is not recommended by our technical support organization.
+It is best to upgrade either the SDK or the Couchbase version you are using.
+* ✔ *Supported*:This combination is subject to ongoing quality assurance, and is fully supported by our technical support organization.
+
+.Recommended SDK per Server Version Matrix
+[#table_sdk_versions]
+[cols="40,25,20,20,25"]
+|===
+| | SDK 1.3 | SDK 1.4 | SDK 1.5, 1.6  | SDK 2.0 
+
+| *Server 5.0-5.5*
+| *✔*
+| *✔*
+| *✔*
+| *✔*
+
+| *Server 6.0*
+| ◎
+| *✔*
+| *✔*
+| *✔*
+
+
+| *Server 6.5*
+| *✖*
+| ◎
+| *✔*
+| *✔*
+|===
+
+Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
+See the notes there for Support details.
+
+== Couchbase New Feature Availability Matrix
+
+.Couchbase Server and SDK Supported Version Matrix
+|===
+| | Server 5.0, 5.1, & 5.5 | Server 6.0 | Server 6.5
+
+| Enhanced Durability
+3+| All SDK versions
+
+| Durable Writes 
+2+| Not Supported
+| Since 2.0
+
+| Analytics
+| DP in 5.5 with 1.4
+2+| Since 1.5
+
+| Distributed ACID Transactions
+2+| Not Supported
+| Since 2.0
+
+| Collections
+2+| Not Supported
+| SDK 2.0 for Developer Preview in Server 6.5
+
+|===
+
+
+== Couchbase Go SDK
+
+The Couchbase Go SDK is installed and managed using `gopkg`, in accordance with established best practices within the Go Community.
+As a result, specific versions are installed within a specific developer environment.
+The SDK follows http://semver.org/[Semantic Versioning^] and typically release an update of the SDK the third Tuesday of each month.
+In order to update your specific developer environment to this new version, you will have to instruct Go to `go get` that specific version.
+For further information, please reference the section on installation.
+
+
+include::6.5@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
