@@ -64,23 +64,26 @@ using encrypted connections or unencrypted connections.
 [#connection-lifecycle]
 == Connection Lifecycle
 
-All high-level objects in the Go SDK are designed to be safe for concurrent use by multiple goroutines.  You will get the best performance by
-using only a single Cluster object per cluster, and as few `Bucket`, `Scope` and `Collection` as is reasonable for your application.
+All high-level objects in the Go SDK are designed to be safe for concurrent use by multiple goroutines. 
+You will get the best performance by using only a single Cluster object per cluster, 
+and as few `Bucket`, `Scope` and `Collection` as is reasonable for your application.
 
 We recommend creating a single `Cluster` instance when your application starts up, and sharing this instance throughout your application.
-If you know at startup time which buckets, scopes, and collections your application will use, we recommend obtaining them from the `Cluster` at startup time and sharing those instances throughout your application as well.
+If you know at startup time which buckets, scopes, and collections your application will use, 
+we recommend obtaining them from the `Cluster` at startup time and sharing those instances throughout your application as well.
 
 Before your application stops, gracefully shut down the client by calling the `Close()` method of each `Cluster` you created.
 
 [#alternate-addresses]
 == Alternate Addresses and Custom Ports
 
-If your Couchbase Server cluster is running in a containerized, port mapped, or otherwise NAT'd environment like Docker or Kubernetes, a client running outside that environment may need additional information in order to connect the cluster.
+If your Couchbase Server cluster is running in a containerized, port mapped, or otherwise NATd environment like Docker or Kubernetes, a client running outside that environment may need additional information in order to connect the cluster.
 Both the client and server require special configuration in this case.
 
 On the server side, each server node must be configured to advertise its external address as well as any custom port mapping.
 This is done with the `setting-alternate-address` CLI command introduced in Couchbase Server 6.5.
 A node configured in this way will advertise two addresses: one for connecting from the same network, and another for connecting from an external network.
+
 // todo link to https://docs.couchbase.com/server/6.5/cli/cbcli/couchbase-cli-setting-alternate-address.html
 
 On the client side, the externally visible ports must be used when connecting.
@@ -98,6 +101,7 @@ In many cases the client is able to automatically select the correct set of addr
 If the detection heuristic fails in your environment, you can override it by setting the `network_type` client setting to `default` if the client and server are on the same network, or `external` if they're on different networks.
 
 NOTE: Any TLS certificates must be set up at the point where the connections are being made.
+
 // todo what does that mean in practice? Also, should this be in the TLS docs section instead?
 
 
@@ -156,7 +160,7 @@ E.....@.@.............+....Z.'yZ..#........
 .%v.....4....m*...A.2I.1.&.*,6+..#..#.5
 ----
 
-include::6.0@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
+include::6.5@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
 DNS SRV bootstrapping is available in the Go SDK.
 In order to make the SDK actually use the SRV records, you need to enable DNS SRV on the environment and pass in the host name from your records (here `example.com`):
