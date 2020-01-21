@@ -7,7 +7,6 @@ include::partial$attributes.adoc[]
 [abstract]
 Sub-Document operations can be used to efficiently access and change parts of documents.
 
-include::partial$beta-warning.adoc[]
 
 Sub-Document operations may be quicker and more network-efficient than _full-document_ operations such as _Upsert_, _Replace_ and _Get_ because they only transmit the accessed sections of the document over the network.
 

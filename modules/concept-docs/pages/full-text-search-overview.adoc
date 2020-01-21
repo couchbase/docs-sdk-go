@@ -4,5 +4,3 @@
 
 [abstract]
 FTS.
-
-include::partial$beta-warning.adoc[]

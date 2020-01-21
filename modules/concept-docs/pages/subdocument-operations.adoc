@@ -4,5 +4,3 @@
 
 [abstract]
 Sub-Doc
-
-include::partial$beta-warning.adoc[]

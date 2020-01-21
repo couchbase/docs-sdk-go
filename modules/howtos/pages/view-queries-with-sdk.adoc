@@ -6,8 +6,6 @@
 [abstract]
 You can use MapReduce views to create queryable indexes in Couchbase Server.
 
-include::partial$beta-warning.adoc[]
-
 WARNING: Although still maintained and supported for legacy use, Views date from the earliest days of Couchbase Server development, and as such are rarely the best choice over, say, xref:n1ql-queries-with-sdk.adoc[our Query service] for your application, see xref:concept-docs:data-services.adoc[our guide to choosing the right service].
 
 = MapReduce Views

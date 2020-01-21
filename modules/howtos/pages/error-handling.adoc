@@ -4,8 +4,6 @@
 :page-aliases: handling-error-conditions
 :source-language: go
 
-include::partial$beta-warning.adoc[]
-
 [abstract]
 Errors are inevitable.
 The developer’s job is to be prepared for whatever is likely to come up -- and to try and be prepared for anything that conceivably could come up.

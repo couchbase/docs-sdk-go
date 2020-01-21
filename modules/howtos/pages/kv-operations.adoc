@@ -3,8 +3,6 @@
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
 
-include::partial$beta-warning.adoc[]
-
 The complete code sample used on this page can be downloaded from xref::example$kv.go[here]
 - from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Collection operations.
 

@@ -4,5 +4,3 @@
 
 [abstract]
 The standardized error codes returned by the Couchbase Go SDK.
-
-include::partial$beta-warning.adoc[]
