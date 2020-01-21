@@ -5,8 +5,3 @@
 
 [abstract]
 Extended attributes.
-
-include::partial$beta-warning.adoc[]
-
-
-

@@ -6,5 +6,4 @@
 [abstract]
 Role-Based Access Control
 
-include::partial$beta-warning.adoc[]
 

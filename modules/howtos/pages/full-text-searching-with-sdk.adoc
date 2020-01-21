@@ -6,7 +6,6 @@
 [abstract]
 You can use the Full Text Search service (FTS) to create queryable full-text indexes in Couchbase Server.
 
-include::partial$beta-warning.adoc[]
 
 Full Text Search or FTS allows you to create, manage, and query full text indexes on JSON documents stored in Couchbase buckets.
 It uses natural language processing for querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
