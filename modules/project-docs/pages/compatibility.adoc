@@ -65,10 +65,6 @@ See the notes there for Support details.
 | DP in 5.5 with 1.4
 2+| Since 1.5
 
-| Distributed ACID Transactions
-2+| Not Supported
-| Since 2.0
-
 | Collections
 2+| Not Supported
 | SDK 2.0 for Developer Preview in Server 6.5
