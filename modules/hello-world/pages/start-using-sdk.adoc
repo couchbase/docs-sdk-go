@@ -1,4 +1,5 @@
 = Install and Start Using the Go SDK with Couchbase Server
+:page-aliases: ROOT:getting-started,ROOT:start-using,ROOT:hello-couchbase,ROOT:start-using-sdk
 :navtitle: Start Using the SDK
 
 [abstract]
