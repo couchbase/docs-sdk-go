@@ -11,7 +11,7 @@ Couchbase Go SDK 2.0 requires Go version 1.11, or later.
 == Couchbase Version/SDK Version Matrix
 
 Couchbase SDKs are tested against a variety of different environments to ensure both backward and forward compatibility with different versions of Couchbase Server.
-The matrix below denotes the version of Couchbase Server, the version of the .NET SDK and whether the SDK is:
+The matrix below denotes the version of Couchbase Server, the version of the Go SDK and whether the SDK is:
 
 * ✖ *Unsupported*: This combination is not tested, and is not within the scope of technical support if you have purchased a support agreement.
 * ◎ *Compatible*: This combination has been tested previously, and should be compatible.
