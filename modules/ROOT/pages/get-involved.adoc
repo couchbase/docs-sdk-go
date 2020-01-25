@@ -1,1 +1,8 @@
-include::go-sdk::page$get-involved.adoc[]
+= Get Involved
+:navtitle: Get Involved
+
+== Contributing
+
+Couchbase welcomes community contributions to the Go SDK.
+The https://github.com/couchbase/gocb[Go SDK source code^] is available on GitHub.
+Please see the https://github.com/couchbase/gocb/blob/master/README.md[README^] file for further information.
