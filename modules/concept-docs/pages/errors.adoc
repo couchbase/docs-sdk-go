@@ -4,6 +4,18 @@
 :page-aliases: 
 
 [abstract]
-When the unexpected happens.
+When the unexpected happens, take a step-by-step approach. .
 
 
+== General Approach to Go Exceptions
+
+include::6.5@sdk:shared:partial$errors.adoc[tag=exception]
+
+// include::6.5@sdk:shared:partial$errors.adoc[tag=ref]
+
+include::6.5@sdk:shared:partial$errors.adoc[tag=durability]
+
+include::6.5@sdk:shared:partial$errors.adoc[tag=diag]
+
+// until opentelemetry release for link below, could add note on API to expose own tracing features?
+// include::6.5@sdk:shared:partial$errors.adoc[tag=rto]
