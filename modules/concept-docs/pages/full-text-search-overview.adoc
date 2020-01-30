@@ -1,6 +1,1 @@
-= Full Text Search Overview
-:nav-title: Search Overview
-:page-topic-type: concept
-
-[abstract]
-FTS.
+include::6.5@sdk:pages:partial$search.adoc[]
