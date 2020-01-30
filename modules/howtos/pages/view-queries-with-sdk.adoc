@@ -1,4 +1,4 @@
-= MapReduce Views Using the .NET SDK with Couchbase Server
+= MapReduce Views Using the Go SDK with Couchbase Server
 :navtitle: MapReduce Views
 :page-topic-type: howto
 :page-aliases: ROOT:view-queries-with-sdk,ROOT:querying-views,ROOT:geo-spatial-views
