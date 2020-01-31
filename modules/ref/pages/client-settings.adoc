@@ -4,10 +4,218 @@
 :page-aliases: ROOT:client-settings
 
 [abstract]
-Client settings
+Client settings using `ConnectOptions` for bootstrapping, timeouts, reliability, and performance.
 
 Almost all configuration for the SDK can be specified through the ConnectOptions which are passed to the `gocb.Connect` call in the SDK.  
 In addition to this, as with SDK 2.0, the majority of these options can also be specified through the connection string.
 
-// == Timeout Options
+
+== General Options
+
+These options specify the general configuration options for the client.
+
+Name: *Authenticator*::
++
+Default:  `nil`
++
+Set this to the authenticator you wish to use to authenticate with the server.  Possible
+options which are included in the SDK include the PasswordAuthenticator and
+CertificateAuthenticator.
+
+Name: *Username / Password*::
++
+Default:  `nil` / `nil`
++
+Username and Password provide a shortcut to creating a PasswordAuthenticator which is
+then used as an Authenticator for connecting to the Cluster.
+
+Name: *Transcoder*::
++
+Default:  `JSONTranscoder{}`
++
+Transcoder specifies the transcoding behaviour that is required of the application.  By
+default this is configured as a JSONTranscoder, which will encode all values through the
+standard Go JSON marshalling facilities.
+
+Name: *RetryStrategy*::
++
+Default:  `BestEffortRetryStrategy{}`
++
+The retry strategy decides if an operation should be retried or canceled. While implementing
+a custom strategy is fairly advanced, the SDK ships with a best effort retry strategy
+out of the box (BestEffortRetryStrategy). This default will retry the operation until it
+either succeeds or the maximum request lifetime is reached.
+
+
+== Security Options
+
+By default the client will connect to Couchbase Server using an unencrypted connection.
+If you are using the Enterprise Edition, it's possible to secure the connection using TLS
+by specifying these options in conjunction with a `couchbase://` connecting string scheme.
+
+Name: *TLSRootCAs*::
++
+Default:  `nil`
++
+TLSRootCAs enables the specification of the Root Certificate's to use when validating a
+server certificate on the client-side.
+
+Name: *TLSSkipVerify*::
++
+Default:  `false`
++
+This is an advanced option which can be used to disable TLS certificate validation.  This
+will disable any form of server validation, but will still encrypt the data being settings
+between the SDK and the server.  This option is intended strictly for use on older versions
+of Couchbase Server where strict validation was not possible.
+
+
+== Orphan Reporting Options
+
+The Go SDK implements the ability to report when unexpected operation responses are received
+from the server.  This primarily occurs when an operation is timed out and later received.
+
+Name: *Disabled*::
++
+Default:  `false`
++
+Specifies whether orphan reporting should be disabled.
+
+Name: *ReportInterval*::
++
+Default:  `10s`
++
+Specifies the duration between reporting of orphaned responses.
+
+Name: *SampleSize*::
++
+Default:  `10`
++
+Specifies the number of samples of orphan responses that should be stored between reports.
+
+
+== Circuit Breaker Options
+
+The Go SDK provides a built in circuit breaker system to enable the SDK to more quickly
+reject requests which are unlikely to succeed.
+
+Name: *Disabled*::
++
+Default:  `false`
++
+...
+
+Name: *VolumeThreshold*::
++
+Default:  `20`
++
+The volume threshold defines how many operations must be in the window before the
+threshold percentage can be meaningfully calculated.
+
+Name: *ErrorThresholdPercentage*::
++
+Default:  `50`
++
+The percentage of operations in a window that may fail before the circuit is
+opened. The value is an integer in the range [0,100].
+
+Name: *SleepWindow*::
++
+Default:  `5s`
++
+The delay between when the circuit opens and when the canary is tried.
+
+Name: *RollingWindow*::
++
+Default:  `1m`
++
+How long the window is in which the number of failed ops are tracked in a rolling
+fashion.
+
+Name: *CanaryTimeout*::
++
+Default:  `5s`
++
+The period of time which canary operations are permitted to take before they are
+marked as a failure.
+
+
+== Timeout Options
+
+Name: *ConnectTimeout*::
++
+Default:  `10s`
++
+The connect timeout is used when a Bucket is opened and if not overridden by a custom
+timeout. If you feel the urge to change this value to something higher, there is a
+good chance that your network is not properly set up. Connecting to the server should
+in practice not take longer than a second on a reasonably fast network.
+
+Name: *KVTimeout*::
++
+Default:  `2.5s`
++
+The Key/Value default timeout is used on operations which are performed on a specific
+key if not overridden by a custom timeout. This includes all commands like get(),
+getFromReplica() and all mutation commands, but does not include operations that are
+performed with enhanced durability requirements.
+
+Name: *ViewTimeout*::
++
+Default:  `75s`
++
+The View timeout is used on view operations if not overridden by a custom timeout.
+Note that it is set to such a high timeout compared to key/value since it can affect
+hundreds or thousands of rows. Also, if there is a node failure during the request
+the internal cluster timeout is set to 60 seconds.
+
+Name: *QueryTimeout*::
++
+Default:  `75s`
++
+The Query timeout is used on all N1QL query operations if not overridden by a custom
+timeout. Note that it is set to such a high timeout compared to key/value since it
+can affect hundreds or thousands of rows.
+
+Name: *AnalyticsTimeout*::
++
+Default:  `75s`
++
+The Analytics timeout is used on all Analytics query operations if not overridden by
+a custom timeout. Note that it is set to such a high timeout compared to key/value
+since it can affect hundreds or thousands of rows.
+
+Name: *SearchTimeout*::
++
+Default:  `75s`
++
+The Search timeout is used on all FTS operations if not overridden by a custom
+timeout. Note that it is set to such a high timeout compared to key/value since
+it can affect hundreds or thousands of rows.
+
+Name: *ManagementTimeout*::
++
+Default:  `75s`
++
+The management timeout is used on all cluster management APIs (BucketManager,
+UserManager, CollectionManager, QueryIndexManager, etc.) if not overridden by a custom
+timeout. The default is quite high because some operations (such as flushing a bucket,
+for example) might take a long time.
+
+
+== IO Options
+
+Name: *DisableMutationTokens*::
++
+Default:  `false`
++
+This is an advanced option which will disable the inclusion of mutation tokens in operation
+responses from the server.  This should generally not be set.
+
+Name: *DisableServerDurations*::
++
+Default:  `false`
++
+This is an advanced option which will disable the inclusion of server processing times in
+operation responses from the server.  This should generally not be set.
 

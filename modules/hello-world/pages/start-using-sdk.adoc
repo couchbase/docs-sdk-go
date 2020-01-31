@@ -11,7 +11,7 @@ The Go 2.0 SDK also introduces improved error handling providing extra error inf
 
 == Installing the SDK
 
-Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. If you are using Go 1.11.1+ with https://github.com/golang/go/wiki/Modules#how-to-install-and-activate-module-support[modules enabled and setup] then you can use `go get`:
+Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. You can use `go get` to download the SDK:
 
 [source,bash]
 ----
@@ -45,7 +45,7 @@ Connection to the cluster is initialized by:
 include::example$startusing.go[tag=bucket]
 ----
 
-If you installed the travel sample data bucket, substitute _travel-sample_ for _bucket-name_.
+If you installed the travel sample data bucket, replace _bucket-name_ with _travel-sample_.
 
 [source,golang,indent=0]
 ----
@@ -53,8 +53,9 @@ include::example$startusing.go[tag=named-bucket]
 ----
 
 The 2.0 SDK is ready for the introduction of xref:#[Collections] in an upcoming release of the Couchbase Data Platform.
-The latest release, Mad Hatter, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme, according to specified _Scope_.
-Here we've used the `DefaultCollection`, which covers the whole Bucket.
+Couchbase Server 6.5 brings a limited xref:6.5@server:developer-preview:preview-mode.adoc[Developer Preview] of Collections, 
+allowing Documents to be grouped by purpose or theme, according to a specified _Collection_. 
+Here we've used the `DefaultCollection`, which provides the same functionality as bucket-level operations did in previous versions of Couchbase Server.
 
 [source,golang,indent=0]
 ----
