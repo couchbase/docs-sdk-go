@@ -3,14 +3,14 @@
 :page-topic-type: howto
 
 [abstract]
-Logging
+Logging with `gocb.Logger` & using other implementations.
 
 The Go SDK offers simple logging of library internals to help debug issues.
 Logging may be configured on a global library-level basis.
 *Note that the logging API is subject to change*.
 
-You can configure logging using the [.api]`gocb.SetLogger`, which accepts an implementation of [.api]`gocb.Logger`.
-The SDK comes with two built-in [.api]`Logger` implementations, which can be instantiated using the following _methods_:
+You can configure logging using the `gocb.SetLogger`, which accepts an implementation of [.api]`gocb.Logger`.
+The SDK comes with two built-in `Logger` implementations, which can be instantiated using the following _methods_:
 
 [[gocb.logger_instantiation_methods]]
 * [.api]`gocb.DefaultStdioLogger()` returns a logger that logs errors and warnings.
