@@ -53,9 +53,9 @@ include::example$startusing.go[tag=named-bucket]
 ----
 
 The 2.0 SDK is ready for the introduction of xref:#[Collections] in an upcoming release of the Couchbase Data Platform.
-The latest release, Mad Hatter, brings a limited _Developer Preview_ of Collections, allowing Documents to be grouped by purpose or theme,
-according to a specified _Collection_.  Here we've used the `DefaultCollection`, which provides the same functionality as
-bucket-level operations did in previous versions of Couchbase Server.
+Couchbase Server 6.5 brings a limited xref:6.5@server:developer-preview:preview-mode.adoc[Developer Preview] of Collections, 
+allowing Documents to be grouped by purpose or theme, according to a specified _Collection_. 
+Here we've used the `DefaultCollection`, which provides the same functionality as bucket-level operations did in previous versions of Couchbase Server.
 
 [source,golang,indent=0]
 ----
