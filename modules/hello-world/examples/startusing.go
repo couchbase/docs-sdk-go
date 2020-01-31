@@ -9,13 +9,12 @@ import (
 
 // #tag::connect[]
 func main() {
-	opts := gocb.ClusterOptions{
-		Authenticator: gocb.PasswordAuthenticator{
-			"Administrator",
-			"password",
-		},
-	}
-	cluster, err := gocb.Connect("localhost", opts)
+	cluster, err := gocb.Connect(
+		"localhost",
+		&gocb.ClusterOptions{
+			Username: "Administrator",
+			Password: "password",
+		})
 	if err != nil {
 		panic(err)
 	}
@@ -23,24 +22,27 @@ func main() {
 
 	// #tag::bucket[]
 	// get a bucket reference
-	bucket := cluster.Bucket("bucket-name", &gocb.BucketOptions{})
+	bucket := cluster.Bucket("bucket-name")
 	// #end::bucket[]
 
 	// #tag::named-bucket[]
 	// get a bucket reference
-	bucket := cluster.Bucket("travel-sample", nil)
+	bucket := cluster.Bucket("travel-sample")
 	// #end::named-bucket[]
 
 	// #tag::collection[]
 	// get a collection reference
 	collection := bucket.DefaultCollection()
+
 	// for a named collection and scope
-	// collection := bucket.Scope("my-scope").Collection("my-collection", &gocb.CollectionOptions{})
+	// scope := bucket.Scope("my-scope")
+	// collection := scope.Collection("my-collection")
 	// #end::collection[]
 
 	// #tag::upsert-get[]
 	// Upsert Document
-	upsertResult, err := collection.Upsert("my-document", map[string]string{"name": "mike"}, &gocb.UpsertOptions{})
+	upsertData := map[string]string{"name": "mike"}
+	upsertResult, err := collection.Upsert("my-document", upsertData, &gocb.UpsertOptions{})
 	if err != nil {
 		panic(err)
 	}
