@@ -4,7 +4,7 @@
 :page-aliases: ROOT:client-settings
 
 [abstract]
-Client settings
+Client settings using `ConnectOptions` for bootstrapping, timeouts, reliability, and performance.
 
 Almost all configuration for the SDK can be specified through the ConnectOptions which are passed to the `gocb.Connect` call in the SDK.  
 In addition to this, as with SDK 2.0, the majority of these options can also be specified through the connection string.
