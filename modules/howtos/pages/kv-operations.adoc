@@ -36,27 +36,6 @@ Timeout sets the timeout value for the underlying network connection.
 include::example$kv.go[tag=insertoptions]
 ----
 
-=== Timeouts
-
-As well as explicitly setting the _Timeout_ value for an operation, the Go SDK also supports setting timeouts via the Golang https://golang.org/pkg/context/[`context.Context`] mechanism.
-Using `context.Context` also provides a means to abort requests on the fly, the SDK itself does expose a way to abort requests other than this mechanism.
-There are three different ways of setting a timeout on an operation: operation level timeout, `context.Context`, and the global level `KVTimeout`.
-All three could be set at the same time for a given operation so the following rules are followed for picking a timeout to use:
-
-1) If the operation level timeout is set then that will be selected over the global timeout.
-2a) If `Context` is set then the shortest of the `Context` deadline and the timeout from 1 will be selected.
-2b) If `Context` is not set then the timeout from 1 will be selected.
-
-Under the hood the SDK uses `context.Context` for all timeouts and will return a gocb timeout error for timeouts for all 3 of these options.
-Timeouts can be checked for with the `gocb.IsTimeoutError(err)` function.
-
-Below we'll set `Context` with a _Replace_ operation.
-
-[source,golang]
-----
-include::example$kv.go[tag=replacecontext]
-----
-
 === CAS
 
 Setting a Compare and Swap (CAS) value is a form of optimistic locking - dealt with in depth in the xref:concurrent-document-mutations.adoc[CAS page].
