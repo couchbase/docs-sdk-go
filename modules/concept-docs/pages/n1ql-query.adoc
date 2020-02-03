@@ -56,12 +56,12 @@ For more information, see xref:6.5@server:n1ql:n1ql-language-reference/covering-
 
 You can also create and define indexes in the SDK using:
 
-[source,csharp]
+[source,golang]
 ----
-var bucketManager = bucket.CreateManager();
-await bucketManager.CreateN1qlPrimaryIndexAsync();
-await bucketManager.CreateN1qlIndexAsync("index_name", new string[] { "name" })
-await bucketManager.CreateN1qlIndexAsync("index_emai", new string[] { "email" })
+mgr := cluster.QueryIndexes()
+err = mgr.CreatePrimaryIndex(bucketName, nil)
+err = mgr.CreateIndex(bucketName, "index_name", []string{"name"}, nil)
+err = mgr.CreateIndex(bucketName, "index_email", []string{"email"}, nil)
 ----
 
 
@@ -85,14 +85,18 @@ and indexes it for all of the applicable indexes (in this case, those that have 
 
 Building deferred indexes can also be done via the SDK:
 
-[source,csharp]
+[source,golang]
 ----
-var bucketManager = bucket.CreateManager();
-await bucketManager.CreateN1qlPrimaryIndexAsync(defer = true);
-await bucketManager.CreateN1qlIndexAsync("ix_name", defer = true, new string[] { "name" });
-await bucketManager.CreateN1qlIndexAsync("ix_email", defer = true, new string[] { "email" });
-await bucketManager.BuildN1qlDeferredIndexesAsync();
-await bucketManager.WatchN1qlIndexes(new List<string> { "ix_name", "ix_email", "#primary"}, TimeSpan.FromSeconds(2));
+mgr := cluster.QueryIndexes()
+err = mgr.CreatePrimaryIndex(bucketName, &gocb.CreatePrimaryQueryIndexOptions{Deferred: true})
+err = mgr.CreateIndex(bucketName, "index_name", []string{"name"},
+    &gocb.CreateQueryIndexOptions{Deferred: true},
+)
+err = mgr.CreateIndex(bucketName, "index_email", []string{"email"},
+    &gocb.CreateQueryIndexOptions{Deferred: true},
+)
+indexesToBuild, err := mgr.BuildDeferredIndexes(bucketName, nil)
+err = mgr.WatchIndexes(bucketName, []string{"ix_name", "ix_email", "#primary"}, time.Duration(2*time.Second), nil)
 ----
 
 
@@ -127,21 +131,23 @@ For N1QL, the default consistency is `not_bounded`.
 ////
 Consider the following snippet:
 
-[source,csharp]
+[source,golang]
 ----
 
-var randomNumber = new Random().Next(0, 10000000);
+random := rand.Intn(10000000)
+user := struct{
+    Name   string `json:"name"`
+    Email  string `json:"email"`
+    Random int    `json:"random"`
+}{Name: "Brass Doorknob", Email:"brass.doorknob@juno.com", Random:random}
 
-bucket.Upsert($"user:{randomNumber}", new {
-    name = "Brass Doorknob",
-    email = "brass.doorknob@juno.com",
-    random = randomNumber
-});
+_, err := collection.Upsert(fmt.Sprintf("user:%d", random), user, nil)
 
-var query = new QueryRequest("SELECT name, email, random, META(default).id FROM default WHERE $1 IN name'")
-    .AddPositionalParamter("Brass");
-
-var result = bucket.Query<dynamic>(query);
+results, err := cluster.Query("SELECT name, email, random, META(default).id FROM default WHERE $1 IN name'",
+    &gocb.QueryOptions{
+        PositionalParameters: []interface{}{"Brass"},
+    },
+)
 ----
 
 The above query may not return the newly inserted document because it has not yet been indexed.
@@ -149,55 +155,15 @@ The query is issued immediately after document creation, and in this case the qu
 
 If the above code is modified to use _RequestPlus_, query processing will wait until all updates have been processed and recalculated into the index from the point in time the query was received:
 
-[source,csharp]
+[source,golang]
 ----
-var query = new QueryRequest("SELECT name, email, random, META(default).id FROM default WHERE $1 IN name'")
-    .AddPositionalParamter("Brass")
-    // If this line is removed, the latest 'random' field might not be present
-    .ScanConsistency(ScanConsistency.RequestPlus);
-
-var result = bucket.Query<dynamic>(query);
+results, err := cluster.Query("SELECT name, email, random, META(default).id FROM default WHERE $1 IN name'",
+    &gocb.QueryOptions{
+        PositionalParameters: []interface{}{"Brass"},
+        ScanConsistency: gocb.QueryScanConsistencyRequestPlus,
+    },
+)
 ----
 
 This gives the application developer more control over the balance between performance (latency) and consistency,
 and allows optimization on a case-by-case basis.
-
-
-
-
-////
-** Awaiting LINQ updates **
-
-== Building Statements with LINQ
-
-[NOTE]
-LINQ is a community project.
-Although it works well with Couchbase, it is not part of the officially-supported product.
-
-LINQ (Language Integrated Query), is a powerful way to guide you in building your statements: 
-you obtain Type safety and auto completion of relevant methods and N1QL clauses. 
-It implements https://msdn.microsoft.com/en-us/library/mt693024.aspx[Microsoft’s language integrated query extensions to the C# language], 
-and is similar to other LINQ providers like Linq2SQL, Entity Framework and NHibernate. 
-The difference is that it emits N1QL in place of SQL. 
-If you have used any other LINQ provider, you will find its familiarity and consistency make it an easy transition.
-
-_Linq2Couchbase_, the LINQ provider for the Couchbase .NET SDK, is a stand-alone project which depends on Couchbase .NET SDK 
-and can be found on https://www.nuget.org/packages/linq2Couchbase[NuGet] -- and by using the NuGet package manager to include the dependency:
-
-[source]
-----
-PM> Install-Package Linq2Couchbase
-----
-
-Once you have included the dependency, you can construct queries just like any other LINQ provider in a SQL-like fashion. Nearly all N1QL statements and functions are supported, for example:
-
-* INNER, LEFT Outer, and Index JOINs
-* Math and Date functions
-* Filtering, projections and sorting
-* Grouping and aggregations
-* META keyword, NEST and UNNEST
-* Etc.
-
-In addition to N1QL language features, Linq2Coucbase supports ORM features like Change-tracking, and mapping of JSON fields to keys and other POCO properties. 
-The provider’s core object is the `BucketContext`, which is a Unit of Work (UoW) type object for performing querying and mutations on a per request basis. 
-////
