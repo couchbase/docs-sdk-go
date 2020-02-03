@@ -22,7 +22,7 @@ func main() {
 
 	// #tag::bucket[]
 	// get a bucket reference
-	bucket := cluster.Bucket("bucket-name", &gocb.BucketOptions{})
+	bucket := cluster.Bucket("bucket-name")
 	// #end::bucket[]
 
 	// #tag::beerview[]
@@ -39,7 +39,7 @@ func main() {
 	// #tag::landmarksview[]
 	landmarksResult, err := bucket.ViewQuery("landmarks", "by_name", &gocb.ViewOptions{
 		Key:       "<landmark-name>",
-		Namespace: gocb.DevelopmentDesignDocumentNamespace,
+		Namespace: gocb.DesignDocumentNamespaceDevelopment,
 	})
 	if err != nil {
 		panic(err)
@@ -47,8 +47,8 @@ func main() {
 	// #end::landmarksview[]
 
 	// #tag::results[]
-	var landmarkRow gocb.ViewRow
-	for landmarksResult.Next(&landmarkRow) {
+	for landmarksResult.Next() {
+		landmarkRow := landmarksResult.Row()
 		fmt.Printf("Document ID: %s\n", landmarkRow.ID)
 		var key string
 		err = landmarkRow.Key(&key)

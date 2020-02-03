@@ -38,19 +38,17 @@ A named or positional parameter is a placeholder for a value in the WHERE, LIMIT
 Note that both parameters and options are optional.
 
 .Positional parameter example:
-[source,golang]
+
+[source,golang,indent=0]
 ----
-query := "SELECT x.* FROM `travel-sample` x WHERE x.`type`=$1 LIMIT 10;"
-rows, err := globalCluster.Query(query, &QueryOptions{PositionalParameters: []interface{}{"hotel"}})
+include::example$query.go[tag=pos-params]
 ----
 
 .Named parameter example:
-[source,golang]
+
+[source,golang,indent=0]
 ----
-query := "SELECT x.* FROM `travel-sample` x WHERE x.`type`=$type LIMIT 10;"
-params := make(map[string]interface{}, 1)
-params["type"] = "hotel"
-rows, err := globalCluster.Query(query, &QueryOptions{NamedParameters: params})
+include::example$query.go[tag=named-params]
 ----
 
 // The complete code for this page's example can be found at xref:[??]
@@ -60,21 +58,9 @@ rows, err := globalCluster.Query(query, &QueryOptions{NamedParameters: params})
 
 In most cases your query will return more than one result, and you may be looking to iterate over those results:
 
-[source,golang]
+[source,golang,indent=0]
 ----
-query := "SELECT x.* FROM `travel-sample` x WHERE x.`type`=$1 LIMIT 10;"
-rows, err := globalCluster.Query(query, &QueryOptions{PositionalParameters: []interface{}{"hotel"}})
-
-// check query was successful
-if err != nil {
-   panic(err)
-}
-
-// iterate over rows
-var hotel interface{}   // this could also be a specific type like Hotel   
-for rows.Next(&hotel) {
-    fmt.Println(hotel)
-}
+include::example$query.go[tag=results]
 ----
 
 == Scan Consistency
@@ -91,24 +77,9 @@ Select this when consistency is always more important than performance.
 // See the xref:scan-consistency-examples.adoc[examples] for how to use *AtPlus* for the best performance balance for many circumstances.
 
 .ScanConsisteny (RYOW)
-[source,golang]
+[source,golang,indent=0]
 ----
-// create / update document (mutation)
-result, err := col.Upsert("id", struct {
-    Name string `json:"name"`
-    Type string `json:"type"`
-}{Name: "somehotel", Type: "hotel"}, nil)
-if err != nil {
-    panic(err)
-}
-
-// create mutation state from mutation results
-state := gocb.NewMutationState(result.MutationToken())
-
-// use mutation state with query option
-rows, err := cluster.Query("SELECT x.* FROM `travel-sample` x WHERE x.`type`=\"hotel\" LIMIT 10", &gocb.QueryOptions{
-    ConsistentWith: state,
-})
+include::example$query.go[tag=consistency]
 ----
 
 == Additional Resources

@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/couchbase/gocb/v2"
+	"github.com/couchbase/gocb/v2/search"
 )
 
 func main() {
@@ -20,23 +21,23 @@ func main() {
 	}
 	// #end::connect[]
 
-	collection := cluster.Bucket("my-bucket", nil).DefaultCollection()
+	collection := cluster.Bucket("my-bucket").DefaultCollection()
 
 	// #tag::matchquery[]
 	matchResult, err := cluster.SearchQuery(
 		"travel-sample-index-hotel-description",
-		gocb.NewMatchQuery("swanky"),
+		search.NewMatchQuery("swanky"),
 		&gocb.SearchOptions{
 			Limit: 10,
 		},
 	)
-	// #end::matchResult[]
+	// #end::matchquery[]
 	fmt.Println(matchResult)
 
 	// #tag::daterangequery[]
 	dateRangeResult, err := cluster.SearchQuery(
 		"travel-sample-index-hotel-description",
-		gocb.NewDateRangeQuery().Start("2019-01-01", true).End("2019-02-01", false),
+		search.NewDateRangeQuery().Start("2019-01-01", true).End("2019-02-01", false),
 		&gocb.SearchOptions{
 			Limit: 10,
 		},
@@ -47,9 +48,9 @@ func main() {
 	// #tag::conjunctionquery[]
 	conjunctionResult, err := cluster.SearchQuery(
 		"travel-sample-index-hotel-description",
-		gocb.NewConjunctionQuery(
-			gocb.NewMatchQuery("swanky"),
-			gocb.NewDateRangeQuery().Start("2019-01-01", true).End("2019-02-01", false),
+		search.NewConjunctionQuery(
+			search.NewMatchQuery("swanky"),
+			search.NewDateRangeQuery().Start("2019-01-01", true).End("2019-02-01", false),
 		),
 		&gocb.SearchOptions{
 			Limit: 10,
@@ -59,8 +60,8 @@ func main() {
 	fmt.Println(conjunctionResult)
 
 	// #tag::iteratingrows[]
-	var row gocb.SearchRow
-	for matchResult.Next(&row) {
+	for matchResult.Next() {
+		row := matchResult.Row()
 		docID := row.ID
 		score := row.Score
 
@@ -70,7 +71,7 @@ func main() {
 			panic(err)
 		}
 
-		fmt.Printf("Document ID: %s, search score: %d, fields included in result: %v\n", docID, score, fields)
+		fmt.Printf("Document ID: %s, search score: %f, fields included in result: %v\n", docID, score, fields)
 	}
 
 	err = matchResult.Close()
@@ -103,7 +104,7 @@ func main() {
 
 	consistentWithResult, err := cluster.SearchQuery(
 		"travel-sample-index-hotel-description",
-		gocb.NewMatchQuery("swanky"),
+		search.NewMatchQuery("swanky"),
 		&gocb.SearchOptions{
 			Limit:          10,
 			ConsistentWith: gocb.NewMutationState(*myWriteResult.MutationToken()),

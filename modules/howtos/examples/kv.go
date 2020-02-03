@@ -20,7 +20,7 @@ func main() {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("bucket-name", &gocb.BucketOptions{})
+	bucket := cluster.Bucket("bucket-name")
 
 	collection := bucket.DefaultCollection()
 
@@ -181,7 +181,7 @@ func main() {
 
 	// #tag::increment[]
 	// Increment
-	incrementResult, err := collection.Binary().Increment("document-key", &gocb.CounterOptions{
+	incrementResult, err := collection.Binary().Increment("document-key", &gocb.IncrementOptions{
 		Initial: 1000,
 		Delta:   1,
 		Timeout: 50 * time.Millisecond,
@@ -195,7 +195,7 @@ func main() {
 
 	// #tag::decrement[]
 	// Increment
-	decrementResult, err := collection.Binary().Decrement("document-key", &gocb.CounterOptions{
+	decrementResult, err := collection.Binary().Decrement("document-key", &gocb.DecrementOptions{
 		Initial: 1000,
 		Delta:   1,
 		Timeout: 50 * time.Millisecond,
