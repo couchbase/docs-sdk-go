@@ -11,7 +11,7 @@ import (
 func main() {
 	cluster, err := gocb.Connect(
 		"localhost",
-		&gocb.ClusterOptions{
+		gocb.ClusterOptions{
 			Username: "Administrator",
 			Password: "password",
 		})
