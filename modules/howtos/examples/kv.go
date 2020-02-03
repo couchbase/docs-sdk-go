@@ -2,7 +2,6 @@ package main
 
 // #tag::connect[]
 import (
-	"context"
 	"fmt"
 	"time"
 
@@ -49,19 +48,6 @@ func main() {
 	}
 	// #end::insertoptions[]
 	fmt.Println(resultwithOptions)
-
-	// #tag::replacecontext[]
-	// Replace Document with context.Context
-	ctx, cancelFunc := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancelFunc() // Cancel should always be called one way or another
-	replaceResult, err := collection.Replace("document-key", &document, &gocb.ReplaceOptions{
-		Context: ctx,
-	})
-	if err != nil {
-		panic(err)
-	}
-	// #end::replacecontext[]
-	fmt.Println(replaceResult)
 
 	// #tag::replacecas[]
 	// Replace Document with Cas
