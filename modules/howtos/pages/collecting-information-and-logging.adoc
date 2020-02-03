@@ -48,3 +48,21 @@ Implementations must satisify the [.api]`gocb.Logger` interface.
 
 The [.api]`gocb.DefaultStdioLogger()` and [.api]`gocb.VerboseStdioLogger()` wrap their [.api]`gocbcore` counterparts to provide a stable interface.
 The [.api]`gocb` versions should be used.
+
+
+== Log Redaction
+
+Redacting logs is a two-stage process. 
+If you want to redact client logs (for example before handing them off to the Couchbase Support team) you first need to enable log redaction in your application.
+
+[source,golang]
+----
+gocb.SetLogRedactionLevel(gocb.RedactFull)
+----
+
+Different redaction levels are supported -- please see the `RedactionLevel` enum description for more information.
+
+Note that you need to run this command before any of the SDK code is initialized so all of the logs are captured properly. 
+Once the SDK writes the logs with the tags to a file, you can then use the xref:6.5@server:cli:cbcli/cblogredaction.adoc[`cblogredaction` tool] to obfuscate the log.
+
+* You may wish to read more on Log Redaction xref:6.5@server:manage:manage-logging/manage-logging.adoc#understanding_redaction[in the Server docs].
