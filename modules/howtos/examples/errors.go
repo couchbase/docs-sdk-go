@@ -2,7 +2,9 @@ package main
 
 // #tag::connect[]
 import (
+	"errors"
 	"fmt"
+	"time"
 
 	gocb "github.com/couchbase/gocb/v2"
 )
@@ -22,7 +24,7 @@ func main() {
 
 	// #tag::bucket[]
 	// get a bucket reference
-	bucket := cluster.Bucket("bucket-name", &gocb.BucketOptions{})
+	bucket := cluster.Bucket("bucket-name")
 	// #end::bucket[]
 
 	// #tag::collection[]
@@ -32,161 +34,168 @@ func main() {
 	// collection := bucket.Scope("my-scope").Collection("my-collection", &gocb.CollectionOptions{})
 	// #end::collection[]
 
-	// #tag::typeassert[]
+	// #tag::as[]
 	_, err = collection.Get("key", nil)
 	if err != nil {
-		if kvError, ok := err.(gocb.KeyValueError); ok {
-			fmt.Println(kvError.ID())         // the id of the document
-			fmt.Println(kvError.StatusCode()) // the memcached error code
-			fmt.Println(kvError.Opaque())     // the unique identifier for the operation
-			if kvError.StatusCode() == 0x01 {
+		var kvError gocb.KeyValueError
+		if errors.As(err, &kvError) {
+			fmt.Println(kvError.StatusCode) // the memcached error code
+			fmt.Println(kvError.Opaque)     // the unique identifier for the operation
+			if kvError.StatusCode == 0x01 {
 				fmt.Println("Document could not be found") // maybe do something like return a 404 to your user
 			}
 		} else {
 			fmt.Printf("An unknown error occurred: %v", err)
 		}
 	}
-	// #end::typeassert[]
+	// #end::as[]
 
-	// #tag::helperfunc[]
-	_, err = collection.Get("key", nil)
+	// #tag::is[]
+	_, err = collection.Get("does-not-exist", nil)
 	if err != nil {
-		if gocb.IsKeyNotFoundError(err) {
-			fmt.Println("Document could not be found") // maybe do something like return a 404 to your user
+		if errors.Is(err, gocb.ErrDocumentNotFound) {
+			fmt.Println("Document could not be found")
 		} else {
 			fmt.Printf("An unknown error occurred: %v", err)
 		}
 	}
-	// #end::helperfunc[]
+	// #end::is[]
 
-	// #tag::retries[]
-	var changeEmail func(maxRetries int) error
-	changeEmail = func(maxRetries int) error {
-		result, err := collection.Get("doc-id", nil)
+	// #tag::replace[]
+	doc := struct{ Foo string }{Foo: "baz"}
+	_, err = collection.Replace("does-not-exist", doc, nil)
+	if err != nil {
+		if errors.Is(err, gocb.ErrDocumentNotFound) {
+			fmt.Println("Key not be found")
+		} else {
+			fmt.Printf("An unknown error occurred: %v", err)
+		}
+	}
+	// #end::replace[]
+
+	// #tag::exists[]
+	doc = struct{ Foo string }{Foo: "baz"}
+	_, err = collection.Insert("does-already-exist", doc, nil)
+	if err != nil {
+		if errors.Is(err, gocb.ErrDocumentExists) {
+			fmt.Println("Key already exists")
+		} else {
+			fmt.Printf("An unknown error occurred: %v", err)
+		}
+	}
+	// #end::exists[]
+
+	newDoc := struct{}{}
+	// #tag::cas[]
+	var doOperation func(attempt) (*gocb.MutationResult, error)
+	doOperation = func(maxAttempts int) (*gocb.MutationResult, error) {
+		doc, err := collection.Get("doc", nil)
 		if err != nil {
-			return err
+			return nil, err
 		}
 
-		doc := struct {
-			Email string `json:"email"`
-		}{}
-		err = result.Content(&doc)
+		result, err := collection.Replace("doc", newDoc, &gocb.ReplaceOptions{Cas: doc.Cas()})
 		if err != nil {
-			return err
+			if errors.Is(err, gocb.ErrCasMismatch) {
+				// Simply recursively retry until maxAttempts is hit
+				if maxAttempts == 0 {
+					return nil, err
+				}
+				return doOperation(maxAttempts - 1)
+			} else {
+				return nil, err
+			}
 		}
 
-		doc.Email = "john.smith@couchbase.com"
-		_, err = collection.Replace("doc-id", doc, &gocb.ReplaceOptions{
-			Cas: result.Cas(),
-		})
-		if err == nil {
-			return nil
-		}
+		return result, nil
+	}
+	// #end::cas[]
 
-		if gocb.IsRetryableError(err) {
-			// IsRetryableError will be true for transient errors, such as a CAS mismatch (indicating
-			// another agent concurrently modified the document), or a temporary failure (indicating
-			// the server is temporarily unavailable or overloaded).  The operation may or may not
-			// have been written, but since it is idempotent we can simply retry it.
-			if maxRetries > 0 {
-				fmt.Printf("Retrying operation on retryable err %v\n", err)
-				return changeEmail(maxRetries)
+	// #tag::insert[]
+	var doInsert func(docId string, doc []byte, maxAttempts int) (string, error)
+	doInsert = func(docId string, doc []byte, maxAttempts int) (string, error) {
+		_, err := collection.Insert(docId, doc, nil)
+		if err != nil {
+			if errors.Is(err, gocb.ErrDocumentExists) {
+				// The logic here is that if we failed to insert on the first attempt then
+				// it's a true error, otherwise we retried due to an ambiguous error, and
+				// it's ok to continue as the operation was actually successful.
+				if maxAttempts == 0 {
+					return "", err
+				}
+
+				return "ok!", nil
+			} else if errors.Is(err, gocb.ErrDurabilityAmbiguous) {
+				if maxAttempts == 0 {
+					return "", err
+				}
+
+				return doInsert(docId, doc, maxAttempts-1)
+			} else if errors.Is(err, gocb.ErrTimeout) {
+				if maxAttempts == 0 {
+					return "", err
+				}
+
+				return doInsert(docId, doc, maxAttempts-1)
 			}
 
-			// Errors can be transient but still exceed our SLA.
-			return fmt.Errorf("maximum retries exceeded, aborting on err %v", err)
+			return "", err
 		}
 
-		// If the err is not isRetryable, there is perhaps a more permanent or serious error,
-		// such as a network failure.
-		return fmt.Errorf("aborting on err %v", err)
+		return "ok!", nil
 	}
+	// #end::insert[]
 
-	err = changeEmail(5)
-	if err != nil {
-		// What to do here is highly application dependent.  Options could include:
-		// - Returning a "please try again later" error back to the end-user (if any)
-		// - Logging it for manual human review, and possible follow-up with the end-user (if any)
-		fmt.Printf("failed to change email: %v", err)
+	// #tag::insert-real[]
+	var doInsertReal func(docId string, doc []byte, maxAttempts int, delay time.Duration) (string, error)
+	doInsertReal = func(docId string, doc []byte, maxAttempts int, delay time.Duration) (string, error) {
+		_, err := collection.Insert(docId, doc, &gocb.InsertOptions{DurabilityLevel: gocb.DurabilityLevelMajority})
+		if err != nil {
+			if errors.Is(err, gocb.ErrDocumentExists) {
+				// The logic here is that if we failed to insert on the first attempt then
+				// it's a true error, otherwise we retried due to an ambiguous error, and
+				// it's ok to continue as the operation was actually successful.
+				if maxAttempts == 0 {
+					return "", err
+				}
+
+				return "ok!", nil
+				// Ambiguous errors.  The operation may or may not have succeeded.  For inserts,
+				// the insert can be retried, and a DocumentExistsException indicates it was
+				// successful.
+			} else if errors.Is(err, gocb.ErrDurabilityAmbiguous) || errors.Is(err, gocb.ErrTimeout) ||
+				// Temporary/transient errors that are likely to be resolved
+				// on a retry.
+				errors.Is(err, gocb.ErrTemporaryFailure) || errors.Is(err, gocb.ErrDurableWriteInProgress) ||
+				errors.Is(err, gocb.ErrDurableWriteReCommitInProgress) ||
+				// These transient errors won't be returned on an insert, but can be used
+				// when writing similar wrappers for other mutation operations.
+				errors.Is(err, gocb.ErrCasMismatch) {
+				if maxAttempts == 0 {
+					return "", err
+				}
+
+				time.Sleep(delay)
+				return doInsertReal(docId, doc, maxAttempts-1, delay*2)
+			}
+
+			return "", err
+		}
+
+		return "ok!", nil
 	}
-	// #end::retries[]
+	// #end::insert-real[]
 
-	// #tag::queryerror[]
+	// #tag::query[]
 	_, err = cluster.Query("select * from `mybucket`", nil)
 	if err != nil {
-		if queryErr, ok := err.(gocb.QueryError); ok {
-			fmt.Println(queryErr.HTTPStatus()) // the HTTP Status from the server
-			fmt.Println(queryErr.ContextID())  // the identifier for the query
-			fmt.Println(queryErr.Endpoint())   // the http endpoint used for the query
-			fmt.Println(queryErr.Code())       // the error code returned by the server
-			fmt.Println(queryErr.Message())    // the error message returned by the server
+		var queryErr gocb.QueryError
+		if errors.As(err, &queryErr) {
+			fmt.Println(queryErr.ClientContextID) // the identifier for the query
+			fmt.Println(queryErr.Endpoint)        // the http endpoint used for the query
+			fmt.Println(queryErr.Statement)       // the query statement
+			fmt.Println(queryErr.Errors)          // a list of errors codes + messages for why the query failed.
 		}
 	}
-	// #end::queryerror[]
-
-	// #tag::analyticserror[]
-	_, err = cluster.AnalyticsQuery("select * from `mybucket`", nil)
-	if err != nil {
-		if queryErr, ok := err.(gocb.AnalyticsQueryError); ok {
-			fmt.Println(queryErr.HTTPStatus()) // the HTTP Status from the server
-			fmt.Println(queryErr.ContextID())  // the identifier for the query
-			fmt.Println(queryErr.Endpoint())   // the http endpoint used for the query
-			fmt.Println(queryErr.Code())       // the error code returned by the server
-			fmt.Println(queryErr.Message())    // the error message returned by the server
-		}
-	}
-	// #end::analyticserror[]
-
-	// #tag::searcherror[]
-	maybePrintSearchError := func(err error) {
-		if err == nil {
-			return
-		}
-		if searchErrs, ok := err.(gocb.SearchErrors); ok {
-			fmt.Println(searchErrs.HTTPStatus()) // the HTTP Status from the server
-			fmt.Println(searchErrs.ContextID())  // the identifier for the query
-			fmt.Println(searchErrs.Endpoint())   // the http endpoint used for the query
-			for _, searchErr := range searchErrs.Errors() {
-				fmt.Println(searchErr.Message()) // the error message
-			}
-		}
-	}
-	indexName := "my-index"
-	searchResult, err := cluster.SearchQuery(indexName, gocb.NewMatchQuery("matchme"), nil)
-	maybePrintSearchError(err)
-
-	var searchRow gocb.SearchRow
-	for searchResult.Next(&searchRow) {
-		// ...
-	}
-
-	err = searchResult.Close()
-	maybePrintSearchError(err)
-	// #end::searcherror[]
-
-	// #tag::viewerror[]
-	maybePrintViewError := func(err error) {
-		if err == nil {
-			return
-		}
-		if viewErrs, ok := err.(gocb.ViewQueryErrors); ok {
-			fmt.Println(viewErrs.HTTPStatus()) // the HTTP Status from the server
-			fmt.Println(viewErrs.Endpoint())   // the http endpoint used for the query
-			for _, viewErr := range viewErrs.Errors() {
-				fmt.Println(viewErr.Message()) // the error message
-				fmt.Println(viewErr.Reason())  // the error reason
-			}
-		}
-	}
-	viewResult, err := bucket.ViewQuery("test", "test", nil)
-	maybePrintViewError(err)
-
-	var viewRow gocb.ViewRow
-	for viewResult.Next(&viewRow) {
-		// ...
-	}
-
-	err = viewResult.Close()
-	maybePrintViewError(err)
-	// #end::viewerror[]
+	// #end::query[]
 }

@@ -26,7 +26,7 @@ func main() {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("default", &gocb.BucketOptions{})
+	bucket := cluster.Bucket("default")
 	collection := bucket.DefaultCollection()
 	// #end::connect[]
 

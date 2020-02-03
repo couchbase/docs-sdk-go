@@ -1,6 +1,8 @@
 package main
 
 import (
+	"crypto/x509"
+
 	gocb "github.com/couchbase/gocb/v2"
 )
 
@@ -16,7 +18,7 @@ func simpleconnect() {
 	}
 	// #end::simpleconnect[]
 
-	cluster.Close()
+	cluster.Close(nil)
 }
 
 func multinodeconnect() {
@@ -31,7 +33,7 @@ func multinodeconnect() {
 	}
 	// #end::multinodeconnect[]
 
-	cluster.Close()
+	cluster.Close(nil)
 }
 
 func customports() {
@@ -46,7 +48,7 @@ func customports() {
 	}
 	// #end::customports[]
 
-	cluster.Close()
+	cluster.Close(nil)
 }
 
 func tlsconnect() {
@@ -61,9 +63,9 @@ func tlsconnect() {
 	opts := gocb.ClusterOptions{
 		Username: "Administrator",
 		Password: "password",
-		SecurityConfig: SecurityConfig{
+		SecurityConfig: gocb.SecurityConfig{
 			TLSRootCAs: rootCAs,
-		}
+		},
 	}
 	cluster, err := gocb.Connect("couchbases://10.112.193.101", opts)
 	if err != nil {
@@ -71,7 +73,7 @@ func tlsconnect() {
 	}
 	// #end::tls[]
 
-	cluster.Close()
+	cluster.Close(nil)
 }
 
 func dnssrv() {
@@ -86,7 +88,7 @@ func dnssrv() {
 	}
 	// #end::dnssrv[]
 
-	cluster.Close()
+	cluster.Close(nil)
 }
 
 func main() {

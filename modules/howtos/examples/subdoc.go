@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -19,7 +20,7 @@ func main() {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("bucket-name", &gocb.BucketOptions{})
+	bucket := cluster.Bucket("bucket-name")
 
 	collection := bucket.DefaultCollection()
 
@@ -230,7 +231,7 @@ func main() {
 		gocb.ArrayAddUniqueSpec("purchases.complete", 95, &gocb.ArrayAddUniqueSpecOptions{}),
 	}
 	arrayAddUniqueSecondResult, err := collection.MutateIn("customer123", mops, &gocb.MutateInOptions{})
-	fmt.Println(gocb.IsPathExistsError(err)) // true
+	fmt.Println(errors.Is(err, gocb.ErrPathExists)) // true
 	// #end::mutateInArrayAddUnique[]
 	fmt.Println(arrayAddUniqueResult)
 	fmt.Println(arrayAddUniqueSecondResult)

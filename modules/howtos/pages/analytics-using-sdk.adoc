@@ -62,10 +62,9 @@ There are currently three parameters:
 
 * *Client Context ID*, sets a context ID that is returned back as part of the result.
 Uses `ClientContextID string` default is a random UUID 
-* *Server Side Timeout*, customizes the timeout sent to the server. 
+* *Timeout*, customizes the timeout sent to the server.
 Does not usually have to be set, as the client sets it based on the timeout on the operation. 
-Uses `ServerSideTimeout time.Duration`, and defaults to the Analytics timeout set on the client (75s).
-Note that any timeout set using `context.Context` will also be used to set this value.
+Uses `Timeout time.Duration`, and defaults to the Analytics timeout set on the client (75s).
 This can be adjusted at the xref:ref:client-settings.adoc#timeout-options[cluster global config level].
 * *Priority*, set if the request should have priority over others.
 The `Priority bool` option defaults to `false`.
@@ -85,9 +84,9 @@ These query result may contain various sorts of data and metadata,
 depending upon the nature of the query, 
 as you will have seen when working through our xref:6.5@server:analytics:primer-beer.adoc[introductory primer]. 
 
-Results are iterated
-using the `Next` function, supplying a pointer to the value in which to store the value. Always remember to check the error value of
-`Close` after iterating the results, this is where any errors occuring whilst calling `Next` will be returned.
+Results are iterated using the `Next` function.
+Within the `for` loop the result is read using the `Row` by supplying a pointer to the variable in which to store the value.
+Always remember to check the error value of `Close` after iterating the results, this is where any errors occurring whilst calling `Next` will be returned.
 
 [source,golang,indent=0]
 ----
