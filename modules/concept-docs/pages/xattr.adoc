@@ -12,9 +12,11 @@ include::6.5@sdk:shared:partial$sdk-xattr-overview.adoc[tag=using_extended_attri
 
 include::6.5@sdk:shared:partial$sdk-xattr-overview.adoc[tag=virtual_extended_attributes]
 
-[source,java]
+[source,golang]
 ----
-bucket.lookupIn(key).get("$document.exptime", new SubdocOptionsBuilder().xattr(true)).execute()
+collection.LookupIn(key, []gocb.LookupInSpec{
+	gocb.GetSpec("$document.exptime", &gocb.GetSpecOptions{IsXattr: true}),
+}, nil)
 ----
 
 // See the xref:howtos:sdk-xattr-example.adoc#virtual-extended-attributes-example[example page] for a complete code sample.
