@@ -133,8 +133,7 @@ Note that `Fields` is a special case, where it's a function.
 include::example$fts.go[tag=iteratingrows]
 ----
 
-Take care to ensure you call `Close` after accessing rows and check for any errors returned.
-This will also close the HTTP stream if a large resultset was requested.
+Take care to ensure you call `Err` after accessing rows and check for any errors returned.
 
 .Iterating facets
 Facets can only be accessed once `Close` has been called on rows.

@@ -52,5 +52,4 @@ Once a view result is obtained then it can be iterated over and the ID, keys and
 include::example$views.go[tag=results]
 ----
 
-Take care to ensure you call `Close` after accessing rows and check for any errors returned.
-This will also close the HTTP stream if a large resultset was requested.
+Take care to ensure you call `Err` after accessing rows to check for any errors returned.

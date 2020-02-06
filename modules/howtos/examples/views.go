@@ -65,7 +65,8 @@ func main() {
 		fmt.Printf("Landmark named %s has value %v\n", key, landmark)
 	}
 
-	err = landmarksResult.Close()
+	// always check for errors after iterating
+	err = landmarksResult.Err()
 	if err != nil {
 		panic(err)
 	}
