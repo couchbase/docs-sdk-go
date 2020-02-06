@@ -86,7 +86,7 @@ as you will have seen when working through our xref:6.5@server:analytics:primer-
 
 Results are iterated using the `Next` function.
 Within the `for` loop the result is read using the `Row` by supplying a pointer to the variable in which to store the value.
-Always remember to check the error value of `Close` after iterating the results, this is where any errors occurring whilst calling `Next` will be returned.
+Always remember to check the error value of `Err` after iterating the results, this is where any errors occurring whilst calling `Next` will be returned.
 
 [source,golang,indent=0]
 ----

@@ -56,8 +56,8 @@ func main() {
 		fmt.Println(hotel)
 	}
 
-	// always close results and check for errors
-	err = results.Close()
+	// always check for errors after iterating
+	err = results.Err()
 	if err != nil {
 		panic(err)
 	}

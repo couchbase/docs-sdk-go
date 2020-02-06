@@ -41,8 +41,8 @@ func main() {
 		fmt.Println(greeting)
 	}
 
-	// always close results and check for errors
-	err = results.Close()
+	// always check for errors after iterating
+	err = results.Err()
 	if err != nil {
 		panic(err)
 	}
@@ -113,7 +113,8 @@ func main() {
 	for results.Next() {
 	}
 
-	err = results.Close()
+	// always check for errors after iterating
+	err = results.Err()
 	if err != nil {
 		panic(err)
 	}

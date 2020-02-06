@@ -74,7 +74,8 @@ func main() {
 		fmt.Printf("Document ID: %s, search score: %f, fields included in result: %v\n", docID, score, fields)
 	}
 
-	err = matchResult.Close()
+	// always check for errors after iterating
+	err = matchResult.Err()
 	if err != nil {
 		panic(err)
 	}
