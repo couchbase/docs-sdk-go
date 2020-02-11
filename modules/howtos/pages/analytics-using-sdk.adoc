@@ -21,6 +21,8 @@ In these examples we will be using an `airports` dataset created on the `travel-
 In Go SDK 1.x, Analytics was only available on the `Bucket` object;
 in Go SDK 2.0, Analytics queries are submitted using the Cluster reference, not a Bucket or Collection:
 
+NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connection using `cluster.Bucket(name)` before you can use Analytics.
+
 [source,golang,indent=0]
 ----
 include::example$analytics.go[tag=query]
