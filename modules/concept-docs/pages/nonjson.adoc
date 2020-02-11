@@ -1,4 +1,4 @@
-= Sub-Non-JSON Documents
+= Non-JSON Documents
 :nav-title: Non-JSON
 :page-aliases: ROOT:nonjson
 :page-topic-type: concept
