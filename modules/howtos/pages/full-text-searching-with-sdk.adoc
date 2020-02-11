@@ -12,6 +12,7 @@ It uses natural language processing for querying documents, provides relevance s
 Some of the supported query types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
 The Go SDK exposes an API for performing FTS queries which abstracts some of the complexity of using the underlying REST API.
 
+NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connection using `cluster.Bucket(name)` before you can use Search.
 
 // As of Couchbase Server 6.5, FTS...
 
