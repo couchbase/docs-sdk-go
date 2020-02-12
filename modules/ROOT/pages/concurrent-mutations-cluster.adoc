@@ -14,7 +14,7 @@ The CAS value itself is returned as part of a document’s metadata whenever a d
 In the SDK this is present as the [.api]`cas` field in the applicable document container object when an operation is successful.
 
 CAS is an acronym for _Compare And Swap_, and is known as a form of optimistic locking.
-The CAS can be supplied as parameters to the _insert_, _upsert_, _replace_, and _remove_ operations.
+The CAS can be supplied as parameters to the _replace_ and _remove_ operations.
 When applications provide the CAS, server will check the application-provided version of CAS against its own version of the CAS:
 
 * If the two CAS values match (they compare successfully), then the mutation operation succeeds.
