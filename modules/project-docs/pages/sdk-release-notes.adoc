@@ -1,13 +1,13 @@
 = Couchbase Go SDK Release Notes
 :navtitle: Release Notes
 :page-topic-type: project-doc
-:page-aliases: relnotes-go-sdk,ROOT:relnotes-go-sdk,ROOT:sdk-release-notes
+:page-aliases: relnotes-go-sdk,ROOT:relnotes-go-sdk,ROOT:sdk-release-notes,ROOT:release-notes
 
 [abstract]
 Release notes, installation instructions, and download archive for the Couchbase Go Client.
 
-These pages cover the 2.0 versions of the Couchbase Java SDK (3.0 SDK API). 
-For release notes, download links, and installation methods for 1.6 and earlier releases of the Couchbase Go Client, please see the xref:1.6@go-sdk::sdk-release-notes[1.x Go Release Notes & Download Archive].
+These pages cover the 2.0 versions of the Couchbase Go SDK (3.0 SDK API). 
+For release notes, download links, and installation methods for 1.6 and earlier releases of the Couchbase Go Client, please see the xref:1.6@go-sdk::sdk-release-notes.adoc[1.x Go Release Notes & Download Archive].
 
 
 == SDK Installation
@@ -212,3 +212,8 @@ Updated how errors are handled in the n1ql, analytics, search, and view APIs so 
 Fixed issue where the SDK can get into a state where all future requests timeout following certain circumstances where a request times out whilst it is being sent.
 * https://issues.couchbase.com/browse/GOCBC-431[GOCBC-431]:
 Fixed issue where the SDK would fail to connect to some external network types such as a publicly addressable Kubernetes cluster. 
+
+
+== Pre-releases
+
+Numerous _Alpha_ and _Beta_ releases were made in the run-up to the 2.0 release, and although unsupported, the release notes and download links are retained for archive purposes xref:3.0-pre-release-notes.adoc[here].
