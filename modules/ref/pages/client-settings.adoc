@@ -159,6 +159,16 @@ The Key/Value default timeout is used on operations which are performed on a spe
 key if not overridden by a custom timeout. This includes all commands like get(),
 getFromReplica() and all mutation commands, but does not include operations that are
 performed with enhanced durability requirements.
++
+TIP: xref:concept-docs:durability-replication-failure-considerations.adoc#synchronous-writes[Durable Write operations] have their own timeout setting, `KVDurabilityTimeout`, see below.
+
+Name: *KVDurabilityTimeout*::
++
+Default: `10s`
++
+Key/Value operations with enhanced durability requirements may take longer to complete, so they have a separate default timeout.
++
+WARNING: The `KVDurabilityTimeout` property is not part of the stable API and may change or be removed at any time.
 
 Name: *ViewTimeout*::
 +
