@@ -49,10 +49,6 @@ include::example$startusing.go[tag=bucket]
 
 If you installed the travel sample data bucket, replace _bucket-name_ with _travel-sample_.
 
-[source,golang,indent=0]
-----
-include::example$startusing.go[tag=named-bucket]
-----
 
 The 2.0 SDK is ready for the introduction of xref:#[Collections] in an upcoming release of the Couchbase Data Platform.
 Couchbase Server 6.5 brings a limited xref:6.5@server:developer-preview:preview-mode.adoc[Developer Preview] of Collections, 
