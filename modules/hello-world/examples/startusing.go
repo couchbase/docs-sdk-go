@@ -25,11 +25,6 @@ func main() {
 	bucket := cluster.Bucket("bucket-name")
 	// #end::bucket[]
 
-	// #tag::named-bucket[]
-	// get a bucket reference
-	bucket := cluster.Bucket("travel-sample")
-	// #end::named-bucket[]
-
 	// #tag::collection[]
 	// get a collection reference
 	collection := bucket.DefaultCollection()
