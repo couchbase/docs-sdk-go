@@ -1,0 +1,91 @@
+= Sample Application
+:nav-title: Travel Sample App
+:content-type: tutorial
+:page-topic-type: tutorial
+:page-aliases: ROOT:sample-application,ROOT:tutorial4,ROOT:sample-app-backend
+
+[abstract]
+Discover how to program interactions with the Couchbase Server via the data, Query, and search services -- using the Travel Sample Application with the built-in Travel Sample data Bucket.
+This version also demonstrated the Developer Preview of the upcoming Collections feature.
+
+include::6.5@sdk:shared:partial$sample-application.adoc[tag=prereq]
+
+
+== Preparation
+
+As well as the xref:start-using-sdk.adoc[Node.js SDK 3.0] and Couchbase Server, 
+set up as described above, you will need `git` to fetch the travel sample application code:
+
+[source,bash]
+----
+git clone git@github.com:couchbaselabs/try-cb-nodejs.git
+----
+
+Change directory into your cloned repository, and check out the latest branch (this will most probably be enabled as the default branch).
+
+[source,bash]
+----
+cd try-cb-nodejs
+git checkout 6.5
+npm install
+----
+
+
+== Running the Travel Sample Application
+
+Next, edit the `storage.host` field in src/main/resources/application.properties to the one for your containerised Couchbase Server (or localhost, 127.0.0.1, if appropriate), and any other local changes -- such as password.
+From here onwards, we'll assume the defaults.
+
+And run with
+
+[source,bash]
+----
+npm rub start
+----
+
+After the build, with your Web browser of choice, head to port 8080 of the local machine -- http://localhost:8080[http://localhost:8080].
+
+
+// *PIC -- screenshot
+
+
+
+== Using the Sample App
+
+Give yourself a username and password and click *Register*.
+
+Now try out a few queries, and see Search in action for the hotel finder feature..
+
+
+== Sample App Backend
+
+The backend code shows Couchbase Java SDK in action with Query and Search, 
+but also how to plug together all of the elements and build an application with Couchbase Server and the Java SDK.
+
+Here's the Search code, which checks to see whether the search term is a three or four letter FAA or ICAO abbreviation, and if not searches for it as an airport name:
+
+
+
+
+
+
+
+[source,javascript]
+----
+  var qs;
+  if (searchTerm.length === 3) {
+    // FAA code
+    qs = "SELECT airportname from `travel-sample` WHERE faa = '" + searchTerm.toUpperCase() + "';";
+  } else if (searchTerm.length === 4 &&
+      (searchTerm.toUpperCase() === searchTerm ||
+        searchTerm.toLowerCase() === searchTerm)) {
+    // ICAO code
+    qs = "SELECT airportname from `travel-sample` WHERE icao = '" + searchTerm.toUpperCase() + "';";
+  } else {
+    // Airport name
+    qs = "SELECT airportname from `travel-sample` WHERE LOWER(airportname) LIKE '%" + searchTerm.toLowerCase() + "%';";
+  }
+----
+
+The https://github.com/couchbaselabs/try-cb-nodejs/blob/6.5/index.js[index.js] file also contains the functions for handling users, registration, and N1QL queries.
+
