@@ -3,7 +3,8 @@
 :page-topic-type: project-doc
 :page-aliases: 3.0αλφα-sdk-release-notes
 
-[abstract] Release notes for the 2.0 Alpha & Beta Releases
+[abstract] 
+Release notes for the 2.0 Alpha & Beta Releases
 
 In the run-up to the SDK 3.0 API (Go SDK 2.0) releases, several αλφα and βετα releases were made.
 Their release notes are maintained here for archive purposes.
