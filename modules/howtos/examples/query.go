@@ -23,6 +23,8 @@ func main() {
 	bucket := cluster.Bucket("travel-sample")
 	collection := bucket.DefaultCollection()
 
+	simple(cluster)
+
 	// #tag::pos-params[]
 	query := "SELECT x.* FROM `travel-sample` x WHERE x.`type`=$1 LIMIT 10;"
 	rows, err := cluster.Query(query, &gocb.QueryOptions{PositionalParameters: []interface{}{"hotel"}})
@@ -63,7 +65,10 @@ func main() {
 	}
 	// #end::results[]
 
-	// #tag::consistency[]
+	metrics(results)
+	one(cluster)
+
+	// #tag::consistentwith[]
 	// create / update document (mutation)
 	result, err := collection.Upsert("id", struct {
 		Name string `json:"name"`
@@ -80,6 +85,73 @@ func main() {
 	rows, err = cluster.Query("SELECT x.* FROM `travel-sample` x WHERE x.`type`=\"hotel\" LIMIT 10", &gocb.QueryOptions{
 		ConsistentWith: state,
 	})
-	// #end::consistency[]
+	// #end::consistentwith[]
 	fmt.Println(rows)
+}
+
+func simple(cluster *gocb.Cluster) {
+	// #tag::simple[]
+	results, err := cluster.Query("SELECT \"hello\" as greeting;", nil)
+	if err != nil {
+		panic(err)
+	}
+
+	var greeting interface{}
+	for results.Next() {
+		err := results.Row(&greeting)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(greeting)
+	}
+
+	// always check for errors after iterating
+	err = results.Err()
+	if err != nil {
+		panic(err)
+	}
+	// #end::simple[]
+}
+
+func one(cluster *gocb.Cluster) {
+	// #tag::one[]
+	query := "SELECT x.* FROM `travel-sample` x WHERE x.`type`=$1 LIMIT 1;"
+	results, err := cluster.Query(query, &gocb.QueryOptions{PositionalParameters: []interface{}{"hotel"}})
+
+	// check query was successful
+	if err != nil {
+		panic(err)
+	}
+
+	var hotel interface{} // this could also be a specific type like Hotel
+	err = results.One(&hotel)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(hotel)
+	// #end::one[]
+}
+
+func metrics(results *gocb.QueryResult) {
+	// #tag::metrics[]
+	metadata, err := results.MetaData()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Execution Time: %d\n", metadata.Metrics.ExecutionTime)
+	// #end::metrics[]
+}
+
+func consistency(cluster *gocb.Cluster) {
+	// #tag::consistency[]
+	query := "SELECT x.* FROM `travel-sample` x WHERE x.`type`=\"hotel\" LIMIT 10"
+	results, err := cluster.Query(query, &gocb.QueryOptions{
+		ScanConsistency: gocb.QueryScanConsistencyRequestPlus,
+	})
+	if err != nil {
+		panic(err)
+	}
+	// #end::consistency[]
+	fmt.Println(results)
 }
