@@ -16,7 +16,7 @@ If you are using Go 1.11+ then installing the Couchbase Go SDK is similar to ins
 
 [source,bash]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.0.0-beta.1
+$ go get github.com/couchbase/gocb/v2@v2.0.1
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -26,9 +26,78 @@ For details on installation using older versions please see xref:hello-world:sta
 
 === API Documentation
 
-The most current and up to date API Documentation is always available through the http://godoc.org/gopkg.in/couchbase/gocb.v1[godoc website].
+The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
+
+== Version 2.0.1 (18 January 2020)
+
+Version 2.0.1 is a maintenance release for the Go SDK 2.0.0.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-775[GOCBC-775]:
+Improve error message for when performing cluster level operations with no connections available.
+* https://issues.couchbase.com/browse/GOCBC-776[GOCBC-776]:
+Added support for KVDurableTimeout.
+* https://issues.couchbase.com/browse/GOCBC-786[GOCBC-786]:
+Improve error messages for the UserManager GetUser function.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-701[GOCBC-701]:
+Fixed issue with enhanced prepared statements not being used.
+* https://issues.couchbase.com/browse/GOCBC-702[GOCBC-702]:
+Fixed issue with CA root certificates not being able to be provided.
+* https://issues.couchbase.com/browse/GOCBC-759[GOCBC-759]:
+Fixed issue with streaming results for HTTP based services timing out unexpectedly.
+* https://issues.couchbase.com/browse/GOCBC-772[GOCBC-772]:
+Fixed issue with many of the management API functions timing out immediately.
+* https://issues.couchbase.com/browse/GOCBC-773[GOCBC-773]:
+Fixed issue with queries that do not return rows (e.g. mutations) causing errors.
+* https://issues.couchbase.com/browse/GOCBC-777[GOCBC-777]:
+Fixed issue with failing operations causing nil pointers.
+* https://issues.couchbase.com/browse/GOCBC-783[GOCBC-783]:
+Fixed issue with Exists returning incorrectly if the document was recently deleted.
+* https://issues.couchbase.com/browse/GOCBC-784[GOCBC-784]:
+Fixed issue with Unlock returning a doc not found error instead of cas mismatch.
+* https://issues.couchbase.com/browse/GOCBC-787[GOCBC-787]:
+Fixed issue with some (xattr related) subdoc operations sending invalid packets.
+* https://issues.couchbase.com/browse/GOCBC-789[GOCBC-789]:
+Fixed issue with search index manager FreezePlan function using an invalid HTTP method.
+* https://issues.couchbase.com/browse/GOCBC-790[GOCBC-790]:
+Fixed issue with user manager sometimes parsing user role origins incorrectly.
+* https://issues.couchbase.com/browse/GOCBC-796[GOCBC-796]:
+Fixed issue with cccp poller hanging if the get cluster config op timed out.
+
+== Version 2.0.0 (18 January 2020)
+
+Version 2.0.0 is the first release for the Go SDK 2.0.0.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-510[GOCBC-510]:
+Dropped support for connecting using the http scheme.
+* https://issues.couchbase.com/browse/GOCBC-534[GOCBC-534]:
+Added support for retry handling.
+* https://issues.couchbase.com/browse/GOCBC-552[GOCBC-652]:
+Added support for circuit breakers.
+* https://issues.couchbase.com/browse/GOCBC-655[GOCBC-655]:
+Added support for enhanced timeout errors providing more information about operations which timeout.
+* https://issues.couchbase.com/browse/GOCBC-656[GOCBC-656]:
+Added support for threshold logging tracer.
+* https://issues.couchbase.com/browse/GOCBC-680[GOCBC-680]:
+Updated how we expose and handle errors.
+* https://issues.couchbase.com/browse/GOCBC-694[GOCBC-694]:
+A large number of updates including:
+How query and analytics results are iterated.
+Minor renaming of various types.
+Moving search facets, sorting, and queries to a search subpackage.
+Removing serializers.
+* https://issues.couchbase.com/browse/GOCBC-740[GOCBC-740]:
+Updated expiry options to be `time.Duration`.
+* https://issues.couchbase.com/browse/GOCBC-760[GOCBC-760]:
+Moved authenticator to ClusterOptions.
 
 
 == Version 2.0 Beta1 (3 October 2019)
