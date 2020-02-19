@@ -11,33 +11,9 @@ include::6.5@sdk:shared:partial$cas.adoc[tag=example]
 
 include::6.5@sdk:shared:partial$cas.adoc[tag=errors]
 
-[source,javascript]
+[source,golang,indent=0]
 ----
-async function incrementVisitCount(collection, userId) {
-    var maxRetries = 10;
-    for(var i = 0; i < maxRetries; ++i) {
-        // Get the current document contents
-        var getRes = await collection.get(userId);
-
-        // Increment the visit count
-        var userDoc = getRes.value;
-        userDoc.visitCount++;
-
-        try {
-            // Attempt to replace the document using CAS
-            await collection.replace(userId, userDoc, {cas: getRes.cas});
-        } catch (e) {
-            // Check if the error thrown is a cas mismatch, if it is, we retry
-            if (e instanceof couchbase.CasMismatchError) {
-                continue;
-            }
-            throw e;
-        }
-
-        // If no errors occured during the replace, we can exit our retry loop
-        break;
-    }
-}
+include::example$cas.go[tag=handlingerrors]
 ----
 
 Sometimes more logic is needed when performing updates, for example, if a property is mutually exclusive with another property; only one or the other can exist, but not both.
@@ -49,17 +25,9 @@ include::6.5@sdk:shared:partial$cas.adoc[tag=format]
 
 include::6.5@sdk:shared:partial$cas.adoc[tag=locking]
 
-[source,javascript]
+[source,golang,indent=0]
 ----
-var getRes = await collection.getAndLock('key');
-
-var lockedCas = getRes.cas;
-
-/** an example of simply unlocking the document:
-await collection.unlock('key', lockedCas);
- */
-
-await collection.upsert('key', 'new value', {cas: lockedCas});
+include::example$cas.go[tag=locking]
 ----
 
 The handler will unlock the item either via an explicit unlock operation ([.api]`unlock`) or implicitly via modifying the item with the correct CAS.
