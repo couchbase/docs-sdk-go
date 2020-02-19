@@ -18,6 +18,15 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 1.6.5 (19 February 2020)
+
+Version 1.6.5 is a maintenance release for the 1.6.x series.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-794[GOCBC-794]:
+Fixed issue where the ClusterManager GetNodesMetadata (note: marked for internal use only) could use incorrect http addresses.
+
 == Version 1.6.4 (17 October 2019)
 
 Version 1.6.4 is a maintenance for the 1.6.x series.
