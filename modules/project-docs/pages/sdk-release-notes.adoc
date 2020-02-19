@@ -16,7 +16,7 @@ If you are using Go 1.11+ then installing the Couchbase Go SDK is similar to ins
 
 [source,bash]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.0.0-beta.1
+$ go get github.com/couchbase/gocb/v2@v2.0.1
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -26,192 +26,78 @@ For details on installation using older versions please see xref:hello-world:sta
 
 === API Documentation
 
-The most current and up to date API Documentation is always available through the http://godoc.org/gopkg.in/couchbase/gocb.v1[godoc website].
+The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 2.0.1 (18 January 2020)
 
-== Version 2.0 Beta1 (3 October 2019)
-
-Version 2.0.0-beta1 is the first beta release for the Go SDK 2.0.0.
+Version 2.0.1 is a maintenance release for the Go SDK 2.0.0.
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/GOCBC-485[GOCBC-485]:
-Added support for GCCCP meaning the ability to execute cluster level queries without first opening a bucket.
-* https://issues.couchbase.com/browse/GOCBC-479[GOCBC-479], https://issues.couchbase.com/browse/GOCBC-480[GOCBC-480], https://issues.couchbase.com/browse/GOCBC-480[GOCBC-619]:
-Updated transcoders to add several new transcoders out of the box as well as changing the default behaviour.
-Added Serializer support to views and search.
-* https://issues.couchbase.com/browse/GOCBC-524[GOCBC-524]:
-Now fails fast if both synchronous and observability based durability are set.
-* https://issues.couchbase.com/browse/GOCBC-535[GOCBC-535]:
-Added data structures API.
-* https://issues.couchbase.com/browse/GOCBC-536[GOCBC-536]:
-Added query fast prepare support.
-* https://issues.couchbase.com/browse/GOCBC-540[GOCBC-540]:
-Enabled mutation tokens by default and removed CAS based observability based durability.
-* https://issues.couchbase.com/browse/GOCBC-560[GOCBC-560], https://issues.couchbase.com/browse/GOCBC-563[GOCBC-563]:
-Changed the subdoc API to be simpler and easier to use.
-* https://issues.couchbase.com/browse/GOCBC-603[GOCBC-603]:
-Changed geo search query functions so that parameters are ordered lon, lat rather than lat,lon.
-* https://issues.couchbase.com/browse/GOCBC-520[GOCBC-520]:
-Added DesignDocument suffix to view manager function names.
-* https://issues.couchbase.com/browse/GOCBC-521[GOCBC-521]:
-Added Index suffix to search index manager function names.
-* https://issues.couchbase.com/browse/GOCBC-522[GOCBC-522]:
-Added AnalyzeDoc function to search index manager to allow users to test how a document will be analyzed by an index.
-
-A large number of minor changes updating names and behavioural tweaks to improve cross-SDK consistency.
+* https://issues.couchbase.com/browse/GOCBC-775[GOCBC-775]:
+Improve error message for when performing cluster level operations with no connections available.
+* https://issues.couchbase.com/browse/GOCBC-776[GOCBC-776]:
+Added support for KVDurableTimeout.
+* https://issues.couchbase.com/browse/GOCBC-786[GOCBC-786]:
+Improve error messages for the UserManager GetUser function.
 
 === Fixed Issues
 
-* https://issues.couchbase.com/browse/GOCBC-591[GOCBC-591]:
-Fixed issue that was causing authentication errors for view queries during a graceful failover.
+* https://issues.couchbase.com/browse/GOCBC-701[GOCBC-701]:
+Fixed issue with enhanced prepared statements not being used.
+* https://issues.couchbase.com/browse/GOCBC-702[GOCBC-702]:
+Fixed issue with CA root certificates not being able to be provided.
+* https://issues.couchbase.com/browse/GOCBC-759[GOCBC-759]:
+Fixed issue with streaming results for HTTP based services timing out unexpectedly.
+* https://issues.couchbase.com/browse/GOCBC-772[GOCBC-772]:
+Fixed issue with many of the management API functions timing out immediately.
+* https://issues.couchbase.com/browse/GOCBC-773[GOCBC-773]:
+Fixed issue with queries that do not return rows (e.g. mutations) causing errors.
+* https://issues.couchbase.com/browse/GOCBC-777[GOCBC-777]:
+Fixed issue with failing operations causing nil pointers.
+* https://issues.couchbase.com/browse/GOCBC-783[GOCBC-783]:
+Fixed issue with Exists returning incorrectly if the document was recently deleted.
+* https://issues.couchbase.com/browse/GOCBC-784[GOCBC-784]:
+Fixed issue with Unlock returning a doc not found error instead of cas mismatch.
+* https://issues.couchbase.com/browse/GOCBC-787[GOCBC-787]:
+Fixed issue with some (xattr related) subdoc operations sending invalid packets.
+* https://issues.couchbase.com/browse/GOCBC-789[GOCBC-789]:
+Fixed issue with search index manager FreezePlan function using an invalid HTTP method.
+* https://issues.couchbase.com/browse/GOCBC-790[GOCBC-790]:
+Fixed issue with user manager sometimes parsing user role origins incorrectly.
+* https://issues.couchbase.com/browse/GOCBC-796[GOCBC-796]:
+Fixed issue with cccp poller hanging if the get cluster config op timed out.
 
+== Version 2.0.0 (18 January 2020)
 
-== Version 2.0 Alpha5 (8 August 2019)
-
-Version 2.0.0-alpha.5 is the fifth alpha release for the Go SDK 2.0.0.
-
-=== New Features and Behavioral Changes
-
-* https://issues.couchbase.com/browse/GOCBC-451[GOCBC-451]:
-Create search index manager.
-* https://issues.couchbase.com/browse/GOCBC-478[GOCBC-478], https://issues.couchbase.com/browse/GOCBC-513[GOCBC-513],  https://issues.couchbase.com/browse/GOCBC-515[GOCBC-515]:
-Various updates to the analytics index manager including:
-Add support for custom (de)serializers in analytics queries.
-Add Dataverse functions to analytics index manager.
-* https://issues.couchbase.com/browse/GOCBC-478[GOCBC-507]:
-Mark up APIs with stability levels.
-* https://issues.couchbase.com/browse/GOCBC-508[GOCBC-508]:
-Add groups to user manager.
-* https://issues.couchbase.com/browse/GOCBC-516[GOCBC-516]:
-Add bulk operations API.
-* https://issues.couchbase.com/browse/GOCBC-519[GOCBC-519]:
-Add IsQueueOverloadError function for detecting when the dispatch queue is full.
-* https://issues.couchbase.com/browse/GOCBC-503[GOCBC-503]:
-Various updates to the bucket manager including:
-Add Bucket suffix to function names.
-Update CreateBucket to take a CreateBucketSettings.
-* https://issues.couchbase.com/browse/GOCBC-511[GOCBC-511]:
-Remove DefaultCollection from Scope. Only the DefaultScope has DefaultCollection so it doesn't make sense to have it.
-* https://issues.couchbase.com/browse/GOCBC-520[GOCBC-520]:
-Add DesignDocument suffix to view manager function names.
-* https://issues.couchbase.com/browse/GOCBC-521[GOCBC-521]:
-Add Index suffix to search index manager function names.
-* https://issues.couchbase.com/browse/GOCBC-522[GOCBC-522]:
-Add AnalyzeDoc function to search index manager to allow users to test how a document will be analyzed by an index.
-
-=== Fixed Issues
-
-* https://issues.couchbase.com/browse/GOCBC-514[GOCBC-514]:
-Don't add clients that failed to connect to the cluster connections cache.
-
-
-== Version 2.0 Alpha4 (25 July 2019)
-
-Version 2.0.0-alpha.4 is the fourth alpha release for the Go SDK 2.0.0.
+Version 2.0.0 is the first release for the Go SDK 2.0.0.
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/GOCBC-412[GOCBC-412], https://issues.couchbase.com/browse/GOCBC-439[GOCBC-439]:
-Update error handling to be more consistent with other SDKs.
-* https://issues.couchbase.com/browse/GOCBC-436[GOCBC-436]:
-Changed subdoc options blocks to use CreatePath rather than CreateParents.
-* https://issues.couchbase.com/browse/GOCBC-438[GOCBC-438]:
-Create bucket manager.
-* https://issues.couchbase.com/browse/GOCBC-447[GOCBC-447]:
-Create query index manager.
-* https://issues.couchbase.com/browse/GOCBC-448[GOCBC-448]:
-Create analytics index manager.
-* https://issues.couchbase.com/browse/GOCBC-449[GOCBC-449]:
-Create user manager.
-* https://issues.couchbase.com/browse/GOCBC-450[GOCBC-450]:
-Create view index manager.
-* https://issues.couchbase.com/browse/GOCBC-452[GOCBC-452]:
-Create collections manager.
-* https://issues.couchbase.com/browse/GOCBC-453[GOCBC-453]:
-Create ping (health) interface.
-* https://issues.couchbase.com/browse/GOCBC-454[GOCBC-454]:
-Create diagnostics (health) interface.
-* https://issues.couchbase.com/browse/GOCBC-455[GOCBC-455]:
-Add DurabilityTimeout option to Durable operation option blocks.
-* https://issues.couchbase.com/browse/GOCBC-463[GOCBC-463]:
-Add enhanced prepared statements support for querying.
-* https://issues.couchbase.com/browse/GOCBC-470[GOCBC-470]:
-Added a Transcoder type and made the Encode/Decode functions belong to it.
-* https://issues.couchbase.com/browse/GOCBC-481[GOCBC-481]:
-Remove support for spatial views.
-* https://issues.couchbase.com/browse/GOCBC-500[GOCBC-483]:
-Update the transcoder api to also expose a JSONSerializer type that can be used for services like query.
-* https://issues.couchbase.com/browse/GOCBC-484[GOCBC-484]:
-Drop the pretty option from query and analytics options blocks.
-* https://issues.couchbase.com/browse/GOCBC-486[GOCBC-486]:
-Rename ContextID in analytics options to ClientContextID and default to a UUID.
-* https://issues.couchbase.com/browse/GOCBC-500[GOCBC-500]:
-Remove all references to OpenTracing API, easier to add whatever it turns into than change after beta.
-
-=== Fixed Issues
-* https://issues.couchbase.com/browse/GOCBC-465[GOCBC-465]:
-Fixed issue where search was calculating timeouts incorrectly.
-* https://issues.couchbase.com/browse/GOCBC-466[GOCBC-466]:
-Fixed issue where the context deadline was being updated evenwhen the durability deadline wasn't coerced upward.
-* https://issues.couchbase.com/browse/GOCBC-473[GOCBC-473], https://issues.couchbase.com/browse/GOCBC-474[GOCBC-474], https://issues.couchbase.com/browse/GOCBC-486[GOCBC-486]:
-Fixed issue where a panic could arise if a cluster level service was used before a bucket was opened.
-
-== Version 2.0 Alpha3 (14 May 2019)
-
-Version 2.0.0-alpha.3 is the third alpha release for the Go SDK 2.0.0.
-
-=== New Features and Behavioral Changes
-
-* https://issues.couchbase.com/browse/GOCBC-411[GOCBC-411]:
-Split GetFromReplica into two new functions - GetAnyReplica and GetAllReplicas. 
-GetAnyReplica will send requests to all servers to Get a document and return the first result received. 
-GetAllReplicas returns a cancellable stream of documents from all servers.
-* https://issues.couchbase.com/browse/GOCBC-429[GOCBC-429], https://issues.couchbase.com/browse/GOCBC-430[GOCBC-430]:
-Update how timeouts are selected when multiple are provided for an operation. 
-If only Timeout is set on the options then use that value.
-If Timeout and Context are set then take the shortest of the two.
-If only Context is set then take the shortest of Context and cluster level timeout.
-* https://issues.couchbase.com/browse/GOCBC-437[GOCBC-437]:
-Add client side timeout to views.
-* https://issues.couchbase.com/browse/GOCBC-441[GOCBC-441]:
-Ensure that all durable operations have DurabilityLevel options.
-
-== Version 2.0 Alpha2 (16 April 2019)
-
-Version 2.0.0-alpha.2 is the second alpha release for the Go SDK 2.0.0.
-
-=== New Features and Behavioral Changes
-
-* https://issues.couchbase.com/browse/GOCBC-407[GOCBC-407]; 
-https://issues.couchbase.com/browse/GOCBC-418[GOCBC-418]; 
-https://issues.couchbase.com/browse/GOCBC-419[GOCBC-419]; 
-https://issues.couchbase.com/browse/GOCBC-420[GOCBC-420]:
-Added support for http streaming to the n1ql, analytics, search, and view APIs. 
-These changes do not alter the public API but work implicitly with requests. 
-This means that requests can be made for large amounts of data without hitting memory issues.
-* https://issues.couchbase.com/browse/GOCBC-414[GOCBC-414]:
-Updated the subdocument API so that full document operations are explicit rather than implicit.
-* https://issues.couchbase.com/browse/GOCBC-415[GOCBC-415]:
-Updated the subdocument API to enable to use of custom encoding/decoding options.
-* https://issues.couchbase.com/browse/GOCBC-416[GOCBC-416]:
-Updated the n1ql, analytics, search, and view APIs to move all metadata calls below a *Metadata type. 
-* https://issues.couchbase.com/browse/GOCBC-422[GOCBC-422]:
-Change gocb.NewCluster to gocb.Connect.
-* https://issues.couchbase.com/browse/GOCBC-423[GOCBC-423]:
-Updated the search API so that the Status type no longer exists and, instead, there are SuccessCount and ErrorCount functions.
-* https://issues.couchbase.com/browse/GOCBC-424[GOCBC-424]:
-Updated the _ErrNoResults_ error that can occur when using n1ql, analytics, search, and view APIs to be an actual error type which can be checked for using _IsNoResultsError(err)_.
-* https://issues.couchbase.com/browse/GOCBC-425[GOCBC-425]:
-Updated how errors are handled in the n1ql, analytics, search, and view APIs so that if errors are known at execution time then they are returned straight away.
-
-=== Fixed Issues
-* https://issues.couchbase.com/browse/GOCBC-413[GOCBC-413]:
-Fixed issue where the SDK can get into a state where all future requests timeout following certain circumstances where a request times out whilst it is being sent.
-* https://issues.couchbase.com/browse/GOCBC-431[GOCBC-431]:
-Fixed issue where the SDK would fail to connect to some external network types such as a publicly addressable Kubernetes cluster. 
+* https://issues.couchbase.com/browse/GOCBC-510[GOCBC-510]:
+Dropped support for connecting using the http scheme.
+* https://issues.couchbase.com/browse/GOCBC-534[GOCBC-534]:
+Added support for retry handling.
+* https://issues.couchbase.com/browse/GOCBC-552[GOCBC-652]:
+Added support for circuit breakers.
+* https://issues.couchbase.com/browse/GOCBC-655[GOCBC-655]:
+Added support for enhanced timeout errors providing more information about operations which timeout.
+* https://issues.couchbase.com/browse/GOCBC-656[GOCBC-656]:
+Added support for threshold logging tracer.
+* https://issues.couchbase.com/browse/GOCBC-680[GOCBC-680]:
+Updated how we expose and handle errors.
+* https://issues.couchbase.com/browse/GOCBC-694[GOCBC-694]:
+A large number of updates including:
+How query and analytics results are iterated.
+Minor renaming of various types.
+Moving search facets, sorting, and queries to a search subpackage.
+Removing serializers.
+* https://issues.couchbase.com/browse/GOCBC-740[GOCBC-740]:
+Updated expiry options to be `time.Duration`.
+* https://issues.couchbase.com/browse/GOCBC-760[GOCBC-760]:
+Moved authenticator to ClusterOptions.
 
 
 == Pre-releases

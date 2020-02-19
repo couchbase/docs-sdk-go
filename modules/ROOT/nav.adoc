@@ -55,7 +55,7 @@
 // ** xref:concept-docs:rbac.adoc[RBAC]
 
 .Reference
-* https://godoc.org/gopkg.in/couchbase/gocb.v2[Go API Reference]
+* https://pkg.go.dev/github.com/couchbase/gocb/v2[Go API Reference]
 * xref:ref:client-settings.adoc[Client Settings]
 
 .Project Docs
