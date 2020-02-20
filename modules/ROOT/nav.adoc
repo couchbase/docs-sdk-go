@@ -22,6 +22,7 @@
 
 .Managing Couchbase
 * xref:howtos:managing-connections.adoc[Managing Connections]
+* xref:howtos:provisioning-cluster-resources.adoc[Provisioning Cluster Resources]
 // * User Management
 // ** xref:howtos:sdk-authentication-overview.adoc[Authentication]
 
