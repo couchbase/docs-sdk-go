@@ -3,35 +3,35 @@
 :page-topic-type: howtos
 
 [abstract]
-The Java SDK supports common JSON document requirements out-of-the-box.
+The Go SDK supports common JSON document requirements out-of-the-box.
 Custom transcoders and serializers provide support for applications needing to perform advanced operations, including supporting non-JSON data.
 
-The Java SDK uses the concepts of transcoders and serializers, which are used whenever data is sent to or retrieved from Couchbase Server.
+The Go SDK uses the concept of transcoders, which are used whenever key-value data is sent to or retrieved from Couchbase Server.
 
-When sending data to Couchbase, the SDK passes the Object being sent to a transcoder.
-The transcoder can either reject the Object as being unsupported, or convert it into a `byte[]` and a Common Flag.
+NOTE: Transcoders are only available to key value operations. Operations using search, analytics, query, or views will use the https://golang.org/doc/articles/json_and_go.html[json package] for serializing and deserializing data.
+
+When sending data to Couchbase, the SDK passes the data being sent to a transcoder.
+The transcoder can either reject the data as being unsupported, or convert it into a `[]byte` and a Common Flag.
 The Common Flag specifies whether the data is JSON, a non-JSON string, or raw binary data.
-It may, but does not have to, use a serializer to perform the byte conversion.
 
-On retrieving data from Couchbase, the fetched `byte[]` and Common Flag are passed to a transcoder.  
-The transcoder converts the bytes into a concrete class (the application specifies the required type) if possible.  
-It may use a serializer for this.
+On retrieving key-value data from Couchbase, the fetched `[]byte` and Common Flag are passed to a transcoder.
+The transcoder converts the bytes into a type (the application provides a pointer to a variable) if possible.
 
-NOTE: Many applications will not need to be aware of transcoders and serializers, as the defaults support most standard JSON use cases.
+NOTE: Many applications will not need to be aware of transcoders, as the defaults support most standard JSON use cases.
 The information in this page is only needed if the application has an advanced use-case, likely involving either non-JSON data, or a requirement for a particular JSON serialization library.
 
 == Default Behaviour
-The `ClusterEnvironment` contains a global transcoder and serializer, which by default are  `JsonTranscoder` and `DefaultJsonSerializer`.
+The `ClusterOptions` specify a global transcoder, which by default is a `JSONTranscoder`.
 
-`DefaultJsonSerializer` uses the high-performance JSON library https://github.com/FasterXML/jackson[Jackson] for serializing and deserializing byte arrays to and from concrete objects.
+`JSONTranscoder` uses the https://golang.org/doc/articles/json_and_go.html[json package] for serializing and deserializing data.
 
-On sending data to Couchbase, `JsonTranscoder` will send Objects to its serializer (`DefaultJsonSerializer` by default) to convert into a `byte[]`.
+On sending data to Couchbase, `JSONTranscoder` will send the data to its serializer to convert into a `[]byte`.
 The serialized bytes are then sent to the Couchbase Server, along with a Common Flag of JSON.
 
-`JsonTranscoder` will pass any Object to its serializer, apart from a `byte[]`.  
-It will reject this with an InvalidArgumentException, as it is ambiguous how it should be handled.
+`JSONTranscoder` will pass any data type to its serializer, apart from a `[]byte`.
+It will reject this with an error, as it is ambiguous how it should be handled.
 
-On retrieving data from Couchbase, `JsonTranscoder` passes the fetched `byte[]` and Common Flag to its serializer (`DefaultJsonSerializer` by default) to convert into a concrete class.
+On retrieving data from Couchbase, `JSONTranscoder` passes the fetched `[]byte` and Common Flag to its serializer to convert into a concrete value.
 
 This table summarizes that information, and this more concise form will be used to describe the other transcoders included in the SDK.
 
@@ -41,33 +41,25 @@ This table summarizes that information, and this more concise form will be used 
 |Result
 |Common Flag
 
-|String
+|string
 |Results of serializer
 |JSON
 
-|byte[]
-|InvalidArgumentException
+|[]byte
+|error
 |-
 
-|Other `Object`
+|Other
 |Results of serializer
 |JSON
 |===
 
-== Using Custom Jackson
-As described above, the default serializer (`DefaultJsonSerializer`) uses Jackson for serializing objects.
-(This Jackson dependency is shaded into a different namespace, so that it does not clash with any Jackson used by your application.)
-
-If Jackson is on the application's classpath, the SDK will instead automatically default to using this.
-It does this during `ClusterEnvironment` creation: if no serializer has been specified, and if Jackson is detected on the classpath, then a `JacksonJsonSerializer` is used as the global default serializer instead of `DefaultJsonSerializer`.  
-This will create and use a Jackson `ObjectMapper` from the standard `com.fasterxml.jackson.databind` package.
-
-== RawJsonTranscoder
-The RawJsonTranscoder provides the ability for the application to explicitly specify that the data they are storing or retrieving is JSON.
-This transcoder does not accept a serializer, and always performs straight pass through of the data to the server.
+== RawJSONTranscoder
+The RawJSONTranscoder provides the ability for the application to explicitly specify that the data they are storing or retrieving is JSON.
+This transcoder does not use a serializer, and always performs straight pass through of the data to the server.
 This enables the application to avoid unnecessary parsing costs when they are certain they are using JSON data.
 
-It only accepts Strings and `byte[]`.
+It only accepts Strings and `[]byte`.
 
 [cols="3", options="header"]
 |===
@@ -75,43 +67,43 @@ It only accepts Strings and `byte[]`.
 |Result
 |Common Flag
 
-|String
+|string
 |Passthrough
 |JSON
 
-|byte[]
+|[]byte
 |Passthrough
 |JSON
 
-|Other `Object`
+|Other
 |InvalidArgumentException
 |-
 |===
 
 This transcoder is particularly useful when working with third-party JSON libraries.
-Here we want to use https://github.com/google/gson[Google Gson] for serialization, instead of the default Jackson:
+Here we want to use https://github.com/pquerna/ffjson[ffjson] for serialization, instead of the default json package:
 
-[source,java]
+[source,golang,indent=0]
 ----
-include::example$Transcoding.java[tag=gson-encode,indent=0]
+include::example$transcoding.go[tag=rawjsonmarshal]
 ----
 
-Since Gson has already done the serialization work, we don't want to use the default `JsonTranscoder`, as this will run the provided String needlessly through `DefaultJsonSerializer` (Jackson).
-Instead, RawJsonTranscoder is used, which just passes through the serialized bytes, and stores them in Couchbase with the JSON Common Flag set.
+Since ffjson has already done the serialization work, we don't want to use the default `JSONTranscoder`, as this will run the provided string needlessly through `json.Marshal`.
+Instead, RawJSONTranscoder is used, which just passes through the serialized bytes, and stores them in Couchbase with the JSON Common Flag set.
 
-Similarly, the same transcoder is used on reading the document, so the raw bytes can be retrieved in a String without going through `DefaultJsonSerializer` (Jackson).  
-Gson can then be used for the deserialization.
+Similarly, the same transcoder is used on reading the document, so the raw bytes can be retrieved in a string without going through `json.Unmarshal`.
+ffjson can then be used for the deserialization.
 
-[source,java]
+[source,golang,indent=0]
 ----
-include::example$Transcoding.java[tag=gson-decode,indent=0]
+include::example$transcoding.go[tag=rawjsonunmarshal]
 ----
 
 == Non-JSON Transcoders
 It is most common to store JSON with Couchbase.
 However, it is possible to store non-JSON documents, such as raw binary data, perhaps using an concise binary encoding like https://msgpack.org[MessagePack] or https://cbor.io/[CBOR], in the Key-Value store.
 
-NOTE: It's important to note that the Couchbase Data Platform includes multiple components other than the Key-Value store -- including N1QL and its indexes, FTS, analytics, and eventing -- and these are optimized for JSON and will either ignore or provide limited functionality with non-JSON documents.
+NOTE: It's important to note that the Couchbase Data Platform includes multiple components other than the Key-Value store -- including N1QL (Query) and its indexes, FTS (Search), analytics, and eventing -- and these are optimized for JSON and will either ignore or provide limited functionality with non-JSON documents.
 
 Also note that some simple data types can be stored directly as JSON, without recourse to non-JSON transcoding.
 A valid JSON document can be a simple integer (`42`), string (`"hello"`), array (`[1,2,3]`), boolean (`true`, `false`) and the JSON `null` value.
@@ -128,24 +120,24 @@ Note that this transcoder does not accept a serializer, and always performs stra
 |Result
 |Common Flag
 
-|String
+|string
 |Passthrough
 |String
 
-|byte[]
-|InvalidArgumentException
+|[]byte
+|error
 |-
 
-|Other `Object`
-|InvalidArgumentException
+|Other
+|error
 |-
 |===
 
 Here’s an example of using the `RawStringTranscoder`:
 
-[source,java]
+[source,golang,indent=0]
 ----
-include::example$Transcoding.java[tag=string,indent=0]
+include::example$transcoding.go[tag=rawstring]
 ----
 
 === RawBinaryTranscoder
@@ -158,97 +150,55 @@ The transcoder does not perform any form of real transcoding, and does not take 
 |Result
 |Common Flag
 
-|String
-|InvalidArgumentException
+|string
+|error
 |-
 
-|byte[]
+|[]byte
 |Passthrough
 |Binary
 
-|Other `Object`
-|InvalidArgumentException
+|Other
+|error
 |-
 |===
 
 Here’s an example of using the `RawBinaryTranscoder`:
 
-[source,java]
+[source,golang,indent=0]
 ----
-include::example$Transcoding.java[tag=binary,indent=0]
+include::example$transcoding.go[tag=rawbinary]
 ----
 
-== Custom Transcoders and Serializers
+== Custom Transcoders
 More advanced transcoding needs can be accomplished if the application implements their own transcoders and serializers.
-
-=== Creating a Custom Serializer
-We saw above one example of using Google Gson with the `RawJsonTranscoder`, but it requires the application to explicitly serialize and deserialize objects each time.  
-By creating a custom Gson serializer, we can avoid this.
-
-It’s easy to create a serializer.  Simply implement the `JsonSerializer` interface’s three methods:
-[source,java]
-----
-include::example$Transcoding.java[tag=gson-serializer,indent=0]
-----
-
-NOTE: The `TypeRef` overload is optional, and is only used if the application explicitly uses it with for example `result.contentAs(new TypeRef<String> {})`, which is an uncommon requirement.  
-It is fine to throw an exception from this method rather than implementing it, if it is not needed.
-
-In this case, there is no need to provide a custom transcoder.
-The <<Default Behaviour,table for `JsonTranscoder`>> shows that it already does what we need: for any Object (that’s not a `byte[]`), it sends it to its serializer, and then stores the result in Couchbase with the JSON Common Flag set.
-All we need to do is change the serializer, as so:
-
-[source,java]
-----
-include::example$Transcoding.java[tag=gson-custom-encode,indent=0]
-----
-
-And for decoding:
-
-[source,java]
-----
-include::example$Transcoding.java[tag=gson-custom-decode,indent=0]
-----
-
-If you want to use Gson for all JSON serialization, you can register it as the global JSON serializer when creating a `ClusterEnvironment`:
-
-[source,java]
-----
-include::example$Transcoding.java[tag=gson-register-1,indent=0]
-----
-
-The default global `JsonTranscoder` will be initialized with this serializer.
-Now our GsonSerializer will be automatically used by all operations, without needing to provide a transcoder each time.
 
 === Creating a Custom Transcoder
 Let’s look at a more complex example: encoding the JSON alternative, https://msgpack.org[MessagePack].
-MessagePack is a compact binary data representation, so it should be stored with the binary Common Flag.
-The Common Flag is chosen by the transcoder, and none of the existing transcoders matches our needs (`RawBinaryTranscoder` does set the binary flag, but it passes data through directly rather than using a serializer).  
+MessagePack is a compact binary data representation which is custom to our needs, so it should be stored with our with own Common Flag.
+The Common Flag is chosen by the transcoder, and none of the existing transcoders matches our needs (`RawBinaryTranscoder` does set the binary flag, but it passes data through directly rather than using a serializer, which could also cause issues if you access data through different SDKs).
 So we need to write one.
 
-Start by creating a new serializer for MessagePack.  This is similar to the GsonSerializer example above:
+We create a transcoder that uses the `msgp.Marshaler`/`msgp.Unmarshaler` interfaces, and sets the our own Common Flag when storing the data:
 
-[source,java]
+[source,golang,indent=0]
 ----
-include::example$Transcoding.java[tag=msgpack-serializer,indent=0]
-----
-
-And now create a transcoder that uses the `MsgPackSerializer`, and sets the binary Common Flag when storing the data:
-
-[source,java]
-----
-include::example$Transcoding.java[tag=msgpack-transcoder,indent=0]
+include::example$transcoding.go[tag=msgpack]
 ----
 
-Note the use of `BINARY_COMPAT_FLAGS`.  The other Common Flags that can be used are `JSON_COMPAT_FLAGS` and `STRING_COMPAT_FLAGS`.  
-Any other flags in `CodecFlags` are for legacy purposes and internal SDK usage, and should not be used.
+Note the use of `customFlags`.
+We are setting the flags to our own value so that our data cannot be misread by any other SDK accessing the data.
+We'd have to implement our transcoder in those SDKs too.
+The `0x02 << 24` value actually corresponds to an internal sdk flag signifying that the datatype is private, we then encode our own MsgPacK flag into it.
 
 Now we can use the new transcoder to seamlessly store MessagePack data in Couchbase Server:
 
-[source,java]
+[source,golang,indent=0]
 ----
-include::example$Transcoding.java[tag=msgpack-encode,indent=0]
+include::example$transcoding.go[tag=msgpack-transcode]
 ----
+
+Note that `input` in this example must be a type that has been enhanced using the https://github.com/tinylib/msgp/wiki/Getting-Started[msgpack tooling].
 
 == Further reading
 
