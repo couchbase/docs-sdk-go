@@ -19,6 +19,7 @@
 * xref:howtos:concurrent-async-apis.adoc[Async & Batching APIs]
 // * xref:howtos:concurrent-document-mutations.adoc[Concurrent Document Mutations]
 // * xref:howtos:durability.adoc[Durability]
+* xref:howtos:transcoders-nonjson.adoc[Transcoders & Non-JSON]
 
 .Managing Couchbase
 * xref:howtos:managing-connections.adoc[Managing Connections]
