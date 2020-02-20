@@ -128,7 +128,7 @@ include::example$provisioningresources.go[tag=createView]
 include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
 
 Note the use of `DesignDocumentNamespaceDevelopment`, the other option is `DesignDocumentNamespaceProduction`.
-This parameter specifies whether the design document should be created as development or production <SOMETHING>.
+This parameter specifies whether the design document should be created as development, or as production --with the former running over only a smallfraction of the documents.
 
 Now that we've created a design document we can fetch it:
 
