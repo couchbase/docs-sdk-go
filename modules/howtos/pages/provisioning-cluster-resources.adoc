@@ -1,0 +1,152 @@
+= Provisioning Cluster Resources
+:navtitle: Provisioning Cluster Resources
+:page-aliases: ROOT:managing-clusters
+
+[abstract]
+Provisioning cluster resources is managed at the collection or bucket level, depending upon the service affected.
+Common use cases are outlined here, more recherché use cases are covered in the https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc[API docs].
+
+include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
+
+The Go SDK also comes with some convenience functionality for common Couchbase management requests.
+
+Management operations in the SDK may be performed through several interfaces depending on the object:
+
+* BucketManager -- `Cluster.Buckets()`
+* UserManager -- `Cluster.Users()` see xref
+* QueryIndexManager -- `Cluster.QueryIndexes()`
+* AnalyticsIndexManager -- `Cluster.AnalyticsIndexes()`
+* SearchIndexManager -- `Cluster.SearchIndexes()`
+* CollectionManager -- `Bucket.Collections()`
+* ViewIndexManager -- `Bucket.ViewIndexes()`.
+
+NOTE: When using a Couchbase version earlier than 6.5, you must create a valid Bucket connection using `cluster.Bucket(name)` before you can use cluster level managers.
+
+
+== Creating and Removing Buckets
+
+The `ClusterManager` interface may be used to create and delete buckets from the Couchbase cluster.
+It is instantiated through the `Cluster.Buckets()` method.
+
+[source,golang,indent=0]
+----
+include::example$provisioningresources.go[tag=creatingbucketmgr]
+----
+
+The `CreateBucketSettings` and `BucketSettings` structs are used for creating and updating buckets, `BucketSettings` is also used for exposing information about existing buckets.
+
+include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=update-bucket-warning]
+
+Here is the list of parameters available:
+
+|====
+| Name | Description | Can be updated
+| `Name string` | The name of the bucket, required for creation. | false
+| `FlushEnabled boolean` | Enables flushing to be performed on this bucket (see the <<go-flushing>> section below). | true
+| `ReplicaIndexDisabled boolean` | Whether or not to replicate indexes. | false
+| `RAMQuotaMB uint64` | How much memory should each node use for the bucket, required for creation. | true
+| `NumReplicas uint32` | The number of replicas to use for the bucket. | true
+| `BucketType BucketType` | The type of the bucket, required for creation. | false
+| `EvictionPolicy EvictionPolicyType` | The type of the eviction to use for the bucket, defaults to `valueOnly`. | true (note: changing will cause the bucket to restart causing temporary inaccessibility)
+| `MaxTTL time.Duration` | The default maximum time-to-live to apply to documents in the bucket. (note: This option is only available for Couchbase and Ephemeral buckets in Couchbase Enterprise Edition.) | true
+| `CompressionMode CompressionMode` | The compression mode to apply to documents in the bucket. (note: This option is only available for Couchbase and Ephemeral buckets in Couchbase Enterprise Edition.) | true
+| `ConflictResolutionType ConflictResolutionType` | The conflict resolution type to apply to conflicts on the bucket, defaults to `seqno` | false
+|====
+
+The following example creates a "hello" bucket:
+
+[source,golang,indent=0]
+----
+include::example$provisioningresources.go[tag=createBucket]
+----
+
+We can now get this bucket and update it to enable Flush:
+
+[source,golang,indent=0]
+----
+include::example$provisioningresources.go[tag=updateBucket]
+----
+
+Once you no longer need to use the bucket, you can remove it:
+
+[source,golang,indent=0]
+----
+include::example$provisioningresources.go[tag=removeBucket]
+----
+
+[#go-flushing]
+== Flushing Buckets
+
+include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=flush-intro]
+
+You can flush a bucket in the SDK by using the `Flush` method:
+
+[source,golang,indent=0]
+----
+include::example$provisioningresources.go[tag=flushBucket]
+----
+
+The `Flush` operation may fail if the bucket does not have flush enabled, in that case it will return an `ErrBucketNotFlushable`.
+
+== Collection Management
+
+This is a xref:6.5@server:developer-preview:collections/collections-overview.adoc[Developer Preview feature], see the https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Bucket.Collections[API doc].
+
+== Index Management
+
+In general,you will rarely need to work with Index Managers from the SDK.
+For those occasions when you do, please see the relevant API docs:
+
+* QueryIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.QueryIndexes[`Cluster.QueryIndexes()`];
+* AnalyticsIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.AnalyticsIndexes[`Cluster.AnalyticsIndexes()`];
+* SearchIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.SearchIndexes[`Cluster.SearchIndexes()`];
+* ViewIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Bucket.ViewIndexes[`Bucket.ViewIndexes()`].
+
+// * Query
+
+// * Search - note & link to FTS page & API?
+
+== View Management
+
+include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=view-management]
+
+In the SDK, design documents are represented by the `DesignDocument` and `View` structs.
+All operations on design documents are performed on the `ViewIndexManager` instance:
+
+[source,golang,indent=0]
+----
+include::example$provisioningresources.go[tag=viewmgr]
+----
+
+The following example upserts a design document with two views:
+
+[source,golang,indent=0]
+----
+include::example$provisioningresources.go[tag=createView]
+----
+
+include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
+
+Note the use of `DesignDocumentNamespaceDevelopment`, the other option is `DesignDocumentNamespaceProduction`.
+This parameter specifies whether the design document should be created as development or production <SOMETHING>.
+
+Now that we've created a design document we can fetch it:
+
+[source,golang,indent=0]
+----
+include::example$provisioningresources.go[tag=getView]
+----
+
+We've created the design document using `DesignDocumentNamespaceDevelopment` and now want to push it to production, we can do this with:
+
+[source,golang,indent=0]
+----
+include::example$provisioningresources.go[tag=publishView]
+----
+
+To remove this design document:
+
+[source,golang,indent=0]
+----
+include::example$provisioningresources.go[tag=removeView]
+----
