@@ -30,6 +30,20 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 2.0.2 (21 February 2020)
+
+Version 2.0.2 is an off-cycle release for the Go SDK 2.0.0.
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-805[GOCBC-805]:
+Updated timeout behavior across the SDK to be consistent. If an operation level timeout is provided then it is used, otherwise the respective global timeout is used.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-804[GOCBC-804]:
+Fixed issue with timeouts not being respected for HTTP requests, leading to them never timing out.
+
 == Version 2.0.1 (19 February 2020)
 
 Version 2.0.1 is a maintenance release for the Go SDK 2.0.0.
