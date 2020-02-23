@@ -34,6 +34,8 @@ The most current and up to date API Documentation is always available through th
 
 Version 2.0.2 is an off-cycle release for the Go SDK 2.0.0.
 
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.0.2?tab=doc[API Documentation]
+
 === New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-805[GOCBC-805]:
@@ -47,6 +49,8 @@ Fixed issue with timeouts not being respected for HTTP requests, leading to them
 == Version 2.0.1 (19 February 2020)
 
 Version 2.0.1 is a maintenance release for the Go SDK 2.0.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.0.1?tab=doc[API Documentation]
 
 === New Features and Behavioral Changes
 
@@ -87,6 +91,8 @@ Fixed issue with cccp poller hanging if the get cluster config op timed out.
 == Version 2.0.0 (18 January 2020)
 
 Version 2.0.0 is the first release for the Go SDK 2.0.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.0.0?tab=doc[API Documentation]
 
 === New Features and Behavioral Changes
 
