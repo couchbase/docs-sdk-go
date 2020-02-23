@@ -65,7 +65,7 @@ Now that you know the basics, you may wish to go straight to that page.
 
 == Additional Resources
 
-// The API reference is generated for each release and can be foundhttps://pkg.go.dev/github.com/couchbase/gocb/v2[here].
+The API reference is generated for each release and can be foundhttps://pkg.go.dev/github.com/couchbase/gocb/v2[here].
 Older API references are linked from their respective sections in the xref:project-docs:sdk-release-notes.adoc[Release Notes].
 
 // xref:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
