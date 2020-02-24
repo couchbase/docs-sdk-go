@@ -57,6 +57,7 @@ The following example creates a "hello" bucket:
 
 [source,golang,indent=0]
 ----
+include::devguide:example$go/provisioning-resources-buckets.go[tag=createBucket]	
 ----
 
 We can now get this bucket and update it to enable Flush:
