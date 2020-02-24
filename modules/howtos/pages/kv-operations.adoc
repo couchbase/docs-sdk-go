@@ -3,7 +3,7 @@
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
 
-The complete code sample used on this page can be downloaded from xref::example$kv.go[here]
+The complete code sample used on this page can be downloaded from xref::devguide:example$go/kv-crud.go[here]
 - from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Collection operations.
 
 
@@ -24,7 +24,7 @@ Here is the _Insert_ operation at its simplest:
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=insert]
+include::devguide:example$go/kv-crud.go[tag=insert]
 ----
 
 Options like timeout may also be added to operations.
@@ -33,7 +33,7 @@ Timeout sets the timeout value for the underlying network connection.
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=insertoptions]
+include::devguide:example$go/kv-crud.go[tag=insertoptions]
 ----
 
 === CAS
@@ -45,7 +45,7 @@ Without explicitly setting it, a newly-created document would have a CAS value o
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=replacecas]
+include::devguide:example$go/kv-crud.go[tag=replacecas]
 ----
 
 Typically we would want to use CAS for something more meaningful like performing a Get, modifying the result and updating the document.
@@ -53,7 +53,7 @@ By using the CAS value we know that if anyone else modified this document and up
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=update]
+include::devguide:example$go/kv-crud.go[tag=update]
 ----
 
 Expiry sets an explicit time to live (TTL) for a document in seconds, for which you can also xref:sdk-xattr-example.adoc[see a more detailed example of TTL discovery] later in the docs.
@@ -62,7 +62,7 @@ xref:6.0@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-buck
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=expiry]
+include::devguide:example$go/kv-expiry.go[tag=expiry]
 ----
 
 == Durability
@@ -98,7 +98,7 @@ Below we can see how to set this on an operation:
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=durability]
+include::devguide:example$go/kv-durability-enhanced.go[tag=durability]
 ----
 
 The older type of durability, observe based durability, works by monitoring the server to ensure that the change has been replicated or persisted to the required number of nodes within the timeout specified on the operation. 
@@ -106,7 +106,7 @@ Here we can see how that is set:
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=observebased]
+include::devguide:example$go/kv-durability-observe.go[tag=observebased]
 ----
 
 To stress, durability is a useful feature but should not be the default for most applications, as there is a performance consideration, 
@@ -126,14 +126,14 @@ Using the `Get()` method with the document key can be done in a similar fashion 
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=get]
+include::devguide:example$go/kv-crud.go[tag=get]
 ----
 
 Timeout can also be set, as in the earlier `Insert` example:
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=gettimeout]
+include::devguide:example$go/kv-crud.go[tag=gettimeout]
 ----
 
 == Removing
@@ -142,7 +142,7 @@ When removing a document, you will have the same concern for durability as with 
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=remove]
+include::devguide:example$go/kv-crud.go[tag=remove]
 ----
 
 
@@ -155,14 +155,14 @@ To prevent a document that already has expiry from expiring you can use `Touch` 
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=touch]
+include::devguide:example$go/kv-expiry.go[tag=touch]
 ----
 
 If you want to get the document at the same time as extending expiry then you can use `GetAndTouch`.
 
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=getandtouch]
+include::devguide:example$go/kv-expiry.go[tag=getandtouch]
 ----
 
 == Atomic document modifications
@@ -172,13 +172,13 @@ The value of a document can be increased or decreased atomically using `Binary()
 .Increment
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=increment]
+include::devguide:example$go/kv-counter.go[tag=increment]
 ----
 
 .Decrement
 [source,golang,indent=0]
 ----
-include::example$kv.go[tag=decrement]
+include::devguide:example$go/kv-counter.go[tag=decrement]
 ----
 
 NOTE: Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change.

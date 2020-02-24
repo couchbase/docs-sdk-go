@@ -13,7 +13,7 @@ include::6.5@sdk:shared:partial$cas.adoc[tag=errors]
 
 [source,golang,indent=0]
 ----
-include::example$cas.go[tag=handlingerrors]
+include::devguide:example$go/using-cas.go[tag=handlingerrors]
 ----
 
 Sometimes more logic is needed when performing updates, for example, if a property is mutually exclusive with another property; only one or the other can exist, but not both.
@@ -27,7 +27,7 @@ include::6.5@sdk:shared:partial$cas.adoc[tag=locking]
 
 [source,golang,indent=0]
 ----
-include::example$cas.go[tag=locking]
+include::devguide:example$go/using-cas.go[tag=locking]
 ----
 
 The handler will unlock the item either via an explicit unlock operation ([.api]`unlock`) or implicitly via modifying the item with the correct CAS.

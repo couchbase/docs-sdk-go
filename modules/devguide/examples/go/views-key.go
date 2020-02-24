@@ -1,6 +1,5 @@
 package main
 
-// #tag::connect[]
 import (
 	"fmt"
 
@@ -14,27 +13,13 @@ func main() {
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("localhost", opts)
+	cluster, err := gocb.Connect("10.112.194.101", opts)
 	if err != nil {
 		panic(err)
 	}
-	// #end::connect[]
 
-	// #tag::bucket[]
 	// get a bucket reference
-	bucket := cluster.Bucket("bucket-name")
-	// #end::bucket[]
-
-	// #tag::beerview[]
-	viewResult, err := bucket.ViewQuery("beer", "by_name", &gocb.ViewOptions{
-		StartKey: "A",
-		Limit:    10,
-	})
-	if err != nil {
-		panic(err)
-	}
-	// #end::beerview[]
-	fmt.Println(viewResult)
+	bucket := cluster.Bucket("travel-sample")
 
 	// #tag::landmarksview[]
 	landmarksResult, err := bucket.ViewQuery("landmarks", "by_name", &gocb.ViewOptions{
@@ -72,4 +57,7 @@ func main() {
 	}
 	// #end::results[]
 
+	if err := cluster.Close(nil); err != nil {
+		panic(err)
+	}
 }

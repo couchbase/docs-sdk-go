@@ -1,6 +1,5 @@
 package main
 
-// #tag::connect[]
 import (
 	"errors"
 	"fmt"
@@ -18,24 +17,25 @@ func main() {
 	}
 	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
-		// handle err
+		panic(err)
 	}
-	// #end::connect[]
 
-	// #tag::bucket[]
-	// get a bucket reference
 	bucket := cluster.Bucket("bucket-name")
-	// #end::bucket[]
-
-	// #tag::collection[]
-	// get a collection reference
 	collection := bucket.DefaultCollection()
-	// for a named collection and scope
-	// collection := bucket.Scope("my-scope").Collection("my-collection", &gocb.CollectionOptions{})
-	// #end::collection[]
 
+	errorsAs(collection)
+	errorsIs(collection)
+	errDocumentNotFound(collection)
+	errDocumentExists(collection)
+	errCasMismatch(collection)
+	errDurabilityAmbiguous(collection)
+	realWorldErrHandling(collection)
+	queryError(cluster)
+}
+
+func errorsAs(collection *gocb.Collection) {
 	// #tag::as[]
-	_, err = collection.Get("key", nil)
+	_, err := collection.Get("key", nil)
 	if err != nil {
 		var kvError gocb.KeyValueError
 		if errors.As(err, &kvError) {
@@ -49,9 +49,11 @@ func main() {
 		}
 	}
 	// #end::as[]
+}
 
+func errorsIs(collection *gocb.Collection) {
 	// #tag::is[]
-	_, err = collection.Get("does-not-exist", nil)
+	_, err := collection.Get("does-not-exist", nil)
 	if err != nil {
 		if errors.Is(err, gocb.ErrDocumentNotFound) {
 			fmt.Println("Document could not be found")
@@ -60,10 +62,12 @@ func main() {
 		}
 	}
 	// #end::is[]
+}
 
+func errDocumentNotFound(collection *gocb.Collection) {
 	// #tag::replace[]
 	doc := struct{ Foo string }{Foo: "baz"}
-	_, err = collection.Replace("does-not-exist", doc, nil)
+	_, err := collection.Replace("does-not-exist", doc, nil)
 	if err != nil {
 		if errors.Is(err, gocb.ErrDocumentNotFound) {
 			fmt.Println("Key not be found")
@@ -72,10 +76,12 @@ func main() {
 		}
 	}
 	// #end::replace[]
+}
 
+func errDocumentExists(collection *gocb.Collection) {
 	// #tag::exists[]
-	doc = struct{ Foo string }{Foo: "baz"}
-	_, err = collection.Insert("does-already-exist", doc, nil)
+	doc := struct{ Foo string }{Foo: "baz"}
+	_, err := collection.Insert("does-already-exist", doc, nil)
 	if err != nil {
 		if errors.Is(err, gocb.ErrDocumentExists) {
 			fmt.Println("Key already exists")
@@ -84,10 +90,12 @@ func main() {
 		}
 	}
 	// #end::exists[]
+}
 
+func errCasMismatch(collection *gocb.Collection) {
 	newDoc := struct{}{}
 	// #tag::cas[]
-	var doOperation func(attempt) (*gocb.MutationResult, error)
+	var doOperation func(maxAttempts int) (*gocb.MutationResult, error)
 	doOperation = func(maxAttempts int) (*gocb.MutationResult, error) {
 		doc, err := collection.Get("doc", nil)
 		if err != nil {
@@ -110,7 +118,9 @@ func main() {
 		return result, nil
 	}
 	// #end::cas[]
+}
 
+func errDurabilityAmbiguous(collection *gocb.Collection) {
 	// #tag::insert[]
 	var doInsert func(docId string, doc []byte, maxAttempts int) (string, error)
 	doInsert = func(docId string, doc []byte, maxAttempts int) (string, error) {
@@ -145,7 +155,9 @@ func main() {
 		return "ok!", nil
 	}
 	// #end::insert[]
+}
 
+func realWorldErrHandling(collection *gocb.Collection) {
 	// #tag::insert-real[]
 	var doInsertReal func(docId string, doc []byte, maxAttempts int, delay time.Duration) (string, error)
 	doInsertReal = func(docId string, doc []byte, maxAttempts int, delay time.Duration) (string, error) {
@@ -185,9 +197,11 @@ func main() {
 		return "ok!", nil
 	}
 	// #end::insert-real[]
+}
 
+func queryError(cluster *gocb.Cluster) {
 	// #tag::query[]
-	_, err = cluster.Query("select * from `mybucket`", nil)
+	_, err := cluster.Query("select * from `mybucket`", nil)
 	if err != nil {
 		var queryErr gocb.QueryError
 		if errors.As(err, &queryErr) {

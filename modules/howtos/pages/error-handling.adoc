@@ -18,7 +18,7 @@ The first way to use the information embedded into these errors (each error type
 
 [source,golang,indent=0]
 ----
-include::example$errors.go[tag=as]
+include::devguide:example$go/error-handling.go[tag=as]
 ----
 
 This approach can be difficult to use as you need to know the Status Code for the error that you want to find.
@@ -26,7 +26,7 @@ Another approach for the most common errors that you are likely to encounter is 
 
 [source,golang,indent=0]
 ----
-include::example$errors.go[tag=is]
+include::devguide:example$go/error-handling.go[tag=is]
 ----
 
 This approach requires far less knowledge about the low level information within the Go SDK. 
@@ -43,19 +43,19 @@ If a particular key cannot be found it is return as an `ErrDocumentNotFound`:
 
 [source,golang,indent=0]
 ----
-include::example$errors.go[tag=replace]
+include::devguide:example$go/error-handling.go[tag=replace]
 ----
 
 [source,golang,indent=0]
 ----
-include::example$errors.go[tag=is]
+include::devguide:example$go/error-handling.go[tag=is]
 ----
 
 On the other hand if the key already exists and should not (e.g. on an insert) then it is returned as a `ErrDocumentExists`:
 
 [source,golang,indent=0]
 ----
-include::example$errors.go[tag=exists]
+include::devguide:example$go/error-handling.go[tag=exists]
 ----
 
 === Concurrency
@@ -66,7 +66,7 @@ If it has, it returns `ErrCasMismatch`, and the most appropriate response is to 
 
 [source,golang,indent=0]
 ----
-include::example$errors.go[tag=cas]
+include::devguide:example$go/error-handling.go[tag=cas]
 ----
 
 === Ambiguity
@@ -86,7 +86,7 @@ For instance, for inserts, they can simply be retried to see if they fail on `Er
 
 [source,golang,indent=0]
 ----
-include::example$errors.go[tag=insert]
+include::devguide:example$go/error-handling.go[tag=insert]
 ----
 
 That example is much closer to what an application will want to be doing.  Let's flesh it out further.
@@ -96,7 +96,7 @@ The application can write wrappers so that it can easily do operations without h
 
 [source,golang,indent=0]
 ----
-include::example$errors.go[tag=insert-real]
+include::devguide:example$go/error-handling.go[tag=insert-real]
 ----
 
 This will make a 'best effort' to do the insert (though its retry strategy is rather naive, and applications may want to implement a more sophisticated approach involving exponential backoff and circuit breaking.)
@@ -125,7 +125,7 @@ A N1QL query either returns results or `QueryError`, like so:
 
 [source,golang,indent=0]
 ----
-include::example$errors.go[tag=query]
+include::devguide:example$go/error-handling.go[tag=query]
 ----
 
 Analytics works in an identical fashion, raising an `AnalyticsError`.

@@ -96,7 +96,7 @@ Here is a simple MatchQuery that looks for the text “swanky” using a defined
 
 [source,golang,indent=0]
 ----
-include::example$fts.go[tag=matchquery]
+include::devguide:example$go/search.go[tag=matchquery]
 ----
 
 All simple query types are created in the same manner, although some have additional properties, which can be seen in common query type descriptions.
@@ -105,7 +105,7 @@ Here is a date range query that looks for dates between 1st January 2019 and 31s
 
 [source,golang,indent=0]
 ----
-include::example$fts.go[tag=daterangequery]
+include::devguide:example$go/search.go[tag=daterangequery]
 ----
 
 Queries can also be combined together.
@@ -113,7 +113,7 @@ A conjunction query contains multiple child queries; its result documents must s
 
 [source,golang,indent=0]
 ----
-include::example$fts.go[tag=conjunctionquery]
+include::devguide:example$go/search.go[tag=conjunctionquery]
 ----
 
 == Working with Results
@@ -131,7 +131,7 @@ Note that `Fields` is a special case, where it's a function.
 
 [source,golang,indent=0]
 ----
-include::example$fts.go[tag=iteratingrows]
+include::devguide:example$go/search.go[tag=iteratingrows]
 ----
 
 Take care to ensure you call `Err` after accessing rows and check for any errors returned.
@@ -141,7 +141,7 @@ Facets can only be accessed once `Close` has been called on rows.
 
 [source,golang,indent=0]
 ----
-include::example$fts.go[tag=iteratingfacets]
+include::devguide:example$go/search.go[tag=iteratingfacets]
 ----
 
 
@@ -152,6 +152,6 @@ FTS allows `RequestPlus` queries -- _Read-Your-Own_Writes (RYOW)_ consistency, e
 
 [source,golang,indent=0]
 ----
-include::example$fts.go[tag=consistency]
+include::devguide:example$go/search.go[tag=consistency]
 ----
 
