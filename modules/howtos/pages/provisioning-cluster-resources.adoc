@@ -30,7 +30,7 @@ It is instantiated through the `Cluster.Buckets()` method.
 
 [source,golang,indent=0]
 ----
-include::example$provisioningresources.go[tag=creatingbucketmgr]
+include::devguide:example$go/provisioning-resources-buckets.go[tag=creatingbucketmgr]
 ----
 
 The `CreateBucketSettings` and `BucketSettings` structs are used for creating and updating buckets, `BucketSettings` is also used for exposing information about existing buckets.
@@ -57,21 +57,20 @@ The following example creates a "hello" bucket:
 
 [source,golang,indent=0]
 ----
-include::example$provisioningresources.go[tag=createBucket]
 ----
 
 We can now get this bucket and update it to enable Flush:
 
 [source,golang,indent=0]
 ----
-include::example$provisioningresources.go[tag=updateBucket]
+include::devguide:example$go/provisioning-resources-buckets.go[tag=updateBucket]
 ----
 
 Once you no longer need to use the bucket, you can remove it:
 
 [source,golang,indent=0]
 ----
-include::example$provisioningresources.go[tag=removeBucket]
+include::devguide:example$go/provisioning-resources-buckets.go[tag=removeBucket]
 ----
 
 [#go-flushing]
@@ -83,7 +82,7 @@ You can flush a bucket in the SDK by using the `Flush` method:
 
 [source,golang,indent=0]
 ----
-include::example$provisioningresources.go[tag=flushBucket]
+include::devguide:example$go/provisioning-resources-buckets.go[tag=flushBucket]
 ----
 
 The `Flush` operation may fail if the bucket does not have flush enabled, in that case it will return an `ErrBucketNotFlushable`.
@@ -115,14 +114,14 @@ All operations on design documents are performed on the `ViewIndexManager` insta
 
 [source,golang,indent=0]
 ----
-include::example$provisioningresources.go[tag=viewmgr]
+include::devguide:example$go/provisioning-resources-views.go[tag=viewmgr]
 ----
 
 The following example upserts a design document with two views:
 
 [source,golang,indent=0]
 ----
-include::example$provisioningresources.go[tag=createView]
+include::devguide:example$go/provisioning-resources-views.go[tag=createView]
 ----
 
 include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
@@ -134,19 +133,19 @@ Now that we've created a design document we can fetch it:
 
 [source,golang,indent=0]
 ----
-include::example$provisioningresources.go[tag=getView]
+include::devguide:example$go/provisioning-resources-views.go[tag=getView]
 ----
 
 We've created the design document using `DesignDocumentNamespaceDevelopment` and now want to push it to production, we can do this with:
 
 [source,golang,indent=0]
 ----
-include::example$provisioningresources.go[tag=publishView]
+include::devguide:example$go/provisioning-resources-views.go[tag=publishView]
 ----
 
 To remove this design document:
 
 [source,golang,indent=0]
 ----
-include::example$provisioningresources.go[tag=removeView]
+include::devguide:example$go/provisioning-resources-views.go[tag=removeView]
 ----

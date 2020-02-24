@@ -57,14 +57,14 @@ The first example shows how to provide them by name:
 
 [source,golang,indent=0]
 ----
-include::example$query.go[tag=named-params]
+include::devguide:example$go/n1ql-query-named-placeholders.go[tag=named-params]
 ----
 
 The second example by position:
 
 [source,golang,indent=0]
 ----
-include::example$query.go[tag=pos-params]
+include::devguide:example$go/n1ql-query-positional-placeholders.go[tag=pos-params]
 ----
 
 // The complete code for this page's example can be found at xref:[??]
@@ -79,7 +79,7 @@ If no error is returned then the request succeeded and the result provides acces
 
 [source,golang,indent=0]
 ----
-include::example$query.go[tag=results]
+include::devguide:example$go/n1ql-query-simple.go[tag=results]
 ----
 
 There are two places that row iteration can return errors - `result.Row` and `result.Err`.
@@ -91,7 +91,7 @@ If you only expect a single result or only want to use the first result in a res
 
 [source,golang,indent=0]
 ----
-include::example$query.go[tag=one]
+include::devguide:example$go/n1ql-query-one.go[tag=one]
 ----
 
 The `QueryMetaData` provides insight into some basic profiling/timing information as well as information like the `ClientContextID`.
@@ -113,7 +113,7 @@ For example, here is how you can print the `executionTime` of a query:
 
 [source,golang,indent=0]
 ----
-include::example$query.go[tag=metrics]
+include::devguide:example$go/n1ql-query-simple.go[tag=metrics]
 ----
 
 == Query Options
@@ -148,7 +148,7 @@ If `QueryScanConsistencyRequestPlus` is chosen, it will likely take a bit longer
 
 [source,golang,indent=0]
 ----
-include::example$query.go[tag=consistency]
+include::devguide:example$go/n1ql-query-consistency.go[tag=consistency]
 ----
 
 You can also use `ConsistentWith MutationState` for a more narrowed-down scan consistency.
@@ -157,7 +157,7 @@ Depending on the index update rate this might provide a speedier response.
 
 [source,golang,indent=0]
 ----
-include::example$query.go[tag=consistentwith]
+include::devguide:example$go/n1ql-query-consistentwith.go[tag=consistentwith]
 ----
 
 === Client Context ID

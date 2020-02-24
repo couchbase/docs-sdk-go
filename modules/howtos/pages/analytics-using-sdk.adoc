@@ -28,7 +28,6 @@ NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connec
 include::example$analytics.go[tag=query]
 ----
 
-
 == Queries
 
 A query can either be `simple` or be `parameterized`. If parameters are used, they can either be `positional` or `named`. 
@@ -36,21 +35,21 @@ Here is one example of each:
 
 [source,golang,indent=0]
 ----
-include::example$analytics.go[tag=simple]
+include::devguide:example$go/analytics-simple-query.go[tag=simple]
 ----
 
 The query may be performed with positional parameters:
 
 [source,golang,indent=0]
 ----
-include::example$analytics.go[tag=positional]
+include::devguide:example$go/analytics-positional-placeholders.go[tag=positional]
 ----
 
 Alternatively, the query may be performed with named parameters:
 
 [source,golang,indent=0]
 ----
-include::example$analytics.go[tag=named]
+include::devguide:example$go/analytics-named-placeholders.go[tag=named]
 ----
 
 NOTE: As timeouts are propagated to the server by the client, a timeout set on the client side may be used to stop the processing of a request, in order to save system resources.
@@ -92,7 +91,7 @@ Always remember to check the error value of `Err` after iterating the results, t
 
 [source,golang,indent=0]
 ----
-include::example$analytics.go[tag=results]
+include::devguide:example$go/analytics-simple-query.go[tag=results]
 ----
 
 // Move these to Error reference doc?
@@ -116,7 +115,7 @@ Here is a snippet using several items of metadata
 
 [source,golang,indent=0]
 ----
-include::example$analytics.go[tag=metadata]
+include::devguide:example$go/analytics-simple-query.go[tag=metadata]
 ----
 
 

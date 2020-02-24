@@ -22,7 +22,10 @@ func main() {
 	bucket := cluster.Bucket("default")
 	collection := bucket.DefaultCollection()
 
-	incrementVisitCount(collection, "userID")
+	replaceWithCas(collection, "userID")
+	lockingAndCas(collection)
+
+	cluster.Close(nil)
 }
 
 // #tag::handlingerrors[]
@@ -30,7 +33,7 @@ type user struct {
 	visitCount int
 }
 
-func incrementVisitCount(collection *gocb.Collection, userID string) {
+func replaceWithCas(collection *gocb.Collection, userID string) {
 	maxRetries := 10
 	for i := 0; i < maxRetries; i++ {
 		// Get the current document contents
@@ -66,7 +69,7 @@ func incrementVisitCount(collection *gocb.Collection, userID string) {
 
 // #end::handlingerrors[]
 
-func locking(collection *gocb.Collection) {
+func lockingAndCas(collection *gocb.Collection) {
 	// #tag::locking[]
 	getRes, err := collection.GetAndLock("key", 2*time.Second, nil)
 	if err != nil {

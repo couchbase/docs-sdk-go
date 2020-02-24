@@ -1,30 +1,30 @@
 package main
 
 import (
-	"fmt"
+	"crypto/tls"
 
-	"gopkg.in/couchbase/gocb.v1"
+	"github.com/couchbase/gocb/v2"
 )
 
 func main() {
+	cert, err := tls.LoadX509KeyPair("mycert.pem", "mykey.pem")
+	if err != nil {
+		panic(err)
+	}
+
+	opts := gocb.ClusterOptions{
+		Authenticator: gocb.CertificateAuthenticator{
+			ClientCertificate: cert,
+		},
+	}
 	// Connect to the cluster using certificates and node key, note: couchbases
-	cluster, err := gocb.Connect("couchbases://10.111.175.101?" +
-		"cacertpath=../x509/ca.pem&" +
-		"certpath=../x509/chain.pem&" +
-		"keypath=../x509/pkey.key")
+	cluster, err := gocb.Connect("couchbases://10.112.193.101", opts)
 	if err != nil {
-		fmt.Println("ERROR CONNECTING TO CLUSTER:", err)
+		panic(err)
 	}
 
-	// Use the CertificateAuthenticator to authenticate
-	cluster.Authenticate(gocb.CertificateAuthenticator{})
-
-	// Open the bucket
-	_, err = cluster.OpenBucket("travel-sample", "")
+	err = cluster.Close(nil)
 	if err != nil {
-		fmt.Println("ERROR OPENING BUCKET:", err)
+		panic(err)
 	}
-
-	fmt.Println("Example Successful - Exiting")
-
 }

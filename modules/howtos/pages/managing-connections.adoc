@@ -15,7 +15,7 @@ The simplest way to create a `Cluster` object is to call `gocb.Connect()` with a
 
 [source,golang]
 ----
-include::example$connections.go[tag=simpleconnect,indent=0]
+include::devguide:example$go/connecting.go[tag=simpleconnect,indent=0]
 ----
 
 NOTE: If you are connecting to a version of Couchbase Server older than 6.5, it will be more efficient if the addresses are those of data (KV) nodes.
@@ -26,7 +26,7 @@ Multiple addresses may be specified in a connection string by delimiting them wi
 
 [source,golang]
 ----
-include::example$connections.go[tag=multinodeconnect,indent=0]
+include::devguide:example$go/connecting.go[tag=multinodeconnect,indent=0]
 ----
 
 TIP: You don't need to include the address of every node in the cluster.
@@ -91,7 +91,7 @@ If the external ports are not the default, you can specify custom ports as part 
 
 [source,golang]
 ----
-include::example$connections.go[tag=customports,indent=0]
+include::devguide:example$go/connecting.go[tag=customports,indent=0]
 ----
 
 TIP: In a deployment that uses multi-dimensional scaling, a custom KV port is only applicable for nodes running the KV service.
@@ -141,7 +141,7 @@ The next step is to enable encryption and pass it the path to the certificate fi
 
 [source,golang]
 ----
-include::example$connections.go[tag=tls,indent=0]
+include::devguide:example$go/connecting.go[tag=tls,indent=0]
 ----
 
 If you want to verify it's actually working, you can use a tool like [.cmd]`tcpdump`.
@@ -167,7 +167,7 @@ In order to make the SDK actually use the SRV records, you need to enable DNS SR
 
 [source,golang]
 ----
-include::example$connections.go[tag=dnssrv,indent=0]
+include::devguide:example$go/connecting.go[tag=dnssrv,indent=0]
 ----
 
 If the DNS SRV records could not be loaded properly you'll get the exception logged and the given host name will be used as a A record lookup.

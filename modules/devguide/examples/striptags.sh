@@ -4,10 +4,10 @@ cd "$(dirname "$0")"
 if [ -z "$gitmod" ] ; then
 	gitmod=0
 fi
-target="$(cd ../../../../devguide-examples ; pwd)" # only 3 ../ if using submodule
+target="$(cd ../../../../sdk-examples ; pwd)" # only 3 ../ if using submodule
 # exclude striptags.sh and non-git files like nodejs/node_modules
 find * |\
-egrep -v '^striptags.sh|^nodejs/node_modules|^nodejs/package-lock.json' |\
+egrep -v '^striptags.sh' |\
  while read f ; do
   if [ -d $f ] ; then
     if [ ! -d $target/$f ] ; then

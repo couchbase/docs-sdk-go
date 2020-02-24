@@ -81,13 +81,13 @@ The latter saves even more bandwidth by not retrieving the contents of the path 
 .Retrieve Sub-Document value
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=lookupInGet]
+include::devguide:example$go/subdoc-lookupin.go[tag=lookupInGet]
 ----
 
 .Check existence of Sub-Document path
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=lookupInExists]
+include::devguide:example$go/subdoc-lookupin.go[tag=lookupInExists]
 ----
 
 NOTE: LookupInResult has an `Exists` method, but this should not be confused with the exists __operation__.  The `Exists` method
@@ -99,7 +99,7 @@ Multiple operations can be combined as well:
 .Combine multiple lookup operations
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=lookupInMulti]
+include::devguide:example$go/subdoc-lookupin.go[tag=lookupInMulti]
 ----
 
 
@@ -111,7 +111,7 @@ The simplest of these operations is _Upsert_, which, similar to the fulldoc-leve
 .Upserting a new Sub-Document
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInUpsert]
+include::devguide:example$go/subdoc-mutatein.go[tag=mutateInUpsert]
 ----
 
 Likewise, the _Insert_ operation will only add the new value to the path if it does not exist:
@@ -119,7 +119,7 @@ Likewise, the _Insert_ operation will only add the new value to the path if it d
 .Inserting a Sub-Document
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInInsert]
+include::devguide:example$go/subdoc-mutatein.go[tag=mutateInInsert]
 ----
 
 Dictionary values can also be replaced or removed, and you may combine any number of mutation operations within the same general _mutateIn_ API.
@@ -128,7 +128,7 @@ Here's an example of one which replaces one path and removes another.
 .Combine multiple mutate operations
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInMulti]
+include::devguide:example$go/subdoc-mutatein.go[tag=mutateInMulti]
 ----
 
 NOTE: `MutateIn` is an _atomic_ operation.
@@ -142,13 +142,13 @@ Unlike fulldoc _Append_/_Prepend_ operations (which simply concatenate bytes to 
 .Array appending a sub-document
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInArrayAppend]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppend]
 ----
 
 .Array prepending a sub-document
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInArrayPrepend]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayPrepend]
 ----
 
 If your document only needs to contain an array, you do not have to create a top-level object wrapper to contain it.
@@ -157,7 +157,7 @@ Simply initialize the document with an empty array and then use the empty path f
 .Creating and populating an array document
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInArrayDoc]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDoc]
 ----
 
 Note that in the above we carried over the CAS value from the Upsert operation to ensure that if someone else modified the document first then our change would error.
@@ -170,13 +170,13 @@ Be sure to know the difference between the use of the _HasMultiple_ option being
 .Add multiple elements to an array
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInArrayDocMulti]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDocMulti]
 ----
 
 .Add single array as element to existing array
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInArrayDocMultiSingle]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDocMultiSingle]
 ----
 
 Note that using _HasMultiple_ with a single _ArrayAppend_ operation results in greater performance increase and bandwidth savings than simply specifying a single _ArrayAppend_ for each element.
@@ -185,7 +185,7 @@ Below we set elements individually to achieve the same as the `HasMultiple` exam
 .Adding multiple elements to array (slow)
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInArrayAppendMulti]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppendMulti]
 ----
 
 If you wish to create an array if it does not exist and also push elements to it within the same operation you may use the <<subdoc_create_path,_CreatePath_>> option:
@@ -193,7 +193,7 @@ If you wish to create an array if it does not exist and also push elements to it
 .Array appending a sub-document with create path
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInArrayAppendCreatePath]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppendCreatePath]
 ----
 
 == Arrays as Unique Sets
@@ -204,7 +204,7 @@ This will do a check to determine if the given value exists or not before actual
 .Adding unique elements to arrays
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInArrayAddUnique]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAddUnique]
 ----
 
 Note that currently the _ArrayAddUnique_ will fail with a _Path Mismatch_ error if the array contains JSON _floats_, _objects_, or _arrays_.
@@ -224,7 +224,7 @@ For example, to insert `"Cruel"` as the second element in the array `["Hello", "
 .Inserting elements into arrays
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInArrayInsert]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayInsert]
 ----
 
 // for your examples, above, CD: “I feel like somewhere in this we should also just a an example path like "my.path[1]" too, just to show how to use the index with a nested path. I don't think it's necessarily clear.”
@@ -240,7 +240,7 @@ These operations are logically similar to the _counter_ operation on an entire d
 .Incrementing a counter
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInIncrement]
+include::devguide:example$go/subdoc-counter.go[tag=mutateInIncrement]
 ----
 
 The _Increment_ and _Decrement_ operations perform simple arithmetic against a numeric value.
@@ -249,7 +249,7 @@ The updated value is returned.
 .Decrementing a counter
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInDecrement]
+include::devguide:example$go/subdoc-counter.go[tag=mutateInDecrement]
 ----
 
 The existing value for _counter_ operations must be within range of a 64 bit signed integer.
@@ -316,7 +316,7 @@ In this case, the _CreatePath_ option may be used.
 .Upsert with CreatePath
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=mutateInCreatePath]
+include::devguide:example$go/subdoc-mutatein.go[tag=mutateInCreatePath]
 ----
 
 == Concurrent Modifications
@@ -349,7 +349,7 @@ Couchbase's xref:1.6@go-sdk::durability.adoc[traditional durability], using `Per
 .Performing Sub Document mutations with traditional durability
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=traddurability]
+include::devguide:example$go/subdoc-durability.go[tag=traddurability]
 ----
 
 In Couchbase Server 6.5 and up, this is built upon with xref:concept-docs:durability-replication-failure-considerations.adoc#durable-writes[Durable Writes], 
@@ -358,7 +358,7 @@ which uses the concept of xref:6.5@server:learn:data/durability.adoc#majority[ma
 .Performing Sub Document mutations with Durable Writes
 [source,golang,indent=0]
 ----
-include::example$subdoc.go[tag=newdurability]
+include::devguide:example$go/subdoc-durability.go[tag=newdurability]
 ----
 
 == Error handling

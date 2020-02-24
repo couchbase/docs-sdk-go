@@ -22,7 +22,7 @@ First we need to connect to the server and create a cluster object:
 
 [source,golang,indent=0]
 ----
-include::example$async.go[tag=connect]
+include::devguide:example$go/concurrent-async.go[tag=connect]
 ----
 
 Once we have that in place then we can set up our goroutines. 
@@ -35,21 +35,21 @@ Here we can see setting up the goroutines ready to receive any work:
 
 [source,golang,indent=0]
 ----
-include::example$async.go[tag=workers]
+include::devguide:example$go/concurrent-async.go[tag=workers]
 ----
 
 Once those are setup we can start loading up our JSON files and sending them to our workers:
 
 [source,golang,indent=0]
 ----
-include::example$async.go[tag=loadData]
+include::devguide:example$go/concurrent-async.go[tag=loadData]
 ----
 
 Finally we wait for the `workChan` to empty and then wait for the "workers" to complete:
 
 [source,golang,indent=0]
 ----
-include::example$async.go[tag=wait]
+include::devguide:example$go/concurrent-async.go[tag=wait]
 ----
 
 
@@ -76,7 +76,7 @@ Here we can see that we create a map containing 8 batches of documents which we 
 
 [source,golang,indent=0]
 ----
-include::example$batch.go[tag=loadData]
+include::devguide:example$go/concurrent-batch.go[tag=loadData]
 ----
 
 Once we've built up our batches we can send them via the `collection.Do` interface. 
@@ -85,7 +85,7 @@ Note that we're checking each individual operation for errors as well as the cal
 
 [source,golang,indent=0]
 ----
-include::example$batch.go[tag=send]
+include::devguide:example$go/concurrent-batch.go[tag=send]
 ----
 
 // use case bulk loader for data integration

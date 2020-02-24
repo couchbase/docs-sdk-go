@@ -1,6 +1,5 @@
 package main
 
-// #tag::connect[]
 import (
 	"fmt"
 	"time"
@@ -15,14 +14,12 @@ func main() {
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("localhost", opts)
+	cluster, err := gocb.Connect("10.112.194.101", opts)
 	if err != nil {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("bucket-name")
-
-	collection := bucket.DefaultCollection()
+	collection := cluster.Bucket("travel-sample").DefaultCollection()
 
 	// #tag::insert[]
 	// Insert Document
@@ -81,32 +78,6 @@ func main() {
 	// #end::update[]
 	fmt.Println(updateResult)
 
-	// #tag::expiry[]
-	// Upsert with Expiry
-	expiryResult, err := collection.Upsert("document-key", &document, &gocb.UpsertOptions{
-		Timeout: 25 * time.Millisecond,
-		Expiry:  60, // Seconds
-	})
-	// #end::expiry[]
-	fmt.Println(expiryResult)
-
-	// #tag::durability[]
-	// Upsert with Durability
-	durableResult, err := collection.Upsert("document-key", &document, &gocb.UpsertOptions{
-		DurabilityLevel: gocb.DurabilityLevelMajority,
-	})
-	// #end::durability[]
-	fmt.Println(durableResult)
-
-	// #tag::observebased[]
-	// Upsert with Observe based durability
-	observeResult, err := collection.Upsert("document-key", &document, &gocb.UpsertOptions{
-		PersistTo:   1, // Has been written to disk on 1 other node than active
-		ReplicateTo: 1, // Has been written to memory on 1 other node than active
-	})
-	// #end::observebased[]
-	fmt.Println(observeResult)
-
 	// #tag::get[]
 	// Get
 	getResult, err := collection.Get("document-key", nil)
@@ -151,59 +122,7 @@ func main() {
 	// #end::remove[]
 	fmt.Println(removeResult)
 
-	// #tag::touch[]
-	// Touch
-	touchResult, err := collection.Touch("document-key", 60, &gocb.TouchOptions{
-		Timeout: 100 * time.Millisecond,
-	})
-	if err != nil {
+	if err := cluster.Close(nil); err != nil {
 		panic(err)
 	}
-	// #end::touch[]
-	fmt.Println(touchResult)
-
-	// #tag::getandtouch[]
-	// GetAndTouch
-	getAndTouchResult, err := collection.GetAndTouch("document-key", 60, &gocb.GetAndTouchOptions{
-		Timeout: 100 * time.Millisecond,
-	})
-	if err != nil {
-		panic(err)
-	}
-
-	var getAndTouchDoc myDoc
-	err = getAndTouchResult.Content(&getAndTouchDoc)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(getAndTouchDoc)
-	// #end::getandtouch[]
-
-	// #tag::increment[]
-	// Increment
-	incrementResult, err := collection.Binary().Increment("document-key", &gocb.IncrementOptions{
-		Initial: 1000,
-		Delta:   1,
-		Timeout: 50 * time.Millisecond,
-		Expiry:  3600, // Seconds
-	})
-	if err != nil {
-		panic(err)
-	}
-	// #end::increment[]
-	fmt.Println(incrementResult)
-
-	// #tag::decrement[]
-	// Increment
-	decrementResult, err := collection.Binary().Decrement("document-key", &gocb.DecrementOptions{
-		Initial: 1000,
-		Delta:   1,
-		Timeout: 50 * time.Millisecond,
-		Expiry:  3600, // Seconds
-	})
-	if err != nil {
-		panic(err)
-	}
-	// #end::decrement[]
-	fmt.Println(decrementResult)
 }
