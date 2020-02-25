@@ -14,7 +14,7 @@ func main() {
 
 	opts := gocb.ClusterOptions{
 		Authenticator: gocb.CertificateAuthenticator{
-			ClientCertificate: cert,
+			ClientCertificate: &cert,
 		},
 	}
 	// Connect to the cluster using certificates and node key, note: couchbases
