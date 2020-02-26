@@ -37,7 +37,7 @@ func errorsAs(collection *gocb.Collection) {
 	// #tag::as[]
 	_, err := collection.Get("key", nil)
 	if err != nil {
-		var kvError gocb.KeyValueError
+		var kvError *gocb.KeyValueError
 		if errors.As(err, &kvError) {
 			fmt.Println(kvError.StatusCode) // the memcached error code
 			fmt.Println(kvError.Opaque)     // the unique identifier for the operation
@@ -203,7 +203,7 @@ func queryError(cluster *gocb.Cluster) {
 	// #tag::query[]
 	_, err := cluster.Query("select * from `mybucket`", nil)
 	if err != nil {
-		var queryErr gocb.QueryError
+		var queryErr *gocb.QueryError
 		if errors.As(err, &queryErr) {
 			fmt.Println(queryErr.ClientContextID) // the identifier for the query
 			fmt.Println(queryErr.Endpoint)        // the http endpoint used for the query
