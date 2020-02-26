@@ -1,0 +1,137 @@
+= Working with the  Collections Developer Preview
+:nav-title: Collections DP
+:content-type: howto
+:page-topic-type: howto
+
+[abstract]
+Collections is introduced as a Developer Preview feature in Couchbase Server 6.5.
+The 3.0 API SDKs (including Go SDK 2.0.x) all work with Collections and Scopes.
+As a practical demonstration, we have a collections-enabled version of the Travel Sample application.
+
+The xref:6.5@server:developer-preview:collections/collections-overview.adoc[Developer Preview of the upcoming Collections feature] in Couchbase Server is fully implemented in the 3.0 API versions of the Couchbase SDKs.
+When working with other server versions, the `defaultcollection` is used from the SDK.
+Here we show how to access individual collections in the Developer Preview version of Couchbase Server 6.5, with a collections-enabled version of our xref:hello-world:sample-application.adoc[Travel Sample application].
+User documents and flight documents are split into user and flight collections.
+Something that previously had to be done with key-value references to different types or categories of data.
+
+
+== Travel Sample app -- with Collections
+
+include::6.5@sdk:shared:partial$sample-application.adoc[tag=prereq]
+
+[WARNING]
+====
+Enabling Developer Preview should only be done on a development machine; 
+there is no upgrade path available from a DP-enabled Couchbase Server.
+====
+== Preparation
+
+As well as the xref:start-using-sdk.adoc[Go SDK 2.0] and Couchbase Server, 
+set up as described above, you will need `git` to fetch the travel sample application code:
+
+[source,console]
+----
+git clone git@github.com:couchbaselabs/try-cb-golang.git
+----
+
+Change directory into your cloned repository, and check out the _Collections_ branch (in the case of the Go SDK, `6.5-collections`).
+
+[source,console]
+----
+cd try-cb-golang
+----
+
+[source,console]
+----
+git checkout 6.5-collections
+----
+
+* Before building the Collections-enabled version of the Travel Sample Application, you need to enable this DP feature (see warning above).
++
+[source,bash]
+.Enable Collections Developer Preview
+----
+/opt/couchbase/bin/couchbase-cli enable-developer-preview --enable -c http://localhost:8091 -u Administrator -p password
+----
++
+[source,console]
+----
+Developer preview cannot be disabled once it is enabled. If you enter developer preview mode you will not be able to upgrade. DO NOT USE IN PRODUCTION.
+Are you sure [y/n]: y
+----
+
+The Travel Sample Bucket needs altering to be split into collections. 
+There is a script to do this included with the collections branch of the Travel Sample App -- run:
+
+[source,console]
+.Create Sample Collections
+----
+sh create-collections.sh Administrator password 127.0.0.1
+----
+
+Adjusting for any changes you have made to server URL, or admin password.
+You should now have the Travel Sample Data Bucket split into collections:
+
+----
+{"uid":"1"}{"uid":"2"}{"uid":"3"}
+
+THE FINAL RESULT
+{"uid":"3","scopes":[{"name":"userData","uid":"8","collections":[{"name":"flights","uid":"9"},{"name":"users","uid":"8"}]},{"name":"_default","uid":"0","collections":[{"name":"_default","uid":"0"}]}]}
+----
+
+
+== Running the Travel Sample Application
+
+
+Next, edit the `cbConnStr` field in *main.go* to the one for your containerised Couchbase Server (or localhost, 127.0.0.1, if appropriate), and any other local changes -- such as password.
+From here onwards, we'll assume the defaults.
+
+And run with
+
+[source,console]
+----
+go run main.go
+----
+
+After the build, with your Web browser of choice, head to port 8080 of the local machine -- http://localhost:8080[http://localhost:8080].
+
+Using the Sample _App_ is the same as with the non-collections version that we cover xref:hello-world:sample-application.adoc#using-the-sample-app[in our introductory doc], but we're assuming you've come here to see Collections in use in the codebase.
+
+
+== Sample App Backend
+
+The backend code shows Couchbase Node.js SDK in action with Query and Search, 
+but also how to plug together all of the elements and build an application with Couchbase Server and the Node.js SDK.
+
+Collections and Scope are set immediately after opening the bucket in `main()`:
+
+[source,golang]
+----
+// Open the bucket
+globalBucket = globalCluster.Bucket(cbDataBucket, nil)
+userBucket = globalCluster.Bucket(cbUserBucket, nil)
+
+// Select the required collections
+globalCollection = globalBucket.DefaultCollection()
+userDataScope := userBucket.Scope("userData")
+userCollection = userDataScope.Collection("users")
+flightCollection = userDataScope.Collection("flights")
+----
+
+And operations are now performed on the specific collection, rather than the whole bucket (or the whole bucket via `_default` collection, as in Server 6.5 without the Developer Preview enabled).
+
+[source,golang]
+----
+var flight jsonBookedFlight
+var flights []jsonBookedFlight
+for _, flightID := range flightIDs {
+	res, err := flightCollection.Get(flightID, nil)
+	if err != nil {
+		writeJsonFailure(w, 500, err)
+		return
+	}
+	res.Content(&flight)
+	flights = append(flights, flight)
+}
+----
+
