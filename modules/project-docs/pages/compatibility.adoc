@@ -5,8 +5,8 @@
 [abstract]
 Features available in different SDK versions, and compatibility between Server and SDK.
 
-Couchbase Go SDK 2.0 requires Go version 1.11, or later.
-
+Couchbase Go SDK 2.0 requires Go version 1.13, or later.
+In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
 
 == Couchbase Version/SDK Version Matrix
 
