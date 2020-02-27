@@ -17,7 +17,7 @@
 
 .Advanced Data Operations
 * xref:howtos:concurrent-async-apis.adoc[Async & Batching APIs]
-// * xref:howtos:concurrent-document-mutations.adoc[Concurrent Document Mutations]
+* xref:howtos:concurrent-document-mutations.adoc[Concurrent Document Mutations]
 // * xref:howtos:durability.adoc[Durability]
 * xref:howtos:transcoders-nonjson.adoc[Transcoders & Non-JSON]
 // * xref:howtos:working-with-collections.adoc[Working with Collections DP]
