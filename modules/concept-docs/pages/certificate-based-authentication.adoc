@@ -9,4 +9,4 @@ The necessary information can be found in our xref:6.5@server:learn:security/cer
 
 include::6.5@sdk:shared:partial$suth-overview.adoc[tag=cert-auth]
 
-See also our xref:howtos:sdk-authentication.adoc[howto doc] on cert-auth with the Scala SDK.
+// See also our xref:howtos:sdk-authentication.adoc[howto doc] on cert-auth with the Go SDK.
