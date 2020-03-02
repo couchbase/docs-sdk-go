@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	// #tag::certconnect[]
+	// Load the public/private key pair from file
 	cert, err := tls.LoadX509KeyPair("mycert.pem", "mykey.pem")
 	if err != nil {
 		panic(err)
@@ -22,6 +24,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	// #end::certconnect[]
 
 	err = cluster.Close(nil)
 	if err != nil {

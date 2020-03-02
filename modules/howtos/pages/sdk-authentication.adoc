@@ -14,9 +14,9 @@ Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide covered the bas
 
 Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide introduced basic authentication against a Couchbase cluster:
 
-[source,scala]
+[source,golang,indent=0]
 ----
-include::example$Auth.scala[tag=basic,indent=0]
+include::devguide:example$go/connecting.go[tag=simpleconnect]
 ----
 
 
@@ -29,11 +29,14 @@ include::6.5@sdk:shared:partial$auth-overview.adoc[tag=cert-auth]
 
 For sample procedures whereby certificates can be generated and deployed, see xref:6.5@server:manage:manage-security/manage-certificates.adoc[Manage Certificates].
 The rest of this document assumes that the processes there, or something similar, have been followed.
-That is, a cluster certificate has been created and installed on the server, a client certificate has been created, and it is stored in a JVM keystore along with the cluster's certificate.
+That is:
 
-[source,scala]
+* A cluster certificate has been created and installed on the server.
+* A client certificate and private key pair have been created, and are accessible to be loaded into your application (the example below loads them from the file system).
+
+[source,golang,indent=0]
 ----
-include::example$Auth.scala[tag=auth,indent=0]
+include::devguide:example$go/connecting-cca.go[tag=certconnect]
 ----
 
 
