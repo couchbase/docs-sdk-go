@@ -1,0 +1,43 @@
+= Authenticating against Couchbase Server
+:page-topic-type: howto
+:page-edition: Enterprise Edition
+:page-aliases: ROOT:sdk-authentication-overview
+
+[abstract]
+As well as Role-Based Access Control (RBAC), Couchbase offers connection with Certificate Authentication, and works transparently with LDAP.
+
+
+Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide covered the basics for authorizing against a Couchbase cluster, but you may need to use alternative authentication methods such as Certification.
+
+
+== RBAC
+
+Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide introduced basic authentication against a Couchbase cluster:
+
+[source,scala]
+----
+include::example$Auth.scala[tag=basic,indent=0]
+----
+
+
+include::6.5@sdk:shared:partial$auth-overview.adoc[tag=rbac]
+
+include::6.5@sdk:shared:partial$auth-overview.adoc[tag=cert-auth]
+
+
+== Authenticating a Scala Client by Certificate
+
+For sample procedures whereby certificates can be generated and deployed, see xref:6.5@server:manage:manage-security/manage-certificates.adoc[Manage Certificates].
+The rest of this document assumes that the processes there, or something similar, have been followed.
+That is, a cluster certificate has been created and installed on the server, a client certificate has been created, and it is stored in a JVM keystore along with the cluster's certificate.
+
+[source,scala]
+----
+include::example$Auth.scala[tag=auth,indent=0]
+----
+
+
+== LDAP
+
+If you are on a network where access is controlled by LDAP, the SDK will work transparently with it.
+No special configuration is needed.
