@@ -73,7 +73,7 @@ For the purposes of the below examples we will use the Travel Sample sample buck
       }
     },
     "store": {
-      "kvStoreName": "mossStore"
+      "kvStoreName": "scorch"
     }
   },
   "sourceType": "couchbase",
