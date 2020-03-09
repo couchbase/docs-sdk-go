@@ -40,7 +40,7 @@ Here we will use the _Full Admin_ role created during installation of the Couchb
 For production client code, you will want to use more appropriate, restrictive settings -- but here we want to get you up and running quickly.
 If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _localhost_.
 
-Connection to the cluster is initialized by:
+To access the KV (Key/Value) API or to query views, you need to open a `Bucket`:
 
 [source,golang,indent=0]
 ----

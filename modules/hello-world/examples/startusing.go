@@ -1,6 +1,5 @@
 package main
 
-// #tag::connect[]
 import (
 	"fmt"
 
