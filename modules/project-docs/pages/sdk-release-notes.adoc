@@ -16,7 +16,7 @@ If you are using Go 1.13+ then installing the Couchbase Go SDK is similar to ins
 
 [source,bash]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.0.2
+$ go get github.com/couchbase/gocb/v2@v2.0.3
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -27,6 +27,39 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.0.3 (17 March 2020)
+
+Version 2.0.3 is a maintenance release for the Go SDK 2.0.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.0.3?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-662[GOCBC-662]:
+Updated sub document operations to automatically, transparently, reorder if an xattr operation is listed.
+This will automatically reorder back to the order that the user defined when returning.
+* https://issues.couchbase.com/browse/GOCBC-700[GOCBC-700]:
+Made improvements to errors returned from management operations
+* https://issues.couchbase.com/browse/GOCBC-716[GOCBC-716]:
+Return a FlushNotEnabled error if bucket flush not enabled.
+* https://issues.couchbase.com/browse/GOCBC-719[GOCBC-719]:
+Consistently create tracing spans for all HTTP requests.
+* https://issues.couchbase.com/browse/GOCBC-728[GOCBC-728]:
+Add cluster level Ping operation.
+* https://issues.couchbase.com/browse/GOCBC-807[GOCBC-807]:
+Update best effort retry strategy to use an exponential backoff calculator.
+* https://issues.couchbase.com/browse/GOCBC-820[GOCBC-820]:
+Remove context.Context from search index manager operations.
+Note that whilst this is a breaking change it was deemed best to break it and make sure any users who are using it know that they are using unused functionality.
+
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-814[GOCBC-814]:
+Fixed issue where search was looking for incorrect field in the JSON response.
+* https://issues.couchbase.com/browse/GOCBC-817[GOCBC-817]:
+Fixed issue where opening a bucket with the same name twice led to incorrect behaviour on both buckets.
 
 
 == Version 2.0.2 (21 February 2020)
