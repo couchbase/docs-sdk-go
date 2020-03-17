@@ -37,20 +37,22 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.0.3?tab=doc[API Documentation
 === New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-662[GOCBC-662]:
-Updated sub document operations to automatically, transparently, reorder if an xattr operation is listed.
-This will automatically reorder back to the order that the user defined when returning.
+The server requires that any subdoc xattr ops are at the beginning of the ops list. 
+If the user provides an ops list containing subdoc xattr ops out of order, the SDK will now reorder it for them and then reorder it back again when it gets the result.
+This ensures that `ContentAt` works as expected.
 * https://issues.couchbase.com/browse/GOCBC-700[GOCBC-700]:
-Made improvements to errors returned from management operations
+Made improvements to errors returned from management operations.
+They now provide more contextual information.
 * https://issues.couchbase.com/browse/GOCBC-716[GOCBC-716]:
-Return a FlushNotEnabled error if bucket flush not enabled.
+SDK now returns a `FlushNotEnabled` error if bucket flush not enabled.
 * https://issues.couchbase.com/browse/GOCBC-719[GOCBC-719]:
-Consistently create tracing spans for all HTTP requests.
+SDK now consistently creates tracing spans for all HTTP requests.
 * https://issues.couchbase.com/browse/GOCBC-728[GOCBC-728]:
-Add cluster level Ping operation.
+Added cluster level Ping operation.
 * https://issues.couchbase.com/browse/GOCBC-807[GOCBC-807]:
-Update best effort retry strategy to use an exponential backoff calculator.
+Updated best effort retry strategy to use an exponential backoff calculator.
 * https://issues.couchbase.com/browse/GOCBC-820[GOCBC-820]:
-Remove context.Context from search index manager operations.
+Removed `context.Context` from search index manager operations.
 Note that whilst this is a breaking change it was deemed best to break it and make sure any users who are using it know that they are using unused functionality.
 
 
