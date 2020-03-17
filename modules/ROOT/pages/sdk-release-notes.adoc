@@ -25,11 +25,11 @@ Version 1.6.6 is a maintenance release for the 1.6.x series.
 === New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-808[GOCBC-808]:
-Automatically retry query error code 4040.
+The SDK now automatically retries after receiving query error code 4040.
 * https://issues.couchbase.com/browse/GOCBC-819[GOCBC-819]:
-Return x509 authentication errors to the user.
+x509 authentication errors are now returned to the user, to facilitate better logging.
 * https://issues.couchbase.com/browse/GOCBC-821[GOCBC-821]:
-Restore previous ClusterManager behaviour as a fallback.
+Restored previous ClusterManager behaviour as a fallback:
 Attempt to use addresses from the connection string to perform ClusterManager operations when ClusterManager is used before opening a bucket.
 
 == Version 1.6.5 (19 February 2020)
