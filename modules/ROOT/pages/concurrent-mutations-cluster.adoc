@@ -39,7 +39,7 @@ uint Replace(string docid, object newvalue, uint oldCas=0) {
 
 == Demonstration
 
-The following demonstrates how the server handles CAS.
+The following demonstrates how the server handles CAS -- again, using Python-like pseudocode.
 A use case for employing the CAS is when adding a new field to an existing document.
 At the application level, this requires the following steps:
 
