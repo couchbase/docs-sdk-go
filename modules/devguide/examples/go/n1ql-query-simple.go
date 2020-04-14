@@ -26,14 +26,19 @@ func main() {
 		panic(err)
 	}
 
+	type hotel struct {
+		Name string `json:"name"`
+	}
+
+	var hotels []hotel
 	// iterate over rows
 	for rows.Next() {
-		var hotel interface{} // this could also be a specific type like Hotel
-		err := rows.Row(&hotel)
+		var h hotel // this could also just be an interface{} type
+		err := rows.Row(&h)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println(hotel)
+		hotels = append(hotels, h)
 	}
 
 	// always check for errors after iterating
