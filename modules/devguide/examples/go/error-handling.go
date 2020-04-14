@@ -124,7 +124,9 @@ func errDurabilityAmbiguous(collection *gocb.Collection) {
 	// #tag::insert[]
 	var doInsert func(docId string, doc []byte, maxAttempts int) (string, error)
 	doInsert = func(docId string, doc []byte, maxAttempts int) (string, error) {
-		_, err := collection.Insert(docId, doc, nil)
+		_, err := collection.Insert(docId, doc, &gocb.InsertOptions{
+			DurabilityLevel: gocb.DurabilityLevelMajority,
+		})
 		if err != nil {
 			if errors.Is(err, gocb.ErrDocumentExists) {
 				// The logic here is that if we failed to insert on the first attempt then
