@@ -6,14 +6,11 @@
 [abstract]
 The Couchbase Go SDK provides an API for managing a Couchbase cluster programmatically.
 
-The primary means for managing clusters is through the Couchbase Web UI which provides an easy to use interface for adding, removing, monitoring and modifying buckets. 
-In some instances you may wish to have a programmatic interface. 
-For example, if you wish to manage a cluster from a setup script, or if you are setting up buckets in test scaffolding.
-
-The Go SDK also comes with some convenience functionality for common Couchbase management requests.
-Management operations in the Go SDK may be performed through several interfaces depending on the object.
+include::6.5@sdk:shared:partial$clusters-buckets.adoc[tag=management]
 
 ////
+Management operations in the Go SDK may be performed through several interfaces depending on the object:
+
 == Creating and Removing Buckets
 
 To create or delete a bucket, call the bucket manager with the `buckets()` call on the cluster:
@@ -30,7 +27,3 @@ This class is also used to expose information about an existing bucket (`manager
 
 The default Collection & Default Scope will be used automatically.
 ////
-
-include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=update-bucket-warning]
-
-
