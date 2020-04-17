@@ -35,7 +35,7 @@
 
 .Learn
 * xref:concept-docs:concepts.adoc[Overview]
-// * xref:concept-docs:buckets-and-clusters.adoc[Buckets & Clusters]
+* xref:concept-docs:buckets-and-clusters.adoc[Buckets & Clusters]
 * xref:concept-docs:collections.adoc[Collections & Scope]
 * xref:concept-docs:compression.adoc[Compression]
 * xref:concept-docs:data-model.adoc[Data Model]
