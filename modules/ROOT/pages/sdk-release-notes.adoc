@@ -18,6 +18,15 @@ The most current and up to date API Documentation is always available through th
 
 *Any checkouts of the Go SDK between July 10 2017 and Sept 29 2017 may have compatibility issues with Server 5.0.*
 
+== Version 1.6.7 (21 April 2020)
+
+Version 1.6.7 is a maintenance release for the 1.6.x series.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-839[GOCBC-839]:
+Fixed issue where the `ClusterManager` `UpdateBucket` operation was using the incorrect endpoint.
+
 == Version 1.6.6 (17 March 2020)
 
 Version 1.6.6 is a maintenance release for the 1.6.x series.
