@@ -12,11 +12,9 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 == SDK Installation
 
-If you are using Go 1.13+ then installing the Couchbase Go SDK is similar to installing most other Go projects:
-
 [source,bash]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.0.3
+$ go get github.com/couchbase/gocb/v2@v2.0.4
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -27,6 +25,29 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.0.4 (21 April 2020)
+
+Version 2.0.4 is a maintenance release for the Go SDK 2.0.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.0.4?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-844[GOCBC-844]:
+Updated to the latest version of gocbconnstr.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-838[GOCBC-838]:
+Fixed issue where HTTP endpoints were being used when SSL is enabled.
+* https://issues.couchbase.com/browse/GOCBC-851[GOCBC-851]:
+Fixed issue where `ServerName` was not being set on the `tls.Config` when SSL was use.
+* https://issues.couchbase.com/browse/GOCBC-853[GOCBC-853]:
+Fixed issue where using `PasswordAuthenticator` with a root CA and SSL would cause a panic.
+* https://issues.couchbase.com/browse/GOCBC-831[GOCBC-831]:
+Fixed issue where search consistency options were not being set in the request payload.
+
 
 == Version 2.0.3 (17 March 2020)
 
