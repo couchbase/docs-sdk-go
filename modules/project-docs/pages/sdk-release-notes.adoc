@@ -14,7 +14,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,bash]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.0.4
+$ go get github.com/couchbase/gocb/v2@v2.1.0
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -25,6 +25,22 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.1.0 (21 April 2020)
+
+Version 2.1.0 is a maintenance release for the Go SDK 2.0.0.
+This release contains updating to a new major release of the core part of the SDK.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.0?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-843[GOCBC-843]:
+Updated to the new version of gocbcore.
+This change includes a key behavioral change of no longer reporting non-configuration related connect time errors.
+* https://issues.couchbase.com/browse/GOCBC-845[GOCBC-845]:
+Add support for the `WaitForReady` operation, support waiting for the KeyValue service to be ready.
+
 
 == Version 2.0.4 (21 April 2020)
 
