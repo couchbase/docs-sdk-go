@@ -13,7 +13,7 @@ The Go SDK also comes with some convenience functionality for common Couchbase m
 Management operations in the SDK may be performed through several interfaces depending on the object:
 
 * BucketManager -- `Cluster.Buckets()`
-* UserManager -- `Cluster.Users()` see xref
+* UserManager -- `Cluster.Users()` // see xref
 * QueryIndexManager -- `Cluster.QueryIndexes()`
 * AnalyticsIndexManager -- `Cluster.AnalyticsIndexes()`
 * SearchIndexManager -- `Cluster.SearchIndexes()`
