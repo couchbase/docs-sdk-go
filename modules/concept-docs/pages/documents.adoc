@@ -1,7 +1,7 @@
 = Document 
 :nav-title: Documents & Doc Ops
 :page-topic-type: concept
-:page-aliases: core-operations
+:page-aliases: ROOT:core-operations,ROOT:documents,ROOT:documents-basics,ROOT:documents-atomic
 
 [abstract]
 Couchbase supports CRUD operations, various data structures, and binary documents.
@@ -10,7 +10,7 @@ Although query and path-based (Sub-Document) services are available, the simplic
 
 
 // use the simplicity of https://developer.couchbase.com/documentation/server/3.x/developer/dev-guide-3.0/read-write.html possibly?
-// don't forget https://docs-staging.couchbase.com/dotnet-sdk/2.7/datastructures.html - and Go equiv?
+// don't forget https://docs-staging.couchbase.com/dotnet-sdk/2.7/datastructures.html - and Java equiv?
 
 ////
 == Documents
@@ -22,4 +22,83 @@ Although query and path-based (Sub-Document) services are available, the simplic
 == Data Structures
 
 == Raw Byte Concatenation
+////
+
+
+
+
+
+include::6.5@sdk:shared:partial$documents.adoc[tag=document]
+
+== Primitive Key-Value Operations
+
+[source,python]
+----
+upsert(docid, document)
+insert(docid, document)
+replace(docid, document)
+get(docid)
+remove(docid)
+----
+
+include::6.5@sdk:shared:partial$documents.adoc[tag=crud-overview]
+
+include::6.5@sdk:shared:partial$documents.adoc[tag=store-update]
+
+[NOTE]
+====
+If you wish to only modify certain parts of a document, you can use xref:subdocument-operations.adoc[sub-document] operations which operate on specific subsets of documents:
+
+[source,python]
+----
+collection.mutate_in("customer123", [SD.upsert("fax", "311-555-0151")])
+----
+
+or xref:6.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
+
+[source,sql]
+----
+update `default` SET sale_price = msrp * 0.75 WHERE msrp < 19.95;
+----
+====
+
+include::6.5@sdk:shared:partial$documents.adoc[tag=get_generic]
+
+[source,sql]
+----
+SELECT * FROM default USE KEYS ["docid"];
+----
+
+or
+
+[source,sql]
+----
+SELECT * FROM default WHERE META(default).id = "docid";
+----
+
+You can also retrieve _parts_ of documents using xref:subdocument-operations.adoc[sub-document operations], by specifying one or more sections of the document to be retrieved
+
+[source,python]
+----
+name, email = cb.retrieve_in('user:kingarthur', 'contact.name', 'contact.email')
+----
+
+include::6.5@sdk:shared:partial$documents.adoc[tag=expiration]
+
+
+////
+include::6.5@sdk:shared:partial$documents.adoc[tag=]
+
+
+include::6.5@sdk:shared:partial$documents.adoc[tag=]
+
+include::6.5@sdk:shared:partial$documents.adoc[tag=]
+
+include::6.5@sdk:shared:partial$documents.adoc[tag=]
+
+include::6.5@sdk:shared:partial$documents.adoc[tag=]
+
+include::6.5@sdk:shared:partial$documents.adoc[tag=]
+
+include::6.5@sdk:shared:partial$documents.adoc[tag=]
 ////
