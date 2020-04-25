@@ -1,7 +1,8 @@
 = Document 
 :nav-title: Documents & Doc Ops
 :page-topic-type: concept
-:page-aliases: ROOT:core-operations,ROOT:documents,ROOT:documents-basics,ROOT:documents-atomic
+//:page-aliases: ROOT:core-operations
+:page-aliases: ROOT:documents,ROOT:documents-basics,ROOT:documents-atomic
 
 [abstract]
 Couchbase supports CRUD operations, various data structures, and binary documents.
