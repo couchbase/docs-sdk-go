@@ -278,6 +278,9 @@ NOTE: Parameterized queries are considered the same query for caching and planni
 
 For more information on how to optimize queries using prepared statements, see xref:6.0@server:n1ql:n1ql-language-reference/prepare.adoc[PREPARE] statement in [.cite]_N1QL language reference_.
 
+CAUTION: *When running an application using Prepared Statements through the Go SDK* -- if you plan to upgrade Couchbase Server from 6.0.x or earlier to 6.5.0 or later, and are running a version of the Go SDK prior to xref:sdk-release-notes.adoc#version-1-6-6-17-march-2020[1.6.6], you will need to xref:6.5@server:install:upgrade-strategy-for-features.adoc#prepared-statements[restart the app or otherwise work around] a change in the Server's behaviour.
+
+
 == Indexes
 
 The Couchbase query service makes use of _indexes_ in order to do its work.
