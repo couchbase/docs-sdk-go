@@ -3,7 +3,43 @@
 :page-topic-type: howto
 
 [abstract]
-In today's distributed and virtual environments, users will often not have full administrative control over their whole network. 
+In today's distributed and virtual environments, users will often not have full administrative control over their whole network.
 Health Check introduces _Ping_ to check nodes are still healthy, and to force idle connections to be kept alive in environments with eager shutdowns of unused resources.
 _Diagnostics_ requests a report from a node, giving instant health check information.
 
+
+Diagnosing problems in distributed environments is far from easy, so Couchbase provides a _Health Check API_ with `Ping()` for active monitoring  and `Diagnostics()` for a look at what the client believes is the current state of the cluster.
+More extensive discussion of the uses of Health Check can be found in the xref:concept-docs/health-check.adoc[Health Check Concept Guide].
+
+
+== Ping
+
+At its simplest, `ping` provides information about the current state of the connections in the Couchbase Cluster, by actively polling:
+`Ping` is available at the `Cluster` and `Bucket` object levels.
+Below we use it at the `Bucket` level:
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/healthcheck.go[tag=ping]
+----
+
+<.> ReportID is optional and assigns a name to this report, if empty then a uuid will be assigned.
+<.> ServiceTypes are which services to ping against.
+<.> The report can be marshalled down into JSON in a human friendly format.
+
+== Diagnostics
+
+`Diagnostics` returns a list of the nodes that the SDK currently has (or had) a connection to, and the current status of the connection.
+However this call _does not_ actively poll the nodes, reporting instead the state the last time it tried to access each node.
+If you want the _current_ status, then use xref:#Ping[Ping].
+
+As the Go SDK does not hold long lived HTTP connections the `Diagnostics` operation will only return information about connections to the KeyValue service.
+
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/healthcheck.go[tag=diagnostics]
+----
+
+<.> ReportID is optional and assigns a name to this report, if empty then a uuid will be assigned.
+<.> The report can be marshalled down into JSON in a human friendly format.
