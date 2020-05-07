@@ -53,7 +53,14 @@ If you installed the travel sample data bucket, replace _bucket-name_ with _trav
 The 2.0 SDK is ready for the introduction of xref:#[Collections] in an upcoming release of the Couchbase Data Platform.
 Couchbase Server 6.5 brings a limited xref:6.5@server:developer-preview:preview-mode.adoc[Developer Preview] of Collections, 
 allowing Documents to be grouped by purpose or theme, according to a specified _Collection_. 
-Here we've used the `DefaultCollection`, which provides the same functionality as bucket-level operations did in previous versions of Couchbase Server.
+
+[source,golang,indent=0]
+----
+include::example$startusing.go[tag=collection]
+----
+
+The commented-out code shows how you would use a named collection and scope.
+However, in this case we've used the `DefaultCollection`, which provides the same functionality as bucket-level operations did in previous versions of Couchbase Server.
 
 [source,golang,indent=0]
 ----
