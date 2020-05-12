@@ -40,13 +40,18 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(upsertResult)
+	fmt.Println(upsertResult.Cas())
 
 	// Get Document
 	getResult, err := collection.Get("my-document", &gocb.GetOptions{})
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(getResult)
+
+	var myContent interface{}
+	if err := getResult.Content(&myContent); err != nil {
+		panic(err)
+	}
+	fmt.Println(myContent)
 	// #end::upsert-get[]
 }
