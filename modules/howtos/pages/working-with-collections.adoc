@@ -31,7 +31,7 @@ set up as described above, you will need `git` to fetch the travel sample applic
 
 [source,console]
 ----
-git clone git@github.com:couchbaselabs/try-cb-golang.git
+git clone https://github.com/couchbaselabs/try-cb-golang.git
 ----
 
 Change directory into your cloned repository, and check out the _Collections_ branch (in the case of the Go SDK, `6.5-collections`).
