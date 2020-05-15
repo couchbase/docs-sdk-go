@@ -1,5 +1,5 @@
 = Non-JSON Documents
-:page-aliases: concept-docs:nonjson
+:page-aliases: concept-docs:nonjson,howtos:transcoders-nonjson
 
 // tag::nonjson_intro[]
 [abstract]
