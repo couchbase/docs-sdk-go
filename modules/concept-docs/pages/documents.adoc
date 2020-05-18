@@ -55,7 +55,7 @@ If you wish to only modify certain parts of a document, you can use xref:subdocu
 collection.mutate_in("customer123", [SD.upsert("fax", "311-555-0151")])
 ----
 
-or xref:6.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
+or xref:6.5@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
 
 [source,sql]
 ----
