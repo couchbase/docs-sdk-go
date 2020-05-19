@@ -65,9 +65,9 @@ Fixed issue where `UpsertUser` sent an invalid request if a role was specified w
 https://issues.couchbase.com/browse/GOCBC-890[GOCBC-890]:
 Performing `Cluster` level operations (query, search, management APIs) before underlying cluster or bucket connections are ready causes errors to be returned.
 To mitigate this the `err := WaitUntilReady(time.Duration, WaitUntilReadyOptions)` operation can be used on either `Cluster` or `Bucket` which will either:
-
-    1) Return no error if connections are setup and ready for use
-    2) Return a `TimeoutError` if connections are not ready within the specified time limit.
++
+. Return no error if connections are setup and ready for use
+. Return a `TimeoutError` if connections are not ready within the specified time limit.
 
 
 == Version 2.1.0 (21 April 2020)
