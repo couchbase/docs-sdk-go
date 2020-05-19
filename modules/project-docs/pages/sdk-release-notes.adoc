@@ -14,7 +14,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,bash]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.1.0
+$ go get github.com/couchbase/gocb/v2@v2.1.1
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -31,7 +31,9 @@ The most current and up to date API Documentation is always available through th
 Version 2.1.1 is a maintenance release for the Go SDK 2.1.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.1?tab=doc[API Documentation]
+
 === New Features and Behavioral Changes
+
 * https://issues.couchbase.com/browse/GOCBC-778[GOCBC-778]:
 Updated legacy durability polling to use a backoff rather than a fixed interval.
 * https://issues.couchbase.com/browse/GOCBC-824[GOCBC-824]:
@@ -58,13 +60,14 @@ Fixed issue where `UpsertUser` sent an invalid request if a role was specified w
 
 == Known issues
 
-* https://issues.couchbase.com/browse/GOCBC-879[GOCBC-879]:
-* https://issues.couchbase.com/browse/GOCBC-890[GOCBC-890]:
+* https://issues.couchbase.com/browse/GOCBC-879[GOCBC-879], 
+https://issues.couchbase.com/browse/GOCBC-890[GOCBC-890]:
 Performing `Cluster` level operations (query, search, management APIs) before underlying cluster or bucket connections are ready causes errors to be returned.
 To mitigate this the `err := WaitUntilReady(time.Duration, WaitUntilReadyOptions)` operation can be used on either `Cluster` or `Bucket` which will either:
 
     1) Return no error if connections are setup and ready for use
     2) Return a `TimeoutError` if connections are not ready within the specified time limit.
+
 
 == Version 2.1.0 (21 April 2020)
 
