@@ -58,7 +58,7 @@ Fixed issue where an invalid cluster config would trigger a shutdown of the unde
 * https://issues.couchbase.com/browse/GOCBC-884[GOCBC-884]:
 Fixed issue where `UpsertUser` sent an invalid request if a role was specified with no bucket.
 
-== Known issues
+=== Known issues
 
 * https://issues.couchbase.com/browse/GOCBC-879[GOCBC-879], 
 https://issues.couchbase.com/browse/GOCBC-890[GOCBC-890]:
