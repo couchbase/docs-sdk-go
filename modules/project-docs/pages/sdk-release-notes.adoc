@@ -1,4 +1,4 @@
 = Couchbase Go SDK Release Notes
 :page-aliases: relnotes-go-sdk,ROOT:relnotes-go-sdk,ROOT:sdk-release-notes,ROOT:release-notes
 
-include::2.1@go-sdk:project-docs:page$sdk-release-notes.adoc[tag=latest]
+include::2.1@go-sdk:project-docs:sdk-release-notes.adoc[tag=latest]
