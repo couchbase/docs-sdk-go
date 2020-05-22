@@ -99,3 +99,8 @@ func AirportSearch(w http.ResponseWriter, req *http.Request) {
 
 The https://github.com/Danzibob/try-cb-golang/blob/6.5/main.go[main.go] file also contains the functions for handling users, registration, and N1QL queries -- which you may find instructive for putting together your first Couchbase applications in Go.
 
+
+
+== Data Model
+
+See the xref:ref:travel-app-data-model.adoc[Travel App Data Model] reference page for more information about the sample data set used.
