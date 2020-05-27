@@ -1,14 +1,43 @@
 = Client Settings
 :page-aliases: env-config,ref:client-settings
 
-You may adjust some settings on the [.api]`Cluster` and [.api]`Bucket` objects.
-Settings set on a [.api]`Cluster` object applies to any subsequently created [.api]`Bucket` objects (though not on ones created before the setting was modified).
+You may adjust some settings on the `Cluster` and `Bucket` objects.
+Settings set on a `Cluster` object applies to any subsequently created `Bucket` objects (though not on ones created before the setting was modified).
 
 Some settings are:
 
-* [.api]`Cluster.SetConnectTimeout` - sets the time the client will block on a single [.api]`Cluster.OpenBucket` call
-* [.api]`Cluster.SetServerConnectTimeout` - The connect timeout per-server, if multiple servers are passed, indicates how long the SDK should wait for each of them to connect.
-* [.api]`Cluster.SetN1qlTimeout`, [.api]`Bucket.SetN1qlTimeout` - sets the timeout for N1QL queries.
+* `Cluster.SetConnectTimeout` - sets the time the client will block on a single Cluster.OpenBucket` call
+* `Cluster.SetServerConnectTimeout` - The connect timeout per-server, if multiple servers are passed, indicates how long the SDK should wait for each of them to connect.
+* `Cluster.SetN1qlTimeout`, `Bucket.SetN1qlTimeout` - sets the timeout for N1QL queries.
 You can also modify the N1QL timeout on a per-query basis.
-* [.api]`Bucket.SetOperationTimeout` - sets the timeout for document (KV) operations such as [.api]`Bucket.Get` and [.api]`Bucket.Upsert`
-* [.api]`Bucket.SetDurabilityTimeout` - sets the timeout for durability operations, indicating how long the SDK should wait for durability criteria should be satisfied before failing the operation.
+* `Bucket.SetOperationTimeout` - sets the timeout for document (KV) operations such as `Bucket.Get` and `Bucket.Upsert`
+* `Bucket.SetDurabilityTimeout` - sets the timeout for durability operations, indicating how long the SDK should wait for durability criteria should be satisfied before failing the operation.
+
+
+== Connection String
+
+The majority of these options can also be specified through the connection string.
+
+* `cacertpath` (string) - Path to the CA certificate
+* `certpath` (string) - Path to your authentication certificate
+* `keypath` (string) - Path to your authentication key
+* `config_total_timeout` (int) - Maximum period to attempt to connect to cluster in ms.
+* `config_node_timeout` (int) - Maximum period to attempt to connect to a node in ms.
+* `http_redial_period` (int) - Maximum period to keep HTTP config connections open in ms.
+* `http_retry_delay` (int) - Period to wait between retrying nodes for HTTP config in ms`.
+* `config_poll_floor_interval` (int) - Minimum time to wait between fetching configs via CCCP in ms.
+* `config_poll_interval` (int) - Period to wait between CCCP config polling in ms.
+* `kv_pool_size` (int) - The number of connections to establish per node.
+* `max_queue_size` (int) - The maximum size of the operation queues per node.
+* `use_kverrmaps` (bool) - Whether to enable error maps from the server.
+* `use_enhanced_errors` (bool) - Whether to enable enhanced error information.
+* `fetch_mutation_tokens` (bool) - Whether to fetch mutation tokens for operations.
+* `compression` (bool) - Whether to enable network-wise compression of documents.
+* `compression_min_size` (int) - The minimal size of the document to consider compression.
+* `compression_min_ratio` (float64) - The minimal compress ratio (compressed / original) for the document to be sent compressed.
+* `server_duration` (bool) - Whether to enable fetching server operation durations.
+* `http_max_idle_conns` (int) - Maximum number of idle http connections in the pool.
+* `http_max_idle_conns_per_host` (int) - Maximum number of idle http connections in the pool per host.
+* `http_idle_conn_timeout` (int) - Maximum length of time for an idle connection to stay in the pool in ms.
+* `network` (string) - The network type to use.
+
