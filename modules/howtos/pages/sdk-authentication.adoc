@@ -25,7 +25,7 @@ include::6.5@sdk:shared:partial$auth-overview.adoc[tag=rbac]
 include::6.5@sdk:shared:partial$auth-overview.adoc[tag=cert-auth]
 
 
-== Authenticating a Scala Client by Certificate
+== Authenticating the Go Client by Certificate
 
 For sample procedures whereby certificates can be generated and deployed, see xref:6.5@server:manage:manage-security/manage-certificates.adoc[Manage Certificates].
 The rest of this document assumes that the processes there, or something similar, have been followed.
