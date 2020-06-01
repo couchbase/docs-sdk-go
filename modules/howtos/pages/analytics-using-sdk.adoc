@@ -97,6 +97,13 @@ include::devguide:example$go/analytics-simple-query.go[tag=results]
 // Move these to Error reference doc?
 Common errors are listed in our xref:ref:error-codes.adoc#analytics-errors[Errors Reference doc], with errors caused by resource unavailability (such as timeouts and _Operation cannot be performed during rebalance_ messages) leading to an xref:howtos:error-handling.adoc#retry[automatic retry] by the SDK.
 
+If you only expect a single result or only want to use the first result in a resultset then you can use `One` (note: this function will iterate any remaining rows in the resultset so can only be called once and should only be used on small resultsets):
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/analytics-query-one.go[tag=one]
+----
+
 ////
 Moving these to error reference doc
 ----
