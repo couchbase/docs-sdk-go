@@ -20,7 +20,6 @@ func main() {
 
 	bucket := cluster.Bucket("travel-sample")
 	collection := bucket.DefaultCollection()
-	binaryC := collection.Binary()
 
 	// Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change.
 
@@ -28,6 +27,7 @@ func main() {
 	// first creating a document if it doesn't exist.   If it exists, the
 	// same method will increment/decrement per the "delta" parameter
 	// #tag::increment[]
+	binaryC := collection.Binary()
 	key := "goDevguideExampleCounter"
 	curKeyValue, err := binaryC.Increment(key, &gocb.IncrementOptions{
 		Initial: 10,
