@@ -14,12 +14,19 @@ func main() {
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("10.112.194.101", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
 
-	collection := cluster.Bucket("travel-sample").DefaultCollection()
+	bucket := cluster.Bucket("default")
+	collection := bucket.DefaultCollection()
+
+	// We wait until the bucket is definitely connected and setup.
+	err = bucket.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
 
 	// #tag::insert[]
 	// Insert Document
@@ -37,7 +44,7 @@ func main() {
 
 	// #tag::insertoptions[]
 	// Insert Document with options
-	resultwithOptions, err := collection.Insert("document-key", &document, &gocb.InsertOptions{
+	resultwithOptions, err := collection.Insert("document-key-options", &document, &gocb.InsertOptions{
 		Timeout: 3 * time.Second,
 	})
 	if err != nil {
@@ -52,7 +59,8 @@ func main() {
 		Cas: 12345,
 	})
 	if err != nil {
-		panic(err)
+		// We expect this to error
+		fmt.Println(err)
 	}
 	// #end::replacecas[]
 	fmt.Println(replaceResultWithCas)

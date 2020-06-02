@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	gocb "github.com/couchbase/gocb/v2"
 )
@@ -13,6 +14,7 @@ func main() {
 			"password",
 		},
 	}
+	// #tag::beerview[]
 	cluster, err := gocb.Connect("10.112.194.101", opts)
 	if err != nil {
 		panic(err)
@@ -21,7 +23,12 @@ func main() {
 	// get a bucket reference
 	bucket := cluster.Bucket("travel-sample")
 
-	// #tag::beerview[]
+	// We wait until the bucket is definitely connected and setup.
+	err = bucket.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
+
 	viewResult, err := bucket.ViewQuery("beer", "by_name", &gocb.ViewOptions{
 		StartKey: "A",
 		Limit:    10,

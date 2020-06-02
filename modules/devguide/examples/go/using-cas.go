@@ -14,13 +14,24 @@ func main() {
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("10.112.193.101", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
 
 	bucket := cluster.Bucket("default")
 	collection := bucket.DefaultCollection()
+
+	// We wait until the bucket is definitely connected and setup.
+	err = bucket.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	_, err = collection.Upsert("userID", user{visitCount: 0}, nil)
+	if err != nil {
+		panic(err)
+	}
 
 	replaceWithCas(collection, "userID")
 	lockingAndCas(collection)

@@ -65,7 +65,7 @@ The paths `name`, `addresses.billing.country` and `purchases.complete[0]` are al
 
 == LookupIn and MutateIn
 
-The _LookupIn_ and _MutateIn_ operations the executors for subdocument specifications.
+The `LookupIn` and `MutateIn` operations the executors for subdocument specifications.
 These two functions are located on the `Collection` and both accept a list of "Specs" which describe what work needs to be done.
 Each different type of operation has a corresponding "spec", for example `GetSpec` or `UpsertSpec`.
 Other than specs which are unique to subdoc the naming should be very similar to corresponding KV operations with "Spec" added on the end.
@@ -75,8 +75,24 @@ These specs can be combined to fetch or mutate multiple fields in a document, mo
 == Retrieving
 
 The _LookupIn_ operations query the document for certain path(s); these path(s) are then returned.
-You have a choice of actually retrieving the document path using the _Get_ Sub-Document operation, or simply querying the existence of the path using the _Exists_ Sub-Document operation.
+You have a choice of actually retrieving the document path using the `GetSpec` Sub-Document specification, or simply querying the existence of the path using the `ExistsSpec` Sub-Document specification.
 The latter saves even more bandwidth by not retrieving the contents of the path if it is not needed.
+The `LookupInResult` contains two functions for inspecting the results:
+
+    * `err := result.ContentAt(idx, &valuePtr)` which will either assign the value at the index specified into the value pointer or it will return an error (such as if the path does not exist)
+    * `exists := result.Exists(idx)` which will return whether or not the path at the index specified exists.
+
+|===
+| Spec | Function | Path exists | Result
+| `GetSpec` | `ContentAt(idx, &valPtr)` | Yes | Value assigned
+| `GetSpec` | `ContentAt(idx, &valPtr)` | No | Error returned
+| `GetSpec` | `Exists(idx)` | Yes | true
+| `GetSpec` | `Exists(idx)` | No | false
+| `ExistsSpec` | `ContentAt(idx, &valPtr)` | Yes | Value assigned
+| `ExistsSpec` | `ContentAt(idx, &valPtr)` | No | Error returned
+| `ExistsSpec` | `Exists(idx)` | Yes | true
+| `ExistsSpec` | `Exists(idx)` | No | false
+|===
 
 .Retrieve Sub-Document value
 [source,golang,indent=0]
@@ -84,15 +100,15 @@ The latter saves even more bandwidth by not retrieving the contents of the path 
 include::devguide:example$go/subdoc-lookupin.go[tag=lookupInGet]
 ----
 
+NOTE: The value pointer provided to the `ContentAt` function must match the type at the provided index.
+
 .Check existence of Sub-Document path
 [source,golang,indent=0]
 ----
 include::devguide:example$go/subdoc-lookupin.go[tag=lookupInExists]
 ----
 
-NOTE: LookupInResult has an `Exists` method, but this should not be confused with the exists __operation__.  The `Exists` method
-is used to check if anything was returned by the server for a given operation.  The result of the exists operation should
-be checked with `ContentAt(X, &boolVariable)`, as in the example.
+NOTE: Using `ExistsSpec` with `ContentAt` will return an error if the path does not exist.
 
 Multiple operations can be combined as well:
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	gocb "github.com/couchbase/gocb/v2"
 )
@@ -22,6 +23,12 @@ func main() {
 	// #tag::bucket[]
 	// get a bucket reference
 	bucket := cluster.Bucket("bucket-name")
+
+	// We wait until the bucket is definitely connected and setup.
+	err = bucket.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
 	// #end::bucket[]
 
 	// #tag::collection[]

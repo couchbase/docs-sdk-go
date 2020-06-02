@@ -21,7 +21,7 @@ This logger should only be used when trying to diagnose an issue.
 [source,go]
 ----
 import (
-        "github.com/couchbase/gocb"
+        "github.com/couchbase/gocb/v2"
 )
 
 func main() {

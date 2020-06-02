@@ -20,7 +20,7 @@ func main() {
 		},
 	}
 	// Connect to the cluster using certificates and node key, note: couchbases
-	cluster, err := gocb.Connect("couchbases://10.112.193.101", opts)
+	cluster, err := gocb.Connect("couchbases://localhost", opts)
 	if err != nil {
 		panic(err)
 	}

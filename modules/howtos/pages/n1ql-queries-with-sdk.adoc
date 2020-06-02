@@ -113,7 +113,7 @@ For example, here is how you can print the `executionTime` of a query:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/n1ql-query-simple.go[tag=metrics]
+include::devguide:example$go/n1ql-query-metrics.go[tag=metrics]
 ----
 
 == Query Options

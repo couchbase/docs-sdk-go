@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/couchbase/gocb/v2"
 )
@@ -13,13 +14,19 @@ func main() {
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("10.112.194.101", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("travel-sample")
+	bucket := cluster.Bucket("default")
 	collection := bucket.DefaultCollection()
+
+	// We wait until the bucket is definitely connected and setup.
+	err = bucket.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
 
 	// Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change.
 

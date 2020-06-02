@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/couchbase/gocb/v2"
 )
@@ -14,7 +15,7 @@ func main() {
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("10.112.193.101", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
@@ -22,6 +23,12 @@ func main() {
 	// Open Bucket and collection
 	bucket := cluster.Bucket("default")
 	collection := bucket.DefaultCollection()
+
+	// We wait until the bucket is definitely connected and setup.
+	err = bucket.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
 
 	// Create a document and assign a "Persist To" value of 1 node.
 	// Should Always Succeed, even on single node cluster.

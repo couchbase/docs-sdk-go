@@ -14,12 +14,19 @@ func main() {
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("10.112.194.101", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
 
-	collection := cluster.Bucket("travel-sample").DefaultCollection()
+	bucket := cluster.Bucket("default")
+	collection := bucket.DefaultCollection()
+
+	// We wait until the bucket is definitely connected and setup.
+	err = bucket.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
 
 	type myDoc struct {
 		Foo string `json:"foo"`
@@ -31,7 +38,7 @@ func main() {
 	// #tag::expiry[]
 	// Upsert with Expiry
 	expiryResult, err := collection.Upsert(key, &document, &gocb.UpsertOptions{
-		Timeout: 25 * time.Millisecond,
+		Timeout: 100 * time.Millisecond,
 		Expiry:  60 * time.Second,
 	})
 	// #end::expiry[]
