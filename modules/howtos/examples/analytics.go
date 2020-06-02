@@ -8,18 +8,28 @@ import (
 )
 
 func main() {
+	// #tag::query[]
 	opts := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
 			"Administrator",
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("10.112.194.101", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
 
-	// #tag::query[]
+	// For Server versions 6.5 or later you do not need to open a bucket here
+	b := cluster.Bucket("travel-sample")
+
+	// We wait until the bucket is definitely connected and setup.
+	// For Server versions 6.5 or later if we hadn't opened a bucket then we could use cluster.WaitUntilReady here.
+	err = b.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
+
 	results, err := cluster.AnalyticsQuery("SELECT \"hello\" as greeting;", nil)
 	if err != nil {
 		panic(err)

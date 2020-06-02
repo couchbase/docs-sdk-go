@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/couchbase/gocb/v2"
 )
@@ -13,7 +14,17 @@ func main() {
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("10.112.194.101", opts)
+	cluster, err := gocb.Connect("localhost", opts)
+	if err != nil {
+		panic(err)
+	}
+
+	// For Server versions 6.5 or later you do not need to open a bucket here
+	b := cluster.Bucket("travel-sample")
+
+	// We wait until the bucket is definitely connected and setup.
+	// For Server versions 6.5 or later if we hadn't opened a bucket then we could use cluster.WaitUntilReady here.
+	err = b.WaitUntilReady(5*time.Second, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -43,13 +54,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
-	metadata, err := rows.MetaData()
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Printf("Execution Time: %d\n", metadata.Metrics.ExecutionTime)
 
 	if err := cluster.Close(nil); err != nil {
 		panic(err)

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	gocb "github.com/couchbase/gocb/v2"
 )
@@ -13,14 +14,19 @@ func main() {
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("localhost", opts)
+	cluster, err := gocb.Connect("172.23.111.3", opts)
 	if err != nil {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("bucket-name")
-
+	bucket := cluster.Bucket("default")
 	collection := bucket.DefaultCollection()
+
+	// We wait until the bucket is definitely connected and setup.
+	err = bucket.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
 
 	// #tag::concurrent[]
 	mops := []gocb.MutateInSpec{
@@ -39,8 +45,13 @@ func main() {
 		panic(err)
 	}
 	// #end::concurrent[]
-	fmt.Println(firstConcurrentResult)
-	fmt.Println(secondConcurrentResult)
+	fmt.Println(firstConcurrentResult.Cas())
+	fmt.Println(secondConcurrentResult.Cas())
+
+	_, err = collection.Upsert("player432", map[string]int{"gold": 1000}, &gocb.UpsertOptions{})
+	if err != nil {
+		panic(err)
+	}
 
 	// #tag::cas[]
 	getRes, err := collection.Get("player432", &gocb.GetOptions{})

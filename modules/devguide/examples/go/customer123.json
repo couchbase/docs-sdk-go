@@ -1,0 +1,24 @@
+{
+  "name": "Douglas Reynholm",
+  "email": "douglas@reynholmindustries.com",
+  "addresses": {
+    "billing": {
+      "line1": "123 Any Street",
+      "line2": "Anytown",
+      "country": "United Kingdom"
+    },
+    "delivery": {
+      "line1": "123 Any Street",
+      "line2": "Anytown",
+      "country": "United Kingdom"
+    }
+  },
+  "purchases": {
+    "complete": [
+      339, 976, 442, 666
+    ],
+    "abandoned": [
+      157, 42, 999
+    ]
+  }
+}

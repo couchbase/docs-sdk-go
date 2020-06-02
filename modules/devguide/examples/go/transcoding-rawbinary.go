@@ -16,7 +16,7 @@ func main() {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("bucket-name")
+	bucket := cluster.Bucket("default")
 
 	collection := bucket.DefaultCollection()
 

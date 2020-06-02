@@ -20,8 +20,13 @@ func main() {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("bucket-name")
+	bucket := cluster.Bucket("default")
 	collection := bucket.DefaultCollection()
+
+	err = bucket.WaitUntilReady(2*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
 
 	errorsAs(collection)
 	errorsIs(collection)
@@ -203,7 +208,7 @@ func realWorldErrHandling(collection *gocb.Collection) {
 
 func queryError(cluster *gocb.Cluster) {
 	// #tag::query[]
-	_, err := cluster.Query("select * from `mybucket`", nil)
+	_, err := cluster.Query("select * from `someotherbucket`", nil)
 	if err != nil {
 		var queryErr *gocb.QueryError
 		if errors.As(err, &queryErr) {

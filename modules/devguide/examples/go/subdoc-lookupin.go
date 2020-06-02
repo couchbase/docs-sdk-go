@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"time"
 
 	"github.com/couchbase/gocb/v2"
@@ -14,12 +16,35 @@ func main() {
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("10.112.194.101", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
 
-	collection := cluster.Bucket("travel-sample").DefaultCollection()
+	bucket := cluster.Bucket("default")
+	collection := bucket.DefaultCollection()
+
+	// We wait until the bucket is definitely connected and setup.
+	err = bucket.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	var customer123 interface{}
+	b, err := ioutil.ReadFile("customer123.json")
+	if err != nil {
+		panic(err)
+	}
+
+	err = json.Unmarshal(b, &customer123)
+	if err != nil {
+		panic(err)
+	}
+
+	_, err = collection.Upsert("customer123", customer123, nil)
+	if err != nil {
+		panic(err)
+	}
 
 	// Get
 	// #tag::lookupInGet[]
@@ -49,11 +74,7 @@ func main() {
 		panic(err)
 	}
 
-	var exists bool
-	err = existsResult.ContentAt(0, &exists)
-	if err != nil {
-		panic(err)
-	}
+	exists := existsResult.Exists(0)
 
 	fmt.Printf("Path exists? %t\n", exists) // Path exists? false
 	// #end::lookupInExists[]
@@ -76,11 +97,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	var multiExists bool
-	err = multiLookupResult.ContentAt(1, &multiExists)
-	if err != nil {
-		panic(err)
-	}
+	multiExists := multiLookupResult.Exists(1)
 
 	fmt.Println(multiCountry)                    // United Kingdom
 	fmt.Printf("Path exists? %t\n", multiExists) // Path exists? false

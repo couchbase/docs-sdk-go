@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/couchbase/gocb/v2"
 )
 
@@ -13,12 +15,23 @@ func main() {
 	}
 
 	// #tag::creatingbucketmgr[]
-	cluster, err := gocb.Connect("10.112.193.101", opts)
+	cluster, err := gocb.Connect("localhost", opts)
+	if err != nil {
+		panic(err)
+	}
+
+	// For Server versions 6.5 or later you do not need to open a bucket here
+	b := cluster.Bucket("travel-sample")
+
+	// We wait until the bucket is definitely connected and setup.
+	// For Server versions 6.5 or later if we hadn't opened a bucket then we could use cluster.WaitUntilReady here.
+	err = b.WaitUntilReady(5*time.Second, nil)
 	if err != nil {
 		panic(err)
 	}
 
 	bucketMgr := cluster.Buckets()
+
 	// #end::creatingbucketmgr[]
 
 	createBucket(bucketMgr)
@@ -34,7 +47,7 @@ func createBucket(bucketMgr *gocb.BucketManager) {
 			Name:                 "hello",
 			FlushEnabled:         false,
 			ReplicaIndexDisabled: true,
-			RAMQuotaMB:           1024,
+			RAMQuotaMB:           200,
 			NumReplicas:          1,
 			BucketType:           gocb.CouchbaseBucketType,
 		},
@@ -48,7 +61,7 @@ func createBucket(bucketMgr *gocb.BucketManager) {
 
 func updateBucket(bucketMgr *gocb.BucketManager) {
 	// #tag::updateBucket[]
-	settings, err := bucketMgr.GetBucket("test", nil)
+	settings, err := bucketMgr.GetBucket("hello", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -63,7 +76,7 @@ func updateBucket(bucketMgr *gocb.BucketManager) {
 
 func removeBucket(bucketMgr *gocb.BucketManager) {
 	// #tag::removeBucket[]
-	err := bucketMgr.DropBucket("test", nil)
+	err := bucketMgr.DropBucket("hello", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -72,7 +85,7 @@ func removeBucket(bucketMgr *gocb.BucketManager) {
 
 func flushBucket(bucketMgr *gocb.BucketManager) {
 	// #tag::flushBucket[]
-	err := bucketMgr.FlushBucket("test", nil)
+	err := bucketMgr.FlushBucket("hello", nil)
 	if err != nil {
 		panic(err)
 	}

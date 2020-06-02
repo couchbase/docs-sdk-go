@@ -21,13 +21,19 @@ func main() {
 			"password",
 		},
 	}
-	cluster, err := gocb.Connect("10.112.193.101", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
 
 	bucket := cluster.Bucket("default")
 	collection := bucket.DefaultCollection()
+
+	// We wait until the bucket is connected and setup.
+	err = bucket.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
 	// #end::connect[]
 
 	// #tag::workers[]
