@@ -67,7 +67,7 @@ Once the SDK writes the logs with the tags to a file, you can then use the xref:
 
 * You may wish to read more on Log Redaction xref:6.5@server:manage:manage-logging/manage-logging.adoc#understanding_redaction[in the Server docs].
 
-== Using your own logger
+== Using your own Logger
 
 Sometimes you want to use your own logger with the SDK.
 You might want your logging to use a popular logging framework such as logrus.
