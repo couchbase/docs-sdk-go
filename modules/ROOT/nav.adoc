@@ -61,6 +61,7 @@
 .Reference
 * https://pkg.go.dev/github.com/couchbase/gocb/v2[Go API Reference]
 * xref:ref:client-settings.adoc[Client Settings]
+* xref:ref:travel-app-data-model.adoc[Travel Sample Data Model]
 
 .Project Docs
 * xref:project-docs:sdk-release-notes.adoc[Release Notes]
