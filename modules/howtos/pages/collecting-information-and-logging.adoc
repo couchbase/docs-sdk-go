@@ -66,3 +66,27 @@ Note that you need to run this command before any of the SDK code is initialized
 Once the SDK writes the logs with the tags to a file, you can then use the xref:6.5@server:cli:cbcli/cblogredaction.adoc[`cblogredaction` tool] to obfuscate the log.
 
 * You may wish to read more on Log Redaction xref:6.5@server:manage:manage-logging/manage-logging.adoc#understanding_redaction[in the Server docs].
+
+== Using your own logger
+
+Sometimes you want to use your own logger with the SDK.
+You might want your logging to use a popular logging framework such as logrus.
+In the following examples we show to use the SDK with a logrus logger:
+
+First we need to create our own logger that wraps the logrus logger.
+The logrus `Log`/`Logf` functions don't quite match the gocb logging interface and the log levels are slightly different.
+This means that we need to do a bit of marshalling to get the data into a set of parameters that logrus can use.
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/custom-logging.go[tag=loggerwrapper]
+----
+
+Next we need to create a logrus logger instance, wrap it in our own logger and then pass it to gocb:
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/custom-logging.go[tag=creation]
+----
+
+Now all of the gocb logging output will go through our logger and be outputted to stdout (e.g. the terminal) in JSON.
