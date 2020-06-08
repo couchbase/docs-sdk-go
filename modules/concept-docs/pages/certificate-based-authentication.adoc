@@ -1,12 +1,1 @@
-= Certificate-Based Authentication
-:nav-title: Cert Auth
-:page-topic-type: concept
-:page-aliases: 
-
-[abstract]
-Certificates-based authentication is available from Couchbase Server 5.1 onwards.
-The necessary information can be found in our xref:6.5@server:learn:security/certificates.adoc[Server docs].
-
-include::6.5@sdk:shared:partial$suth-overview.adoc[tag=cert-auth]
-
-// See also our xref:howtos:sdk-authentication.adoc[howto doc] on cert-auth with the Go SDK.
+include::6.5@sdk:pages:partial$certificates.adoc[]
