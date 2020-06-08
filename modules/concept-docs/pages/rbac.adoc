@@ -1,9 +1,1 @@
-= Role-Based Access Control (RBAC)
-:nav-title: RBAC
-:page-topic-type: concept
-:page-aliases: 
-
-[abstract]
-Role-Based Access Control
-
-
+include::6.5@sdk:pages:partial$rbac.adoc[]
