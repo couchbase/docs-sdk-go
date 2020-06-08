@@ -71,7 +71,7 @@ If you are working at the _Cluster_ level, then add to the `cluster()` in the xr
 ----
 include::devguide:example$go/connecting.go[tag=waituntilready,indent=0]
 ----
-If you are working at the _Bucket_ level, then the https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Bucket.WaitUntilReady-[Bucket-level `WaitUntilReady`] does the same as the Cluster-level version.
+If you are working at the _Bucket_ level, then the https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Bucket.WaitUntilReady[Bucket-level `WaitUntilReady`] does the same as the Cluster-level version.
 [source,golang]
 ----
 include::devguide:example$go/connecting.go[tag=waituntilreadybucket,indent=0]
