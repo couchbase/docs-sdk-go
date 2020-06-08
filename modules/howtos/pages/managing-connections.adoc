@@ -61,6 +61,25 @@ The full list of recognized parameters is documented in the client settings refe
 A connection string may optionally be prefixed by either `"couchbase://"` or `"couchbases://"`.  This can be used to control whether the SDK connects
 using encrypted connections or unencrypted connections.
 
+
+== Waiting for Bootstrap Completion
+Depending on the environment and network latency, bootstrapping the SDK fully might take a little longer than the default key-value timeout of 2.5 seconds.
+This means that whilst bootstrap is occurring any operations that you make might timeout.
+To prevent those early timeouts from happening, you can use the `WaitUntilReady` method which will return a timeout error if bootstrap isn't completed in the specified time.
+If you are working at the _Cluster_ level, then add to the `cluster()` in the xref:#connecting-to-a-cluster[earlier example]:
+[source,golang]
+----
+include::devguide:example$go/connecting.go[tag=waituntilready,indent=0]
+----
+If you are working at the _Bucket_ level, then the https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Bucket.WaitUntilReady-[Bucket-level `WaitUntilReady`] does the same as the Cluster-level version.
+[source,golang]
+----
+include::devguide:example$go/connecting.go[tag=waituntilreadybucket,indent=0]
+----
+// Other timeout issues may occur when using the SDK located geographically separately from the Couchbase Server cluster -- this is xref:project-docs:compatibility#[not recommended].
+// See the xref:#working-in-the-cloud[Cloud section] below for some suggestions of settings adjustments.
+
+
 [#connection-lifecycle]
 == Connection Lifecycle
 
