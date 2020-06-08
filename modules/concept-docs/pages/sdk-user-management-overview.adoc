@@ -1,8 +1,1 @@
-= User Management
-:nav-title: User Management
-:page-topic-type: concept
-:page-aliases: 
-
-[abstract]
-Users, permissions, authentication.
-
+include::6.5@sdk:pages:partial$user-management.adoc[]
