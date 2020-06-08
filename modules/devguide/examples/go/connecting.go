@@ -2,6 +2,7 @@ package main
 
 import (
 	"crypto/x509"
+	"time"
 
 	gocb "github.com/couchbase/gocb/v2"
 )
@@ -91,10 +92,53 @@ func dnssrv() {
 	cluster.Close(nil)
 }
 
+func waitUntilReady() {
+	// #tag::waituntilready[]
+	opts := gocb.ClusterOptions{
+		Username: "Administrator",
+		Password: "password",
+	}
+	cluster, err := gocb.Connect("couchbase://10.112.193.101", opts)
+	if err != nil {
+		panic(err)
+	}
+
+	err = cluster.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
+	// #end::waituntilready[]
+
+	cluster.Close(nil)
+}
+
+func waitUntilReadyBucket() {
+	// #tag::waituntilreadybucket[]
+	opts := gocb.ClusterOptions{
+		Username: "Administrator",
+		Password: "password",
+	}
+	cluster, err := gocb.Connect("couchbase://10.112.193.101", opts)
+	if err != nil {
+		panic(err)
+	}
+
+	bucket := cluster.Bucket("default")
+
+	err = bucket.WaitUntilReady(5*time.Second, nil)
+	if err != nil {
+		panic(err)
+	}
+	// #end::waituntilreadybucket[]
+
+	cluster.Close(nil)
+}
+
 func main() {
 	simpleconnect()
 	multinodeconnect()
 	customports()
 	tlsconnect()
 	dnssrv()
+	waitUntilReady()
 }
