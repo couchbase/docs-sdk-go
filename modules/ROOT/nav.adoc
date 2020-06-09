@@ -54,9 +54,9 @@
 ** xref:concept-docs:understanding-views.adoc[Map Reduce Views]
 ** xref:concept-docs:n1ql-query.adoc[Query]
 ** xref:concept-docs:full-text-search-overview.adoc[Search]
-// * xref:concept-docs:sdk-user-management-overview.adoc[User Management]
-// ** xref:concept-docs:certificate-based-authentication.adoc[Cert Auth]
-// ** xref:concept-docs:rbac.adoc[RBAC]
+* xref:concept-docs:sdk-user-management-overview.adoc[User Management]
+** xref:concept-docs:certificate-based-authentication.adoc[Cert Auth]
+** xref:concept-docs:rbac.adoc[RBAC]
 
 .Reference
 * https://pkg.go.dev/github.com/couchbase/gocb/v2[Go API Reference]
