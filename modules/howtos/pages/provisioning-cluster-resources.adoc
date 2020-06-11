@@ -25,7 +25,7 @@ NOTE: When using a Couchbase version earlier than 6.5, you must create a valid B
 
 == Creating and Removing Buckets
 
-The `ClusterManager` interface may be used to create and delete buckets from the Couchbase cluster.
+The `BucketManager` interface may be used to create and delete buckets from the Couchbase cluster.
 It is instantiated through the `Cluster.Buckets()` method.
 
 [source,golang,indent=0]
