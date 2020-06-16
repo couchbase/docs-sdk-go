@@ -1,7 +1,7 @@
-github.com/couchbase/gocb/v2 v2.1.1 h1:oVQH+iqLo0kVZtKPOs+Pjz2Ff21w7KWPRpCdNxUzybA=
-github.com/couchbase/gocb/v2 v2.1.1/go.mod h1:J7lYxuFJMAvbis8IeF2IHfcCJFt+pVgdSoefdUSPIz0=
-github.com/couchbase/gocbcore/v9 v9.0.1 h1:JLOB6IRfqyoCzo3ZlF03c1eE5GF34oUYY6XrYgseJ2I=
-github.com/couchbase/gocbcore/v9 v9.0.1/go.mod h1:jOSQeBSECyNvD7aS4lfuaw+pD5t6ciTOf8hrDP/4Nus=
+github.com/couchbase/gocb/v2 v2.1.2 h1:EJvci59RpfdvQtzEkOmKPSAgiJOPEtRfHrWJyBSeK9A=
+github.com/couchbase/gocb/v2 v2.1.2/go.mod h1:hDe+uYNmE4hH1De7xMFX0QDvR3lDG5xyZ8PLcBBHU3M=
+github.com/couchbase/gocbcore/v9 v9.0.2 h1:urpwJdJbUPMMTWs2rSiSz3fRNMMzde9P8Hk7zx+JIWA=
+github.com/couchbase/gocbcore/v9 v9.0.2/go.mod h1:Qhg3elTSq6Nhur6PcUnkBK+jwBwyO9+c1I0XsKAWgtc=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
@@ -24,6 +24,8 @@ github.com/sirupsen/logrus v1.6.0 h1:UBcNElsrwanuuMsnGSlYmtmgbb23qDR5dG+6X6Oo89I
 github.com/sirupsen/logrus v1.6.0/go.mod h1:7uNnSEd1DgxDLC74fIahvMZmmYsHGZGEOFrfsX/uA88=
 github.com/stretchr/objx v0.1.0 h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
+github.com/stretchr/objx v0.1.1 h1:2vfRuCMp5sSVIDSqO8oNnWJq7mPa6KVP3iPIwFBuy8A=
+github.com/stretchr/objx v0.1.1/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/stretchr/testify v1.5.1 h1:nOGnQDM7FYENwehXlg/kFVnos3rEvtKTjRvOWSzb6H4=
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
