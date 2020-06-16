@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,bash]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.1.1
+$ go get github.com/couchbase/gocb/v2@v2.1.2
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -26,6 +26,39 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.1.2 (16 June 2020)
+
+Version 2.1.2 is a maintenance release for the Go SDK 2.1.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.2?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-907[GOCBC-907]:
+Enhance search query errors to include the index name and error text from the server.
+* https://issues.couchbase.com/browse/GOCBC-913[GOCBC-913]:
+Ensure that only available services are used for Ping if no services specified.
+* https://issues.couchbase.com/browse/GOCBC-923[GOCBC-923]:
+Updated const declarations to add types to improve API reference.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-879[GOCBC-879],
+https://issues.couchbase.com/browse/GOCBC-890[GOCBC-890]:
+Fixed issue causing `Cluster` level operations to return errors when performed before underlying cluster or bucket connections are ready.
+These operations (query, search, analytics, views, management APIs) will now behave like key value operations - waiting for connections to be ready before they are sent.
+The https://docs.couchbase.com/go-sdk/2.1/howtos/managing-connections.html#waiting-for-bootstrap-completion[`WaitUntilReady`] call can still be used for verifying that connections are ready.
+* https://issues.couchbase.com/browse/GOCBC-891[GOCBC-891]:
+Fixed issue where the `Name` property of a `Role` was being sent as the incorrect json field name.
+* https://issues.couchbase.com/browse/GOCBC-897[GOCBC-897]:
+Fixed issue where operations with incredible short timeouts (timing out before operation sent) could cause a data race.
+* https://issues.couchbase.com/browse/GOCBC-900[GOCBC-900]:
+Fixed issue where `IgnoreIfExists` option was being ignored for query index management.
+* https://issues.couchbase.com/browse/GOCBC-906[GOCBC-906]:
+Fixed issue where enhanced durability could be incorrectly set as unsupported on early operations.
+* https://issues.couchbase.com/browse/GOCBC-914[GOCBC-914]:
+Fixed issue where operations using named collections could be sent with an incorrect collection ID in queued before the collection is known.
 
 == Version 2.1.1 (19 May 2020)
 
