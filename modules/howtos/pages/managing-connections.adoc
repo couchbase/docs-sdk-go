@@ -76,7 +76,7 @@ If you are working at the _Bucket_ level, then the https://pkg.go.dev/github.com
 ----
 include::devguide:example$go/connecting.go[tag=waituntilreadybucket,indent=0]
 ----
-// Other timeout issues may occur when using the SDK located geographically separately from the Couchbase Server cluster -- this is xref:project-docs:compatibility#[not recommended].
+Other timeout issues may occur when using the SDK located geographically separately from the Couchbase Server cluster -- this is xref:project-docs:compatibility#network-requirements[not recommended].
 // See the xref:#working-in-the-cloud[Cloud section] below for some suggestions of settings adjustments.
 
 
