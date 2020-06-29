@@ -60,6 +60,12 @@ Fixed issue where enhanced durability could be incorrectly set as unsupported on
 * https://issues.couchbase.com/browse/GOCBC-914[GOCBC-914]:
 Fixed issue where operations using named collections could be sent with an incorrect collection ID in queued before the collection is known.
 
+== Known issues
+* https://issues.couchbase.com/browse/GOCBC-941[GOCBC-941]:
+Performing `Cluster` level `WaitUntilReady` never completes within the timeout.
+This issue was introduced whilst fixing the behaviour for operations at the `Cluster` level when the `WaitUntilReady` call is not used.
+The workaround for this is to not use the `Cluster` level `WaitUntilReady` call, `Cluster` level operations will now be queued until the SDK has connected and setup anyway.
+
 == Version 2.1.1 (19 May 2020)
 
 Version 2.1.1 is a maintenance release for the Go SDK 2.1.0.
