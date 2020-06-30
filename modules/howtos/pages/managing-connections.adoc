@@ -192,3 +192,5 @@ include::devguide:example$go/connecting.go[tag=dnssrv,indent=0]
 If the DNS SRV records could not be loaded properly you'll get the exception logged and the given host name will be used as a A record lookup.
 
 Also, if you pass in more than one node, DNS SRV bootstrap will not be attempted.
+
+include::6.5@sdk:shared:partial$managing-connections.adoc[tag=cloud]
