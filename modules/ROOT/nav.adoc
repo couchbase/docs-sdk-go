@@ -25,9 +25,9 @@
 .Managing Couchbase
 * xref:howtos:managing-connections.adoc[Managing Connections]
 ** xref:howtos:sdk-authentication.adoc[Authentication]
+** xref:howtos:troubleshooting-cloud-connections.adoc[Troubleshooting Cloud Connections]
 * xref:howtos:provisioning-cluster-resources.adoc[Provisioning Cluster Resources]
 // * User Management
-// ** xref:howtos:sdk-authentication-overview.adoc[Authentication]
 
 .Errors & Diagnostics
 * xref:howtos:error-handling.adoc[Handling Errors]
@@ -61,6 +61,7 @@
 .Reference
 * https://pkg.go.dev/github.com/couchbase/gocb/v2[Go API Reference]
 * xref:ref:client-settings.adoc[Client Settings]
+// * xref:ref:error-codes.adoc[Error Messages]
 * xref:ref:travel-app-data-model.adoc[Travel Sample Data Model]
 
 .Project Docs
