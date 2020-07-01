@@ -1,7 +1,7 @@
-github.com/couchbase/gocb/v2 v2.1.2 h1:EJvci59RpfdvQtzEkOmKPSAgiJOPEtRfHrWJyBSeK9A=
-github.com/couchbase/gocb/v2 v2.1.2/go.mod h1:hDe+uYNmE4hH1De7xMFX0QDvR3lDG5xyZ8PLcBBHU3M=
-github.com/couchbase/gocbcore/v9 v9.0.2 h1:urpwJdJbUPMMTWs2rSiSz3fRNMMzde9P8Hk7zx+JIWA=
-github.com/couchbase/gocbcore/v9 v9.0.2/go.mod h1:Qhg3elTSq6Nhur6PcUnkBK+jwBwyO9+c1I0XsKAWgtc=
+github.com/couchbase/gocb/v2 v2.1.3 h1:55KAszQgo3GXGYwsHiRDJmIu4AMVnWeT1DIr0xPbfK4=
+github.com/couchbase/gocb/v2 v2.1.3/go.mod h1:T+rsVAV7M+Is/Gr835jG/5F594aJ5gfFt0aCE40m0t0=
+github.com/couchbase/gocbcore/v9 v9.0.3 h1:rhtmibe9DHPM98C2V7s8eg3gCFBto/jCQqMVTT8PfZU=
+github.com/couchbase/gocbcore/v9 v9.0.3/go.mod h1:jOSQeBSECyNvD7aS4lfuaw+pD5t6ciTOf8hrDP/4Nus=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
