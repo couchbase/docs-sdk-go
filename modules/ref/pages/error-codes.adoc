@@ -4,3 +4,29 @@
 
 [abstract]
 The standardized error codes returned by the Couchbase Go SDK.
+
+
+////
+== Analytics Errors
+////
+== Connecting to Cloud
+
+Although  the SDK and cliet application should be located in the same LAN-like environment (or cloud availability zone), and this is the only network configuration supported, we recognise that this set-up may not be possible during development.
+In particular, you may be developing against Couchbase Cloud from a laptop in a small or home office, where DNS-SRV may cause problems.
+
+In order for your application to connect to your cloud, Couchbase Cloud creates a special kind of DNS record, called a Service record, or DNS-SRV record. 
+DNS SRV records are widely supported and used frequently in systems like XMPP, and Kubernetes services.  
+Occasionally, some DNS providers can run into issues with large DNS SRV records. 
+This can manifest as a host not found issue. 
+The actual problem is (a typically older) DNS server that cannot handle large responses which converts the error to host not found. 
+This has frequently been observed when working from home with a service provider router that embeds a caching DNS Server.
+
+Below is a list of log messages that you may see if you hit DNS SRV issues. 
+These examples have been created in the circumstance that the SRV record is too long for the DNS provider to handle,
+and are included here so that they are findable by search, and you can then go to our xref:howtos:troubleshooting-cloud-connections.adoc#troubleshooting-host-not-found[cloud connection troubleshooting page].
+
+.no such host
+[source,terminal] 
+----
+Failed to connect. dial tcp: lookup 8676842d-4e8b-4c5b-a44f-e0886f8c0bc1.dp.cloud.couchbase.com: no such host
+----
