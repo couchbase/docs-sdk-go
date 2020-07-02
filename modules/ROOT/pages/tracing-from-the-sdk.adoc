@@ -36,7 +36,7 @@ cluster.Authenticate(gocb.PasswordAuthenticator{
 })
 
 cluster.SetTracer(&tracer)
-bucket, _ := cluster.OpenBucket(“travel-sample”, “”)
+bucket, _ := cluster.OpenBucket("travel-sample", "")
 
 // Loads some docs and write them back
 for i := 0; i < 5; i++ {
