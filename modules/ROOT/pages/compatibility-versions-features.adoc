@@ -63,6 +63,7 @@ To take advantage of all features offered by Couchbase Server, you need to know 
 The following matrix shows which versions of the Couchbase Go SDK support the major features of each version of Couchbase Server.
 
 .Couchbase Server and SDK Supported Version Matrix
+[.table-merge-cells] 
 [cols="<25,.^23,.^24,.^18,.^19"]
 |===
 | | Server 4.0, 4.1 | Server 4.5, 4.6 | Server 5.x | Server 6.0, 6.5
