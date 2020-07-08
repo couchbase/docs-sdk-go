@@ -124,19 +124,7 @@ err = mgr.WatchIndexes(bucketName, []string{"ix_name", "ix_email", "#primary"}, 
 
 == Index Consistency
 
-Because indexes are by design outside the data service, they are _eventually consistent_ with respect to changes to documents 
-and, depending on how you issue the query, may at times not contain the most up-to-date information.
-This may especially be the case when deployed in a write-heavy environment: changes may take some time to propagate over to the index nodes.
-
-The asynchronous updating nature of xref:6.5@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSIs)] means that they can be very quick to query and do not require the additional overhead of index recaclculations at the time documents are modified.
-N1QL queries are forwarded to the relevant indexes, and the queries are done based on indexed information, rather than the documents as they exist in the data service.
-
-With default query options, the query service will rely on the current index state: 
-the most up-to-date document versions are not retrieved, and only the indexed versions are queried.
-This provides the best performance.
-Only updates occurring with a small time frame may not yet have been indexed.
-For cases where consistency is more important than performance, the `scan_consistency` property of a query may be set to `REQUEST_PLUS`.
-ensuring that indexes are synchronized with the data service before querying.
+include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=index-consistency]
 
 The following options are available:
 
@@ -151,6 +139,7 @@ If index-maintenance is running behind, the query waits for it to catch up.
 
 For N1QL, the default consistency is `not_bounded`.
 ////
+
 Consider the following snippet:
 
 [source,golang]
