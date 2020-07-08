@@ -4,7 +4,7 @@
 :page-aliases: ROOT:n1ql-query,
 
 [abstract]
-Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
+Parallel data management for complex queries over many records, using a familiar SQL-like syntax.
 
 include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=intro]
 
