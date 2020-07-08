@@ -6,30 +6,15 @@
 [abstract]
 Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
 
-The N1QL Query Language provides a familiar, SQL-like experience for querying documents stored in Couchbase.
-You can xref:6.5@server:n1ql:n1ql-language-reference/index.adoc[read up on the language in our reference guide], 
-but you probably just want to xref:howtos:n1ql-queries-with-sdk.adoc[dive into a practical example].
-
-Below, we fill in some of the gaps between reference and rolling-up-your-sleeves practicality,
-with discussion of a few areas of the Query service where more background knowledge will help you to better program your application.
+include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=intro]
 
 
-== Prepared Statements for Query Optimization
+// Prepared Statements for Query Optimization
+include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=prepared]
 
-When a N1QL query string is sent to the server, the server will inspect the string and parse it, planning which indexes to query.
-Once this is done, it generates a _query plan_.
-The computation for the plan adds some additional processing time and overhead for the query.
-
-Often-used queries can be _prepared_ so that its _plan_ is generated only once.
-Subsequent queries using the same query string will use the pre-generated plan instead, saving on the overhead and processing of the plan each time.
-
-You can indicate to the SDK that a given query should be optimized in the above fashion.
-When an SDK sees that a query should be optimized, it will internally prepare the statement and store the plan in an internal cache.
-When issuing the query again, the SDK will check to see if a plan exists in its cache, and will send the plan to the server.
-
-To indicate that an SDK should optimize a query, the `Adhoc` parameter should be set to false.
-When a query is not ad hoc, the SDK will fetch the plan (if it does not already have it).
-Do not turn off the `Adhoc` flag for each query since only a finite number of query plans (currently 5000) can be stored in the SDK.
+NOTE: In Go SDK 2.1 and earlier, the `adhoc` parameter is `Adhoc`. 
+It is set to `false` by default -- set to `true` for a plan _not_ to be prepared, or a prepared plan _not_ to be reused.
+The 5000 limit to the client-side cache also does not apply. 
 
 [source,golang]
 ----
@@ -49,10 +34,6 @@ Do not turn off the `Adhoc` flag for each query since only a finite number of qu
 		panic(err)
 	}
 ----
-
-NOTE: Parameterized queries are considered the same query for caching and planning purposes, even if the supplied parameters are different.
-
-For more information on how to optimize queries using prepared statements, see xref:6.5@server:n1ql:n1ql-language-reference/prepare.adoc[PREPARE] statement in the N1QL language reference.
 
 
 == Indexes
