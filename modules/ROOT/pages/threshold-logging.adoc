@@ -8,7 +8,7 @@ include::6.0@sdk:shared:partial$tracing.adoc[tag=open_tracing]
 
 include::6.0@sdk:shared:partial$tracing.adoc[tag=threshold_configuration]
 
-[#tracing_dot_net]
+[#tracing_go]
 == Threshold Logging in Go
 
 Response Time Observability is implemented in the Go SDK from version 1.4 onwards.
