@@ -4,5 +4,7 @@
 == Contributing
 
 Couchbase welcomes community contributions to the Go SDK.
-The https://github.com/couchbase/couchbase-go-client[Go SDK source code^] is available on GitHub.
+The https://github.com/couchbase/gocbt[Go SDK source code^] is available on GitHub.
 Please see the https://github.com/couchbase/gocb/blob/master/README.md[README^] file for further information.
+
+include::6.5@sdk:shared:partial$contrib.adoc[tag=contrib]
