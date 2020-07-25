@@ -451,3 +451,6 @@ If you need to combine both JSON _and_ path-syntax literals you can do so by esc
 a quote or backslash) and then encapsulating it in backticks (`pass:c[`path`]`).
 
 NOTE: Currently, paths cannot exceed 1024 characters, and cannot be more than 32 levels deep.
+
+
+include::6.5@sdk:shared:partial$sdk-xattr-overview.adoc[tag=extended_attributes]
