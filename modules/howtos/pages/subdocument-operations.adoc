@@ -1,8 +1,8 @@
 = Sub-Document Operations with the Go SDK
 :navtitle: Sub-Doc Operations
 :page-topic-type: howto
-include::partial$attributes.adoc[]
 :lang: Go
+:page-aliases: ROOT:sdk-xattr-example.adoc
 
 [abstract]
 Sub-Document operations can be used to efficiently access and change parts of documents.
