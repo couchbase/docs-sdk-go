@@ -192,6 +192,6 @@ Working on just a specific path within a JSON document will reduce network bandw
 
 Another way of increasing network performance is to _pipeline_ operations with xref:concurrent-async-apis.adoc#bulk-operations-api[Bulk Operations API].
 
-As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:concept-docs:non-json.adoc[arbitary bytes, or binary format].
+As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:concept-docs:nonjson.adoc[arbitary bytes, or binary format].
 
 Our xref:n1ql-queries-with-sdk.adoc[Query Engine] enables retrieval of information using the SQL-like syntax of N1QL.
