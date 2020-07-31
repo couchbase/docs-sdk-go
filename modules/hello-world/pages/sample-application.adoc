@@ -18,15 +18,19 @@ set up as described above, you will need `git` to fetch the travel sample applic
 
 [source,console]
 ----
-git clone https://github.com/couchbaselabs/try-cb-golang.git
+$ git clone https://github.com/couchbaselabs/try-cb-golang.git
 ----
 
 Change directory into your cloned repository, and check out the `6.5` branch (this will most probably be enabled as the default branch).
 
 [source,console]
 ----
-cd try-cb-golang
-git checkout 6.5
+$ cd try-cb-golang
+----
+
+[source,console]
+----
+$ git checkout 6.5
 ----
 
 
@@ -39,7 +43,7 @@ And run with
 
 [source,console]
 ----
-go run main.go
+$ go run main.go
 ----
 
 After the build, with your Web browser of choice, head to port 8080 of the local machine -- http://localhost:8080[http://localhost:8080].
