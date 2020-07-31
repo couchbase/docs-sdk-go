@@ -56,7 +56,7 @@ By using the CAS value we know that if anyone else modified this document and up
 include::devguide:example$go/kv-crud.go[tag=update]
 ----
 
-Expiry sets an explicit time to live (TTL) for a document in seconds, for which you can also xref:sdk-xattr-example.adoc[see a more detailed example of TTL discovery] later in the docs.
+Expiry sets an explicit time to live (TTL) for a document in seconds.
 For a discussion of item (Document) _vs_ Bucket expiration, see the 
 xref:6.0@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
 
@@ -189,10 +189,9 @@ NOTE: Increment & Decrement are considered part of the 'binary' API and as such 
 == Additional Resources
 
 Working on just a specific path within a JSON document will reduce network bandwidth requirements - see the xref:subdocument-operations.adoc[Sub-Document] pages.
-For working with metadata on a document, reference our xref:sdk-xattr-example.adoc[Extended Attributes] pages.
 
-// Another way of increasing network performance is to _pipeline_ operations with xref:batching-operations.adoc[Batching Operations].
+Another way of increasing network performance is to _pipeline_ operations with xref:concurrent-async-apis.adoc#bulk-operations-api[Bulk Operations API].
 
-// As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:non-json.adoc[arbitary bytes, or binary format].
+As well as various xref:concept-docs:data-model.adoc[Formats] of JSON, Couchbase can work directly with xref:concept-docs:nonjson.adoc[arbitary bytes, or binary format].
 
 Our xref:n1ql-queries-with-sdk.adoc[Query Engine] enables retrieval of information using the SQL-like syntax of N1QL.
