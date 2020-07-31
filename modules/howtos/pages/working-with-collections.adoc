@@ -31,27 +31,27 @@ set up as described above, you will need `git` to fetch the travel sample applic
 
 [source,console]
 ----
-git clone https://github.com/couchbaselabs/try-cb-golang.git
+$ git clone https://github.com/couchbaselabs/try-cb-golang.git
 ----
 
 Change directory into your cloned repository, and check out the _Collections_ branch (in the case of the Go SDK, `6.5-collections`).
 
 [source,console]
 ----
-cd try-cb-golang
+$ cd try-cb-golang
 ----
 
 [source,console]
 ----
-git checkout 6.5-collections
+$ git checkout 6.5-collections
 ----
 
 * Before building the Collections-enabled version of the Travel Sample Application, you need to enable this DP feature (see warning above).
 +
-[source,bash]
+[source,console]
 .Enable Collections Developer Preview
 ----
-/opt/couchbase/bin/couchbase-cli enable-developer-preview --enable -c http://localhost:8091 -u Administrator -p password
+$ /opt/couchbase/bin/couchbase-cli enable-developer-preview --enable -c http://localhost:8091 -u Administrator -p password
 ----
 +
 [source,console]
@@ -66,7 +66,7 @@ There is a script to do this included with the collections branch of the Travel 
 [source,console]
 .Create Sample Collections
 ----
-sh create-collections.sh Administrator password 127.0.0.1
+$ sh create-collections.sh Administrator password 127.0.0.1
 ----
 
 Adjusting for any changes you have made to server URL, or admin password.
@@ -90,7 +90,7 @@ And run with
 
 [source,console]
 ----
-go run main.go
+$ go run main.go
 ----
 
 After the build, with your Web browser of choice, head to port 8080 of the local machine -- http://localhost:8080[http://localhost:8080].
