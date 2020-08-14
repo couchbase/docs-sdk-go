@@ -122,7 +122,7 @@ err = mgr.WatchIndexes(bucketName, []string{"ix_name", "ix_email", "#primary"}, 
 ----
 
 
-== Index Consistency
+// == Index Consistency
 
 include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=index-consistency]
 
