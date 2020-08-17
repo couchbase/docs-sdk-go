@@ -33,13 +33,13 @@ include::6.5@sdk:shared:partial$documents.adoc[tag=document]
 
 == Primitive Key-Value Operations
 
-[source,python]
+[source,golang,indent=0]
 ----
-upsert(docid, document)
-insert(docid, document)
-replace(docid, document)
-get(docid)
-remove(docid)
+Upsert(docid string, document interface{}, options *gocb.UpsertOptions) (*MutationResult, error)
+Insert(docid string, document interface{}, options *gocb.InsertOptions) (*MutationResult, error)
+Replace(docid string, document interface{}, options *gocb.ReplaceOptions) (*MutationResult, error)
+Get(docid string, options *gocb.GetOptions) (*GetResult, error)
+Remove(docid string, options *gocb.RemoveOptions) (*MutationResult, error)
 ----
 
 include::6.5@sdk:shared:partial$documents.adoc[tag=crud-overview]
@@ -50,9 +50,12 @@ include::6.5@sdk:shared:partial$documents.adoc[tag=store-update]
 ====
 If you wish to only modify certain parts of a document, you can use xref:subdocument-operations.adoc[sub-document] operations which operate on specific subsets of documents:
 
-[source,python]
+[source,golang,indent=0]
 ----
-collection.mutate_in("customer123", [SD.upsert("fax", "311-555-0151")])
+mops := []gocb.MutateInSpec{
+    gocb.UpsertSpec("fax", "311-555-0151", &gocb.UpsertSpecOptions{}),
+}
+result, err := collection.MutateIn("customer123", mops, &gocb.MutateInOptions{})
 ----
 
 or xref:6.5@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
@@ -79,9 +82,13 @@ SELECT * FROM default WHERE META(default).id = "docid";
 
 You can also retrieve _parts_ of documents using xref:subdocument-operations.adoc[sub-document operations], by specifying one or more sections of the document to be retrieved
 
-[source,python]
+[source,golang,indent=0]
 ----
-name, email = cb.retrieve_in('user:kingarthur', 'contact.name', 'contact.email')
+ops := []gocb.LookupInSpec{
+    gocb.GetSpec("contact.name", &gocb.GetSpecOptions{}),
+    gocb.GetSpec("contact.email", &gocb.GetSpecOptions{}),
+}
+result, err := collection.LookupIn("user:kingarthur", ops, &gocb.LookupInOptions{})
 ----
 
 include::6.5@sdk:shared:partial$documents.adoc[tag=expiration]
