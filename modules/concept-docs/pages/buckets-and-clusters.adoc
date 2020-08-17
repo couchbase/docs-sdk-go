@@ -8,22 +8,19 @@ The Couchbase Go SDK provides an API for managing a Couchbase cluster programmat
 
 include::6.5@sdk:shared:partial$clusters-buckets.adoc[tag=management]
 
-////
 Management operations in the Go SDK may be performed through several interfaces depending on the object:
+
 
 == Creating and Removing Buckets
 
-To create or delete a bucket, call the bucket manager with the `buckets()` call on the cluster:
+To create or delete a bucket, call the bucket manager with the `Buckets()` call on the cluster:
 
-[source,java]
+[source,golang]
 ----
-Cluster cluster = Cluster.connect("127.0.0.1", "user", "123456");
-BucketManager manager = cluster.buckets();
-manager.createBucket(bucketSettings);
+manager := cluster.Buckets()
+err = mgr.CreateBucket(createBucketSettings)
 ----
 
-// The `BucketSettings` can be created via a builder, [.api]`DefaultBucketSettings.builder()`.
-This class is also used to expose information about an existing bucket (`manager.getBucket(string)`) or to update an existing bucket (`manager.updateBucket(bucketSettings)`). 
+This class is also used to expose information about an existing bucket (`manager.GetBucket(string, *gocb.GetBucketOptions)`) or to update an existing bucket (`manager.UpdateBucket(gocb.BucketSettings, *gocb.UpdateBucketOptions)`).
 
 The default Collection & Default Scope will be used automatically.
-////
