@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.1.4
+$ go get github.com/couchbase/gocb/v2@v2.1.5
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -26,6 +26,31 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.1.5 (18 August 2020)
+
+Version 2.1.5 is a maintenance release for the Go SDK 2.1.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.5?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-926[GOCBC-926]:
+Added a new `Cluster` level option to set which authentication mechanisms to use.
+* https://issues.couchbase.com/browse/GOCBC-962[GOCBC-962]:
+Exposed the `ThresholdLogTracer` and corresponding options so that threshold logging can be configured.
+The threshold logger can then be set on the `Cluster` level options as `Tracer`.
+Note: The threshold logger is the default tracer used by the SDK.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-718[GOCBC-718]:
+Fixed issue where errors would be silently swallwed when performing JSON unmarshalling of search and view queries.
+Unmarshalling errors will now be surfaced by the `result.Err()` function after iterating results.
+* https://issues.couchbase.com/browse/GOCBC-950[GOCBC-950]:
+Fixed issue where the SDK was not performing HELLO with the JSON feature enabled, leading to some KV error message context being lost.
+* https://issues.couchbase.com/browse/GOCBC-968[GOCBC-968]:
+Fixed issue where n1ql indexes were being created using prepared statements.
 
 == Version 2.1.4 (21 July 2020)
 

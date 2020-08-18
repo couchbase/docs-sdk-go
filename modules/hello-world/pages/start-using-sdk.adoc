@@ -17,7 +17,7 @@ Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.1.4
+$ go get github.com/couchbase/gocb/v2@v2.1.5
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
