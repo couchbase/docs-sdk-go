@@ -250,6 +250,28 @@ if shouldUpdateVal(val):
 
 You can also use xref:subdocument-operations.adoc#ul_fp2_2yw_mv[sub-document counter operations] to increment numeric values _within_ a document containing other content.
 
+
+=== Use Cases
+
+The SDK provides a high-level abstraction over the simple `incr()`/`decr()` of Couchbase Server's memcached binary protocol. 
+This enables you to work with counters using `get()` and `upsert()` operations -- allowing, _inter alia_, the use of durability options with the operations.
+You will find several ways of working with counters https://pkg.go.dev/gopkg.in/couchbase/gocb.v1?tab=doc#Bucket.Counter[in the API docs].
+////
+The example below shows a counter being initialised, then being replaced using a `bucket.upsert()`:
+
+[source,java]
+----
+bucket.remove("countme");
+bucket.counter("countme", 1, 0); // init at 0, incr by 1 if exists
+System.out.println(bucket.counter("countme", 1).content()); // prints 1
+JsonLongDocument overrider = JsonLongDocument.create("countme", new Long(99));
+bucket.upsert(overrider);
+System.out.println("after increment: " + bucket.counter("countme", 1).content()); // prints 100
+----
+////
+
+
+
 [#devguide_datastructures]
 == Datastructures - List, Map, Set, Queue
 
