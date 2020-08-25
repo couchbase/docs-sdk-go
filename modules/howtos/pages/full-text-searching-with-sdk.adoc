@@ -1,4 +1,4 @@
-= Full Text Search (FTS) Using the .Go SDK with Couchbase Server
+= Full Text Search (FTS) Using the Go SDK with Couchbase Server
 :navtitle: Searching from the SDK
 :page-topic-type: howto
 
