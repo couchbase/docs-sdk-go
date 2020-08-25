@@ -22,7 +22,7 @@ After familiarizing yourself with how to create and query a search index in the 
 Search queries are executed at Cluster level (not bucket or collection).
 As of Couchbase Server 6.5+ they do also not require a bucket to be opened first.
 In older versions of Couchbase Server, even though executed at Cluster level, a bucket must be opened before performing queries.
-Search queries, facets, and sorting have a slightly different import to other components of `gocb`, you can import them using `import "github.com/couchbase/gocb/v2/search"`.
+Search queries, facets, and sorting have a slightly different import from other components of `gocb`, you can import them using `import "github.com/couchbase/gocb/v2/search"`.
 
 Here is a simple MatchQuery that looks for the text “swanky” using a defined index:
 
