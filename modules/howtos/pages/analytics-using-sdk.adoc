@@ -129,10 +129,10 @@ include::devguide:example$go/analytics-simple-query.go[tag=metadata]
 
 For a listing of available `Metrics` in `MetaData`, see the xref:concept-docs:analytics-for-sdk-users.adoc[Understanding Analytics] SDK doc.
 
-////
+
 
 == Additional Resources 
 
 To learn more about using N1QL for Analytics -- the first commercial implementation of SQL++ -- see our https://sqlplusplus-tutorial.couchbase.com/tutorial/#1[Tutorial Introduction to SQL++ for SQL users].
 
-////
+
