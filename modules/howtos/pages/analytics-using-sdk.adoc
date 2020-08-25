@@ -133,6 +133,6 @@ For a listing of available `Metrics` in `MetaData`, see the xref:concept-docs:an
 
 == Additional Resources 
 
-To learn more about using N1QL for Analytics -- the first commercial implementation of SQL++ -- see our https://sqlplusplus-tutorial.couchbase.com/tutorial/%231[Tutorial Introduction to SQL++ for SQL users].
+To learn more about using N1QL for Analytics -- the first commercial implementation of SQL\++ -- see our https://sqlplusplus-tutorial.couchbase.com/tutorial/#1[Tutorial Introduction to SQL++ for SQL users].
 
 
