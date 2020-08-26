@@ -46,7 +46,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 | *✔*
 | *✔*
 
-| *Server 6.5*
+| *Server 6.5, 6.6*
 | *✖*
 | *✖*
 | *✖*
