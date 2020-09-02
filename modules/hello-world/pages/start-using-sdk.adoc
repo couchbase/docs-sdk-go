@@ -78,7 +78,7 @@ Now that you know the basics, you may wish to go straight to that page.
 For developing on Couchbase Cloud, 
 try the https://github.com/couchbase/docs-sdk-go/blob/release/2.1/modules/devguide/examples/go/cloud.go[Cloud-based Hello World program].
 
-If you are not working from the same _Availability Zone_ as your Couchbase Cloud, refer to the follorwing:
+If you are not working from the same _Availability Zone_ as your Couchbase Cloud, refer to the following:
 
 * Notes on xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments], 
 * xref:project-docs:compatibility.adoc#network-requirements[Network Requirements], 
