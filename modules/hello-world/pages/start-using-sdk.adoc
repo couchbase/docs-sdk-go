@@ -35,6 +35,8 @@ Now you have the Go client installed, open your favourite text editor and try ou
 include::example$startusing.go[tag=connect]
 ----
 
+If you are connecting to Couchbase Cloud rather than a local Couchbase Server, then also refer to the <<cloud-connections, Cloud section>>, below.
+
 Couchbase uses xref:6.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
 Here we will use the _Full Admin_ role created during installation of the Couchbase Data Platform.
 For production client code, you will want to use more appropriate, restrictive settings -- but here we want to get you up and running quickly.
@@ -69,6 +71,19 @@ include::example$startusing.go[tag=upsert-get]
 
 KV Operations are described in detail on the xref:howtos:kv-operations.adoc[KV Operations page].
 Now that you know the basics, you may wish to go straight to that page.
+
+
+== Cloud Connections
+
+For developing on Couchbase Cloud, 
+try the https://github.com/couchbase/docs-sdk-go/blob/release/2.1/modules/devguide/examples/go/cloud.go[Cloud-based Hello World program].
+
+If you are not working from the same _Availability Zone_ as your Couchbase Cloud, refer to the follorwing:
+
+* Notes on xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments], 
+* xref:project-docs:compatibility.adoc#network-requirements[Network Requirements], 
+* If you have a consumer-grade router which has problems with DNS-SRV records review our xref:howtos:troubleshooting-cloud-connections.adoc#troubleshooting-host-not-found[Troubleshooting Guide].
+
 
 == Additional Resources
 
