@@ -549,7 +549,8 @@ support for AT_PLUS N1QL Queries with Mutation Tokens.
 * https://issues.couchbase.com/browse/GOCBC-58[GOCBC-58]: Added
 support for Cross Bucket Joins.
 
-=== Fixed Issues
 
-None.
+== Older Releases
+
+Although https://www.couchbase.com/support-policy/enterprise-software[no longer supported], documentation for older releases continues to be available in our https://docs-archive.couchbase.com/home/index.html[docs archive].
 // end::latest[]
