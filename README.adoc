@@ -10,7 +10,6 @@ endif::[]
 :url-playbook: {url-org}/docs-site
 
 This repository hosts the documentation source for the Couchbase Go SDK.
-You are in the branch for the upcoming (unsupported) developer preview release of 3.0.
 
 == Contributing
 
