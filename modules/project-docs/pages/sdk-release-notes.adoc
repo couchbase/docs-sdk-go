@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.1.5
+$ go get github.com/couchbase/gocb/v2@v2.1.6
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -26,6 +26,30 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.1.6 (15 September 2020)
+
+Version 2.1.6 is a maintenance release for the Go SDK 2.1.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.6?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+
+* https://issues.couchbase.com/browse/GOCBC-979[GOCBC-979]:
+Add ExpiryTime to GetResult, providing the point in time at which a document will expire.
+
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-969[GOCBC-969]:
+Fixed issue where the SDK would attempt to parse query metrics even if they weren't present.
+* https://issues.couchbase.com/browse/GOCBC-976[GOCBC-976]:
+Fixed issue where custom transcoders were not supported for performing a get request with expiry.
+* https://issues.couchbase.com/browse/GOCBC-978[GOCBC-978]:
+Fixed issue where it was possible for more than one request to trigger switching from unknown to pending state for a given collection.
+* https://issues.couchbase.com/browse/GOCBC-981[GOCBC-981]:
+Fixed issue where setting the `network` connection string property to `default` would be discarded.
 
 == Version 2.1.5 (18 August 2020)
 
