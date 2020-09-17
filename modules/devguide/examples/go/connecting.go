@@ -134,6 +134,24 @@ func waitUntilReadyBucket() {
 	cluster.Close(nil)
 }
 
+func insecureLDAPConnect() {
+	// #tag::insecureLDAP[]
+	opts := gocb.ClusterOptions{
+		Username: "Administrator",
+		Password: "password",
+		SecurityConfig: gocb.SecurityConfig{
+			AllowedSaslMechanisms: []gocb.SaslMechanism{gocb.PlainSaslMechanism},
+		},
+	}
+	cluster, err := gocb.Connect("couchbase://10.112.193.101", opts)
+	if err != nil {
+		panic(err)
+	}
+	// #end::insecureLDAP[]
+
+	cluster.Close(nil)
+}
+
 func main() {
 	simpleconnect()
 	multinodeconnect()
@@ -141,4 +159,6 @@ func main() {
 	tlsconnect()
 	dnssrv()
 	waitUntilReady()
+	waitUntilReadyBucket()
+	insecureLDAPConnect()
 }
