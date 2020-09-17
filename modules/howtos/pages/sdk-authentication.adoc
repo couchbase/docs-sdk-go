@@ -42,3 +42,7 @@ include::devguide:example$go/connecting-cca.go[tag=certconnect]
 
 include::6.5@sdk:shared:partial$auth-overview.adoc[tag=ldap]
 
+[source,golang,indent=0]
+----
+include::devguide:example$go/connecting.go[tag=insecureLDAP]
+----
