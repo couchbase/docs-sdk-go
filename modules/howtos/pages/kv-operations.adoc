@@ -101,7 +101,8 @@ Below we can see how to set this on an operation:
 include::devguide:example$go/kv-durability-enhanced.go[tag=durability]
 ----
 
-The older type of durability, observe based durability, works by monitoring the server to ensure that the change has been replicated or persisted to the required number of nodes within the timeout specified on the operation. 
+If a version of Couchbase Server lower than 6.5 is being used then the application can fall-back to xref:concept-docs:durability-replication-failure-considerations.adoc#older-server-versions['client verified' durability]. 
+The older type of durability, also known as _observe based durability_, works by monitoring the server to ensure that the change has been replicated or persisted to the required number of nodes within the timeout specified on the operation. 
 Here we can see how that is set:
 
 [source,golang,indent=0]
