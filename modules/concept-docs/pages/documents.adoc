@@ -95,20 +95,24 @@ result, err := collection.LookupIn("user:kingarthur", ops, &gocb.LookupInOptions
 
 include::6.5@sdk:shared:partial$documents.adoc[tag=counters1]
 
-[source,python]
+[source,java]
 ----
-# Python example
->>> cb.counter('counter_id', delta=20, initial=100).value
-100L
->>> cb.counter('counter_id', delta=1).value
-101L
->>> cb.counter('counter_id', delta=-50).value
-51L
+//  Java example:
+String counterDocId = "counter-doc";
+// Increment by 1, creating doc if needed
+collection.binary().increment(counterDocId);
+// Decrement by 1
+collection.binary().decrement(counterDocId);
+// Decrement by 5
+collection.binary().decrement(counterDocId,
+DecrementOptions.decrementOptions().delta(5));
 ----
+
 include::6.5@sdk:shared:partial$documents.adoc[tag=counters2]
 
 [source,python]
 ----
+# Python example:
 rv = cb.get('counter_id')
 value, cas = rv.value, rv.cas
 if should_increment_value(value):
@@ -116,6 +120,13 @@ if should_increment_value(value):
 ----
 
 include::6.5@sdk:shared:partial$documents.adoc[tag=counters3]
+
+
+=== Use Cases
+
+The SDK provides a high-level abstraction over the simple `incr()`/`decr()` of Couchbase Server's memcached binary protocol, using `collections.binary()`. 
+This enables you to work with counters using `get()` and `upsert()` operations -- allowing, _inter alia_, the use of durability options with the operations.
+You will find several ways of working with counters https://pkg.go.dev/github.com/couchbase/gocb/v2#BinaryCollection.Decrement[in the API docs].
 
 // Expiry
 include::6.5@sdk:shared:partial$documents.adoc[tag=expiration]
