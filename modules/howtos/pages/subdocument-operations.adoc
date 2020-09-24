@@ -360,7 +360,8 @@ include::example$subdoc.go[tag=cas]
 
 == Durability
 
-Couchbase's xref:1.6@go-sdk::durability.adoc[traditional durability], using `PersistTo` and `ReplicateTo`, is still available, particuarly for talking to Couchbase Server 6.0 and earlier:
+Couchbase's xref:1.6@go-sdk::durability.adoc[traditional durability], using `PersistTo` and `ReplicateTo`, is 
+xref:concept-docs:durability-replication-failure-considerations.adoc#older-server-versions[still available], particularly for talking to Couchbase Server 6.0 and earlier:
 
 .Performing Sub Document mutations with traditional durability
 [source,golang,indent=0]
