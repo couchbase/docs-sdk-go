@@ -138,7 +138,11 @@ To configure encryption for the Go SDK:
 
 It is important to make sure you are transferring the certificate in an encrypted manner from the server to the client side, so either copy it through SSH or through a similar secure mechanism.
 
-If you are running on `localhost` and just want to enable TLS for a development machine, just copying and pasting it suffices.
+If you are running on `localhost` and just want to enable TLS for a development machine, just copying and pasting it suffices
+-- _so long as you use `127.0.0.1` rather than `localhost` in the connection string_.
+This is because the certificate will not match the name _localhost_.
+Setting `TLSSkipVerify` is a workaround if you need to use ` couchbases://localhost`.
+
 Navigate in the admin UI to menu:Settings[Cluster] and copy the input box of the TLS certificate into a file on your machine (which we will refer to as `cluster.cert`).
 It looks similar to this:
 
