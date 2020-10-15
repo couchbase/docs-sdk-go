@@ -12,6 +12,9 @@ It is the responsibility of the development team and the software architect to e
 include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=intro]
 
 include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep]
+Options for making changes to `numKvConnections` (kvEndpoints) for Durable Writes, change the `kv_pool_size` value. 
+Increasing the number of reader and writer threads for Couchbase Server storage _may_ be advantageous: see the discussion on the xref:6.5@server:learn:buckets-memory-and-storage/storage.adoc#threading[Server storage page].
+include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep3]
 
 include::6.5@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=older]
 
