@@ -2,15 +2,10 @@
 :navtitle: ACID Transactions
 :page-topic-type: howto
 
-// [abstract]
-// The C++ Transactions built upon the C SDK.
+[abstract]
+Distributed ACID Transactions in Couchbase SDKs
 
 
 Distributed ACID Transactions are not currently available for the Go SDK.
-Nevertheless, you may find that you can achieve the same result with our xref:concept-docs:durability-replication-failure-considerations.adoc#durable-writes[strong durable gurarantees within a single bucket] and some re-architecture.
+include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=other]
 
-
-Currently, Distributed ACID Transactions are available for:
-
-* The xref:1.0@cxx-txns::distributed-acid-transactions-from-the-sdk.adoc[C++ API].
-* The xref:3.0@java-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Java SDK].
