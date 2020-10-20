@@ -27,6 +27,7 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+
 == Version 2.1.7 (20 October 2020)
 
 Version 2.1.7 is a maintenance release for the Go SDK 2.1.0.
@@ -36,18 +37,18 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.7?tab=doc[API Documentation
 === New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-938[GOCBC-938]:
-Add uncommitted support for `FlexIndex` to `QueryOptions`.
+Added uncommitted support for `FlexIndex` to `QueryOptions`.
 * https://issues.couchbase.com/browse/GOCBC-942[GOCBC-942]:
-Add uncommitted support for `Scope` level queries.
+Added uncommitted support for `Scope` level queries.
 * https://issues.couchbase.com/browse/GOCBC-944[GOCBC-944]:
-Add uncommitted support for `Scope` level analytics queries.
+Added uncommitted support for `Scope` level analytics queries.
 * https://issues.couchbase.com/browse/GOCBC-944[GOCBC-944]:
-Add uncommitted support for `User` collections level RBAC.
+Added uncommitted support for `User` collections level RBAC.
 * https://issues.couchbase.com/browse/GOCBC-994[GOCBC-994]:
 Fixed issue where nil values used in subdoc `MutateIn` operations would be rejected by the server.
 These values are now coerced into JSON `null` values before sending.
 * https://issues.couchbase.com/browse/GOCBC-1001[GOCBC-1001]:
-Add missing `Terms`, `DateRanges`, and `NumericRanges` fields to `SearchFacetResult`.
+Added missing `Terms`, `DateRanges`, and `NumericRanges` fields to `SearchFacetResult`.
 
 === Fixed Issues
 
