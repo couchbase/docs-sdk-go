@@ -1,29 +1,57 @@
-= Error Codes
+= Errors & Exceptions Reference
 :nav-title: Error Codes
 :page-topic-type: ref
 
 [abstract]
-The standardized error codes returned by the Couchbase Go SDK.
+The standardized error codes returned by the Couchbase Go SDK, from cloud connection to sub-document.
+
+include::6.5@sdk:shared:partial$error-ref.adoc[tag=intro]
+
+== Shared Error Definitions 
+
+include::6.5@sdk:shared:partial$error-ref.adoc[tag=shared]
+
+
+== KeyValue Error Definitions
+include::6.5@sdk:shared:partial$error-ref.adoc[tag=kv]
+
+
+== Query Error Definitions
+include::6.5@sdk:shared:partial$error-ref.adoc[tag=query]
+
+
+== Analytics Error Definitions
+include::6.5@sdk:shared:partial$error-ref.adoc[tag=analytics]
+
+
+== Search Error Definition
+include::6.5@sdk:shared:partial$error-ref.adoc[tag=search]
+
+
+== View Error Definitions
+include::6.5@sdk:shared:partial$error-ref.adoc[tag=views]
+
+
+== Management API Error Definitions
+include::6.5@sdk:shared:partial$error-ref.adoc[tag=mgmnt]
+
+
+== Field-Level Encryption Error Definitions
+include::6.5@sdk:shared:partial$error-ref.adoc[tag=fle]
 
 
 ////
-== Analytics Errors
+=== SDK-Specific Error Definitions
+
+ID Range 1000 - 2000
+
+This range is reserved for sdk-specific error codes which are not standardized, but might be used later.
 ////
+
+
+
 == Connecting to Cloud
-
-Although  the SDK and cliet application should be located in the same LAN-like environment (or cloud availability zone), and this is the only network configuration supported, we recognise that this set-up may not be possible during development.
-In particular, you may be developing against Couchbase Cloud from a laptop in a small or home office, where DNS-SRV may cause problems.
-
-In order for your application to connect to your cloud, Couchbase Cloud creates a special kind of DNS record, called a Service record, or DNS-SRV record. 
-DNS SRV records are widely supported and used frequently in systems like XMPP, and Kubernetes services.  
-Occasionally, some DNS providers can run into issues with large DNS SRV records. 
-This can manifest as a host not found issue. 
-The actual problem is (a typically older) DNS server that cannot handle large responses which converts the error to host not found. 
-This has frequently been observed when working from home with a service provider router that embeds a caching DNS Server.
-
-Below is a list of log messages that you may see if you hit DNS SRV issues. 
-These examples have been created in the circumstance that the SRV record is too long for the DNS provider to handle,
-and are included here so that they are findable by search, and you can then go to our xref:howtos:troubleshooting-cloud-connections.adoc#troubleshooting-host-not-found[cloud connection troubleshooting page].
+include::6.5@sdk:shared:partial$error-ref.adoc[tag=cloud]
 
 .no such host
 [source,terminal] 
@@ -31,3 +59,10 @@ and are included here so that they are findable by search, and you can then go t
 Failed to connect. dial tcp: lookup 8676842d-4e8b-4c5b-a44f-e0886f8c0bc1.dp.cloud.couchbase.com: no such host
 ----
 
+
+== Further Reading
+
+* Our practical look at xref:howtos:error-handling.adoc[error handling with the SDK].
+* xref:howtos:health-check.adoc#diagnostics[Diagnostics] with Health Check.
+* xref:concept-docs:errors.adoc[Discussion document] on handling exceptions.
+* Further reference material in the https://pkg.go.dev/github.com/couchbase/gocb/v2[API Guide].
