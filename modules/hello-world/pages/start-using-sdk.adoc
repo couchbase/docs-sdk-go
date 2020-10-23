@@ -63,6 +63,7 @@ include::example$startusing.go[tag=collection]
 
 The commented-out code shows how you would use a named collection and scope.
 However, in this case we've used the `DefaultCollection`, which provides the same functionality as bucket-level operations did in previous versions of Couchbase Server.
+The `DefaultCollection` must be used when connecting to a 6.6 cluster or earlier.
 
 [source,golang,indent=0]
 ----
