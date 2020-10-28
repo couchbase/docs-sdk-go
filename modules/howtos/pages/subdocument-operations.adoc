@@ -278,7 +278,7 @@ Note that there are several differences as compared the full-document _counter_ 
 * Sub-Document counter operations protect against overflow and underflow, returning an error if the operation would exceed the range.
 Full-document counters will use normal C semantics for overflow (in which the overflow value is carried over above 0), and will silently fail on underflow, setting the value to 0 instead.
 
-* Sub-Document counter operations can operate on any numeric value within a document, while xref:howtos:kv-operations.adoc#atomic-counters[full-document counter operations] require a specially formatted counter document with only the counter value.
+* Sub-Document counter operations can operate on any numeric value within a document, while xref:kv-operations.adoc#atomic-counters[full-document counter operations] require a specially formatted counter document with only the counter value.
 
 [#executing-multiple-operations]
 == Executing Multiple Operations
