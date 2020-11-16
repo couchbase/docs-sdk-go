@@ -173,28 +173,32 @@ If the query is marked as readonly, both the server and the SDK can improve proc
 On the client side, the SDK can be more liberal with retries because it can be sure that there are no state-mutating side-effects happening.
 The query engine will ensure that actually no data is mutated when parsing and planning the query.
 
-
 ////
 == Querying at Scope level
 
-From version 3.0.2 of the Ruby SDK, it is possible to query off the xref:7.0@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with the beta version of the next Couchbase Server release, 7.0β_,
-using the `query()` method.
+From version 2.1.7 of the Go SDK, it is possible to query off the xref:7.0@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with the beta version of the next Couchbase Server release, 7.0β_,
+using the `scope.Query()` method.
 It takes the statement as a required argument, and then allows additional options if needed.
 
 CAUTION: This feature is marked xref:project-docs:compatibility.adoc#interface-stability[_Uncommitted_].
-Expect a promotion to _Committed_ API in the next minor release (3.1).
+Expect a promotion to _Committed_ API in a future release.
 
 The code snippet below shows how to run a simple query to fetch 10 random rows from travel-sample and print the results, 
 the assumption is that the `airline` collection exists within a scope `us`.
 
 [source,golang]
 ----
-include::example$queries.rb[tag=scope]
+myCollection := "airline"
+query := fmt.Sprintf("SELECT x.* FROM %s x LIMIT 10;", myCollection)
+        rows, err := us.Query(query, &gocb.QueryOptions{})
+        // check query was successful
+        if err != nil {
+                panic(err)
+        }
 ----
 
-A complete list of `QueryOptions` can be found in the https://docs.couchbase.com/sdk-api/couchbase-ruby-client/Couchbase/Options/Query.html[API docs].
+A complete list of `QueryOptions` can be found in the https://pkg.go.dev/github.com/couchbase/gocb/v2#Scope.Query[API docs].
 ////
-
 
 == Additional Resources
 
