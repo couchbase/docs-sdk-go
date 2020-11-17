@@ -55,7 +55,7 @@ See the notes there for Support details.
 [.table-merge-cells] 
 [cols="7,7,5,6,5"]
 |===
-| | Server 5.0, 5.1, & 5.5 | Server 6.0 | Server 6.5 & 6.6
+| | Server 5.0, 5.1, & 5.5 | Server 6.0 | Server 6.5 & 6.6 | Server 7.0β
 
 | Enhanced Durability
 4+| All SDK versions
