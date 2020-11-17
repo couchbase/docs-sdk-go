@@ -173,7 +173,7 @@ If the query is marked as readonly, both the server and the SDK can improve proc
 On the client side, the SDK can be more liberal with retries because it can be sure that there are no state-mutating side-effects happening.
 The query engine will ensure that actually no data is mutated when parsing and planning the query.
 
-////
+
 == Querying at Scope level
 
 From version 2.1.7 of the Go SDK, it is possible to query off the xref:7.0@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with the beta version of the next Couchbase Server release, 7.0β_,
@@ -198,7 +198,7 @@ query := fmt.Sprintf("SELECT x.* FROM %s x LIMIT 10;", myCollection)
 ----
 
 A complete list of `QueryOptions` can be found in the https://pkg.go.dev/github.com/couchbase/gocb/v2#Scope.Query[API docs].
-////
+
 
 == Additional Resources
 
