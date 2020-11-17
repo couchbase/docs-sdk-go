@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.1.7
+$ go get github.com/couchbase/gocb/v2@v2.1.8
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -27,6 +27,25 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+== Version 2.1.8 (17 November 2020)
+
+Version 2.1.8 is a maintenance release for the Go SDK 2.1.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.8?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-937[GOCBC-937]:
+Added uncommitted support for `GeoPolygon` search queries.
+* https://issues.couchbase.com/browse/GOCBC-1005[GOCBC-1005]:
+Added document id to key value errors.
+* https://issues.couchbase.com/browse/GOCBC-1006[GOCBC-1006]:
+Changed the log level for retry strategy retries from info to debug.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1007[GOCBC-1007]:
+Fixed issue some operations were being incorrectly sent to the retry orchestrator on errors.
 
 == Version 2.1.7 (20 October 2020)
 
