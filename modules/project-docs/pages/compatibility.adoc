@@ -53,24 +53,29 @@ See the notes there for Support details.
 
 .Couchbase Server and SDK Supported Version Matrix
 [.table-merge-cells] 
+[cols="7,7,5,6,5"]
 |===
 | | Server 5.0, 5.1, & 5.5 | Server 6.0 | Server 6.5 & 6.6
 
 | Enhanced Durability
-3+| All SDK versions
+4+| All SDK versions
 
 | Durable Writes 
 2+| Not Supported
-| Since 2.0
+2+| Since 2.0
 
 | Analytics
 | DP in 5.5 with 1.4
-2+| Since 1.5
+3+| Since 1.5
 
 | Collections
 2+| Not Supported
 | SDK 2.0 for Developer Preview in Server 6.5 & 6.6
+| Since 2.0
 
+| Scope-Level N1QL Queries
+3+| Not Supported
+| Developer Preview in 7.0β, SDK 2.1.7
 |===
 
 
