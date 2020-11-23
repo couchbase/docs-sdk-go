@@ -1,0 +1,41 @@
+= User Management
+:navtitle: Provisioning Cluster Resources
+:page-aliases: ROOT:sdk-user-management-example.adoc
+
+[abstract]
+The Java SDK lets you create _users_, assign them _roles_ and associated _privileges_, and remove them from the system.
+
+== User-Management APIs
+
+Users who have been assigned the *Admin* role for the cluster are able to create, edit, and remove users.
+The Java SDK provides APIs to support these activities.
+A high-level summary of the APIs can be found in xref:concept-docs:sdk-user-management-overview.adoc[User-Management],
+and details of all options in the https://docs.couchbase.com/sdk-api/couchbase-java-client/com/couchbase/client/java/manager/user/UserManager.html[UserManager API docs].
+
+== Using the UserManager API
+
+The most common uses of the `UserManager` API are creating and listing users:
+
+.Creating Users
+[source,java]
+----
+include::example$UserManagementExample.java[tag=usermanagement_1,indent=0]
+----
+
+.Listing Users
+[source,java]
+----
+include::example$UserManagementExample.java[tag=usermanagement_2,indent=0]
+----
+
+Using a user created in the SDK to access data:
+
+[source,java]
+----
+include::example$UserManagementExample.java[tag=usermanagement_3,indent=0]
+----
+
+
+== Further Reading
+
+The SDK also contains management APIs for dealing with xref:provisioning-cluster-resources.adoc[Cluster resources].
