@@ -17,22 +17,22 @@ and details of all options in the https://docs.couchbase.com/sdk-api/couchbase-j
 The most common uses of the `UserManager` API are creating and listing users:
 
 .Creating Users
-[source,java]
+[source,golang,indent=0]
 ----
-include::example$UserManagementExample.java[tag=usermanagement_1,indent=0]
+include::devguide:example$go/user-management.go[tag=upsert]
 ----
 
 .Listing Users
-[source,java]
+[source,golang,indent=0]
 ----
-include::example$UserManagementExample.java[tag=usermanagement_2,indent=0]
+include::devguide:example$go/user-management.go[tag=getall]
 ----
 
 Using a user created in the SDK to access data:
 
-[source,java]
+[source,golang,indent=0]
 ----
-include::example$UserManagementExample.java[tag=usermanagement_3,indent=0]
+include::devguide:example$go/user-management.go[tag=operations]
 ----
 
 
