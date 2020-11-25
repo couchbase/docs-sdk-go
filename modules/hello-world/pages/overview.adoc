@@ -83,7 +83,7 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2[API Docs^]
 [.content]
 The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area.
 Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. 
-`context.Context` for cancellations and timeouts is supported in all operations, and error handling is improved with extra information.
+Error handling is improved with extra information.
 
 
 [.column]
