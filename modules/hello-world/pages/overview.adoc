@@ -1,4 +1,4 @@
-= Couchbase Node.js SDK 3.0
+= Couchbase Go SDK 2.1
 :page-type: landing-page
 :page-layout: landing-page-top-level-sdk
 :page-role: tiles
@@ -13,18 +13,20 @@
 [.column]
 ====== {empty}
 [.content]
-The Node.js SDK allows you to connect to a Couchbase Server cluster from Node.js. 
-The Node.js SDK is a native Node.js module that uses the very fast libcouchbase library to handle communicating with the cluster over the Couchbase binary protocol.
+The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, and adding support for future Couchbase Server features like Collections and Scopes (available in Couchbase Server 6.5 & 6.6 as a developer preview).
+The Go 2.x SDK also introduces improved error handling providing extra error information.
 
 
 [.column]
 [.content]
-[source,javascript]
+[source,golang,indent=0]
 ----
-const queryResult = await cluster.query("SELECT * FROM `travel-sample` WHERE city=$1 LIMIT 10", { parameters: ['Paris']});
-queryResult.rows.forEach((row)=>{
-   console.log(row);
-});
+	// get a collection reference
+	collection := bucket.DefaultCollection()
+
+	// for a named collection and scope
+	// scope := bucket.Scope("my-scope")
+	// collection := scope.Collection("my-collection")
 ----
 
 
@@ -35,7 +37,7 @@ queryResult.rows.forEach((row)=>{
 [.column]
 ====== {empty}
 
-== Couchbase Node.js SDK 3.0
+== Couchbase Go SDK 2.1
 
 ++++
 <div class="card-row three-column-row">
@@ -71,7 +73,7 @@ and the xref:howtos:subdocument-operations.adoc[Sub-Document API].
 [.content]
 The documentation supplements the practical Howto docs with references and xref:concept-docs:concepts.adoc[concept guides], for those who prefer a broader understanding before diving in and coding.
 []
-https://docs.couchbase.com/sdk-api/couchbase-node-client[API Docs^]
+https://pkg.go.dev/github.com/couchbase/gocb/v2[API Docs^]
 
 
 [.column]
@@ -79,9 +81,10 @@ https://docs.couchbase.com/sdk-api/couchbase-node-client[API Docs^]
 .What's Hot?
 
 [.content]
-The Couchbase Node.js SDK 3.0 is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area
--- and introducing a xref:howtos:concurrent-async-apis.adoc[promises API] to reduce the complexity of asynchronous JavaScript in client apps.
-It can be paired with the 3.0-compatible https://v2.ottomanjs.com/#introduction[updated Ottoman ODM^] for speedier, scalable development.
+The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area.
+Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. 
+`context.Context` for cancellations and timeouts is supported in all operations, and error handling is improved with extra information.
+
 
 [.column]
 ====== {empty}
@@ -99,8 +102,8 @@ xref:project-docs:migrating-sdk-code-to-3.n.adoc[migration guide] for moving to 
 .Community
 
 [.content]
-For community help, visit the https://forums.couchbase.com/c/node-js-sdk/12[Couchbase forums^].
-The Node.js SDK can be combined with many other projects in the broader JavaScript ecosystem and beyond -- in the https://blog.couchbase.com/?s=Node.js[Couchbase Blog^] there are examples covering everything from Apache OpenWhisk to Vue.js.
+For community help, visit the https://forums.couchbase.com/c/go-sdk/23[Couchbase forums^].
+The Go SDK can be combined with many other projects in the broader Go ecosystem and beyond -- in the https://blog.couchbase.com/?s=Golang[Couchbase Blog^] there are several examples.
 
 ++++
 </div>
