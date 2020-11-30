@@ -1,7 +1,8 @@
 name: go-sdk
-version: '2.1'
+version: '2.2'
 title: Go SDK
-start_page: hello-world:start-using-sdk.adoc
+prerelease: BETA
+start_page: hello-world:overview.adoc
 nav:
 - modules/ROOT/nav.adoc
-server_version: '6.5'
+server_version: '6.6'
