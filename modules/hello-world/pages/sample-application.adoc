@@ -62,8 +62,8 @@ Now try out a few queries, and see Search in action for the hotel finder feature
 
 == Sample App Backend
 
-The backend code shows Couchbase Java SDK in action with Query and Search, 
-but also how to plug together all of the elements and build an application with Couchbase Server and the Java SDK.
+The backend code shows Couchbase Go SDK in action with Query and Search,
+but also how to plug together all of the elements and build an application with Couchbase Server and the Go SDK.
 
 Here's the Search code, where `AirportSearch` checks to see whether the search term is a three or four letter FAA or ICAO abbreviation, and if not searches for it as an airport name:
 
