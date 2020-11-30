@@ -1,4 +1,4 @@
- = Slow Operations Logging
+= Slow Operations Logging
 :page-topic-type: howto
 // :page-aliases: ROOT:
 
@@ -32,7 +32,6 @@ These include slow queries, responses taking beyond a certain threshold, and orp
 //
 //The information logged can be configured, although configurability does vary slightly between SDKs.
 //
-//// Please add (here, and further down) the settings info that users need here for your SDK  :)
 //
 //Advanced users can build their own implementations of the interface:
 //
