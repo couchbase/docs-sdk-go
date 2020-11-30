@@ -51,7 +51,7 @@ These include slow queries, responses taking beyond a certain threshold, and orp
 //}
 //----
 //
-//// The different Meter implementation names are heavily based on their _OpenTelemetry_ counterparts.
+// ;; The different Meter implementation names are heavily based on their _OpenTelemetry_ counterparts.
 //
 //At each emit/log interval, the AggregatingMeter outputs a JSON structure that is very similar to the `ThresholdRequestTracer` or the `OrphanResponseReporter`.
 //The default value for the `emitInterval` is 600 seconds (10 minutes).
