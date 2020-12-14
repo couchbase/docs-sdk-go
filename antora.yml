@@ -1,7 +1,6 @@
 name: go-sdk
 version: '2.2'
 title: Go SDK
-prerelease: BETA
 start_page: hello-world:overview.adoc
 nav:
 - modules/ROOT/nav.adoc
