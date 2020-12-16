@@ -27,9 +27,11 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+
 == Version 2.2.0 (15 December 2020)
 
-Version 2.2.0 is the first maintenance release for the Go SDK 2.2.0.
+Version 2.2.0 is the first release in the Go SDK 2.2 series.
+It brings enhancements and bug fixes over 2.1.8, and improves compatibility with Server 6.6 and with 7.0β.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.0?tab=doc[API Documentation]
 
@@ -48,11 +50,11 @@ Added support for bucket level durability settings in `BucketManager`.
 * https://issues.couchbase.com/browse/GOCBC-972[GOCBC-972]:
 Added support for `Score` to `SearchOptions`.
 * https://issues.couchbase.com/browse/GOCBC-1014[GOCBC-1014]:
-Update search `GeoPolygon` support to API stability committed.
+Updated search `GeoPolygon` support to API stability committed.
 * https://issues.couchbase.com/browse/GOCBC-1015[GOCBC-1015]:
-Update `QueryOptions` `FlexIndex` support to API stability committed.
+Updated `QueryOptions` `FlexIndex` support to API stability committed.
 * https://issues.couchbase.com/browse/GOCBC-1026[GOCBC-1026]:
-Update `BucketSettings` ephemeral eviction policies support to API stability committed.
+Updated `BucketSettings` ephemeral eviction policies support to API stability committed.
 
 === Fixed Issues
 
@@ -62,6 +64,7 @@ Fixed issue where having multiple buckets open could cause view requests to be s
 Fixed issue where having multiple buckets open could cause view manager requests to be sent to an incorrect bucket.
 * https://issues.couchbase.com/browse/GOCBC-1028[GOCBC-1028]:
 Fixed issue where bootstrapping against a non-kv node could never successfully fully connect.
+
 
 == Version 2.1.8 (17 November 2020)
 
