@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.1.8
+$ go get github.com/couchbase/gocb/v2@v2.2.0
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -26,6 +26,45 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+
+== Version 2.2.0 (15 December 2020)
+
+Version 2.2.0 is the first release in the Go SDK 2.2 series.
+It brings enhancements and bug fixes over 2.1.8, and improves compatibility with Server 6.6 and with 7.0β.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.0?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-869[GOCBC-869]:
+`BucketSettings` `MaxTTL` field deprecated in favour of `MaxExpiry`.
+* https://issues.couchbase.com/browse/GOCBC-934[GOCBC-934]:
+Added support for bucket level durability settings in `BucketManager`.
+* https://issues.couchbase.com/browse/GOCBC-948[GOCBC-948]:
+Changed document expiry durations so that expiry lengths of > 30 days sent as unix timestamps (now + expiry).
+* https://issues.couchbase.com/browse/GOCBC-934[GOCBC-934]:
+Added support for bucket level durability settings in `BucketManager`.
+* https://issues.couchbase.com/browse/GOCBC-963[GOCBC-963]:
+`GetResult` `Expiry` function deprecated in favour of `ExpiryTime`.
+* https://issues.couchbase.com/browse/GOCBC-972[GOCBC-972]:
+Added support for `Score` to `SearchOptions`.
+* https://issues.couchbase.com/browse/GOCBC-1014[GOCBC-1014]:
+Updated search `GeoPolygon` support to API stability committed.
+* https://issues.couchbase.com/browse/GOCBC-1015[GOCBC-1015]:
+Updated `QueryOptions` `FlexIndex` support to API stability committed.
+* https://issues.couchbase.com/browse/GOCBC-1026[GOCBC-1026]:
+Updated `BucketSettings` ephemeral eviction policies support to API stability committed.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1022[GOCBC-1022]:
+Fixed issue where having multiple buckets open could cause view requests to be sent to an incorrect bucket.
+* https://issues.couchbase.com/browse/GOCBC-1021[GOCBC-1021]:
+Fixed issue where having multiple buckets open could cause view manager requests to be sent to an incorrect bucket.
+* https://issues.couchbase.com/browse/GOCBC-1028[GOCBC-1028]:
+Fixed issue where bootstrapping against a non-kv node could never successfully fully connect.
+
 
 == Version 2.1.8 (17 November 2020)
 
