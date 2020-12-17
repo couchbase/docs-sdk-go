@@ -73,18 +73,70 @@ include::6.0@sdk:pages:partial$max-connections.adoc[tag=limits]
 When your application is done talking to Couchbase, you can issue the [.api]`Bucket.Close()` call on the bucket, which will disconnect your application from the given bucket.
 
 [#ssl]
-== Configuring SSL
+== Secure Connections with TLS
 
-WARNING: Be aware that certificate validation when connecting to Couchbase using SSL requires Go 1.6+ and gocb 1.2+.
-Otherwise SSL connections are subject to https://en.wikipedia.org/wiki/Man-in-the-middle_attack[man-in-the-middle^] attacks.
+Couchbase Server Enterprise Edition supports full encryption of client-side traffic using Transport Layer Security (TLS).
+That includes key-value type operations, queries, and configuration communication.
+Make sure you have the Enterprise Edition of Couchbase Server before proceeding with configuring encryption on the client side.
 
-To configure SSL, pass an SSL scheme with your connection string when creating your cluster object.
+To configure encryption for the Go SDK:
 
-[source,go]
+. Get the CA certificate from the cluster and save it in a text file.
+. Enable encryption on the client side and point it to the file containing the certificate.
+
+It is important to make sure you are transferring the certificate in an encrypted manner from the server to the client side, so either copy it through SSH or through a similar secure mechanism.
+
+If you are running on `localhost` and just want to enable TLS for a development machine, just copying and pasting it suffices
+-- _so long as you use `127.0.0.1` rather than `localhost` in the connection string_.
+This is because the certificate will not match the name _localhost_.
+Setting `TLSSkipVerify` is a workaround if you need to use `couchbases://localhost`.
+
+Navigate in the admin UI to menu:Settings[Cluster] and copy the input box of the TLS certificate into a file on your machine.
+It looks similar to this:
+
 ----
-myCluster, _ := gocb.Connect("couchbases://10.1.1.1")
+-----BEGIN CERTIFICATE-----
+MIICmDCCAYKgAwIBAgIIE4FSjsc3nyIwCwYJKoZIhvcNAQEFMAwxCjAIBgNVBAMT
+ASowHhcNMTMwMTAxMDAwMDAwWhcNNDkxMjMxMjM1OTU5WjAMMQowCAYDVQQDEwEq
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzz2I3Gi1XcOCNRVYwY5R
+................................................................
+mgDnQI8nw2arBRoseLpF6WNw22CawxHVOlMceQaGOW9gqKNBN948EvJJ55Dhl7qG
+BQp8sR0J6BsSc86jItQtK9eQWRg62+/XsgVCmDjrB5owHPz+vZPYhsMWixVhLjPJ
+mkzeUUj/kschgQ0BWT+N+pyKAFFafjwFYtD0e5NwFUUBfsOyQtYV9xu3fw+T2N8S
+itfGtmmlEfaplVGzGPaG0Eyr53g5g2BgQbi5l5Tt2awqhd22WOVbCalABd9t2IoI
+F4+FjEqAEIr1mQepDaNM0gEfVcgd2SzGhC3yhYFBAH//8W4DUot5ciEhoBs=
+-----END CERTIFICATE-----
+----
+
+The next step is to enable encryption and pass it the path to the certificate file.
+
+[source,golang]
+----
+myCluster, _ := gocb.Connect("couchbases://10.1.1.1?cacertpath=/path/to/ca.pem")
+
+cluster.Authenticate(gocb.PasswordAuthenticator
+     {      Username: username,      Password: password, }
+     )
+
 myBucket, _ := myCluster.OpenBucket("default", "")
 ----
+
+If you want to verify that it's actually working, you can use a tool like `tcpdump`.
+For example, an unencrypted upsert request looks like this (using `sudo tcpdump -i lo0 -A -s 0 port 11210`):
+
+----
+E..e..@.@.............+......q{...#..Y.....
+.E...Ey........9........................id{"key":"value"}
+----
+
+After enabling encryption, you cannot inspect the traffic in cleartext (same upsert request, but watched on port 11207 which is the default encrypted port):
+
+----
+E.....@.@.............+....Z.'yZ..#........
+..... ...xuG.O=.#.........?.Q)8..D...S.W.4.-#....@7...^.Gk.4.t..C+......6..)}......N..m..o.3...d.,.	...W.....U..
+.%v.....4....m*...A.2I.1.&.*,6+..#..#.5
+----
+
 
 include::6.0@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
