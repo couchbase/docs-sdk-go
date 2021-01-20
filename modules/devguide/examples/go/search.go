@@ -12,8 +12,8 @@ import (
 func main() {
 	opts := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
-			"Administrator",
-			"password",
+			Username: "Administrator",
+			Password: "password",
 		},
 	}
 	// #tag::matchquery[]
@@ -86,7 +86,12 @@ func main() {
 		docID := row.ID
 		score := row.Score
 
-		fmt.Printf("Document ID: %s, search score: %f, fields included in result: %v\n", docID, score)
+		var fields interface{}
+		if err := row.Fields(&fields); err != nil {
+			panic(err)
+		}
+
+		fmt.Printf("Document ID: %s, search score: %f, fields included in result: %v\n", docID, score, fields)
 	}
 
 	// always check for errors after iterating

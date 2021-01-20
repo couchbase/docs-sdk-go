@@ -1,6 +1,11 @@
 package main
 
 import (
+	"crypto/tls"
+	"errors"
+	"log"
+	"time"
+
 	gocb "github.com/couchbase/gocb/v2"
 )
 
@@ -22,17 +27,17 @@ func basic() {
 	// #end::getcollection[]
 
 	// #tag::getresult[]
-	getResult, err := collection.Get("key", GetOptions{
+	getResult, err := collection.Get("key", &gocb.GetOptions{
 		Timeout: 2 * time.Second,
 	})
 	// #end::getresult[]
 	// #tag::handleerror[]
-	if errors.Is(err, ErrDocumentNotFound) {
+	if errors.Is(err, gocb.ErrDocumentNotFound) {
 		// handle your error
 	}
 	// #end::handleerror[]
 	// #tag::handleerrorext[]
-	if errors.Is(err, ErrDocumentNotFound) {
+	if errors.Is(err, gocb.ErrDocumentNotFound) {
 		var kverr gocb.KeyValueError
 		if errors.As(err, &kverr) {
 			log.Printf("Error Context: %+v\n", kverr)
@@ -42,13 +47,13 @@ func basic() {
 	log.Printf("Get Result: %+v\n", getResult)
 
 	// #tag::queryresult[]
-	queryResult, err := cluster.Query("select 1=1", QueryOptions{
+	queryResult, err := cluster.Query("select 1=1", &gocb.QueryOptions{
 		Timeout: 3 * time.Second,
 	})
 	// #end::queryresult[]
 	log.Printf("Query Result: %+v\n", queryResult)
 
-	cluster.Close()
+	cluster.Close(&gocb.ClusterCloseOptions{})
 }
 
 func passauthenticator() {
@@ -65,7 +70,7 @@ func passauthenticator() {
 	}
 	// #end::passauthenticator[]
 
-	cluster.Close()
+	cluster.Close(&gocb.ClusterCloseOptions{})
 }
 
 func certauthenticator() {
@@ -76,8 +81,8 @@ func certauthenticator() {
 	}
 
 	opts := gocb.ClusterOptions{
-		Authenticator: gocb.CertificateAuthenticator {
-			ClientCertificate: cert,
+		Authenticator: gocb.CertificateAuthenticator{
+			ClientCertificate: &cert,
 		},
 	}
 	cluster, err := gocb.Connect("10.112.193.101", opts)
@@ -86,7 +91,7 @@ func certauthenticator() {
 	}
 	// #end::certauthenticator[]
 
-	cluster.Close()
+	cluster.Close(&gocb.ClusterCloseOptions{})
 }
 
 func main() {

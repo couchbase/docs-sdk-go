@@ -10,8 +10,8 @@ import (
 func main() {
 	opts := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
-			"Administrator",
-			"password",
+			Username: "Administrator",
+			Password: "password",
 		},
 	}
 	// #tag::beerview[]
