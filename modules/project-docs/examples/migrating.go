@@ -22,7 +22,7 @@ func basic() {
 	// #end::basicconnecting[]
 
 	// #tag::getcollection[]
-	bucket := cluster.Bucket("default")
+	bucket := cluster.Bucket("travel-sample")
 	collection := bucket.DefaultCollection()
 	// #end::getcollection[]
 

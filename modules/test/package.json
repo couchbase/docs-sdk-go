@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "bats-assert": "github:ztombol/bats-assert",
+    "bats-support": "github:ztombol/bats-support"
+  }
+}

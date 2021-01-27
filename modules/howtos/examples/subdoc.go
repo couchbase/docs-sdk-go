@@ -14,12 +14,12 @@ func main() {
 			Password: "password",
 		},
 	}
-	cluster, err := gocb.Connect("172.23.111.3", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("default")
+	bucket := cluster.Bucket("travel-sample")
 	collection := bucket.DefaultCollection()
 
 	// We wait until the bucket is definitely connected and setup.

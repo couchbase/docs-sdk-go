@@ -20,7 +20,7 @@ func main() {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("default")
+	bucket := cluster.Bucket("travel-sample")
 	collection := bucket.DefaultCollection()
 
 	err = bucket.WaitUntilReady(2*time.Second, nil)

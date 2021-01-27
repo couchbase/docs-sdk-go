@@ -1,0 +1,29 @@
+name: Build Code Examples
+
+on:
+  push:
+    branches: [release/2.2]
+    paths:
+    - "**/*.go"
+  pull_request:
+    branches: [release/2.2]
+    paths:
+    - "**/*.go"
+env:
+  GO_VERSION: 1.13
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Build code samples
+        run: cd modules && make build
