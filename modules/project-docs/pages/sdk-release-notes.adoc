@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.2.0
+$ go get github.com/couchbase/gocb/v2@v2.2.1
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -26,6 +26,31 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+
+== Version 2.2.1 (16 February 2021)
+
+Version 2.2.1 is a maintenance release for the Go SDK 2.2.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.1?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1017[GOCBC-1017]:
+Updated server endpoints for collections manager.
+* https://issues.couchbase.com/browse/GOCBC-1040[GOCBC-1040]:
+Updated json serialization of errors to include the underlying cause.
+* https://issues.couchbase.com/browse/GOCBC-1054[GOCBC-1054]:
+Updated `MutateIn` to allow a blank path with `RemoveSpec`.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1047[GOCBC-1047]:
+Fixed issue where `GetAllScopes` was not setting the max expiry value for any collections.
+* https://issues.couchbase.com/browse/GOCBC-1052[GOCBC-1052]:
+Fixed issue where `GetAllDesignDocuments` was ignoring the provided `namespace`.
+* https://issues.couchbase.com/browse/GOCBC-1061[GOCBC-1061]:
+Fixed issue where an extra, empty, origin was added to user roles on fetching the user.
 
 
 == Version 2.2.0 (15 December 2020)
