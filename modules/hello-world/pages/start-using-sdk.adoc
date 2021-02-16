@@ -21,7 +21,7 @@ You can use `go get` to download the SDK:
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.2.0
+$ go get github.com/couchbase/gocb/v2@v2.2.1
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
