@@ -28,10 +28,15 @@ func main() {
 		panic(err)
 	}
 
+	// creates the required view for the query
+	viewMgr := bucket.ViewIndexes()
+	createView(viewMgr)
+
 	// #tag::landmarksview[]
-	landmarksResult, err := bucket.ViewQuery("landmarks", "by_name", &gocb.ViewOptions{
-		Key:       "<landmark-name>",
-		Namespace: gocb.DesignDocumentNamespaceDevelopment,
+	landmarksResult, err := bucket.ViewQuery("landmarks-by-name", "by_name", &gocb.ViewOptions{
+		Key:             "Circle Bar",
+		Namespace:       gocb.DesignDocumentNamespaceDevelopment,
+		ScanConsistency: gocb.ViewScanConsistencyRequestPlus,
 	})
 	if err != nil {
 		panic(err)
@@ -65,6 +70,23 @@ func main() {
 	// #end::results[]
 
 	if err := cluster.Close(nil); err != nil {
+		panic(err)
+	}
+}
+
+func createView(viewMgr *gocb.ViewIndexManager) {
+	designDoc := gocb.DesignDocument{
+		Name: "landmarks-by-name",
+		Views: map[string]gocb.View{
+			"by_name": {
+				Map:    "function (doc, meta) { if (doc.type == 'landmark') { emit(doc.name, null); } }",
+				Reduce: "",
+			},
+		},
+	}
+
+	err := viewMgr.UpsertDesignDocument(designDoc, gocb.DesignDocumentNamespaceDevelopment, nil)
+	if err != nil {
 		panic(err)
 	}
 }

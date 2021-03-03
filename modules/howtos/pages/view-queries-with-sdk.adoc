@@ -24,18 +24,18 @@ TIP: See the xref:6.0@server:learn:views/views-writing.adoc[Incremental MapReduc
 
 Once you have a view defined, it can be queried from the Go SDK by using the `ViewQuery` method on a Bucket instance.
 
-The following example is the definition of a `by_name` view in a _"beer"_ design document.
-This view checks whether a document is a beer and has a name.
-If it does, it emits the beer's name into the index.
-This view allows beers to be queried for by name.
-For example, it's now possible to ask the question "What beers start with A?"
+The following example is the definition of a `by_country` view in a _"landmarks-by-country"_ design document.
+This view checks whether a document is a landmark and has a country.
+If it does, it emits the landmark's country into the index.
+This view allows landmarks to be queried for by country.
+For example, it's now possible to ask the question "What countries start with U?"
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/views-startkey.go[tag=beerview]
+include::devguide:example$go/views-startkey.go[tag=landmarksviewstart]
 ----
 
-The following example is the definition of a `by_name` view in a _"landmarks"_ design document in the _"travel-sample"_ sample dataset.
+The following example is the definition of a `by_name` view in a _"landmarks-by-name"_ design document in the _"travel-sample"_ sample dataset.
 This view checks whether a document is a landmark and has a name.
 If it does, it emits the landmark's name into the index.
 This view allows landmarks to be queried for by its _"name"_ field.

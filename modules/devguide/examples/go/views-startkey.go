@@ -14,8 +14,8 @@ func main() {
 			Password: "password",
 		},
 	}
-	// #tag::beerview[]
-	cluster, err := gocb.Connect("10.112.194.101", opts)
+	// #tag::landmarksviewstart[]
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
@@ -29,14 +29,20 @@ func main() {
 		panic(err)
 	}
 
-	viewResult, err := bucket.ViewQuery("beer", "by_name", &gocb.ViewOptions{
-		StartKey: "A",
-		Limit:    10,
+	// creates the required view for the query
+	viewMgr := bucket.ViewIndexes()
+	createView(viewMgr)
+
+	viewResult, err := bucket.ViewQuery("landmarks-by-country", "by_country", &gocb.ViewOptions{
+		StartKey:        "U",
+		Limit:           10,
+		Namespace:       gocb.DesignDocumentNamespaceDevelopment,
+		ScanConsistency: gocb.ViewScanConsistencyRequestPlus,
 	})
 	if err != nil {
 		panic(err)
 	}
-	// #end::beerview[]
+	// #end::landmarksviewstart[]
 
 	for viewResult.Next() {
 		row := viewResult.Row()
@@ -47,13 +53,13 @@ func main() {
 			panic(err)
 		}
 
-		var beer interface{}
-		err = row.Value(&beer)
+		var landmark interface{}
+		err = row.Value(&landmark)
 		if err != nil {
 			panic(err)
 		}
 
-		fmt.Printf("Beer named %s has value %v\n", key, beer)
+		fmt.Printf("Landmark named %s has value %v\n", key, landmark)
 	}
 
 	// always check for errors after iterating
@@ -63,6 +69,23 @@ func main() {
 	}
 
 	if err := cluster.Close(nil); err != nil {
+		panic(err)
+	}
+}
+
+func createView(viewMgr *gocb.ViewIndexManager) {
+	designDoc := gocb.DesignDocument{
+		Name: "landmarks-by-country",
+		Views: map[string]gocb.View{
+			"by_country": {
+				Map:    "function (doc, meta) { if (doc.type == 'landmark') { emit(doc.country, null); } }",
+				Reduce: "",
+			},
+		},
+	}
+
+	err := viewMgr.UpsertDesignDocument(designDoc, gocb.DesignDocumentNamespaceDevelopment, nil)
+	if err != nil {
 		panic(err)
 	}
 }

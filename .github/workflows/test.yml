@@ -1,30 +1,46 @@
-name: Run Code Examples
+name: Test Code Samples 
 
 on:
   push:
     branches: [release/2.2]
     paths:
-    - "/modules/**/*.bats"
-    - "/modules/**/*.go"
+      - 'modules/test/*'
+      - 'modules/Makefile'
+      - '**/*.go'
+      - '**/*.mod'
+      - '**/*.sum'
   pull_request:
     branches: [release/2.2]
     paths:
-    - "/modules/**/*.bats"
-    - "/modules/**/*.go"
-env:
-  CB_IMAGE: build-docker.couchbase.com/smallcb-sdks
-  CB_VERSION: cb7-sdk3-ub20
+      - 'modules/test/*'
+      - 'modules/Makefile'
+      - '**/*.go'
+      - '**/*.mod'
+      - '**/*.sum'
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      working-directory:
+        ./modules
 
     steps:
       - name: Checkout actions
         uses: actions/checkout@v2
 
-      - name: Run Couchbase Server
-        run: cd modules && CB_IMAGE=${{ env.CB_IMAGE }} CB_VERSION=${{ env.CB_VERSION }} make cb-run
+      - name: Build Couchbase Docker image
+        run: make cb-build
+        working-directory: ${{ env.working-directory }}
+
+      - name: Run Couchbase Server+SDK container
+        run: make cb-start
+        working-directory: ${{ env.working-directory }}
 
       - name: Test code samples
-        run: make tests
+        run: make tests 
+        working-directory: ${{ env.working-directory }}
+      
+      - name: Cleanup
+        run: make cb-stop
+        working-directory: ${{ env.working-directory }}

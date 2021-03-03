@@ -3,8 +3,8 @@
 GO_VERSION ?="1.13"
 GOCB_VERSION ?="v2.2.1"
 
-CB_IMAGE = build-docker.couchbase.com/smallcb-sdks
-CB_VERSION = cb7-sdk3-ub20
+CB_IMAGE=couchbase
+CB_VERSION=cb7-sdk3-go-ub20
 
 TEST_NAME=""
 
@@ -27,26 +27,30 @@ update-versions:
 	@./test/scripts/update-versions.sh howtos/examples ${GO_VERSION} ${GOCB_VERSION}
 	@./test/scripts/update-versions.sh project-docs/examples ${GO_VERSION} ${GOCB_VERSION}
 
+
 # -------------------------------------------
 # DOCKER
 # -------------------------------------------
+cb-build:
+	@docker build --network host -t ${CB_IMAGE}:${CB_VERSION} -f test/Dockerfile .
 
-# Run couchbase server+sdks container. Note that this runs with the `-rm` option, 
+# Run couchbase server+sdk container. Note that this runs with the `-rm` option, 
 # which will ensure the container is deleted when stopped.
-cb-run:
-	@docker run -it --rm -v ${PWD}:/modules -d --name cb-test -p 8091-8096:8091-8096 ${CB_IMAGE}:${CB_VERSION}
-	@docker exec cb-test bin/bash -c "cp -r /modules/test/scripts/init-couchbase ."
-	@docker exec cb-test bin/bash -c "/init-couchbase/init.sh"
-	@docker exec cb-test bin/bash -c "/init-couchbase/init-buckets.sh"
+cb-start:
+	@docker run -t --rm -v ${PWD}:/modules -d --name cb-test -p 8091-8096:8091-8096 ${CB_IMAGE}:${CB_VERSION}
+	@docker exec -t cb-test bin/bash -c "/init-couchbase/init.sh"
+	@docker exec -t cb-test bin/bash -c "/init-couchbase/init-buckets.sh"
 
-# Run tests
+# Run all tests
 tests:
-	@docker exec -it cb-test bin/bash -c "cd modules && bats ./test"
+	@cd test && npm install
+	@docker exec -t cb-test bin/bash -c "cd modules && bats -T ./test"
 
 # Run a single test.
 # i.e make TEST_NAME="analytics-named-placeholders.go" single-test
 single-test:
-	@docker exec -it cb-test bin/bash -c "cd modules && bats ./test -f ${TEST_NAME}"
+	@cd test && npm install
+	@docker exec -t cb-test bin/bash -c "cd modules && bats -T ./test -f ${TEST_NAME}"
 	
 # Stop the server container
 cb-stop:

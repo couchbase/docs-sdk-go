@@ -4,11 +4,11 @@ CB_USER="${CB_USER:-Administrator}"
 CB_PSWD="${CB_PSWD:-password}"
 CB_HOST="${CB_HOST:-127.0.0.1}"
 CB_PORT="${CB_PORT:-8091}"
-CB_NAME="${CB_NAME:-play}"
+CB_NAME="${CB_NAME:-docs-test}"
 
 CB_SERVICES="${CB_SERVICES:-data,query,index,fts,analytics}"
 
-CB_KV_RAMSIZE="${CB_KV_RAMSIZE:-512}"
+CB_KV_RAMSIZE="${CB_KV_RAMSIZE:-1024}"
 CB_INDEX_RAMSIZE="${CB_INDEX_RAMSIZE:-256}"
 CB_FTS_RAMSIZE="${CB_FTS_RAMSIZE:-256}"
 CB_EVENTING_RAMSIZE="${CB_EVENTING_RAMSIZE:-0}"
@@ -57,7 +57,6 @@ fi
 
 sleep 3
 
-echo "Reconfiguring indexer..."
 curl -v -X POST -d @/init-couchbase/init-indexer.json \
 http://${CB_USER}:${CB_PSWD}@${CB_HOST}:${CB_INDEXER_PORT}/internal/settings?internal=ok
 

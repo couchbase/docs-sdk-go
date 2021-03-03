@@ -47,7 +47,7 @@ func createBucket(bucketMgr *gocb.BucketManager) {
 			Name:                 "hello",
 			FlushEnabled:         false,
 			ReplicaIndexDisabled: true,
-			RAMQuotaMB:           200,
+			RAMQuotaMB:           150,
 			NumReplicas:          1,
 			BucketType:           gocb.CouchbaseBucketType,
 		},
@@ -84,6 +84,10 @@ func removeBucket(bucketMgr *gocb.BucketManager) {
 }
 
 func flushBucket(bucketMgr *gocb.BucketManager) {
+	// allow some time before flushing the bucket as example code
+	// runs fairly quickly.
+	time.Sleep(5 * time.Second)
+
 	// #tag::flushBucket[]
 	err := bucketMgr.FlushBucket("hello", nil)
 	if err != nil {
