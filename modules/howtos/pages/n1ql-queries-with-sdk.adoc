@@ -42,7 +42,7 @@ NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connec
 Let's break it down. A query is always performed at the `Cluster` level, using the `Query` method.
 It takes the statement as a required argument and then allows to provide additional options if needed (in the example above, no options are specified).
 
-Once a result returns you can iterate the returned rows and/or access the `QueryMetaData` associated with the query.
+Once a result returns you can iterate the returned rows and then access the `QueryMetaData` associated with the query (note that rows must be iterated before access to `QueryMetaData` is allowed).
 
 
 == Queries & Placeholders
