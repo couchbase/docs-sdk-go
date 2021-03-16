@@ -13,9 +13,9 @@ The analytics service is available in Couchbase Data Platform 6.0 and later (dev
 == Getting Started
 
 After familiarizing yourself with our xref:6.5@server:analytics:primer-beer.adoc[introductory primer],
-in particular creating a dataset and linking it to a bucket to shadow the operational data, 
+in particular creating a dataset and linking it to a bucket to shadow the operational data,
 try Couchbase Analytics using the Go SDK.
-Intentionally, the API for analytics is very similar to that of the query service. 
+Intentionally, the API for analytics is very similar to that of the query service.
 In these examples we will be using an `airports` dataset created on the `travel-sample` bucket.
 
 In Go SDK 1.x, Analytics was only available on the `Bucket` object;
@@ -30,7 +30,7 @@ include::example$analytics.go[tag=query]
 
 == Queries
 
-A query can either be `simple` or be `parameterized`. If parameters are used, they can either be `positional` or `named`. 
+A query can either be `simple` or be `parameterized`. If parameters are used, they can either be `positional` or `named`.
 Here is one example of each:
 
 [source,golang,indent=0]
@@ -62,9 +62,9 @@ Additional parameters may be sent as part of the query.
 There are currently three parameters:
 
 * *Client Context ID*, sets a context ID that is returned back as part of the result.
-Uses `ClientContextID string` default is a random UUID 
+Uses `ClientContextID string` default is a random UUID
 * *Timeout*, customizes the timeout sent to the server.
-Does not usually have to be set, as the client sets it based on the timeout on the operation. 
+Does not usually have to be set, as the client sets it based on the timeout on the operation.
 Uses `Timeout time.Duration`, and defaults to the Analytics timeout set on the client (75s).
 This can be adjusted at the xref:ref:client-settings.adoc#timeout-options[cluster global config level].
 * *Priority*, set if the request should have priority over others.
@@ -81,9 +81,9 @@ include::example$analytics.go[tag=options]
 
 == Handling the Response
 
-These query result may contain various sorts of data and metadata, 
-depending upon the nature of the query, 
-as you will have seen when working through our xref:6.5@server:analytics:primer-beer.adoc[introductory primer]. 
+These query result may contain various sorts of data and metadata,
+depending upon the nature of the query,
+as you will have seen when working through our xref:6.5@server:analytics:primer-beer.adoc[introductory primer].
 
 Results are iterated using the `Next` function.
 Within the `for` loop the result is read using the `Row` by supplying a pointer to the variable in which to store the value.
@@ -97,7 +97,7 @@ include::devguide:example$go/analytics-simple-query.go[tag=results]
 // Move these to Error reference doc?
 Common errors are listed in our xref:ref:error-codes.adoc#analytics-errors[Errors Reference doc], with errors caused by resource unavailability (such as timeouts and _Operation cannot be performed during rebalance_ messages) leading to an xref:howtos:error-handling.adoc#retry[automatic retry] by the SDK.
 
-If you only expect a single result or only want to use the first result in a results set then you can use `One` 
+If you only expect a single result or only want to use the first result in a results set then you can use `One`
 (note: this function will iterate any remaining rows in the resultset so can only be called once and should only be used on small results sets):
 
 [source,golang,indent=0]
@@ -131,7 +131,36 @@ For a listing of available `Metrics` in `MetaData`, see the xref:concept-docs:an
 
 
 
-== Additional Resources 
+== Scoped Queries on Named Collections
+
+In addition to creating a dataset with a WHERE clause to filter the results to documents with certain characteristics, you can also create a dataset against a named collection, for example:
+
+[source,n1ql]
+----
+ALTER COLLECTION `travel-sample`.inventory.airport ENABLE ANALYTICS;
+
+-- NB: this is more or less equivalent to:
+CREATE DATAVERSE `travel-sample`.inventory;
+CREATE DATASET `travel-sample`.inventory.airport ON `travel-sample`.inventory.airport;
+----
+
+We can then query the Dataset as normal, using the fully qualified keyspace:
+
+[source,go]
+----
+include::devguide:example$go/analytics-collection-scope.go[tag=handle-collection,indent=0]
+----
+
+Note that using the `CREATE DATASET` syntax we could choose any Dataset name in any Dataverse, including the default.
+However the SDK supports this standard convention, allowing us to query from the Scope object:
+
+[source,go]
+----
+include::devguide:example$go/analytics-collection-scope.go[tag=handle-scope,indent=0]
+----
+
+
+== Additional Resources
 
 To learn more about using N1QL for Analytics -- the first commercial implementation of SQL\++ -- see our https://sqlplusplus-tutorial.couchbase.com/tutorial/#1[Tutorial Introduction to SQL++ for SQL users].
 
