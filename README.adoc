@@ -41,11 +41,15 @@ See the contributing guide to learn more.
 
 == Documentation Code Sample Testing
 
-To ensure that the code samples included in the documentation are correct and produce the results we expect, we have setup scripts that build and test each example file. For testing we use the https://github.com/bats-core/bats-core[bats-core] automation framework to run the code and https://github.com/ztombol/bats-assert[bats-assert] assertion library to make assertions on the output where necessary.
+To ensure that the code samples included in the documentation are correct and produce the results we expect, we have setup scripts that build and test each example file.
+
+For testing we use the https://github.com/bats-core/bats-core[bats-core] automation framework to run the code and https://github.com/ztombol/bats-assert[bats-assert] assertion library to make assertions on the output where necessary.
 
 The tests run against the latest Couchbase Server docker image with the relevant SDK (Go in this case) provided alongside it.
 
-To fascilitate running the tests there is a `Makefile` in the `/modules` directory of the project. There you will find all the relevant commands needed to execute the docker container and the test/build scripts.
+To facilitate running the tests there is a `Makefile` in the `/modules` directory of the project.
+
+There you will find all the relevant commands needed to execute the docker container and the test/build scripts.
 
 === Running a test
 Before you can run the tests you will need to ensure you have Docker and npm available on your machine.
@@ -56,9 +60,11 @@ TIP: After your first build of the docker image you won't need to build it every
 
 Here are the steps required to achieve this:
 
-- cd into the `/modules` directory and run `make cb-build` to build a local image of Couchbase Server + Go SDK.
+- `cd` into the `/modules` directory and run `make cb-build` to build a local image of Couchbase Server + Go SDK.
 
-- Once that has completed succesfully you can run `cb-start` to run the docker container. Note that this can take some time as it will configure couchbase server with all the required test data (e.g travel-sample bucket) for the examples to run successfully. 
+- Once that has completed succesfully you can run `cb-start` to run the docker container.
+
+Note that this can take some time as it will configure couchbase server with all the required test data (e.g. travel-sample bucket) for the examples to run successfully.
 
 - If you run `docker ps` in a separate shell you should see a container called `cb-test` running.
 ```
@@ -82,7 +88,8 @@ TIP: Because we mount the `/modules` directory in the `cb-test` container, you w
 === Creating a new test
 If you look at the `/modules/test` directory you will find files with the *.bats* extension, which are essentially our test files.
 
-Depending on where your code sample is going to be located (e.g `/modules/devguide`), you will see a corresponding test file in the test directory. This is mainly to keep the tests organised and easy to find.
+Depending on where your code sample is going to be located (e.g. `/modules/devguide`), you will see a corresponding test file in the test directory. 
+This is mainly to keep the tests organised and easy to find.
 
 Here is an example test case:
 ```
@@ -95,13 +102,16 @@ Here is an example test case:
 
 *runExample* is simply a helper function provided in `test_helper.bash`, which takes care of invoking your `go run` command. The idea is that any generic test functions can be placed there to be used across any test.
 
-*assert_success* is a helper function provied by the `bats-assert` library and checks wether your command has successfully exited with a status of 0. If not, it will fail the test.
+*assert_success* is a helper function provied by the `bats-assert` library and checks whether your command has successfully exited with a status of 0. 
+If not, it will fail the test.
 
-*assert_output --partial* is another bats-assert helper that checks if the output of your code sample contains the substring provided. The assertion will fail if the string is not found.
+*assert_output --partial* is another bats-assert helper that checks if the output of your code sample contains the substring provided. 
+The assertion will fail if the string is not found.
 
 Note that it will not always be necessary to assert the output of your code sample, in those cases just using `assert_success` will be enough.
 
 If you want to run all the code sample tests you can also execute `make tests`.
 
 === CI - Github Actions
-When submitting a PR, the code sample tests will run against your changes in the same manner as your local machine using Github Actions. You can see the workflow definitions in the `.github` folder.
+When submitting a PR, the code sample tests will run against your changes in the same manner as your local machine using Github Actions. 
+You can see the workflow definitions in the `.github` folder.
