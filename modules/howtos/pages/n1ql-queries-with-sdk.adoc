@@ -184,17 +184,16 @@ CAUTION: This feature is marked xref:project-docs:compatibility.adoc#interface-s
 Expect a promotion to _Committed_ API in a future release.
 
 The code snippet below shows how to run a simple query to fetch 10 random rows from travel-sample and print the results, 
-the assumption is that the `airline` collection exists within a scope `us`.
+the assumption is that the `airline` collection exists within a scope `myScope`.
 
 [source,golang]
 ----
-myCollection := "airline"
-query := fmt.Sprintf("SELECT x.* FROM %s x LIMIT 10;", myCollection)
-        rows, err := us.Query(query, &gocb.QueryOptions{})
-        // check query was successful
-        if err != nil {
-                panic(err)
-        }
+myScope := cluster.Bucket("mybucket").Scope("myscope")
+rows, err := myScope.Query("SELECT x.* FROM `airline` x LIMIT 10;", &gocb.QueryOptions{})
+// check query was successful
+if err != nil {
+        panic(err)
+}
 ----
 
 A complete list of `QueryOptions` can be found in the https://pkg.go.dev/github.com/couchbase/gocb/v2#Scope.Query[API docs].
