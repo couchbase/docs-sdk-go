@@ -5,7 +5,7 @@
 [abstract]
 Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
 
-For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operations, Couchbase Data Platform offers the xref:6.5@server:analytics:introduction.adoc[Couchbase Analytics Service (CBAS)].
+For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operations, Couchbase Data Platform offers the xref:6.6@server:analytics:introduction.adoc[Couchbase Analytics Service (CBAS)].
 This is the analytic counterpart to our xref:n1ql-queries-with-sdk.adoc[operational data focussed Query Service].
 The analytics service is available in Couchbase Data Platform 6.0 and later (developer preview in 5.5).
 
@@ -27,6 +27,7 @@ NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connec
 ----
 include::example$analytics.go[tag=query]
 ----
+
 
 == Queries
 
@@ -69,7 +70,6 @@ Uses `Timeout time.Duration`, and defaults to the Analytics timeout set on the c
 This can be adjusted at the xref:ref:client-settings.adoc#timeout-options[cluster global config level].
 * *Priority*, set if the request should have priority over others.
 The `Priority bool` option defaults to `false`.
-
 
 Here, we give the request priority over others, and set a custom, server-side timeout value:
 
@@ -126,9 +126,7 @@ Here is a snippet using several items of metadata
 include::devguide:example$go/analytics-simple-query.go[tag=metadata]
 ----
 
-
 For a listing of available `Metrics` in `MetaData`, see the xref:concept-docs:analytics-for-sdk-users.adoc[Understanding Analytics] SDK doc.
-
 
 
 == Scoped Queries on Named Collections
@@ -163,5 +161,3 @@ include::devguide:example$go/analytics-collection-scope.go[tag=handle-scope,inde
 == Additional Resources
 
 To learn more about using N1QL for Analytics -- the first commercial implementation of SQL\++ -- see our https://sqlplusplus-tutorial.couchbase.com/tutorial/#1[Tutorial Introduction to SQL++ for SQL users].
-
-
