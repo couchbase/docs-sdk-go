@@ -1,0 +1,46 @@
+name: Test Code Samples 
+
+on:
+  push:
+    branches: [release/2.2]
+    paths:
+      - 'modules/test/*'
+      - 'modules/Makefile'
+      - '**/*.go'
+      - '**/*.mod'
+      - '**/*.sum'
+  pull_request:
+    branches: [release/2.2]
+    paths:
+      - 'modules/test/*'
+      - 'modules/Makefile'
+      - '**/*.go'
+      - '**/*.mod'
+      - '**/*.sum'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      working-directory:
+        ./modules
+
+    steps:
+      - name: Checkout actions
+        uses: actions/checkout@v2
+
+      - name: Build Couchbase Docker image
+        run: make cb-build
+        working-directory: ${{ env.working-directory }}
+
+      - name: Run Couchbase Server+SDK container
+        run: make cb-start
+        working-directory: ${{ env.working-directory }}
+
+      - name: Test code samples
+        run: make tests 
+        working-directory: ${{ env.working-directory }}
+      
+      - name: Cleanup
+        run: make cb-stop
+        working-directory: ${{ env.working-directory }}

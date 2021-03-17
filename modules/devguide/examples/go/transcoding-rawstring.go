@@ -16,7 +16,7 @@ func main() {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("default")
+	bucket := cluster.Bucket("travel-sample")
 
 	collection := bucket.DefaultCollection()
 

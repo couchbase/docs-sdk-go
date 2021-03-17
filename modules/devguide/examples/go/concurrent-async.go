@@ -26,7 +26,7 @@ func main() {
 		panic(err)
 	}
 
-	bucket := cluster.Bucket("default")
+	bucket := cluster.Bucket("travel-sample")
 	collection := bucket.DefaultCollection()
 
 	// We wait until the bucket is connected and setup.

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/couchbase/gocb/v2"
+	gocb "github.com/couchbase/gocb/v2"
 	"github.com/couchbase/gocb/v2/search"
 )
 
@@ -17,7 +17,7 @@ func main() {
 		},
 	}
 	// #tag::matchquery[]
-	cluster, err := gocb.Connect("172.23.111.3", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
@@ -34,7 +34,7 @@ func main() {
 	}
 
 	matchResult, err := cluster.SearchQuery(
-		"travel-sample-index-hotel-description",
+		"travel-sample-index",
 		search.NewMatchQuery("swanky"),
 		&gocb.SearchOptions{
 			Limit:  10,
@@ -70,7 +70,7 @@ func main() {
 
 	// #tag::daterangequery[]
 	dateRangeResult, err := cluster.SearchQuery(
-		"travel-sample-index-hotel-description",
+		"travel-sample-index",
 		search.NewDateRangeQuery().Start("2019-01-01", true).End("2019-02-01", false),
 		&gocb.SearchOptions{
 			Limit: 10,
@@ -91,7 +91,7 @@ func main() {
 			panic(err)
 		}
 
-		fmt.Printf("Document ID: %s, search score: %f, fields included in result: %v\n", docID, score, fields)
+		fmt.Printf("Document ID: %s, search score: %f, fields included in range result: %v\n", docID, score, fields)
 	}
 
 	// always check for errors after iterating
@@ -102,7 +102,7 @@ func main() {
 
 	// #tag::conjunctionquery[]
 	conjunctionResult, err := cluster.SearchQuery(
-		"travel-sample-index-hotel-description",
+		"travel-sample-index",
 		search.NewConjunctionQuery(
 			search.NewMatchQuery("swanky"),
 			search.NewDateRangeQuery().Start("2019-01-01", true).End("2019-02-01", false),
@@ -127,7 +127,7 @@ func main() {
 			panic(err)
 		}
 
-		fmt.Printf("Document ID: %s, search score: %f, fields included in result: %v\n", docID, score, fields)
+		fmt.Printf("Document ID: %s, search score: %f, fields included in conjunction result: %v\n", docID, score, fields)
 	}
 
 	// always check for errors after iterating
@@ -138,7 +138,7 @@ func main() {
 
 	// #tag::iteratingfacets[]
 	facetsResult, err := cluster.SearchQuery(
-		"my-facet-index",
+		"travel-sample-index",
 		search.NewMatchAllQuery(),
 		&gocb.SearchOptions{
 			Limit: 10,
@@ -176,9 +176,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	time.Sleep(5 * time.Second)
 
 	consistentWithResult, err := cluster.SearchQuery(
-		"travel-sample-index-hotel-description",
+		"travel-sample-index",
 		search.NewMatchQuery("swanky"),
 		&gocb.SearchOptions{
 			Limit:          10,
