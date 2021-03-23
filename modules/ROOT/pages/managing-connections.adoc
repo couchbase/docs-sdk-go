@@ -141,3 +141,9 @@ include::6.0@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
 To use DNS SRV in the Go SDK, simply pass the single bootstrap node (in this case `couchbase://example.com`).
 DNS SRV lookup will not be performed if there is more than a single node in the bootstrap list.
+
+
+== Cloud Connections
+
+Connecting to  couchbase Cloud requires TLS and DNs-SRV, as detailed above.
+Additionally, if you are using a xref:cloud:clouds:private-network.adoc[private network], for Go SDK 1.6.x you will need to set `network=default` in the connection string.
