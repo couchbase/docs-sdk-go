@@ -187,6 +187,21 @@ include::devguide:example$go/kv-counter.go[tag=decrement]
 
 NOTE: Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change.
 
+== Scoped KV Operations
+
+It is possible to perform scoped key-value operations on named xref:7.0@server:learn:data/scopes-and-collections.adoc[`Collections`] _with the beta version of the next Couchbase Server release, 7.0β_.
+See the https://pkg.go.dev/github.com/couchbase/gocb/v2#Collection[API docs] for more information.
+
+CAUTION: This feature is marked xref:project-docs:compatibility.adoc#interface-stability[_Uncommitted_].
+Expect a promotion to _Committed_ API in a future minor release.
+
+Here is an example showing an upsert in the `users` collection, which lives in the `travel-sample.tenant_agent_00` keyspace:
+
+[source,go]
+----
+include::devguide:example$go/kv-collection-scope.go[tag=namedcollectionupsert, indent=0]
+----
+
 == Additional Resources
 
 Working on just a specific path within a JSON document will reduce network bandwidth requirements - see the xref:subdocument-operations.adoc[Sub-Document] pages.
