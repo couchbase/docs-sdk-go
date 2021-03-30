@@ -197,7 +197,7 @@ Expect a promotion to _Committed_ API in a future minor release.
 
 Here is an example showing an upsert in the `users` collection, which lives in the `travel-sample.tenant_agent_00` keyspace:
 
-[source,go]
+[source,golang]
 ----
 include::devguide:example$go/kv-collection-scope.go[tag=namedcollectionupsert, indent=0]
 ----
