@@ -14,6 +14,12 @@ load 'test/test_helper.bash'
    assert_output --partial "map[greeting:hello]"
 }
 
+@test "[howtos] - collection-manager.go" {
+   runExample $HOWTOS_DIR collection-manager.go
+   assert_success
+   assert_output --partial "drop-scope"
+}
+
 @test "[howtos] - subdoc.go" {
     echo "create example document"
     cbimport json --verbose \

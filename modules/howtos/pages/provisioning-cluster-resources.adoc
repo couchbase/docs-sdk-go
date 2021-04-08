@@ -13,7 +13,7 @@ The Go SDK also comes with some convenience functionality for common Couchbase m
 Management operations in the SDK may be performed through several interfaces depending on the object:
 
 * BucketManager -- `Cluster.Buckets()`
-* UserManager -- `Cluster.Users()` 
+* UserManager -- `Cluster.Users()`
 // see xref
 * QueryIndexManager -- `Cluster.QueryIndexes()`
 * AnalyticsIndexManager -- `Cluster.AnalyticsIndexes()`
@@ -58,7 +58,7 @@ The following example creates a "hello" bucket:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/provisioning-resources-buckets.go[tag=createBucket]	
+include::devguide:example$go/provisioning-resources-buckets.go[tag=createBucket]
 ----
 
 We can now get this bucket and update it to enable Flush:
@@ -91,7 +91,52 @@ The `Flush` operation may fail if the bucket does not have flush enabled, in tha
 
 == Collection Management
 
-This is a xref:6.5@server:developer-preview:collections/collections-overview.adoc[Developer Preview feature], see the https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Bucket.Collections[API doc].
+[.status]#Developer Preview#
+
+The CollectionManager interface may be used to create and delete scopes and collections from the Couchbase cluster.
+It is instantiated through the `Bucket.Collections()` method.
+Refer to the https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Bucket.Collections[`CollectionManager` API documentation]
+for further details.
+
+[source,golang]
+----
+include::example$collection-manager.go[tag=create-collection-manager,indent=0]
+----
+
+You can create a scope:
+
+[source,golang]
+----
+include::example$collection-manager.go[tag=create-scope,indent=0]
+----
+
+You can then create a collection within that scope:
+
+[source,golang]
+----
+include::example$collection-manager.go[tag=create-collection,indent=0]
+----
+
+Finally, you can drop unneeded collections and scopes:
+
+[source,golang]
+----
+include::example$collection-manager.go[tag=drop-collection,indent=0]
+
+include::example$collection-manager.go[tag=drop-scope,indent=0]
+----
+
+Note that you require at least the https://docs.couchbase.com/server/7.0/learn/security/roles.html#bucket-admin[Bucket Admin] privilege to create or drop a Scope.
+The same role also lets you manage Collections, though a more minimal set of privileges is https://docs.couchbase.com/server/7.0/learn/security/roles.html#manage-collections-in-scope[Manage Collections in Scope] along with https://docs.couchbase.com/server/7.0/learn/security/roles.html#data-reader[Data Reader].
+
+You can create users with the appropriate RBAC programmatically:
+[source,golang]
+----
+include::example$collection-manager.go[tag=bucketAdmin, indent=0]
+
+include::example$collection-manager.go[tag=scopeAdmin, indent=0]
+----
+
 
 == Index Management
 
