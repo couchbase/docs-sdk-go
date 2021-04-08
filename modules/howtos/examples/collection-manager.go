@@ -42,7 +42,7 @@ func main() {
 		panic(err)
 	}
 
-	// // For Server versions 6.5 or later you do not need to open a bucket here
+	// For Server versions 6.5 or later you do not need to open a bucket here
 	b := cluster.Bucket("travel-sample")
 
 	// We wait until the bucket is definitely connected and setup.
