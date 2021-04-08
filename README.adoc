@@ -62,7 +62,7 @@ Here are the steps required to achieve this:
 
 - `cd` into the `/modules` directory and run `make cb-build` to build a local image of Couchbase Server + Go SDK.
 
-- Once that has completed succesfully you can run `cb-start` to run the docker container.
+- Once that has completed succesfully you can run `make cb-start` to run the docker container.
 
 Note that this can take some time as it will configure couchbase server with all the required test data (e.g. travel-sample bucket) for the examples to run successfully.
 
@@ -80,6 +80,8 @@ ed861cf827ec   couchbase:cb7-sdk3-go-ub20   "/entrypoint.sh couc…"   51 minute
 
 1 test, 0 failures in 1 seconds
 ```
+
+- If you want to run all the code sample tests you can also execute `make tests`.
 
 - To stop the docker container you can simply run `make cb-stop`, this will stop and remove the docker container, but will keep the local image should you need to start it up again.
 
@@ -110,8 +112,7 @@ The assertion will fail if the string is not found.
 
 Note that it will not always be necessary to assert the output of your code sample, in those cases just using `assert_success` will be enough.
 
-If you want to run all the code sample tests you can also execute `make tests`.
-
 === CI - Github Actions
-When submitting a PR, the code sample tests will run against your changes in the same manner as your local machine using Github Actions. 
+When submitting a PR, the code sample tests will run against your changes in the same manner as your local machine using Github Actions.
+
 You can see the workflow definitions in the `.github` folder.

@@ -265,3 +265,8 @@ EOF
     assert_success
     assert_output --partial "$EXPECTED_OUTPUT"
 }
+
+@test "[devguide] - kv-collection-scope.go" {
+    runExample $DEVGUIDE_DIR kv-collection-scope.go
+    assert_success
+}
