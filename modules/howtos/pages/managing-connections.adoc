@@ -198,3 +198,5 @@ If the DNS SRV records could not be loaded properly you'll get the exception log
 Also, if you pass in more than one node, DNS SRV bootstrap will not be attempted.
 
 include::6.5@sdk:shared:partial$managing-connections.adoc[tag=cloud]
+
+NOTE: Connection to Couchbase Cloud requires Couchbase Go SDK 2.0 and up, unless you use a xref:1.6@go-sdk:managing-connections.adoc#cloud-connections[workaround in 1.6].
