@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.2.2
+$ go get github.com/couchbase/gocb/v2@v2.2.3
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -26,6 +26,35 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.2.3 (20 April 2021)
+
+Version 2.2.3 is a maintenance release for the Go SDK 2.2.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.3?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1071[GOCBC-1071]:
+Updated SDK to use new protocol level changes for get collection id.
+* https://issues.couchbase.com/browse/GOCBC-1068[GOCBC-1068]:
+Dropped log level to warn for when applying a cluster config object is preempted.
+* https://issues.couchbase.com/browse/GOCBC-1079[GOCBC-1079]:
+During bootstrap don't retry authentication if the error is request cancelled.
+* https://issues.couchbase.com/browse/GOCBC-1081[GOCBC-1081]:
+During CCCP polling don't retry request if the error is request cancelled.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1074[GOCBC-1074]:
+Fixed issue where threshold log tracer was missing fields in log output.
+* https://issues.couchbase.com/browse/GOCBC-1080[GOCBC-1080]:
+Fixed issue where SDK would always rebuild connections on first cluster config fetched against server 7.0.
+* https://issues.couchbase.com/browse/GOCBC-1082[GOCBC-1082]:
+Fixed issue where bootstrapping a node during an SDK wide reconnect would cause a delay in connecting to that node.
+* https://issues.couchbase.com/browse/GOCBC-1088[GOCBC-1088]:
+Fixed issue where the poller controller could deadlock if a node reported a bucket not found at the same time as CCCP successfully fetched a cluster config for the first time.
+
 
 == Version 2.2.2 (16 March 2021)
 
