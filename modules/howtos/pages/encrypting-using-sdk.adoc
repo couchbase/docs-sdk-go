@@ -1,10 +1,11 @@
 = Field Level Encryption from the Go SDK
+:description: A practical guide for getting started with Field-Level Encryption, showing how to encrypt and decrypt JSON fields using the Go SDK.
 :page-topic-type: howto
 :page-edition: Enterprise Edition
 // :page-aliases: ROOT:encrypting-using-sdk.adoc
 
 [abstract]
-A practical guide for getting started with Field-Level Encryption, showing how to encrypt and decrypt JSON fields using the Go SDK.
+{description}
 
 For a high-level overview of this feature, see xref:concept-docs:encryption.adoc[].
 

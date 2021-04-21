@@ -1,10 +1,11 @@
 = Non-JSON Documents
+:description: Binary formats & Transcoders
 :nav-title: Non-JSON
 :page-aliases: ROOT:nonjson
 :page-topic-type: concept
 
 [abstract]
-Binary formats & Transcoders
+{description}
 
 include::6.5@sdk:shared:partial$nonjson.adoc[tag=intro]
 

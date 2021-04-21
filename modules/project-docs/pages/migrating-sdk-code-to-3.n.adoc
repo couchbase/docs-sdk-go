@@ -1,10 +1,11 @@
 = Migrating from Go SDK 1.x to SDK 2.0
+:description: The SDK 3.0 API used in Go SDK 2.0 breaks the existing 2.0 APIs (used in Go SDK 1.6) in order to provide a number of improvements.
 :nav-title: Migrating to the SDK 3.0 API
 :page-topic-type: concept
 :page-aliases: ROOT:migrate
 
 [abstract]
-The SDK 3.0 API used in Go SDK 2.0 breaks the existing 2.0 APIs (used in Go SDK 1.6) in order to provide a number of improvements.
+{description}
 Collections and Scopes are introduced.
 The Document class and structure has been completely removed from the API, and the returned values are now typically `Result` type objects.
 Retry behaviour is more proactive, and lazy bootstrapping moves all error handling to a single place.

@@ -1,10 +1,11 @@
 = Key Value Operations
+:description: The complete code sample used on this page can be downloaded from https://github.com/couchbase/docs-sdk-go/blob/release/2.1/modules/devguide/examples/go/kv-crud.go[here] \
+-- from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Collection operations.
 :navtitle: KV Operations
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
 
-The complete code sample used on this page can be downloaded from https://github.com/couchbase/docs-sdk-go/blob/release/2.1/modules/devguide/examples/go/kv-crud.go[here]
--- from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Collection operations.
+{description}
 
 
 == Documents

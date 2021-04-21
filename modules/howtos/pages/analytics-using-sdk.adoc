@@ -1,9 +1,10 @@
 = Analytics using the Go SDK
+:description: Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
 :page-topic-type: howto
 :page-edition: Enterprise Edition
 
 [abstract]
-Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
+{description}
 
 For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operations, Couchbase Data Platform offers the xref:6.6@server:analytics:introduction.adoc[Couchbase Analytics Service (CBAS)].
 This is the analytic counterpart to our xref:n1ql-queries-with-sdk.adoc[operational data focussed Query Service].

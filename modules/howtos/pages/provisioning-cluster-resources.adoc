@@ -1,9 +1,10 @@
 = Provisioning Cluster Resources
+:description: Provisioning cluster resources is managed at the collection or bucket level, depending upon the service affected.
 :navtitle: Provisioning Cluster Resources
 :page-aliases: ROOT:managing-clusters
 
 [abstract]
-Provisioning cluster resources is managed at the collection or bucket level, depending upon the service affected.
+{description}
 Common use cases are outlined here, more recherché use cases are covered in the https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc[API docs].
 
 include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]

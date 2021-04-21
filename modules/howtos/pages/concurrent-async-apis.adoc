@@ -1,11 +1,12 @@
 = Choosing an API
+:description: The Go SDK offers a synchronous blocking interface but this does not stop you from using it asynchronously, \
+or from performing bulk operations concurrently.
 :navtitle: Choosing an API
 :page-topic-type: howto
 :page-aliases: ROOT:async-programming,ROOT:batching-operations,multiple-apis
 
 [abstract]
-The Go SDK offers a synchronous blocking interface but this does not stop you from using it asynchronously, 
-or from performing bulk operations concurrently. 
+{description}
 By using goroutines you can call into the SDK aynchronously and by using the `BulkOp` API you
 can batch multiple operations into a single SDK call which executes concurrently behind the scenes.
 

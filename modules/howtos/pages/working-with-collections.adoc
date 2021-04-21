@@ -1,10 +1,11 @@
 = Working with the  Collections Developer Preview
+:description: Collections is introduced as a Developer Preview feature in Couchbase Server 6.5.
 :nav-title: Collections DP
 :content-type: howto
 :page-topic-type: howto
 
 [abstract]
-Collections is introduced as a Developer Preview feature in Couchbase Server 6.5.
+{description}
 The 3.0 API SDKs (including Go SDK 2.0.x) all work with Collections and Scopes.
 As a practical demonstration, we have a collections-enabled version of the Travel Sample application.
 

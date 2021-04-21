@@ -1,6 +1,7 @@
 = Collections
+:description: pass:q[Available as a _Developer Preview_ in Couchbase Server 6.5.]
 
 [abstract]
-Available as a _Developer Preview_ in Couchbase Server 6.5.
+{description}
 
 Please see the xref:6.5@server:developer-preview:collections/collections-overview.adoc[Collections Overview documents] in the Server docs.

@@ -1,10 +1,11 @@
 = Managing Connections using the Go SDK and Couchbase Server
+:description: This section describes how to connect the Go SDK to a Couchbase cluster.
 :navtitle: Managing Connections
 :page-topic-type: concept
 :page-aliases: ROOT:managing-connections,howtos:multi-network,ROOT:connecting,ROOT:connection-advanced
 
 [abstract]
-This section describes how to connect the Go SDK to a Couchbase cluster.
+{description}
 It contains best practices as well as information on TLS/SSL and other advanced connection options.
 
 == Connecting to a Cluster

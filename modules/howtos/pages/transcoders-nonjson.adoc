@@ -1,9 +1,10 @@
 = Transcoders & Non-JSON Documents
+:description: The Go SDK supports common JSON document requirements out-of-the-box.
 :nav-title: Using Transcoders
 :page-topic-type: howtos
 
 [abstract]
-The Go SDK supports common JSON document requirements out-of-the-box.
+{description}
 Custom transcoders and serializers provide support for applications needing to perform advanced operations, including supporting non-JSON data.
 
 The Go SDK uses the concept of transcoders, which are used whenever key-value data is sent to or retrieved from Couchbase Server.

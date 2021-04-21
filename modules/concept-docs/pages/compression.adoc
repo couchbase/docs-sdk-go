@@ -1,11 +1,12 @@
 = Compression
+:description: In response to increasing volumes of data being sent over the wire, Couchbase Data Platform now provides data compression between the SDK and Couchbase Server.
 :page-topic-type: concept
 :page-edition: Enterprise Edition
 :page-aliases:../../ROOT/pages/compression-intro.adoc
 include::partial$attributes.adoc[]
 
 [abstract]
-In response to increasing volumes of data being sent over the wire, Couchbase Data Platform now provides data compression between the SDK and Couchbase Server.
+{description}
 
 // 2.7 docs to update <---------------------
 // needs moving to sdk-common

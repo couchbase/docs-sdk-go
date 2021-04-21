@@ -1,9 +1,10 @@
 = Slow Operations Logging
+:description: Tracing information on slow operations can be found in the logs as threshold logging, orphan logging, and other span metrics.
 :page-topic-type: howto
 // :page-aliases: ROOT:
 
 [abstract]
-Tracing information on slow operations can be found in the logs as threshold logging, orphan logging, and other span metrics.
+{description}
 Change the settings to alter how much information you collect.
 
 To improve debuggability certain metrics are automatically measured and logged.
