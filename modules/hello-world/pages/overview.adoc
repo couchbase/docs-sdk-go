@@ -1,4 +1,4 @@
-= Couchbase Go SDK 2.1
+= Couchbase Go SDK 2.2
 :page-type: landing-page
 :page-layout: landing-page-top-level-sdk
 :page-role: tiles
