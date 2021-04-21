@@ -37,7 +37,7 @@ The Go 2.x SDK also introduces improved error handling providing extra error inf
 [.column]
 ====== {empty}
 
-== Couchbase Go SDK 2.1
+== Couchbase Go SDK 2.2
 
 ++++
 <div class="card-row three-column-row">
