@@ -13,14 +13,14 @@ For a high-level overview of this feature, see xref:concept-docs:encryption.adoc
 The Go SDK works together with the https://github.com/couchbase/gocbencryption[Go Couchbase Encryption^] library to provide support for encryption and decryption of JSON fields.
 This library includes cryptographic algorithms you can use out of the box, and provides a framework for implementing your own crypto components.
 
-NOTE: The encryption code is packaged as an optional library because it is released under a https://github.com/couchbase/gocbencryption/blob/master/LICENSE[different license^] than the Couchbase Go SDK.
+NOTE: The encryption code is packaged as an optional library because it is released under a https://github.com/couchbase/gocbencryption/blob/master/LICENSE[different license^] from the Couchbase Go SDK.
 To use the encryption library, you have to explicitly include this dependency in your project configuration.
 
 To get started with the Go encryption library you can fetch it using:
 
-[source]
+[source,console]
 ----
-go get github.com/couchbase/gocbencryption/v2.0.0
+$ go get github.com/couchbase/gocbencryption/v2.0.0
 ----
 
 == Configuration
@@ -113,7 +113,7 @@ The output is now:
 WARNING: SDK 1 cannot read fields encrypted by SDK 2.
 
 It's inadvisable to have both the old and new versions of your application active at the same time.
-The simplest way to migrate is to do an offline upgrade during a scheduled a maintenance window.
+The simplest way to migrate is to do an offline upgrade during a scheduled maintenance window.
 For an online upgrade without downtime, consider a https://en.wikipedia.org/wiki/Blue-green_deployment[blue-green deployment^].
 
 SDK 2 requires additional configuration to read fields encrypted by SDK 1.
