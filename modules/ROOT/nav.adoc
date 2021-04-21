@@ -28,6 +28,7 @@
 ** xref:howtos:troubleshooting-cloud-connections.adoc[Troubleshooting Cloud Connections]
 * xref:howtos:provisioning-cluster-resources.adoc[Provisioning Cluster Resources]
 ** xref:howtos:sdk-user-management-example.adoc[User Management]
+* xref:howtos:encrypting-using-sdk.adoc[Encrypting Your Data]
 
 .Errors & Diagnostics
 * xref:howtos:error-handling.adoc[Handling Errors]
