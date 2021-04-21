@@ -136,6 +136,12 @@ Additionally, the default transcoder has been modified to no longer transcoder b
 encoding strings as JSON or JSON as strings.  A new LegacyTranscoder has been implemented which mirrors Go SDK 1.x's behaviour.
 
 
+=== Encryption
+
+Field Level Encryption is a separate library requiring, for Go SDK 2.x, SDK 2.2.0 or more recent. 
+Differences between the 1.x and 2.x implementations, and an upgrade path, are discussed in the xref:howtos:encrypting-using-sdk.adoc#migration-from-sdk1[Field-Level Encryption documentation].
+
+
 ===  Error Handling
 
 How to handle errors has remained relatively unchanged from Go SDK 1.x and continues to follow the idiomatic Go ideology of
