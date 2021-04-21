@@ -1,14 +1,152 @@
-= Field Level Encryption from the SDK
+= Field Level Encryption from the Go SDK
 :page-topic-type: howto
 :page-edition: Enterprise Edition
-:page-status: Developer Preview
-// // :page-aliases: ROOT:encrypting-using-sdk.adoc
+:page-aliases: ROOT:encrypting-using-sdk.adoc
 
 [abstract]
-The Field Level Encryption library enables encryption and decryption of JSON fields, to support FIPS-140-2 compliance.
+A practical guide for getting started with Field-Level Encryption, showing how to encrypt and decrypt JSON fields using the Go SDK.
+
+For a high-level overview of this feature, see xref:concept-docs:encryption.adoc[].
+
+[#package]
+== Packaging
+The Go SDK works together with the https://github.com/couchbase/gocbencryption[Go Couchbase Encryption^] library to provide support for encryption and decryption of JSON fields.
+This library includes cryptographic algorithms you can use out of the box, and provides a framework for implementing your own crypto components.
+
+NOTE: The encryption code is packaged as an optional library because it is released under a https://github.com/couchbase/gocbencryption/blob/master/LICENSE[different license^] than the Couchbase Go SDK.
+To use the encryption library, you have to explicitly include this dependency in your project configuration.
+
+To get started with the Go encryption library you can fetch it using:
+
+[source]
+----
+go get github.com/couchbase/gocbencryption/v2.0.0
+----
+
+== Configuration
+The Go Field-Level Encryption library works on the principle of `Encrypters` and `Decrypters` which can be packaged within a `Provider`, as well as a custom xref:transcoders-nonjson.adoc[`Transcoder`].
+`Encrypters` and `Decrypters` are registered with a `CryptoManager` and are then used at serialization/deserialization time to encrypt and decrypt annotated fields.
+
+Here we'll go through an example of setting up and using the Go Field-Level Encryption library.
+
+To begin we need to create a couple of keys, you should *not* use the `InsecureKeyring` other than for evaluation purposes and should keep your keys secure.
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/fle.go[tag=keys]
+----
+
+Now that we have keys we can create a `Provider` (here we use the `AeadAes256CbcHmacSha512` algorithm which is the default supplied by the library).
+The `Provider` gives us a way to easily create multiple encrypters for the same algorithm but different keys.
+At this point we also create `CryptoManager` and register our encrypters and decrypters with it.
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/fle.go[tag=provider]
+----
+
+Now we can create a `Transcoder` using our `CryptoManager`.
+Once created we need to register the `Transcoder` with the SDK.
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/fle.go[tag=transcoder]
+----
+
+== Usage
+Once an encryption transcoder has been registered then encryption/decryption will be performed on annotated fields transparently.
+
+Sensitive fields in your data classes can be "annotated" using the `encrypted` tag. For example:
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/fle.go[tag=annotation]
+----
+
+Now let's create a person document and save it to Couchbase:
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/fle.go[tag=upsert]
+----
+
+You can get the document as a `map[string]interface{}` to verify the fields were encrypted:
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/fle.go[tag=getmap]
+----
+
+Because decoding as a `map` does not decrypt anything, the expected output is something like:
+
+[source]
+----
+map[
+    address:map[
+        encrypted$houseName:map[alg:AEAD_AES_256_CBC_HMAC_SHA512 ciphertext:Uh1WE0VSkjZoc4x9xITQ0sHm1eGqJszzv7/YuvLapGOjmSHj3+DNsTYKylKyhZMeDW6zosmm+F7qV+OO6+1WFg== kid:mykey]
+        streetName:my street
+    ]
+    encrypted$password:map[alg:AEAD_AES_256_CBC_HMAC_SHA512 ciphertext:C2l9bJKjnDpgaOUh4R0+SKAPE8WjFoxR8BvIolpB9w467yEspmZmqXcTCHkFk29O1F8sac9V9asb1lWS0ZgI3w== kid:mykey]
+    firstName:Barry
+    lastName:Sheen
+    encrypted$phone:map[alg:AEAD_AES_256_CBC_HMAC_SHA512 ciphertext:N2HpOioi3bm4Q9s0H4aon9NX1QO+7ZKs4DkEfy2ExeuVrMCfb14wrq3kpN7BfOOWo7YnFUt/kx/xgJEv2cOFDw== kid:myotherkey]
+]
+----
+
+Now let's read the person document using the data binding.
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/fle.go[tag=getstr]
+----
+
+The output is now:
+
+[source]
+----
+{FirstName:Barry LastName:Sheen Password:bang! Address:{HouseName:my house StreetName:my street} Phone:123456}
+----
+
+[#migration-from-sdk1]
+== Migrating from SDK 1
+
+WARNING: SDK 1 cannot read fields encrypted by SDK 2.
+
+It's inadvisable to have both the old and new versions of your application active at the same time.
+The simplest way to migrate is to do an offline upgrade during a scheduled a maintenance window.
+For an online upgrade without downtime, consider a https://en.wikipedia.org/wiki/Blue-green_deployment[blue-green deployment^].
+
+SDK 2 requires additional configuration to read fields encrypted by SDK 1.
+The rest of this section describes how to configure Field-Level Encryption in SDK 2 for backwards compatibility with SDK 1.
+
+[#configure-field-name-prefix]
+=== Changing the field name prefix
+
+In SDK 1, the default prefix for encrypted field names was `\__crypt_`.
+This caused problems for Couchbase Sync Gateway, which does not like field names to begin with an underscore.
+In SDK 2, the default prefix is `encrypted$`.
+
+For compatibility with SDK 1, you can configure the `CryptoManager` to use the old `\__crypt_` prefix:
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/fle.go[tag=oldannotation]
+----
+
+Alternatively, you can https://forums.couchbase.com/t/replacing-field-name-prefix/28786[rename the existing fields using a N1QL statement].
+
+WARNING: In SDK 1, only top-level fields could be encrypted.
+SDK 2 allows encrypting fields at any depth.
+If you decide to rename the existing fields, make sure to do so _before_ writing any encrypted fields below the top level, otherwise it may be difficult to rename the nested fields using a generic N1QL statement.
 
 
-Client-side implementation of Field Level Encryption is available in the previous version of the SDK.
-It will be enabled in a future release of the third generation SDK.
+[#configure-legacy-decrypters]
+=== Enabling decrypters for legacy algorithms
 
-A _Developer Preview_ is available in the xref:3.0@java-sdk:howtos:encrypting-using-sdk.adoc[Java SDK].
+The encryption algorithms used by SDK 1 are deprecated, and are no longer used for encrypting new data.
+To enable decrypting fields written by SDK 1, register the legacy decrypters with the `CryptoManager`:
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/fle.go[tag=legacy]
+----
