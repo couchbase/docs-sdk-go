@@ -9,6 +9,8 @@ import (
 	"github.com/couchbase/gocb/v2/search"
 )
 
+// This example requires an index called `travel-sample-index` to be created
+// See modules/test/scripts/init-couchbase/init-buckets.sh(line 47)
 func main() {
 	opts := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{

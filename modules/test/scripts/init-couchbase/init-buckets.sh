@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# expand variables and print commands
-set -o xtrace
-
 # exit immediately if a command fails or if there are unset vars
 set -euo pipefail
 
@@ -34,7 +31,7 @@ echo "cbimport travel-sample..."
     -d file:///opt/couchbase/samples/travel-sample.zip
 
 echo "create ariports dataset"
-curl --fail -v -u ${CB_USER}:${CB_PSWD} -H "Content-Type: application/json" -d '{
+curl --fail -s -u ${CB_USER}:${CB_PSWD} -H "Content-Type: application/json" -d '{
     "statement": "CREATE DATASET airports ON `travel-sample` WHERE `type`=\"airport\";",
     "pretty":true,
     "client_context_id":"test"
@@ -43,15 +40,17 @@ curl --fail -v -u ${CB_USER}:${CB_PSWD} -H "Content-Type: application/json" -d '
 echo "sleep 10 to allow stabilization..."
 sleep 10
 
+echo
 echo "create travel-sample-index"
-curl --fail -v -u ${CB_USER}:${CB_PSWD} -X PUT \
+curl --fail -s -u ${CB_USER}:${CB_PSWD} -X PUT \
     http://${CB_HOST}:8094/api/index/travel-sample-index \
     -H 'cache-control: no-cache' \
     -H 'content-type: application/json' \
     -d @/init-couchbase/travel-sample-index.json
 
-echo "Waiting for travel-sample-index to be ready. Please wait..."
-until curl --fail -s -u ${CB_USER}:${CB_PSWD} http://${CB_HOST}:8094/api/index/hotels-index/count |
+echo
+echo "Waiting for travel-sample-index to be ready..."
+until curl --fail -s -u ${CB_USER}:${CB_PSWD} http://${CB_HOST}:8094/api/index/travel-sample-index/count |
     jq -e '.count' | grep 31591 >/dev/null; do # there are 31591 docs to be processed in this index...
     echo "Waiting for travel-sample-index to be ready. Trying again in 10 seconds."
     sleep 10
