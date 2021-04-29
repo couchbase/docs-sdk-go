@@ -1,11 +1,12 @@
 = Couchbase Go SDK Release Notes
+:description: Release notes, installation instructions, and download archive for the Couchbase Go Client.
 :navtitle: Release Notes
 :page-topic-type: project-doc
 :page-aliases: relnotes-go-sdk,ROOT:relnotes-go-sdk,ROOT:sdk-release-notes,ROOT:release-notes
 
 // tag::latest[]
 [abstract]
-Release notes, installation instructions, and download archive for the Couchbase Go Client.
+{description}
 
 These pages cover the 2.0 versions of the Couchbase Go SDK (3.0 SDK API). 
 For release notes, download links, and installation methods for 1.6 and earlier releases of the Couchbase Go Client, please see the xref:1.6@go-sdk::sdk-release-notes.adoc[1.x Go Release Notes & Download Archive].

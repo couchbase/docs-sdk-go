@@ -1,12 +1,13 @@
 = Handling Errors
+:description: Errors are inevitable. The developer’s job is to be prepared for whatever is likely to come up
 :navtitle: Handling Errors
 :page-topic-type: howto
 :page-aliases: handling-error-conditions
 :source-language: go
 
 [abstract]
-Errors are inevitable.
-The developer’s job is to be prepared for whatever is likely to come up -- and to try and be prepared for anything that conceivably could come up.
+{description} -- and to try and be prepared for anything that conceivably could come up.
+
 Couchbase gives you a lot of flexibility, but it is recommended that you equip yourself with an understanding of the possibilities.
 
 == Handling Errors

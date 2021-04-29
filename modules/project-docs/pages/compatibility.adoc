@@ -1,10 +1,11 @@
 = Compatibility of Couchbase Features, Couchbase Server Versions, and the Couchbase Go SDK
+:description: Features available in different SDK versions, and compatibility between Server and SDK. \
+Plus notes on Cloud, networks, and AWS Lambda.
 :navtitle: Compatibility
 :page-aliases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
 
 [abstract]
-Features available in different SDK versions, and compatibility between Server and SDK.
-Plus notes on Cloud, networks, and AWS Lambda.
+{description}
 
 Couchbase Go SDK 2.0 requires Go version 1.13, or later.
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.

@@ -1,11 +1,12 @@
 = Sub-Document Operations with the Go SDK
+:description: Sub-Document operations can be used to efficiently access and change parts of documents.
 :navtitle: Sub-Doc Operations
 :page-topic-type: howto
 :lang: Go
 :page-aliases: ROOT:sdk-xattr-example.adoc
 
 [abstract]
-Sub-Document operations can be used to efficiently access and change parts of documents.
+{description}
 
 
 Sub-Document operations may be quicker and more network-efficient than _full-document_ operations such as _Upsert_, _Replace_ and _Get_ because they only transmit the accessed sections of the document over the network.

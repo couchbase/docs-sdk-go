@@ -1,9 +1,10 @@
 = Diagnosing and preventing Network Problems with Health Check
+:description: In today's distributed and virtual environments, users will often not have full administrative control over their whole network.
 :navtitle: Health Check
 :page-topic-type: howto
 
 [abstract]
-In today's distributed and virtual environments, users will often not have full administrative control over their whole network.
+{description}
 Health Check introduces _Ping_ to check nodes are still healthy, and to force idle connections to be kept alive in environments with eager shutdowns of unused resources.
 _Diagnostics_ requests a report from a node, giving instant health check information.
 

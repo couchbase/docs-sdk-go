@@ -1,10 +1,11 @@
 = Health Check
+:description: Health Check provides ping() and diagnostics() tests for the health of the network and the cluster.
 :nav-title: Health Check
 :page-topic-type: concept
 :page-aliases: ROOT:health-check
 
 [abstract]
-Health Check provides ping() and diagnostics() tests for the health of the network and the cluster.
+{description}
 
 `Ping` and `diagnostics` methods, on the bucket and cluster objects respectively, can give us information about the current state of nodes, and their connections.
 

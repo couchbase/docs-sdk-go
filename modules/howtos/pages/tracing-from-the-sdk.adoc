@@ -1,9 +1,10 @@
 = Tracing from the Go SDK
+:description: Threshold logging and Response Time Observability.
 :navtitle: Tracing from the SDK
 :page-topic-type: howto
 
 [abstract]
-Threshold logging and Response Time Observability.
+{description}
 
 // https://issues.couchbase.com/browse/DOC-4791 - 
 

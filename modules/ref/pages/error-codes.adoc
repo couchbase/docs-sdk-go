@@ -1,9 +1,10 @@
 = Errors & Exceptions Reference
+:description: The standardized error codes returned by the Couchbase Go SDK, from cloud connection to sub-document.
 :nav-title: Error Codes
 :page-topic-type: ref
 
 [abstract]
-The standardized error codes returned by the Couchbase Go SDK, from cloud connection to sub-document.
+{description}
 
 include::6.5@sdk:shared:partial$error-ref.adoc[tag=intro]
 

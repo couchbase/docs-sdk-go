@@ -1,10 +1,11 @@
 = Analytics
+:description: Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
 :nav-title: Analytics for SDK Users
 :page-topic-type: concept
 :page-aliases: analytics,
 
 [abstract]
-Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
+{description}
 
 
 For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operation.

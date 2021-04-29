@@ -1,8 +1,9 @@
 = Response Time Observability with Open Telemetry
+:description: RTO - Observability using the Open Telemetry API.
 :nav-title: Response Time Observability
 :page-topic-type: concept
 
 [abstract]
-RTO - Observability using the Open Telemetry API.
+{description}
 
 include::6.5@sdk:shared:partial$rto.adoc[tag=placeholder]

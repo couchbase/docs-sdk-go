@@ -1,11 +1,12 @@
 = Sample Application
+:description: Discover how to program interactions with the Couchbase Server via the data, Query, and search services -- using the Travel Sample Application with the built-in Travel Sample data Bucket.
 :nav-title: Travel Sample App
 :content-type: tutorial
 :page-topic-type: tutorial
 :page-aliases: ROOT:sample-application,ROOT:tutorial4,ROOT:sample-app-backend
 
 [abstract]
-Discover how to program interactions with the Couchbase Server via the data, Query, and search services -- using the Travel Sample Application with the built-in Travel Sample data Bucket.
+{description}
 This version also demonstrated the Developer Preview of the upcoming Collections feature.
 
 include::6.5@sdk:shared:partial$sample-application.adoc[tag=prereq]

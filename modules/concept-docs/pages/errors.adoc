@@ -1,10 +1,11 @@
 = Errors, Exceptions, and Diagnostics
+:description: When the unexpected happens, take a step-by-step approach.
 :nav-title: Errors & Diagnostics
 :page-topic-type: concept
 :page-aliases: 
 
 [abstract]
-When the unexpected happens, take a step-by-step approach. .
+{description}
 
 
 == General Approach to Go Exceptions
