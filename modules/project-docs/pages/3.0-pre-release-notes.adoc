@@ -4,7 +4,7 @@
 :page-topic-type: project-doc
 :page-aliases: 3.0αλφα-sdk-release-notes
 
-[abstract] 
+[abstract]
 {description}
 
 In the run-up to the SDK 3.0 API (Go SDK 2.0) releases, several αλφα and βετα releases were made.

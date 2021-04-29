@@ -1,11 +1,11 @@
 = SDK License
-:description: Couchbase SDKs' source code is licensed under the Apache Licence 2.0. \
-Dependencies carry their own licenses.
+:description: Couchbase SDKs' source code is licensed under the Apache Licence 2.0.
 :page-topic-type: project-doc
 :page-aliases: ROOT:sdk-licenses.adoc
 
 [abstract]
 {description}
+Dependencies carry their own licenses.
 
 The Couchbase Go Client is distributed as source under the https://www.apache.org/licenses/LICENSE-2.0[Apache License, Version 2.0].
 
