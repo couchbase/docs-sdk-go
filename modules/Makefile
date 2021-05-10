@@ -4,7 +4,7 @@ GO_VERSION ?="1.13"
 GOCB_VERSION ?="v2.2.1"
 
 CB_EDITION ?=couchbase/server:enterprise-7.0.0
-CB_VERSION ?=beta
+CB_BUILD ?=beta
 LOCAL_IMAGE_NAME=cb7-sdk3-ub20
 
 TEST_NAME=""
@@ -33,7 +33,7 @@ update-versions:
 # DOCKER
 # -------------------------------------------
 cb-build:
-	@docker build --build-arg CB_EDITION=${CB_EDITION} --build-arg CB_VERSION=${CB_VERSION} -t ${LOCAL_IMAGE_NAME} -f test/Dockerfile .
+	@docker build --build-arg CB_EDITION=${CB_EDITION} --build-arg CB_BUILD=${CB_BUILD} -t ${LOCAL_IMAGE_NAME} -f test/Dockerfile .
 
 # Run couchbase server+sdk container. Note that this runs with the `-rm` option, 
 # which will ensure the container is deleted when stopped.

@@ -1,4 +1,4 @@
-name: Test Code Samples 
+name: Test Code Samples (GA)
 
 on:
   push:
@@ -17,10 +17,6 @@ on:
       - '**/*.go'
       - '**/*.mod'
       - '**/*.sum'
-env:
-  REGISTRY: registry.gitlab.com/cb-vanilla/server
-  CB_VERSION: 7.0.0
-  CB_BUILD: 5017
 
 jobs:
   test:
@@ -33,15 +29,8 @@ jobs:
       - name: Checkout actions
         uses: actions/checkout@v2
 
-      - name: Docker Login
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PSWD }}
-
       - name: Build Couchbase Docker image
-        run: CB_EDITION=${{ env.REGISTRY }}:${{ env.CB_VERSION}} CB_VERSION=${{ env.CB_BUILD }} make cb-build    
+        run: make cb-build
         working-directory: ${{ env.working-directory }}
 
       - name: Run Couchbase Server+SDK container

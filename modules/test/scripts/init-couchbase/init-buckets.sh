@@ -30,7 +30,7 @@ echo "cbimport travel-sample..."
     -b travel-sample \
     -d file:///opt/couchbase/samples/travel-sample.zip
 
-echo "create ariports dataset"
+echo "create airports dataset"
 curl --fail -s -u ${CB_USER}:${CB_PSWD} -H "Content-Type: application/json" -d '{
     "statement": "CREATE DATASET airports ON `travel-sample` WHERE `type`=\"airport\";",
     "pretty":true,

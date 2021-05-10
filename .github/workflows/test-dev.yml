@@ -1,0 +1,49 @@
+name: Test Code Samples (Dev)
+
+on:
+  push:
+    branches: [release/2.2]
+    paths:
+      - 'modules/test/*'
+      - 'modules/Makefile'
+      - '**/*.go'
+      - '**/*.mod'
+      - '**/*.sum'
+env:
+  REGISTRY: registry.gitlab.com/cb-vanilla/server
+  CB_EDITION: 7.0.0
+  CB_BUILD: 5127
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      working-directory:
+        ./modules
+
+    steps:
+      - name: Checkout actions
+        uses: actions/checkout@v2
+
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PSWD }}
+
+      - name: Build Couchbase Docker image
+        run: CB_EDITION=${{ env.REGISTRY }}:${{ env.CB_EDITION }} CB_BUILD=${{ env.CB_BUILD }}  make cb-build    
+        working-directory: ${{ env.working-directory }}
+
+      - name: Run Couchbase Server+SDK container
+        run: make cb-start
+        working-directory: ${{ env.working-directory }}
+
+      - name: Test code samples
+        run: make tests 
+        working-directory: ${{ env.working-directory }}
+      
+      - name: Cleanup
+        run: make cb-stop
+        working-directory: ${{ env.working-directory }}
