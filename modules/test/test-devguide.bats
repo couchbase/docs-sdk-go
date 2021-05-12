@@ -2,6 +2,21 @@
 
 load 'test/test_helper.bash'
 
+# Test is a bit flaky on the last assertion if not run first. 
+# It seems the search index updates when the other tests run, causing major delay on the
+# expected result for the last assertion.
+@test "[devguide] - search.go" {
+    # TODO: The tags conjunctionquery[] and daterangequery[] don't seem
+    # to return any results, needs further investigation.
+
+    runExample $DEVGUIDE_DIR search.go
+    assert_success
+    assert_output --partial "Document ID: hotel_26223"
+    assert_output --partial "fields included in result: map[description:Swanky"
+    refute_output --partial "Facet field: type, total: 0"
+    assert_output --partial "Document ID: a-new-hotel, search score: 7"
+}
+
 @test "[devguide] - analytics-named-placeholders.go" {
     runExample $DEVGUIDE_DIR analytics-named-placeholders.go
     assert_success
@@ -157,18 +172,6 @@ EOF
 @test "[devguide] - provisioning-resources-views.go" {
     runExample $DEVGUIDE_DIR provisioning-resources-views.go
     assert_success
-}
-
-@test "[devguide] - search.go" {
-    # TODO: The tags conjunctionquery[] and daterangequery[] don't seem
-    # to return any results, needs further investigation.
-
-    runExample $DEVGUIDE_DIR search.go
-    assert_success
-    assert_output --partial "Document ID: hotel_26223"
-    assert_output --partial "fields included in result: map[description:Swanky"
-    refute_output --partial "Facet field: type, total: 0"
-    assert_output --partial "Document ID: a-new-hotel, search score: 7"
 }
 
 @test "[devguide] - subdoc-counter.go" {

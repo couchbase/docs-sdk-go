@@ -1,8 +1,8 @@
 ARG BASE_IMAGE=ubuntu:20.04
 
-ARG CB_EDITION=enterprise
-ARG CB_VERSION=7.0.0-beta
-ARG CB_IMAGE=couchbase:$CB_EDITION-$CB_VERSION
+ARG CB_EDITION=couchbase/server:enterprise-7.0.0
+ARG CB_BUILD=beta
+ARG CB_IMAGE=$CB_EDITION-$CB_BUILD
 
 ARG CB_CLIENT_OS=ubuntu2004
 ARG CB_CLIENT_OS_TYPE=focal
@@ -13,10 +13,6 @@ FROM golang AS golang
 
 FROM $CB_IMAGE
 
-ARG CB_EDITION
-ARG CB_VERSION
-ARG CB_IMAGE
-
 ARG CB_CLIENT_OS
 ARG CB_CLIENT_OS_TYPE
 
@@ -25,10 +21,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update && \
     apt-get install -y \
-	curl wget jq unzip zip \
-	build-essential cmake libssl-dev \
-	atop htop psmisc strace time \
-	vim npm
+    curl wget jq unzip zip \
+    build-essential cmake libssl-dev \
+    atop htop psmisc strace time \
+    vim npm
 
 # ------------------------------------------------------
 
@@ -55,4 +51,4 @@ RUN chmod +x /init-couchbase/*.sh
 
 RUN if [ ! -d /opt/couchbase/etc/couchbase ]; then mkdir -p /opt/couchbase/etc/couchbase; fi \
     && cat /init-couchbase/init-static-config.txt >> \
-        /opt/couchbase/etc/couchbase/static_config
+    /opt/couchbase/etc/couchbase/static_config

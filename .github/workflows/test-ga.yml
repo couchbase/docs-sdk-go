@@ -1,4 +1,4 @@
-name: Test Code Samples 
+name: Test Code Samples (GA)
 
 on:
   push:

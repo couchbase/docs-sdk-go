@@ -3,8 +3,9 @@
 GO_VERSION ?="1.13"
 GOCB_VERSION ?="v2.2.1"
 
-CB_IMAGE=couchbase
-CB_VERSION=cb7-sdk3-go-ub20
+CB_EDITION ?=couchbase/server:enterprise-7.0.0
+CB_BUILD ?=beta
+LOCAL_IMAGE_NAME=cb7-sdk3-ub20
 
 TEST_NAME=""
 
@@ -32,12 +33,12 @@ update-versions:
 # DOCKER
 # -------------------------------------------
 cb-build:
-	@docker build --network host -t ${CB_IMAGE}:${CB_VERSION} -f test/Dockerfile .
+	@docker build --build-arg CB_EDITION=${CB_EDITION} --build-arg CB_BUILD=${CB_BUILD} -t ${LOCAL_IMAGE_NAME} -f test/Dockerfile .
 
 # Run couchbase server+sdk container. Note that this runs with the `-rm` option, 
 # which will ensure the container is deleted when stopped.
 cb-start:
-	@docker run -t --rm -v ${PWD}:/modules -d --name cb-test -p 8091-8096:8091-8096 ${CB_IMAGE}:${CB_VERSION}
+	@docker run -t --rm -v ${PWD}:/modules -d --name cb-test -p 8091-8096:8091-8096 ${LOCAL_IMAGE_NAME}
 	@docker exec -t cb-test bin/bash -c "/init-couchbase/init.sh"
 	@docker exec -t cb-test bin/bash -c "/init-couchbase/init-buckets.sh"
 
