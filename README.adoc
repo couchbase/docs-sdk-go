@@ -1,6 +1,6 @@
-image:https://github.com/couchbase/docs-sdk-go/actions/workflows/build.yml/badge.svg[https://github.com/couchbase/docs-sdk-go/actions/workflows/build.yml] 
-image:https://github.com/couchbase/docs-sdk-go/actions/workflows/test-ga.yml/badge.svg[https://github.com/couchbase/docs-sdk-go/actions/workflows/test-ga.yml]
-image:https://github.com/couchbase/docs-sdk-go/actions/workflows/test-dev.yml/badge.svg[https://github.com/couchbase/docs-sdk-go/actions/workflows/test-dev.yml]
+image:https://github.com/couchbase/docs-sdk-go/actions/workflows/build.yml/badge.svg[link="https://github.com/couchbase/docs-sdk-go/actions/workflows/build.yml"] 
+image:https://github.com/couchbase/docs-sdk-go/actions/workflows/test-ga.yml/badge.svg[link="https://github.com/couchbase/docs-sdk-go/actions/workflows/test-ga.yml"]
+image:https://github.com/couchbase/docs-sdk-go/actions/workflows/test-dev.yml/badge.svg[link="https://github.com/couchbase/docs-sdk-go/actions/workflows/test-dev.yml"]
 
 = Couchbase Go SDK Documentation
 // Settings:
