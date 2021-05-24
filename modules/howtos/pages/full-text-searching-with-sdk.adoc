@@ -72,7 +72,7 @@ include::devguide:example$go/search.go[tag=iteratingrows]
 Take care to ensure you call `Err` after accessing rows and check for any errors returned.
 
 .Iterating facets
-Facets can only be accessed once all of the rows have been iterated or `Close` has been called on rows.
+Facets can only be accessed once all the rows have been iterated.
 
 [source,golang,indent=0]
 ----

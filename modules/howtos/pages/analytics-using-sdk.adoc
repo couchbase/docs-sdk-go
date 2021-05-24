@@ -119,7 +119,7 @@ Moving these to error reference doc
 === MetaData
 
 The `AnalyticsResultsMetadata` object contains useful metadata, such as `Metrics` and `ClientContextID`.
-Note that before metadata can be accessed the results object must be closed.
+Note that before metadata can be accessed the results object rows must be fully iterated.
 Here is a snippet using several items of metadata
 
 [source,golang,indent=0]
