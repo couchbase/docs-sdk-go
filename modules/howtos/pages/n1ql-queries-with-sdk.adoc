@@ -96,6 +96,7 @@ include::devguide:example$go/n1ql-query-one.go[tag=one]
 ----
 
 The `QueryMetaData` provides insight into some basic profiling/timing information as well as information like the `ClientContextID`.
+The `MetaData()` call can only be made once all the query rows have been iterated.
 
 .QueryMetaData
 [options="header"]
