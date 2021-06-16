@@ -93,9 +93,6 @@ The SDK follows http://semver.org/[Semantic Versioning^] and typically release a
 In order to update your specific developer environment to this new version, you will have to instruct Go to `go get` that specific version.
 For further information, please reference the section on installation.
 
-include::6.5@sdk:shared:partial$network-requirements.adoc[]
+include::7.0@sdk:shared:partial$network-requirements.adoc[]
 
-NOTE: With Go 1.6, which does not have the Alternate Address feature, you need to use `?network=default` in the connection string for COuchbase Cloud.
-
-
-include::6.5@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
+include::7.0@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
