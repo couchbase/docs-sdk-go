@@ -7,7 +7,7 @@ Plus notes on Cloud, networks, and AWS Lambda.
 [abstract]
 {description}
 
-Couchbase Go SDK 2.0 requires Go version 1.13, or later.
+Couchbase Go SDK 2.x requires Go version 1.13, or later.
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
 
 == Couchbase Version/SDK Version Matrix
@@ -23,9 +23,9 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
-[cols="40,20,20,20,25"]
+[cols="40,20,20,20,30"]
 |===
-| | SDK 1.4 | SDK 1.5 | SDK 1.6 | SDK 2.0 - 2.2 
+| | SDK 1.4 | SDK 1.5 | SDK 1.6 | SDK 2.0 - 2.2
 
 | *Server 5.0-5.5*
 | *✔*
@@ -49,8 +49,17 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 | *✖*
 | *✖*
 | *◎*
-| *✔*
+| *◎* _(see below)_
 |===
+
+[IMPORTANT]
+====
+An API change in the planned release version of Couchbase Server 7.0 means changes in the latest versions of the SDK which render these new SDK versions incompatible with the beta versions of 7.0.
+
+Go SDK *2.2.2* is the latest version compatible with Server 7.0β.
+
+Later SDK 2.x releases will be limited to the Default Scope and Collection with the beta 7.0 server, and will only be fully compatible with the full release version.
+====
 
 Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
@@ -58,7 +67,7 @@ See the notes there for Support details.
 == Couchbase New Feature Availability Matrix
 
 .Couchbase Server and SDK Supported Version Matrix
-[.table-merge-cells] 
+[.table-merge-cells]
 [cols="7,7,5,6,5"]
 |===
 | | Server 5.0, 5.1, & 5.5 | Server 6.0 | Server 6.5 & 6.6 | Server 7.0β
@@ -66,7 +75,7 @@ See the notes there for Support details.
 | Enhanced Durability
 4+| All SDK versions
 
-| Durable Writes 
+| Durable Writes
 2+| Not Supported
 2+| Since 2.0
 
@@ -95,7 +104,7 @@ For further information, please reference the section on installation.
 
 include::6.5@sdk:shared:partial$network-requirements.adoc[]
 
-NOTE: With Go 1.6, which does not have the Alternate Address feature, you need to use `?network=default` in the connection string for COuchbase Cloud.
+NOTE: With Go 1.6, which does not have the Alternate Address feature, you need to use `?network=default` in the connection string for Couchbase Cloud.
 
 
 include::6.5@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
