@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.2.3
+$ go get github.com/couchbase/gocb/v2@v2.2.4
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -28,11 +28,32 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+
+== Version 2.2.4 (15 May 2021)
+
+Version 2.2.4 is a maintenance release for the Go SDK 2.2.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.4?tab=doc[API Documentation]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1095[GOCBC-1095]:
+Fixed issue where errors returned from views was parsed incorrectly.
+* https://issues.couchbase.com/browse/GOCBC-1102[GOCBC-1102]:
+Fixed issue where `WaitUntilReady` would never recover if one of the HTTP based services returned an error.
+* https://issues.couchbase.com/browse/GOCBC-1106[GOCBC-1106]:
+Fixed issue where `hits` being `null` in a search response would leave to an internal error.
+* https://issues.couchbase.com/browse/GOCBC-1111[GOCBC-1111]; https://issues.couchbase.com/browse/GOCBC-1112[GOCBC-1112]:
+Fixed issue where parsing search errors was using the incorrect field.
+* https://issues.couchbase.com/browse/GOCBC-1100[GOCBC-1100]:
+Fixed issue where the `took` field in search metrics was parsed incorrectly.
+
+
 == Version 2.2.3 (20 April 2021)
 
 Version 2.2.3 is a maintenance release for the Go SDK 2.2.0.
 
-https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.3?tab=doc[API Documentation]
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.4?tab=doc[API Documentation]
 
 === New Features and Behavioral Changes
 
