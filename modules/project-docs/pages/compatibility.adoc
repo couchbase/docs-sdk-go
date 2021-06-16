@@ -104,7 +104,4 @@ For further information, please reference the section on installation.
 
 include::6.6@sdk:shared:partial$network-requirements.adoc[]
 
-NOTE: With Go 1.6, which does not have the Alternate Address feature, you need to use `?network=default` in the connection string for Couchbase Cloud.
-
-
 include::6.6@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
