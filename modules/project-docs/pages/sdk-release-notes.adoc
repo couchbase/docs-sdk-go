@@ -29,7 +29,7 @@ Older versions may work, but are not supported.
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
 
-== Version 2.2.4 (15 May 2021)
+== Version 2.2.4 (15 June 2021)
 
 Version 2.2.4 is a maintenance release for the Go SDK 2.2.0.
 
