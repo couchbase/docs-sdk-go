@@ -127,14 +127,14 @@ include::example$collection-manager.go[tag=drop-collection,indent=0]
 include::example$collection-manager.go[tag=drop-scope,indent=0]
 ----
 
-Note that you require at least the https://docs.couchbase.com/server/7.0/learn/security/roles.html#bucket-admin[Bucket Admin] privilege to create or drop a Scope.
-The same role also lets you manage Collections, though a more minimal set of privileges is https://docs.couchbase.com/server/7.0/learn/security/roles.html#manage-collections-in-scope[Manage Collections in Scope] along with https://docs.couchbase.com/server/7.0/learn/security/roles.html#data-reader[Data Reader].
+Note that the most minimal permissions to create and drop a Scope or Collection is
+xref:server:learn:security/roles.adoc#manage-scopes[Manage Scopes]
+along with
+xref:server:learn:security/roles.adoc#data-reader[Data Reader]
 
 You can create users with the appropriate RBAC programmatically:
 [source,golang]
 ----
-include::example$collection-manager.go[tag=bucketAdmin, indent=0]
-
 include::example$collection-manager.go[tag=scopeAdmin, indent=0]
 ----
 
