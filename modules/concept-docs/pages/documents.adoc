@@ -2,7 +2,6 @@
 :description: Couchbase supports CRUD operations, various data structures, and binary documents.
 :nav-title: Documents & Doc Ops
 :page-topic-type: concept
-//:page-aliases: ROOT:core-operations
 :page-aliases: ROOT:documents,ROOT:documents-basics,ROOT:documents-atomic
 
 [abstract]
@@ -30,7 +29,7 @@ Although query and path-based (Sub-Document) services are available, the simplic
 
 
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=document]
+include::7.0@sdk:shared:partial$documents.adoc[tag=document]
 
 == Primitive Key-Value Operations
 
@@ -43,9 +42,9 @@ Get(docid string, options *gocb.GetOptions) (*GetResult, error)
 Remove(docid string, options *gocb.RemoveOptions) (*MutationResult, error)
 ----
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=crud-overview]
+include::7.0@sdk:shared:partial$documents.adoc[tag=crud-overview]
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=store-update]
+include::7.0@sdk:shared:partial$documents.adoc[tag=store-update]
 
 [NOTE]
 ====
@@ -53,99 +52,80 @@ If you wish to only modify certain parts of a document, you can use xref:subdocu
 
 [source,golang,indent=0]
 ----
-mops := []gocb.MutateInSpec{
-    gocb.UpsertSpec("fax", "311-555-0151", &gocb.UpsertSpecOptions{}),
-}
-result, err := collection.MutateIn("customer123", mops, &gocb.MutateInOptions{})
+include::example$documents.go[tag=mutate-in]
 ----
 
-or xref:6.5@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
+or xref:7.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
 
 [source,sql]
 ----
-update `default` SET sale_price = msrp * 0.75 WHERE msrp < 19.95;
+update `travel-sample`.inventory.airline SET sale_price = msrp * 0.75 WHERE msrp < 19.95;
 ----
 ====
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=get_generic]
+include::7.0@sdk:shared:partial$documents.adoc[tag=get_generic]
 
 [source,sql]
 ----
-SELECT * FROM default USE KEYS ["docid"];
+SELECT * FROM `travel-sample`.inventory.airport USE KEYS ["airport_1254"];
 ----
 
 or
 
 [source,sql]
 ----
-SELECT * FROM default WHERE META(default).id = "docid";
+SELECT * FROM `travel-sample`.inventory.airport WHERE META().id = "airport_1254";
 ----
 
 You can also retrieve _parts_ of documents using xref:subdocument-operations.adoc[sub-document operations], by specifying one or more sections of the document to be retrieved
 
 [source,golang,indent=0]
 ----
-ops := []gocb.LookupInSpec{
-    gocb.GetSpec("contact.name", &gocb.GetSpecOptions{}),
-    gocb.GetSpec("contact.email", &gocb.GetSpecOptions{}),
-}
-result, err := collection.LookupIn("user:kingarthur", ops, &gocb.LookupInOptions{})
+include::example$documents.go[tag=lookup-in]
 ----
 
 // Counters
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=counters1]
+include::7.0@sdk:shared:partial$documents.adoc[tag=counters1]
 
-[source,java]
+[source,go,indent=0]
 ----
-//  Java example:
-String counterDocId = "counter-doc";
-// Increment by 1, creating doc if needed
-collection.binary().increment(counterDocId);
-// Decrement by 1
-collection.binary().decrement(counterDocId);
-// Decrement by 5
-collection.binary().decrement(counterDocId,
-DecrementOptions.decrementOptions().delta(5));
+include::example$documents.go[tag=counters]
 ----
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=counters2]
+include::7.0@sdk:shared:partial$documents.adoc[tag=counters2]
 
-[source,python]
+[source,golang,indent=0]
 ----
-# Python example:
-rv = cb.get('counter_id')
-value, cas = rv.value, rv.cas
-if should_increment_value(value):
-  cb.upsert('counter_id', value + increment_amount, cas=cas)
+include::example$documents.go[tag=counter-increment]
 ----
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=counters3]
+include::7.0@sdk:shared:partial$documents.adoc[tag=counters3]
 
 
 === Use Cases
 
-The SDK provides a high-level abstraction over the simple `incr()`/`decr()` of Couchbase Server's memcached binary protocol, using `collections.binary()`. 
-This enables you to work with counters using `get()` and `upsert()` operations -- allowing, _inter alia_, the use of durability options with the operations.
+The SDK provides a high-level abstraction over the simple `incr()`/`decr()` of Couchbase Server's memcached binary protocol, using `collections.Binary()`.
+This enables you to work with counters using `Get()` and `Replace()` operations -- allowing, _inter alia_, the use of durability options with the operations.
 You will find several ways of working with counters https://pkg.go.dev/github.com/couchbase/gocb/v2#BinaryCollection.Decrement[in the API docs].
 
 // Expiry
-include::6.5@sdk:shared:partial$documents.adoc[tag=expiration]
+include::7.0@sdk:shared:partial$documents.adoc[tag=expiration]
 
 
 ////
-include::6.5@sdk:shared:partial$documents.adoc[tag=]
+include::7.0@sdk:shared:partial$documents.adoc[tag=]
 
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=]
+include::7.0@sdk:shared:partial$documents.adoc[tag=]
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=]
+include::7.0@sdk:shared:partial$documents.adoc[tag=]
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=]
+include::7.0@sdk:shared:partial$documents.adoc[tag=]
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=]
+include::7.0@sdk:shared:partial$documents.adoc[tag=]
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=]
+include::7.0@sdk:shared:partial$documents.adoc[tag=]
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=]
+include::7.0@sdk:shared:partial$documents.adoc[tag=]
 ////

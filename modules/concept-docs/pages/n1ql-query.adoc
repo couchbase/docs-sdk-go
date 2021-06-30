@@ -7,42 +7,33 @@
 [abstract]
 {description}
 
-include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=intro]
+include::7.0@sdk:shared:partial$n1ql-queries.adoc[tag=intro]
 
 
 // Prepared Statements for Query Optimization
-include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=prepared]
+include::7.0@sdk:shared:partial$n1ql-queries.adoc[tag=prepared]
 
-NOTE: In Go SDK 2.1 and earlier, the `adhoc` parameter is `Adhoc`. 
+NOTE: In Go SDK 2.3 and earlier, the `adhoc` parameter is `Adhoc`.
 It is set to `false` by default -- set to `true` for a plan _not_ to be prepared, or a prepared plan _not_ to be reused.
-The 5000 limit to the client-side cache also does not apply. 
+The 5000 limit to the client-side cache also does not apply.
 
-[source,golang]
+QueryResult result = cluster.query(
+"select count(*) from `travel-sample`.inventory.airport where country = ?",
+QueryOptions.queryOptions().adhoc(false).parameters(JsonArray.from("France"))
+);
+
+[source,golang,indent=0]
 ----
-	query := "SELECT x.* FROM `travel-sample` x LIMIT 10;"
-	rows, err := cluster.Query(query, &gocb.QueryOptions{
-		Adhoc: false,
-	})
-	if err != nil {
-		panic(err)
-	}
-
-	for rows.Next() {
-	}
-
-	err = rows.Err()
-	if err != nil {
-		panic(err)
-	}
+include::example$n1ql-query.go[tag=prepared-statement]
 ----
 
 
 == Indexes
 
-The Couchbase query service makes use of xref:6.5@server:learn:services-and-indexes/indexes/indexes.adoc[_indexes_] in order to do its work.
+The Couchbase query service makes use of xref:7.0@server:learn:services-and-indexes/indexes/indexes.adoc[_indexes_] in order to do its work.
 Indexes replicate subsets of documents from data nodes over to index nodes, 
 allowing specific data (for example, specific document properties) to be retrieved quickly, 
-and to distribute load away from data nodes in xref:6.5@server:learn:services-and-indexes/services/services.adoc[MDS] topologies.
+and to distribute load away from data nodes in xref:7.0@server:learn:services-and-indexes/services/services.adoc[MDS] topologies.
 
 [IMPORTANT]
 In order to make a bucket queryable, it must have at least one index defined.
@@ -53,38 +44,37 @@ This includes using the `META` function in the queries.
 
 [source,n1ql]
 ----
-CREATE PRIMARY INDEX ON `users`
+CREATE PRIMARY INDEX ON `travel-sample`
 ----
 
 You can also define indexes over given document fields and then use those fields in the query:
 
 [source,n1ql]
 ----
-CREATE INDEX ix_name ON `users`(name);
-CREATE INDEX ix_email ON `users`(email);
+CREATE INDEX ix_name ON `travel-sample`(name);
+CREATE INDEX ix_email ON `travel-sample`(email);
 ----
 
 This would allow you to query the _users_ bucket regarding a document's `name` or `email` properties, thus:
 
 [source,n1ql]
 ----
-SELECT name, email FROM `users` WHERE name="Monty Python" OR email="monty@python.org";
+SELECT name, email
+FROM `travel-sample`
+WHERE name="Glasgow Grand Central" OR email="grandcentralhotel@principal-hayley.com";
 ----
 
 Indexes help improve the performance of a query.
 When an index includes the actual values of all the fields specified in the query, 
 the index _covers_ the query, and eliminates the need to fetch the actual values from the Data Service.
 An index, in this case, is called a _covering index_, and the query is called a _covered_ query.
-For more information, see xref:6.5@server:n1ql:n1ql-language-reference/covering-indexes.adoc[Covering Indexes].
+For more information, see xref:7.0@server:n1ql:n1ql-language-reference/covering-indexes.adoc[Covering Indexes].
 
 You can also create and define indexes in the SDK using:
 
-[source,golang]
+[source,golang,indent=0]
 ----
-mgr := cluster.QueryIndexes()
-err = mgr.CreatePrimaryIndex(bucketName, nil)
-err = mgr.CreateIndex(bucketName, "index_name", []string{"name"}, nil)
-err = mgr.CreateIndex(bucketName, "index_email", []string{"email"}, nil)
+include::example$n1ql-query.go[tag=create-index]
 ----
 
 
@@ -96,10 +86,10 @@ The deferred indexes can be built together, rather than having to re-scan the en
 
 [source,sql]
 ----
-CREATE PRIMARY INDEX ON `users` WITH {"defer_build": true};
-CREATE INDEX ix_name ON `users`(name) WITH {"defer_build": true};
-CREATE INDEX ix_email ON `users`(email) WITH {"defer_build": true};
-BUILD INDEX ON `users`(`#primary`, `ix_name`, `ix_email`);
+CREATE PRIMARY INDEX ON `travel-sample` WITH {"defer_build": true};
+CREATE INDEX ix_name ON `travel-sample`(name) WITH {"defer_build": true};
+CREATE INDEX ix_email ON `travel-sample`(email) WITH {"defer_build": true};
+BUILD INDEX ON `travel-sample`(`#primary`, `ix_name`, `ix_email`);
 ----
 
 The indexes are not built until the `BUILD INDEX` statement is executed.
@@ -108,28 +98,19 @@ and indexes it for all of the applicable indexes (in this case, those that have 
 
 Building deferred indexes can also be done via the SDK:
 
-[source,golang]
+[source,golang,indent=0]
 ----
-mgr := cluster.QueryIndexes()
-err = mgr.CreatePrimaryIndex(bucketName, &gocb.CreatePrimaryQueryIndexOptions{Deferred: true})
-err = mgr.CreateIndex(bucketName, "index_name", []string{"name"},
-    &gocb.CreateQueryIndexOptions{Deferred: true},
-)
-err = mgr.CreateIndex(bucketName, "index_email", []string{"email"},
-    &gocb.CreateQueryIndexOptions{Deferred: true},
-)
-indexesToBuild, err := mgr.BuildDeferredIndexes(bucketName, nil)
-err = mgr.WatchIndexes(bucketName, []string{"ix_name", "ix_email", "#primary"}, time.Duration(2*time.Second), nil)
+include::example$n1ql-query.go[tag=deferred-index]
 ----
 
 
 // == Index Consistency
 
-include::6.5@sdk:shared:partial$n1ql-queries.adoc[tag=index-consistency]
+include::7.0@sdk:shared:partial$n1ql-queries.adoc[tag=index-consistency]
 
 The following options are available:
 
-include::6.5@server:learn:page$services-and-indexes/indexes/index-replication.adoc[tag=scan_consistency]
+include::7.0@server:learn:page$services-and-indexes/indexes/index-replication.adoc[tag=scan_consistency]
 ////
 * `not_bounded`: Executes the query immediately, without requiring any consistency for the query.
 If index-maintenance is running behind, out-of-date results may be returned.
@@ -143,23 +124,9 @@ For N1QL, the default consistency is `not_bounded`.
 
 Consider the following snippet:
 
-[source,golang]
+[source,golang,indent=0]
 ----
-
-random := rand.Intn(10000000)
-user := struct{
-    Name   string `json:"name"`
-    Email  string `json:"email"`
-    Random int    `json:"random"`
-}{Name: "Brass Doorknob", Email:"brass.doorknob@juno.com", Random:random}
-
-_, err := collection.Upsert(fmt.Sprintf("user:%d", random), user, nil)
-
-results, err := cluster.Query("SELECT name, email, random, META(default).id FROM default WHERE $1 IN name'",
-    &gocb.QueryOptions{
-        PositionalParameters: []interface{}{"Brass"},
-    },
-)
+include::example$n1ql-query.go[tag=index-consistency]
 ----
 
 The above query may not return the newly inserted document because it has not yet been indexed.
@@ -167,14 +134,9 @@ The query is issued immediately after document creation, and in this case the qu
 
 If the above code is modified to use _RequestPlus_, query processing will wait until all updates have been processed and recalculated into the index from the point in time the query was received:
 
-[source,golang]
+[source,golang,indent=0]
 ----
-results, err := cluster.Query("SELECT name, email, random, META(default).id FROM default WHERE $1 IN name'",
-    &gocb.QueryOptions{
-        PositionalParameters: []interface{}{"Brass"},
-        ScanConsistency: gocb.QueryScanConsistencyRequestPlus,
-    },
-)
+include::example$n1ql-query.go[tag=index-consistency-request-plus]
 ----
 
 This gives the application developer more control over the balance between performance (latency) and consistency,

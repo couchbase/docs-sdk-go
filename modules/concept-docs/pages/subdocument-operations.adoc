@@ -1,1 +1,1 @@
-include::6.5@sdk:pages:partial$subdoc.adoc[]
+include::7.0@sdk:pages:partial$subdoc.adoc[]

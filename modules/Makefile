@@ -18,6 +18,7 @@ build:
 	@./test/scripts/build-examples.sh howtos/examples
 	@./test/scripts/build-examples.sh project-docs/examples
 	@./test/scripts/build-examples.sh devguide/examples/go
+	@./test/scripts/build-examples.sh concept-docs/examples
 
 # Utility script to update the go and gocb versions for all code examples.
 # Avoids having to manually change each go.mod and go.sum file in every examples directory.
@@ -27,6 +28,7 @@ update-versions:
 	@./test/scripts/update-versions.sh hello-world/examples ${GO_VERSION} ${GOCB_VERSION}
 	@./test/scripts/update-versions.sh howtos/examples ${GO_VERSION} ${GOCB_VERSION}
 	@./test/scripts/update-versions.sh project-docs/examples ${GO_VERSION} ${GOCB_VERSION}
+	@./test/scripts/update-versions.sh concept-docs/examples ${GO_VERSION} ${GOCB_VERSION}
 
 
 # -------------------------------------------
