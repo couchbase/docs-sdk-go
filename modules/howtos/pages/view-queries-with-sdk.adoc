@@ -18,7 +18,7 @@ The _map_ and _reduce_ functions are stored on the server and written in JavaScr
 
 MapReduce queries can be further customized during query time to allow only a subset (or range) of the data to be returned.
 
-TIP: See the xref:6.0@server:learn:views/views-writing.adoc[Incremental MapReduce Views] and xref:6.0@server:learn:views/views-querying.adoc[Querying Data with Views] sections of the general documentation to learn more about views and their architecture.
+TIP: See the xref:7.0@server:learn:views/views-writing.adoc[Incremental MapReduce Views] and xref:7.0@server:learn:views/views-querying.adoc[Querying Data with Views] sections of the general documentation to learn more about views and their architecture.
 
 
 == Querying Views through the Go SDK

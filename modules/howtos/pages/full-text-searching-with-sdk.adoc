@@ -35,8 +35,8 @@ include::devguide:example$go/search.go[tag=matchquery]
 We have also included the `Fields` option which will get the content of the specified (indexed) field as a part of the response.
 
 All simple query types are created in the same manner, although some have additional properties, which can be seen in common query type descriptions.
-Couchbase FTS's xref:6.5@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the range wanted.
-Here is a date range query that looks for dates between 1st January 2019 and 31st January, the second parameter is whether the date should be considered inclusive:
+Couchbase FTS's xref:7.0@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the range wanted.
+Here is a date range query that looks for dates between 1st January 2019 and 1st February, the second parameter is whether the date should be considered inclusive:
 
 [source,golang,indent=0]
 ----

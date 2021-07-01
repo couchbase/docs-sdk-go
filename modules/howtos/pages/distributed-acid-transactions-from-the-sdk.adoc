@@ -8,5 +8,5 @@
 
 
 Distributed ACID Transactions are not currently available for the Go SDK.
-include::6.5@sdk:shared:partial$acid-transactions.adoc[tag=other]
+include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=other]
 

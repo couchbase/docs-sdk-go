@@ -21,14 +21,14 @@ include::devguide:example$go/connecting.go[tag=simpleconnect]
 ----
 
 
-include::6.5@sdk:shared:partial$auth-overview.adoc[tag=rbac]
+include::7.0@sdk:shared:partial$auth-overview.adoc[tag=rbac]
 
-include::6.5@sdk:shared:partial$auth-overview.adoc[tag=cert-auth]
+include::7.0@sdk:shared:partial$auth-overview.adoc[tag=cert-auth]
 
 
 == Authenticating the Go Client by Certificate
 
-For sample procedures whereby certificates can be generated and deployed, see xref:6.5@server:manage:manage-security/manage-certificates.adoc[Manage Certificates].
+For sample procedures whereby certificates can be generated and deployed, see xref:7.0@server:manage:manage-security/manage-certificates.adoc[Manage Certificates].
 The rest of this document assumes that the processes there, or something similar, have been followed.
 That is:
 
@@ -41,7 +41,7 @@ include::devguide:example$go/connecting-cca.go[tag=certconnect]
 ----
 
 
-include::6.5@sdk:shared:partial$auth-overview.adoc[tag=ldap]
+include::7.0@sdk:shared:partial$auth-overview.adoc[tag=ldap]
 
 [source,golang,indent=0]
 ----

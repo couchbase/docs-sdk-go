@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/couchbase/gocb/v2"
 	"time"
+
+	"github.com/couchbase/gocb/v2"
 )
 
 func operationsWithNewUser(username, password, connString, bucketName string) {
@@ -20,7 +21,7 @@ func operationsWithNewUser(username, password, connString, bucketName string) {
 	}
 	// For Server versions 6.5 or later you do not need to open a bucket here
 	bucket := cluster.Bucket(bucketName)
-	collection := bucket.DefaultCollection()
+	collection := bucket.Scope("inventory").Collection("airline")
 
 	err = cluster.QueryIndexes().CreatePrimaryIndex(bucketName, &gocb.CreatePrimaryQueryIndexOptions{
 		IgnoreIfExists: true,
@@ -54,7 +55,7 @@ func operationsWithNewUser(username, password, connString, bucketName string) {
 		panic(err)
 	}
 
-	queryRes, err := cluster.Query("SELECT * FROM `travel-sample` LIMIT 5", nil)
+	queryRes, err := cluster.Query("SELECT * FROM `travel-sample`.inventory.airline LIMIT 5", nil)
 	if err != nil {
 		panic(err)
 	}

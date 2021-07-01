@@ -169,7 +169,7 @@ func main() {
 	// #end::iteratingfacets[]
 
 	// #tag::consistency[]
-	collection := bucket.DefaultCollection()
+	collection := bucket.Scope("inventory").Collection("hotel")
 
 	hotel := struct {
 		Description string `json:"description"`

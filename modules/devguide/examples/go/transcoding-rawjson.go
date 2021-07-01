@@ -24,7 +24,7 @@ func main() {
 
 	bucket := cluster.Bucket("travel-sample")
 
-	collection := bucket.DefaultCollection()
+	collection := bucket.Scope("inventory").Collection("airline")
 
 	// Create a new raw transcoder and use it to Upsert the document.
 	// #tag::rawjsonmarshal[]

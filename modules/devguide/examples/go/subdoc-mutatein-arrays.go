@@ -23,7 +23,7 @@ func main() {
 	}
 
 	bucket := cluster.Bucket("travel-sample")
-	collection := bucket.DefaultCollection()
+	collection := bucket.Scope("inventory").Collection("airline")
 
 	// We wait until the bucket is definitely connected and setup.
 	err = bucket.WaitUntilReady(5*time.Second, nil)

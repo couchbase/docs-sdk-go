@@ -20,7 +20,7 @@
 * xref:howtos:concurrent-document-mutations.adoc[Concurrent Document Mutations]
 // * xref:howtos:durability.adoc[Durability]
 * xref:howtos:transcoders-nonjson.adoc[Transcoders & Non-JSON]
-* xref:howtos:working-with-collections.adoc[Working with Collections DP]
+* xref:howtos:working-with-collections.adoc[Working with Collections]
 
 .Managing Couchbase
 * xref:howtos:managing-connections.adoc[Managing Connections]

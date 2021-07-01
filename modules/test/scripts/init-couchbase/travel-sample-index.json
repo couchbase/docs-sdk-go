@@ -1,70 +1,107 @@
 {
-  "name": "travel-sample-index",
   "type": "fulltext-index",
+  "name": "travel-sample-index",
+  "sourceType": "gocbcore",
+  "sourceName": "travel-sample",
+  "planParams": {
+    "maxPartitionsPerPIndex": 1024,
+    "indexPartitions": 1
+  },
   "params": {
     "doc_config": {
       "docid_prefix_delim": "",
       "docid_regexp": "",
-      "mode": "type_field",
+      "mode": "scope.collection.type_field",
       "type_field": "type"
     },
     "mapping": {
+      "analysis": {},
       "default_analyzer": "standard",
       "default_datetime_parser": "dateTimeOptional",
       "default_field": "_all",
       "default_mapping": {
-        "dynamic": false,
-        "enabled": true,
-        "properties": {
-          "description": {
-            "enabled": true,
-            "dynamic": false,
-            "fields": [
-              {
-                "docvalues": true,
-                "include_in_all": true,
-                "include_term_vectors": true,
-                "index": true,
-                "name": "description",
-                "store": true,
-                "type": "text"
-              }
-            ]
-          },
-          "type": {
-            "enabled": true,
-            "dynamic": false,
-            "fields": [
-              {
-                "docvalues": true,
-                "include_in_all": true,
-                "include_term_vectors": true,
-                "index": true,
-                "name": "type",
-                "store": true,
-                "type": "text"
-              }
-            ]
-          }
-        }
+        "dynamic": true,
+        "enabled": false
       },
       "default_type": "_default",
-      "docvalues_dynamic": true,
+      "docvalues_dynamic": false,
       "index_dynamic": true,
       "store_dynamic": false,
-      "type_field": "_type"
+      "type_field": "_type",
+      "types": {
+        "inventory.airline": {
+          "dynamic": true,
+          "enabled": true
+        },
+        "inventory.airport": {
+          "dynamic": true,
+          "enabled": true
+        },
+        "inventory.hotel": {
+          "dynamic": false,
+          "enabled": true,
+          "properties": {
+            "city": {
+              "dynamic": false,
+              "enabled": true,
+              "fields": [
+                {
+                  "docvalues": true,
+                  "include_in_all": true,
+                  "include_term_vectors": true,
+                  "index": true,
+                  "name": "city",
+                  "store": true,
+                  "type": "text"
+                }
+              ]
+            },
+            "description": {
+              "dynamic": false,
+              "enabled": true,
+              "fields": [
+                {
+                  "docvalues": true,
+                  "include_in_all": true,
+                  "include_term_vectors": true,
+                  "index": true,
+                  "name": "description",
+                  "store": true,
+                  "type": "text"
+                }
+              ]
+            },
+            "type": {
+              "dynamic": false,
+              "enabled": true,
+              "fields": [
+                {
+                  "docvalues": true,
+                  "include_in_all": true,
+                  "include_term_vectors": true,
+                  "index": true,
+                  "name": "type",
+                  "store": true,
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        },
+        "inventory.landmark": {
+          "dynamic": true,
+          "enabled": true
+        },
+        "inventory.route": {
+          "dynamic": true,
+          "enabled": true
+        }
+      }
     },
     "store": {
       "indexType": "scorch",
       "segmentVersion": 15
     }
   },
-  "sourceType": "gocbcore",
-  "sourceName": "travel-sample",
-  "sourceParams": {},
-  "planParams": {
-    "maxPartitionsPerPIndex": 1024,
-    "indexPartitions": 1,
-    "numReplicas": 0
-  }
+  "sourceParams": {}
 }
