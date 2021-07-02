@@ -2,7 +2,7 @@ name: Test Code Samples (Dev)
 
 on:
   push:
-    branches: [release/2.2]
+    branches: [release/2.3]
     paths:
       - 'modules/test/*'
       - 'modules/Makefile'
@@ -12,7 +12,7 @@ on:
 env:
   REGISTRY: registry.gitlab.com/cb-vanilla/server
   CB_EDITION: 7.0.0
-  CB_BUILD: 5127
+  CB_BUILD: 5295
 
 jobs:
   test:
