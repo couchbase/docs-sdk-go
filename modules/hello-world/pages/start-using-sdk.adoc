@@ -8,9 +8,9 @@ The Couchbase Go SDK allows you to connect to a Couchbase cluster from Go.
 It is a native Go library and uses the high-performance gocbcore to handle communicating to the cluster over Couchbase’s binary protocols
 
 The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, 
-and adding support for future Couchbase Server features like Collections and Scopes 
-(available in Couchbase Server 6.5 as a xref:concept-docs:collections.adoc[developer preview]).
-The Go 2.0 SDK also introduces improved error handling providing extra error information.
+and adding support for future Couchbase Server features like xref:concept-docs:collections.adoc[Collections and Scopes]
+(available in Couchbase Server 7.0).
+The Go 2.x SDK also introduces improved error handling providing extra error information.
 
 If you're upgrading your application from Couchbase Go SDK 1.x, please read our xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migration Guide].
 
@@ -22,7 +22,7 @@ You can use `go get` to download the SDK:
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.2.3
+$ go get github.com/couchbase/gocb/v2@v2.2.4
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -42,7 +42,7 @@ include::example$startusing.go[tag=connect]
 
 If you are connecting to Couchbase Cloud rather than a local Couchbase Server, then also refer to the <<cloud-connections, Cloud section>>, below.
 
-Couchbase uses xref:6.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
+Couchbase uses xref:7.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
 Here we will use the _Full Admin_ role created during installation of the Couchbase Data Platform.
 For production client code, you will want to use more appropriate, restrictive settings -- but here we want to get you up and running quickly.
 If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _localhost_.
@@ -54,20 +54,20 @@ To access the KV (Key/Value) API or to query views, you need to open a `Bucket`:
 include::example$startusing.go[tag=bucket]
 ----
 
-If you installed the travel sample data bucket, replace _bucket-name_ with _travel-sample_.
+If you installed the travel sample data bucket, replace _bucketName_ with _travel-sample_.
 
 
-The 2.0 SDK is ready for the introduction of xref:#[Collections] in an upcoming release of the Couchbase Data Platform.
-Couchbase Server 6.5 brings a limited xref:6.5@server:developer-preview:preview-mode.adoc[Developer Preview] of Collections, 
-allowing Documents to be grouped by purpose or theme, according to a specified _Collection_. 
+The 2.3 SDK supports full integration with the xref:concept-docs:collections.adoc[Collections] feature in the latest release of the Couchbase Data Platform, Couchbase Server 7.0.
+This brings complete support of Collections, allowing Documents to be grouped by purpose or theme, according to a specified _Scope_.
+Here we will use the `users` collection within the `tenant_agent_00` scope from `travel-sample` bucket as an example.
 
 [source,golang,indent=0]
 ----
 include::example$startusing.go[tag=collection]
 ----
 
-The commented-out code shows how you would use a named collection and scope.
-However, in this case we've used the `DefaultCollection`, which provides the same functionality as bucket-level operations did in previous versions of Couchbase Server.
+The code shows how you would use a named collection and scope. A named or default collection will provide the same functionality as bucket-level operations did in previous versions of Couchbase Server.
+
 The `DefaultCollection` must be used when connecting to a 6.6 cluster or earlier.
 
 [source,golang,indent=0]
@@ -82,7 +82,7 @@ Now that you know the basics, you may wish to go straight to that page.
 == Cloud Connections
 
 For developing on Couchbase Cloud, 
-try the https://github.com/couchbase/docs-sdk-go/blob/release/2.1/modules/devguide/examples/go/cloud.go[Cloud-based Hello World program].
+try the https://github.com/couchbase/docs-sdk-go/blob/release/2.3/modules/devguide/examples/go/cloud.go[Cloud-based Hello World program].
 
 If you are not working from the same _Availability Zone_ as your Couchbase Cloud, refer to the following:
 

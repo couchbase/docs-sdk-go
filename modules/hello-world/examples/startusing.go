@@ -7,6 +7,8 @@ import (
 	gocb "github.com/couchbase/gocb/v2"
 )
 
+var bucketName = "travel-sample"
+
 // #tag::connect[]
 func main() {
 	cluster, err := gocb.Connect(
@@ -22,7 +24,7 @@ func main() {
 
 	// #tag::bucket[]
 	// get a bucket reference
-	bucket := cluster.Bucket("travel-sample")
+	bucket := cluster.Bucket(bucketName)
 
 	// We wait until the bucket is definitely connected and setup.
 	err = bucket.WaitUntilReady(5*time.Second, nil)
@@ -32,12 +34,9 @@ func main() {
 	// #end::bucket[]
 
 	// #tag::collection[]
-	// get a collection reference
-	collection := bucket.DefaultCollection()
-
-	// for a named collection and scope
-	// scope := bucket.Scope("my-scope")
-	// collection := scope.Collection("my-collection")
+	// get a user-defined collection reference
+	scope := bucket.Scope("tenant_agent_00")
+	collection := scope.Collection("users")
 	// #end::collection[]
 
 	// #tag::upsert-get[]
