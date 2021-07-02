@@ -23,7 +23,7 @@ func basic() {
 
 	// #tag::getcollection[]
 	bucket := cluster.Bucket("travel-sample")
-	collection := bucket.DefaultCollection()
+	collection := bucket.Scope("inventory").Collection("airport")
 	// #end::getcollection[]
 
 	// #tag::getresult[]
