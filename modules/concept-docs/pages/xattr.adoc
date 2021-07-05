@@ -7,17 +7,15 @@
 [abstract]
 {description}
 
-include::6.5@sdk:shared:partial$sdk-xattr-overview.adoc[tag=intro_extended_attributes]
+include::7.0@sdk:shared:partial$sdk-xattr-overview.adoc[tag=intro_extended_attributes]
 
-include::6.5@sdk:shared:partial$sdk-xattr-overview.adoc[tag=using_extended_attributes]
+include::7.0@sdk:shared:partial$sdk-xattr-overview.adoc[tag=using_extended_attributes]
 
-include::6.5@sdk:shared:partial$sdk-xattr-overview.adoc[tag=virtual_extended_attributes]
+include::7.0@sdk:shared:partial$sdk-xattr-overview.adoc[tag=virtual_extended_attributes]
 
-[source,golang]
+[source,golang,indent=0]
 ----
-collection.LookupIn(key, []gocb.LookupInSpec{
-	gocb.GetSpec("$document.exptime", &gocb.GetSpecOptions{IsXattr: true}),
-}, nil)
+include::example$xattr.go[tag=xattr]
 ----
 
 // See the xref:howtos:sdk-xattr-example.adoc#virtual-extended-attributes-example[example page] for a complete code sample.

@@ -13,7 +13,7 @@
 [.column]
 ====== {empty}
 [.content]
-The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, and adding support for future Couchbase Server features like Collections and Scopes (available in Couchbase Server 6.5 & 6.6 as a developer preview).
+The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, and adding support for future Couchbase Server features like Collections and Scopes (available in Couchbase Server 7.0).
 The Go 2.x SDK also introduces improved error handling providing extra error information.
 
 
@@ -21,12 +21,7 @@ The Go 2.x SDK also introduces improved error handling providing extra error inf
 [.content]
 [source,golang,indent=0]
 ----
-	// get a collection reference
-	collection := bucket.DefaultCollection()
-
-	// for a named collection and scope
-	// scope := bucket.Scope("my-scope")
-	// collection := scope.Collection("my-collection")
+include::example$overview.go[tag=overview]
 ----
 
 
@@ -51,7 +46,7 @@ The Go 2.x SDK also introduces improved error handling providing extra error inf
 [.content]
 Dive right in with a xref:start-using-sdk.adoc[quick install and Hello World].
 Try out our xref:sample-application.adoc[Travel Sample Application].
-And take a look at the xref:howtos:working-with-collections.adoc[developer preview of Collections].
+And take a look at the xref:howtos:working-with-collections.adoc[Collections feature].
 
 
 [.column]
@@ -95,7 +90,7 @@ Those useful nuts-and-bolts guides to
 xref:project-docs:compatibility.adoc[compatibility tables]; 
 xref:project-docs:sdk-release-notes.adoc[release notes]; 
 xref:project-docs:get-involved.adoc[contribution guide]; and the 
-xref:project-docs:migrating-sdk-code-to-3.n.adoc[migration guide] for moving to the 3.0 API.
+xref:project-docs:migrating-sdk-code-to-3.n.adoc[migration guide] for moving to the 2.x API.
 
 [.column]
 ====== {empty}

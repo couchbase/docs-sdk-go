@@ -30,7 +30,7 @@ func main() {
 	}
 
 	// #tag::metrics[]
-	query := "SELECT x.* FROM `travel-sample` x LIMIT 10;"
+	query := "SELECT x.* FROM `travel-sample`.inventory.airport x LIMIT 10;"
 	rows, err := cluster.Query(query, &gocb.QueryOptions{
 		Metrics: true,
 	})

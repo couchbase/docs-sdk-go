@@ -7,7 +7,7 @@
 [abstract]
 {description}
 
-include::6.6@sdk:shared:partial$nonjson.adoc[tag=intro]
+include::7.0@sdk:shared:partial$nonjson.adoc[tag=intro]
 
-include::6.6@sdk:shared:partial$nonjson.adoc[tag=using]
+include::7.0@sdk:shared:partial$nonjson.adoc[tag=using]
 

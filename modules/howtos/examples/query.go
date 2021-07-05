@@ -50,4 +50,28 @@ func main() {
 		panic(err)
 	}
 	// #end::simple[]
+
+	// tag::simple-named-scope[]
+	scope := cluster.Bucket("travel-sample").Scope("inventory")
+	results, err = scope.Query("SELECT x.* FROM `airline` x LIMIT 10;", &gocb.QueryOptions{})
+	// check query was successful
+	if err != nil {
+		panic(err)
+	}
+
+	var airline interface{}
+	for results.Next() {
+		err := results.Row(&airline)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(airline)
+	}
+	// end::simple-named-scope[]
+
+	// always check for errors after iterating
+	err = results.Err()
+	if err != nil {
+		panic(err)
+	}
 }

@@ -30,9 +30,10 @@ func main() {
 	}
 
 	// #tag::consistency[]
-	query := "SELECT x.* FROM `travel-sample` x WHERE x.`type`=\"hotel\" LIMIT 10"
+	query := "SELECT x.* FROM `travel-sample`.inventory.hotel x WHERE x.`city`= $1 LIMIT 10"
 	rows, err := cluster.Query(query, &gocb.QueryOptions{
 		ScanConsistency: gocb.QueryScanConsistencyRequestPlus,
+		PositionalParameters: []interface{}{"San Francisco"},
 	})
 	if err != nil {
 		panic(err)

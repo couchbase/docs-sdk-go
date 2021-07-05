@@ -19,7 +19,7 @@ This is fairly non-disruptive and does not produce a lot of output.
 * [.api]`gocb.VerboseStdioLogger()` returns a logger that logs more detailed tracing information.
 This logger should only be used when trying to diagnose an issue.
 
-[source,go]
+[source,golang,indent=0]
 ----
 import (
         "github.com/couchbase/gocb/v2"
@@ -35,7 +35,7 @@ func main() {
 It is also possible to provide other logger implementations to [.api]`gocb.SetLogger`.
 Implementations must satisify the [.api]`gocb.Logger` interface.
 
-[source,go]
+[source,golang,indent=0]
 ----
   type Logger interface {
 	// Outputs logging information:
@@ -56,7 +56,7 @@ The [.api]`gocb` versions should be used.
 Redacting logs is a two-stage process. 
 If you want to redact client logs (for example before handing them off to the Couchbase Support team) you first need to enable log redaction in your application.
 
-[source,golang]
+[source,golang,indent=0]
 ----
 gocb.SetLogRedactionLevel(gocb.RedactFull)
 ----
@@ -64,9 +64,9 @@ gocb.SetLogRedactionLevel(gocb.RedactFull)
 Different redaction levels are supported -- please see the `RedactionLevel` enum description for more information.
 
 Note that you need to run this command before any of the SDK code is initialized so all of the logs are captured properly. 
-Once the SDK writes the logs with the tags to a file, you can then use the xref:6.5@server:cli:cbcli/cblogredaction.adoc[`cblogredaction` tool] to obfuscate the log.
+Once the SDK writes the logs with the tags to a file, you can then use the xref:7.0@server:cli:cbcli/cblogredaction.adoc[`cblogredaction` tool] to obfuscate the log.
 
-* You may wish to read more on Log Redaction xref:6.5@server:manage:manage-logging/manage-logging.adoc#understanding_redaction[in the Server docs].
+* You may wish to read more on Log Redaction xref:7.0@server:manage:manage-logging/manage-logging.adoc#understanding_redaction[in the Server docs].
 
 == Using your own Logger
 

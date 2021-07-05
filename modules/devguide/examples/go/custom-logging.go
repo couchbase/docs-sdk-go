@@ -66,14 +66,14 @@ func main() {
 	}
 
 	bucket := cluster.Bucket("travel-sample")
-	col := bucket.DefaultCollection()
+	collection := bucket.Scope("inventory").Collection("airport")
 
 	err = bucket.WaitUntilReady(5*time.Second, nil)
 	if err != nil {
 		panic(err)
 	}
 
-	_, err = col.Upsert("mylogger", "logs", nil)
+	_, err = collection.Upsert("mylogger", "logs", nil)
 	if err != nil {
 		panic(err)
 	}

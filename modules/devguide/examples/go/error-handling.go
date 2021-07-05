@@ -21,7 +21,7 @@ func main() {
 	}
 
 	bucket := cluster.Bucket("travel-sample")
-	collection := bucket.DefaultCollection()
+	collection := bucket.Scope("inventory").Collection("airport")
 
 	err = bucket.WaitUntilReady(2*time.Second, nil)
 	if err != nil {

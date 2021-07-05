@@ -20,7 +20,7 @@ func main() {
 	}
 
 	bucket := cluster.Bucket("travel-sample")
-	collection := bucket.DefaultCollection()
+	collection := bucket.Scope("inventory").Collection("airport")
 
 	// We wait until the bucket is definitely connected and setup.
 	err = bucket.WaitUntilReady(5*time.Second, nil)
@@ -82,7 +82,7 @@ func replaceWithCas(collection *gocb.Collection, userID string) {
 
 func lockingAndCas(collection *gocb.Collection) {
 	// #tag::locking[]
-	getRes, err := collection.GetAndLock("key", 2*time.Second, nil)
+	getRes, err := collection.GetAndLock("airport_1263", 2*time.Second, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -93,7 +93,7 @@ func lockingAndCas(collection *gocb.Collection) {
 	collection.Unlock("key", lockedCas, nil)
 	*/
 
-	_, err = collection.Replace("key", "new value", &gocb.ReplaceOptions{
+	_, err = collection.Replace("airport_1263", "new value", &gocb.ReplaceOptions{
 		Cas: lockedCas,
 	})
 	// #end::locking[]

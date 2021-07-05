@@ -1,6 +1,6 @@
-= Migrating from Go SDK 1.x to SDK 2.0
-:description: The SDK 3.0 API used in Go SDK 2.0 breaks the existing 2.0 APIs (used in Go SDK 1.6) in order to provide a number of improvements.
-:nav-title: Migrating to the SDK 3.0 API
+= Migrating from Go SDK 1.x to SDK 2.x
+:description: The SDK 3.x API used in Go SDK 2.x breaks the existing 2.x APIs (used in Go SDK 1.6) in order to provide a number of improvements.
+:nav-title: Migrating to the SDK 3.x API
 :page-topic-type: concept
 :page-aliases: ROOT:migrate
 
@@ -11,12 +11,12 @@ The Document class and structure has been completely removed from the API, and t
 Retry behaviour is more proactive, and lazy bootstrapping moves all error handling to a single place.
 Individual behaviour changes across services are explained here.
 
-Go SDK 2.0 implements the SDK 3.0 API found in the _3.0_ versions of the C, .NET, Java, PHP, and Python SDKs.
+Go SDK 2.x implements the SDK 3.x API found in the _3.x_ versions of the C, .NET, Java, PHP, and Python SDKs.
 
-include::6.5@sdk:shared:partial$migration.adoc[tag=intro]
+include::7.0@sdk:shared:partial$migration.adoc[tag=intro]
 
 
-include::6.5@sdk:shared:partial$migration.adoc[tag=terms]
+include::7.0@sdk:shared:partial$migration.adoc[tag=terms]
 
 As an example here is a KeyValue document fetch:
 
@@ -32,13 +32,13 @@ Compare this to a N1QL query:
 include::example$migrating.go[tag=queryresult,indent=0]
 ----
 
-include::6.5@sdk:shared:partial$migration.adoc[tag=terms2]
+include::7.0@sdk:shared:partial$migration.adoc[tag=terms2]
 
 
-include::6.5@sdk:shared:partial$migration.adoc[tag=new]
+include::7.0@sdk:shared:partial$migration.adoc[tag=new]
 
 
-include::6.5@sdk:shared:partial$migration.adoc[tag=lang]
+include::7.0@sdk:shared:partial$migration.adoc[tag=lang]
 
 ===  Installation and Configuration
 
@@ -54,7 +54,7 @@ also be specified through the connection string.  See the appropriate documentat
 ==== Authentication
 
 Since Go SDK 1.x supports  Couchbase Server clusters older than 5.0, it had to support both Role-Based access control
-as well as bucket-level passwords. The minimum cluster version supported by SDK 3 is Server 5.0, which means that only
+as well as bucket-level passwords. The minimum cluster version supported by SDK 2.x is Server 5.0, which means that only
 RBAC is supported. This is why you can set the username and password when directly connecting:
 
 [source,golang]
@@ -89,7 +89,7 @@ The reason behind this change is that even if a bucket can be opened, a millisec
 All this state has been moved into the actual operation so there is only a single place where the error handling needs to take place. 
 This simplifies error handling and retry logic for an application.
 
-In SDK 2, you connected, opened a bucket, performed a KV op, and disconnected like this:
+In SDK 1, you connected, opened a bucket, performed a KV op, and disconnected like this:
 
 [source,golang]
 ----
@@ -106,14 +106,17 @@ getResult, _ := bucket.Get("airline_10", nil)
 bucket.Close()
 ----
 
-Here is the SDK 3 equivalent:
+Here is the SDK 2 equivalent:
 
 [source,golang]
 ----
+include::example$migrating.go[tag=getcollection,indent=0]
+
 include::example$migrating.go[tag=getresult,indent=0]
+
 ----
 
-`Collections` will be generally available with an upcoming Couchbase Server release, but the SDK already encodes it in its API to be future-proof.
+`Collections` are generally available from Couchbase Server version 7.0, which the SDK is already compatible with.
 If you are using a Couchbase Server version which does not support `Collections`, always use the `DefaultCollection()` method to access the KV API; it will map to the full bucket.
 
 IMPORTANT: You'll notice that `Bucket(string)` returns immediately, even if the bucket resources are not completely opened. 

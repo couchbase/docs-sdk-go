@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+
 	"github.com/couchbase/gocb/v2"
 	gocbfieldcrypt "github.com/couchbase/gocbencryption/v2"
 )
@@ -110,7 +111,8 @@ func main() {
 	// end::transcoder[]
 
 	// tag::upsert[]
-	col := cluster.Bucket("travel-sample").DefaultCollection()
+	bucket := cluster.Bucket("travel-sample")
+	collection := bucket.Scope("inventory").Collection("airport")
 
 	person := Person{
 		FirstName: "Barry",
@@ -129,14 +131,14 @@ func main() {
 		Phone: "123456",
 	}
 
-	_, err = col.Upsert("p1", person, nil)
+	_, err = collection.Upsert("p1", person, nil)
 	if err != nil {
 		panic(err)
 	}
 	// end::upsert[]
 
 	// tag::getmap[]
-	res, err := col.Get("p1", nil)
+	res, err := collection.Get("p1", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -151,7 +153,7 @@ func main() {
 	// end::getmap[]
 
 	// tag::getstr[]
-	personRes, err := col.Get("p1", nil)
+	personRes, err := collection.Get("p1", nil)
 	if err != nil {
 		panic(err)
 	}

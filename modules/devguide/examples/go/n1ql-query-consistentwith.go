@@ -29,8 +29,11 @@ func main() {
 		panic(err)
 	}
 
-	collection := b.DefaultCollection()
+	collection := b.Scope("inventory").Collection("hotel")
 
+    // NOTE: This currently fails with Couchbase Internal Server error.
+    // Server issue tracked here: https://issues.couchbase.com/browse/MB-46876
+    // Add back in once Couchbase Server 7.0.1 is available, which will fix this issue.
 	// #tag::consistentwith[]
 	// create / update document (mutation)
 	result, err := collection.Upsert("id", struct {
@@ -45,9 +48,13 @@ func main() {
 	state := gocb.NewMutationState(*result.MutationToken())
 
 	// use mutation state with query option
-	rows, err := cluster.Query("SELECT x.* FROM `travel-sample` x WHERE x.`type`=\"hotel\" LIMIT 10", &gocb.QueryOptions{
-		ConsistentWith: state,
-	})
+	rows, err := cluster.Query(
+		"SELECT x.* FROM `travel-sample`.inventory.hotel x WHERE x.`city`= $1 LIMIT 10",
+		&gocb.QueryOptions{
+			ConsistentWith:       state,
+			PositionalParameters: []interface{}{"San Francisco"},
+		},
+	)
 	// #end::consistentwith[]
 	if err != nil {
 		panic(err)

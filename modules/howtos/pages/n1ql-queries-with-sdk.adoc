@@ -10,13 +10,13 @@ Querying can solve typical programming tasks such as finding a user profile by e
 
 Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
 xref:#_additional_resources[Further resources] for learning about N1QL are listed at the bottom of the page.
-Before you get started you may wish to checkout the xref:6.0@server:n1ql:n1ql-language-reference/index.adoc[N1QL intro page], or just dive in with a query against our travel sample data set.
+Before you get started you may wish to checkout the xref:7.0@server:n1ql:n1ql-language-reference/index.adoc[N1QL intro page], or just dive in with a query against our travel sample data set.
 In this case, the one thing that you need to know is that in order to make a Bucket queryable, it must have at least one index defined.
 You can define a _primary_ index on a bucket. 
 When a primary index is defined you can issue non-covered queries on the bucket as well.
 
 Use
-xref:6.5@server::tools/cbq-shell.html[cbq], our interactive Query shell.
+xref:7.0@server::tools/cbq-shell.html[cbq], our interactive Query shell.
 Open it, and enter the following:
 
 [source,n1ql]
@@ -153,6 +153,10 @@ If `QueryScanConsistencyRequestPlus` is chosen, it will likely take a bit longer
 include::devguide:example$go/n1ql-query-consistency.go[tag=consistency]
 ----
 
+// Due to https://issues.couchbase.com/browse/MB-46876 this section won’t work with named scopes and collections,
+// we need to omit this information until Couchbase Server 7.0.1 is available, which will contain the fix for this bug.
+// We should avoid showing the user this information until then.
+////
 You can also use `ConsistentWith MutationState` for a more narrowed-down scan consistency.
 Construct the `MutationState` from individual `MutationToken`s that are returned from KV `MutationResult`s to make sure at least those mutations are visible.
 Depending on the index update rate this might provide a speedier response.
@@ -161,6 +165,7 @@ Depending on the index update rate this might provide a speedier response.
 ----
 include::devguide:example$go/n1ql-query-consistentwith.go[tag=consistentwith]
 ----
+////
 
 === Client Context ID
 
@@ -178,24 +183,16 @@ The query engine will ensure that actually no data is mutated when parsing and p
 
 == Querying at Scope Level
 
-From version 2.1.7 of the Go SDK, it is possible to query off the xref:7.0@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with the beta version of the next Couchbase Server release, 7.0β_,
+It is possible to query off the xref:7.0@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with Couchbase Server release 7.0_,
 using the `scope.Query()` method.
 It takes the statement as a required argument, and then allows additional options if needed.
 
-CAUTION: This feature is marked xref:project-docs:compatibility.adoc#interface-stability[_Uncommitted_].
-Expect a promotion to _Committed_ API in a future release.
+The code snippet below shows how to run a simple query to fetch 10 random rows from travel-sample and print the results,
+the assumption is that the `airline` collection exists within a scope `inventory`.
 
-The code snippet below shows how to run a simple query to fetch 10 random rows from travel-sample and print the results, 
-the assumption is that the `airline` collection exists within a scope `myScope`.
-
-[source,golang]
+[source,golang,indent=0]
 ----
-myScope := cluster.Bucket("mybucket").Scope("myscope")
-rows, err := myScope.Query("SELECT x.* FROM `airline` x LIMIT 10;", &gocb.QueryOptions{})
-// check query was successful
-if err != nil {
-        panic(err)
-}
+include::example$query.go[tag=simple-named-scope]
 ----
 
 A complete list of `QueryOptions` can be found in the https://pkg.go.dev/github.com/couchbase/gocb/v2#Scope.Query[API docs].
@@ -208,7 +205,7 @@ Be sure to check that your use case fits your selection of query service.
 
 // For a deeper dive into N1QL from the SDK, refer to our xref:[N1QL SDK concept doc].
 
-The xref:6.5@server:n1ql:n1ql-language-reference/index.adoc[Server doc N1QL intro] introduces up a complete guide to the N1QL language, including all of the latest additions.
+The xref:7.0@server:n1ql:n1ql-language-reference/index.adoc[Server doc N1QL intro] introduces up a complete guide to the N1QL language, including all of the latest additions.
 
 The http://query.pub.couchbase.com/tutorial/#1[N1QL interactive tutorial] is a good introduction to the basics of N1QL use.
 

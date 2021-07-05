@@ -7,7 +7,7 @@
 {description}
 Common use cases are outlined here, more recherché use cases are covered in the https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc[API docs].
 
-include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
+include::7.0@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
 
 The Go SDK also comes with some convenience functionality for common Couchbase management requests.
 
@@ -37,7 +37,7 @@ include::devguide:example$go/provisioning-resources-buckets.go[tag=creatingbucke
 
 The `CreateBucketSettings` and `BucketSettings` structs are used for creating and updating buckets, `BucketSettings` is also used for exposing information about existing buckets.
 
-include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=update-bucket-warning]
+include::7.0@sdk:shared:partial$flush-info-pars.adoc[tag=update-bucket-warning]
 
 Here is the list of parameters available:
 
@@ -79,7 +79,7 @@ include::devguide:example$go/provisioning-resources-buckets.go[tag=removeBucket]
 [#go-flushing]
 == Flushing Buckets
 
-include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=flush-intro]
+include::7.0@sdk:shared:partial$flush-info-pars.adoc[tag=flush-intro]
 
 You can flush a bucket in the SDK by using the `Flush` method:
 
@@ -91,8 +91,6 @@ include::devguide:example$go/provisioning-resources-buckets.go[tag=flushBucket]
 The `Flush` operation may fail if the bucket does not have flush enabled, in that case it will return an `ErrBucketNotFlushable`.
 
 == Collection Management
-
-[.status]#Developer Preview#
 
 The CollectionManager interface may be used to create and delete scopes and collections from the Couchbase cluster.
 It is instantiated through the `Bucket.Collections()` method.
@@ -106,21 +104,21 @@ include::example$collection-manager.go[tag=create-collection-manager,indent=0]
 
 You can create a scope:
 
-[source,golang]
+[source,golang,indent=0]
 ----
 include::example$collection-manager.go[tag=create-scope,indent=0]
 ----
 
 You can then create a collection within that scope:
 
-[source,golang]
+[source,golang,indent=0]
 ----
 include::example$collection-manager.go[tag=create-collection,indent=0]
 ----
 
 Finally, you can drop unneeded collections and scopes:
 
-[source,golang]
+[source,golang,indent=0]
 ----
 include::example$collection-manager.go[tag=drop-collection,indent=0]
 
@@ -131,7 +129,7 @@ Note that you require at least the https://docs.couchbase.com/server/7.0/learn/s
 The same role also lets you manage Collections, though a more minimal set of privileges is https://docs.couchbase.com/server/7.0/learn/security/roles.html#manage-collections-in-scope[Manage Collections in Scope] along with https://docs.couchbase.com/server/7.0/learn/security/roles.html#data-reader[Data Reader].
 
 You can create users with the appropriate RBAC programmatically:
-[source,golang]
+[source,golang,indent=0]
 ----
 include::example$collection-manager.go[tag=bucketAdmin, indent=0]
 
@@ -155,7 +153,7 @@ For those occasions when you do, please see the relevant API docs:
 
 == View Management
 
-include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=view-management]
+include::7.0@sdk:shared:partial$flush-info-pars.adoc[tag=view-management]
 
 In the SDK, design documents are represented by the `DesignDocument` and `View` structs.
 All operations on design documents are performed on the `ViewIndexManager` instance:
@@ -172,7 +170,7 @@ The following example upserts a design document with two views:
 include::devguide:example$go/provisioning-resources-views.go[tag=createView]
 ----
 
-include::6.5@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
+include::7.0@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
 
 Note the use of `DesignDocumentNamespaceDevelopment`, the other option is `DesignDocumentNamespaceProduction`.
 This parameter specifies whether the design document should be created as development, or as production -- with the former running over only a small fraction of the documents.

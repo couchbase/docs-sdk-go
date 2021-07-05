@@ -12,9 +12,9 @@ load 'test/test_helper.bash'
     runExample $DEVGUIDE_DIR search.go
     assert_success
     assert_output --partial "Document ID: hotel_26223"
-    assert_output --partial "fields included in result: map[description:Swanky"
+    assert_output --partial "fields included in result: map[_\$c:hotel description:Swanky "
     refute_output --partial "Facet field: type, total: 0"
-    assert_output --partial "Document ID: a-new-hotel, search score: 7"
+    assert_output --partial "Document ID: a-new-hotel, search score:"
 }
 
 @test "[devguide] - analytics-named-placeholders.go" {
@@ -32,7 +32,16 @@ load 'test/test_helper.bash'
 @test "[devguide] - analytics-query-one.go" {
     runExample $DEVGUIDE_DIR analytics-query-one.go
     assert_success
-    assert_output --partial "map[airportname:Calais Dunkerque country:France]"
+}
+
+@test "[devguide] - analytics-collection-scope.go" {
+    runExample $DEVGUIDE_DIR analytics-collection-scope.go
+    assert_success
+}
+
+@test "[devguide] - analytics-simple-query.go" {
+    runExample $DEVGUIDE_DIR analytics-simple-query.go
+    assert_success
 }
 
 @test "[devguide] - cloud.go" {
@@ -125,6 +134,9 @@ EOF
 }
 
 @test "[devguide] - n1ql-query-consistentwith.go" {
+    # TODO: Remove `skip` once Couchbase Server 7.0.1 is available.
+    skip "BUG: https://issues.couchbase.com/browse/MB-46876"
+
     runExample $DEVGUIDE_DIR n1ql-query-consistentwith.go
     assert_success
 }
@@ -272,4 +284,12 @@ EOF
 @test "[devguide] - kv-collection-scope.go" {
     runExample $DEVGUIDE_DIR kv-collection-scope.go
     assert_success
+}
+
+@test "[devguide] - fle.go" {
+    runExample $DEVGUIDE_DIR fle.go
+    assert_success
+    assert_output --partial "FirstName:Barry LastName:Sheen Password:bang!"
+    assert_output --partial "Addresses:[{HouseName:my house StreetName:my street}"
+    assert_output --partial "{HouseName:my other house StreetName:my other street}] Phone:123456}"
 }

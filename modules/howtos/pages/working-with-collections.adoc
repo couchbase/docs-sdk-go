@@ -1,33 +1,28 @@
-= Working with the  Collections Developer Preview
-:description: Collections is introduced as a Developer Preview feature in Couchbase Server 6.5.
-:nav-title: Collections DP
+= Working with the  Collections
+:description: Collections is introduced as a Developer Preview feature in Couchbase Server 6.5 & 6.6, and fully supported in Server 7.0.
+:nav-title: Collections
 :content-type: howto
 :page-topic-type: howto
 
 [abstract]
 {description}
-The 3.0 API SDKs (including Go SDK 2.0.x) all work with Collections and Scopes.
+The 2.3 SDK will work with all features of Collections and Scopes.
 As a practical demonstration, we have a collections-enabled version of the Travel Sample application.
 
-The xref:6.5@server:developer-preview:collections/collections-overview.adoc[Developer Preview of the upcoming Collections feature] in Couchbase Server is fully implemented in the 3.0 API versions of the Couchbase SDKs.
+The xref:7.0@server:learn:data/scopes-and-collections.adoc[Collections feature] in Couchbase Server 7.0 is fully implemented in the 2.3 API version of the Couchbase SDK.
 When working with other server versions, the `defaultcollection` is used from the SDK.
-Here we show how to access individual collections in the Developer Preview version of Couchbase Server 6.5, with a collections-enabled version of our xref:hello-world:sample-application.adoc[Travel Sample application].
+Here we show how to access individual collections in Couchbase Server 7.0, with a collections-enabled version of our xref:hello-world:sample-application.adoc[Travel Sample application].
 User documents and flight documents are split into user and flight collections.
 Something that previously had to be done with key-value references to different types or categories of data.
 
 
 == Travel Sample app -- with Collections
 
-include::6.5@sdk:shared:partial$sample-application.adoc[tag=prereq]
+include::7.0@sdk:shared:partial$sample-application.adoc[tag=prereq]
 
-[WARNING]
-====
-Enabling Developer Preview should only be done on a development machine; 
-there is no upgrade path available from a DP-enabled Couchbase Server.
-====
 == Preparation
 
-As well as the xref:hello-world:start-using-sdk.adoc[Go SDK 2.1] and Couchbase Server, 
+As well as the xref:hello-world:start-using-sdk.adoc[Go SDK 2.3] and Couchbase Server,
 set up as described above, you will need `git` to fetch the travel sample application code:
 
 [source,console]
@@ -106,7 +101,7 @@ but also how to plug together all of the elements and build an application with 
 
 Collections and Scope are set immediately after opening the bucket in `main()`:
 
-[source,golang]
+[source,golang,indent=0]
 ----
 // Open the bucket
 globalBucket = globalCluster.Bucket(cbDataBucket, nil)
@@ -121,7 +116,7 @@ flightCollection = userDataScope.Collection("flights")
 
 And operations are now performed on the specific collection, rather than the whole bucket (or the whole bucket via `_default` collection, as in Server 6.5 without the Developer Preview enabled).
 
-[source,golang]
+[source,golang,indent=0]
 ----
 var flight jsonBookedFlight
 var flights []jsonBookedFlight

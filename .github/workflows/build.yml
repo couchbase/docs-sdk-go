@@ -2,7 +2,7 @@ name: Build Code Samples
 
 on:
   push:
-    branches: [release/2.2]
+    branches: [release/2.3]
     paths:
       - 'modules/test/*'
       - 'modules/Makefile'
@@ -10,7 +10,7 @@ on:
       - '**/*.mod'
       - '**/*.sum'
   pull_request:
-    branches: [release/2.2]
+    branches: [release/2.3]
     paths:
       - 'modules/test/*'
       - 'modules/Makefile'

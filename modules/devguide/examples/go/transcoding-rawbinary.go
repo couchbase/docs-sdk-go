@@ -18,7 +18,7 @@ func main() {
 
 	bucket := cluster.Bucket("travel-sample")
 
-	collection := bucket.DefaultCollection()
+	collection := bucket.Scope("inventory").Collection("airport")
 
 	// #tag::rawbinary[]
 	input := []byte("hello world")

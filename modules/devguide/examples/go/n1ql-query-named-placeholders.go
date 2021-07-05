@@ -30,9 +30,9 @@ func main() {
 	}
 
 	// #tag::named-params[]
-	query := "SELECT x.* FROM `travel-sample` x WHERE x.`type`=$type LIMIT 10;"
+	query := "SELECT x.* FROM `travel-sample`.inventory.hotel x WHERE x.`city`=$city LIMIT 10;"
 	params := make(map[string]interface{}, 1)
-	params["type"] = "hotel"
+	params["city"] = "San Francisco"
 	rows, err := cluster.Query(query, &gocb.QueryOptions{NamedParameters: params})
 	// #end::named-params[]
 

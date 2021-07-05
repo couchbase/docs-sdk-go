@@ -30,7 +30,7 @@ func main() {
 	}
 
 	// #tag::one[]
-	query := "SELECT x.* FROM `travel-sample` x WHERE x.`type`=$1 LIMIT 1;"
+	query := "SELECT x.* FROM `travel-sample`.inventory.hotel x WHERE x.`type`=$1 LIMIT 1;"
 	rows, err := cluster.Query(query, &gocb.QueryOptions{PositionalParameters: []interface{}{"hotel"}})
 
 	// check query was successful

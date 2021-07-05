@@ -14,7 +14,7 @@ func main() {
 			Password: "password",
 		},
 	}
-	cluster, err := gocb.Connect("172.23.111.3", opts)
+	cluster, err := gocb.Connect("localhost", opts)
 	if err != nil {
 		panic(err)
 	}
