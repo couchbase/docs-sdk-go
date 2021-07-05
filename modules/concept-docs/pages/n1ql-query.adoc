@@ -17,11 +17,6 @@ NOTE: In Go SDK 2.3 and earlier, the `adhoc` parameter is `Adhoc`.
 It is set to `false` by default -- set to `true` for a plan _not_ to be prepared, or a prepared plan _not_ to be reused.
 The 5000 limit to the client-side cache also does not apply.
 
-QueryResult result = cluster.query(
-"select count(*) from `travel-sample`.inventory.airport where country = ?",
-QueryOptions.queryOptions().adhoc(false).parameters(JsonArray.from("France"))
-);
-
 [source,golang,indent=0]
 ----
 include::example$n1ql-query.go[tag=prepared-statement]
