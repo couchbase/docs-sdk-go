@@ -58,6 +58,7 @@ This means that tuning the number of connections (KV endpoints) is no longer nec
 This is set to `true` by default.
 Note, changing the setting will only affect Server versions 7.0 onwards.
 
+
 == Security Options
 
 By default the client will connect to Couchbase Server using an unencrypted connection.
