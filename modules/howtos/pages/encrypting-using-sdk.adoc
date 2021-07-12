@@ -14,7 +14,7 @@ For a high-level overview of this feature, see xref:concept-docs:encryption.adoc
 The Go SDK works together with the https://github.com/couchbase/gocbencryption[Go Couchbase Encryption^] library to provide support for encryption and decryption of JSON fields.
 This library includes cryptographic algorithms you can use out of the box, and provides a framework for implementing your own crypto components.
 
-NOTE: The encryption code is packaged as an optional library because it is released under a https://github.com/couchbase/gocbencryption/blob/master/LICENSE[different license^] from the Couchbase Go SDK.
+NOTE: The encryption code is packaged as an optional library and is subject to the Couchbase https://www.couchbase.com/LA03012021[License] and https://www.couchbase.com/ESLA08042020[Enterprise Subscription License] agreements.
 To use the encryption library, you have to explicitly include this dependency in your project configuration.
 
 To get started with the Go encryption library you can fetch it using:
