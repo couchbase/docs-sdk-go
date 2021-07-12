@@ -50,7 +50,7 @@ CREATE INDEX ix_name ON `travel-sample`(name);
 CREATE INDEX ix_email ON `travel-sample`(email);
 ----
 
-This would allow you to query the _users_ bucket regarding a document's `name` or `email` properties, thus:
+This would allow you to query the _travel-sample_ bucket regarding a document's `name` or `email` properties, thus:
 
 [source,n1ql]
 ----
@@ -88,7 +88,7 @@ BUILD INDEX ON `travel-sample`(`#primary`, `ix_name`, `ix_email`);
 ----
 
 The indexes are not built until the `BUILD INDEX` statement is executed.
-At this point, the server scans all of the documents in the `users` bucket, 
+At this point, the server scans all of the documents in the `travel-sample` bucket, 
 and indexes it for all of the applicable indexes (in this case, those that have a `name` or `email` field).
 
 Building deferred indexes can also be done via the SDK:
