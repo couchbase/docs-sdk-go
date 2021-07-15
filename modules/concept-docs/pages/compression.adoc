@@ -24,7 +24,7 @@ Compression is only available in the Enterprise Edition of Couchbase Data Platfo
 
 [TIP]
 ====
-This size limit is enforced by Couchbase Server (7.0 and earlier); in practice it will affect very few users, as most JSON documents are considerably smaller.
+This size limit is enforced by Couchbase Server; in practice it will affect very few users, as most JSON documents are considerably smaller.
 A compressed doument of just under 20MB, which is greater than 20,971,520 bytes (20 MiB) when uncompressed, will be rejected by the server as follows:
 
 * Couchbase Server decompresses the document to check that it is valid JSON, and is correctly compressed with _Snappy_, and at this point measures it against `max data size` (20 MiB).
