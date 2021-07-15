@@ -1,9 +1,9 @@
 github.com/couchbase/gocb/v2 v2.2.0/go.mod h1:3D9lwKlaZFTbQk2Pw0OmfqIXuhmYSCVg0zIljY3ecgo=
-github.com/couchbase/gocb/v2 v2.2.4 h1:lcLFotwNX79y6RMzqJCBAyTTYu1Hy6CbT31Fo+ykMcc=
-github.com/couchbase/gocb/v2 v2.2.4/go.mod h1:nZV5d6WT+M+xy714aDTV+W0b6qMi7vJpbiV7TDs96rU=
+github.com/couchbase/gocb/v2 v2.3.0 h1:wM1FHFx+ZRDZGJDFMq3SWl1mAwJgjjEjLusr1UrO6yo=
+github.com/couchbase/gocb/v2 v2.3.0/go.mod h1:uHSE8LYpcSwYwGiD1CTlv7Zcs41xEZui2z7tVUwfNMo=
+github.com/couchbase/gocbcore/v10 v10.0.1 h1:nxG6xO8LIFQt12LloUA85Z2HHPB/I7J5sezf/05G3+Y=
+github.com/couchbase/gocbcore/v10 v10.0.1/go.mod h1:s6dwBFs4c3+cAzZbo1q0VW+QasudhHJuehE8b8U2YNg=
 github.com/couchbase/gocbcore/v9 v9.1.0/go.mod h1:jOSQeBSECyNvD7aS4lfuaw+pD5t6ciTOf8hrDP/4Nus=
-github.com/couchbase/gocbcore/v9 v9.1.5 h1:YCgvrh7QfQZSb0qE/sxC3rzYWLZL6Pm/My/zLhxewfA=
-github.com/couchbase/gocbcore/v9 v9.1.5/go.mod h1:jOSQeBSECyNvD7aS4lfuaw+pD5t6ciTOf8hrDP/4Nus=
 github.com/couchbase/gocbencryption/v2 v2.0.0 h1:EQupas64rh9PtHNOXCHC4ed8hyYRaWz3hDG4QUB5XgE=
 github.com/couchbase/gocbencryption/v2 v2.0.0/go.mod h1:GLo7IqD1M9mEsy1twIUHnlkuJlCdzgpRzXMIryBLEUg=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -37,6 +37,8 @@ github.com/stretchr/objx v0.1.1/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/stretchr/testify v1.5.1 h1:nOGnQDM7FYENwehXlg/kFVnos3rEvtKTjRvOWSzb6H4=
 github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
+github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
+github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/tinylib/msgp v1.1.1 h1:TnCZ3FIuKeaIy+F45+Cnp+caqdXGy4z74HvwXN+570Y=
 github.com/tinylib/msgp v1.1.1/go.mod h1:+d+yLhGm8mzTaHzB+wgMYrodPfmZrzkirds8fDWklFE=
 golang.org/x/sys v0.0.0-20190422165155-953cdadca894 h1:Cz4ceDQGXuKRnVBDTS23GTn/pU5OE2C0WrNTOYK1Uuc=
@@ -45,3 +47,5 @@ gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v2 v2.2.2 h1:ZCJp+EgiOT7lHqUV2J862kp8Qj64Jo6az82+3Td9dZw=
 gopkg.in/yaml.v2 v2.2.2/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
+gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c h1:dUUwHk2QECo/6vqA44rthZ8ie2QXMNeKRTHCNY2nXvo=
+gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
