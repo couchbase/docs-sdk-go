@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.2.3
+$ go get github.com/couchbase/gocb/v2@v2.3.0
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -27,6 +27,66 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.3.0 (15 July 2021)
+
+Version 2.3.0 is the first release in the Go SDK 2.3 series.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.0?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-935[GOCBC-935]:
+Added support for Analytics remote and external link management.
+* https://issues.couchbase.com/browse/GOCBC-936[GOCBC-936]:
+Added support for compound dataverse names to Analytics management.
+* https://issues.couchbase.com/browse/GOCBC-940[GOCBC-940]:
+* https://issues.couchbase.com/browse/GOCBC-1096[GOCBC-1096]:
+Updated the tracing interface, and made it API stability level committed.
+* https://issues.couchbase.com/browse/GOCBC-1037[GOCBC-1037]:
+Added support for `PreserveExpiry` option to key value operations.
+* https://issues.couchbase.com/browse/GOCBC-1044[GOCBC-1044]:
+Added support for meter interface, and default `LoggingMeter` implementation.
+* https://issues.couchbase.com/browse/GOCBC-1063[GOCBC-1063]:
+Added uncommitted support for `context.Context` to options blocks.
+* https://issues.couchbase.com/browse/GOCBC-1077[GOCBC-1077]:
+Updated errors returned on Query error code return of 12009.
+* https://issues.couchbase.com/browse/GOCBC-1130[GOCBC-1130]:
+Updated Query error handling to return an authentication error on error code 13104.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1095[GOCBC-1095]:
+Fixed issue where View error contents were being parsed incorrectly.
+* https://issues.couchbase.com/browse/GOCBC-1100[GOCBC-1100]:
+Fixed issue where the Search metrics `took` field was being parsed incorrectly.
+* https://issues.couchbase.com/browse/GOCBC-1106[GOCBC-1106]:
+Fixed issue where a Search response containing a `hits` field but the field being `null` would lead to an error.
+* https://issues.couchbase.com/browse/GOCBC-1111[GOCBC-1111]:
+Fixed issue where any errors returned from the Search service were not being propagated through the SDK.
+* https://issues.couchbase.com/browse/GOCBC-1127[GOCBC-1127]:
+Fixed issue where Query errors were sometimes not being parsed correctly.
+* https://issues.couchbase.com/browse/GOCBC-1132[GOCBC-1132]:
+Fixed issue where benchmarks would not compile.
+
+== Version 2.2.4 (15 June 2021)
+
+Version 2.2.4 is a maintenance release for the Go SDK 2.2.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.4?tab=doc[API Documentation]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1095[GOCBC-1095]:
+Fixed issue where errors returned from views was parsed incorrectly.
+* https://issues.couchbase.com/browse/GOCBC-1102[GOCBC-1102]:
+Fixed issue where `WaitUntilReady` would never recover if one of the HTTP based services returned an error.
+* https://issues.couchbase.com/browse/GOCBC-1106[GOCBC-1106]:
+Fixed issue where `hits` being `null` in a search response would leave to an internal error.
+* https://issues.couchbase.com/browse/GOCBC-1111[GOCBC-1111]; https://issues.couchbase.com/browse/GOCBC-1112[GOCBC-1112]:
+Fixed issue where parsing search errors was using the incorrect field.
+* https://issues.couchbase.com/browse/GOCBC-1100[GOCBC-1100]:
+Fixed issue where the `took` field in search metrics was parsed incorrectly.
 
 == Version 2.2.3 (20 April 2021)
 
