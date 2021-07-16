@@ -29,7 +29,7 @@ NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang p
 Currently we support using the Couchbase Go Client with Go releases 1.13 and up.
 Older versions may work, but are not supported.
 
-Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref:project-docs:relnotes-go-sdk.html[release notes].
+Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref:1.6@go-sdk::relnotes-go-sdk.html[release notes].
 
 == Hello Couchbase
 
