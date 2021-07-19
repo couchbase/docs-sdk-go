@@ -1,3 +1,4 @@
 :go-api-link: http://docs.couchbase.com/sdk-api/couchbase-go-client-2.2.2
 :go-current-version: 2.3
 :version-server: 7.0
+:name-sdk: Go SDK
