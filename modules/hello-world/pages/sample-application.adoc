@@ -5,60 +5,18 @@
 :page-topic-type: tutorial
 :page-aliases: ROOT:sample-application,ROOT:tutorial4,ROOT:sample-app-backend
 
-[abstract]
-{description}
-This version also demonstrated the Developer Preview of the upcoming Collections feature.
+:travel-sample-git-project: try-cb-golang
+:travel-sample-entrypoint: main.go
 
-include::6.5@sdk:shared:partial$sample-application.adoc[tag=prereq]
+include::project-docs:partial$attributes.adoc[]
 
+include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=abstract]
 
-== Preparation
+include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=quick-start]
 
-As well as the xref:start-using-sdk.adoc[Go SDK 2.0] and Couchbase Server, 
-set up as described above, you will need `git` to fetch the travel sample application code:
+include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=bring-your-own]
 
-[source,console]
-----
-$ git clone https://github.com/couchbaselabs/try-cb-golang.git
-----
-
-Change directory into your cloned repository, and check out the `6.5` branch (this will most probably be enabled as the default branch).
-
-[source,console]
-----
-$ cd try-cb-golang
-----
-
-[source,console]
-----
-$ git checkout 6.5
-----
-
-
-== Running the Travel Sample Application
-
-Next, edit the `cbConnStr` field in *main.go* to the one for your containerised Couchbase Server (or localhost, 127.0.0.1, if appropriate), and any other local changes -- such as password.
-From here onwards, we'll assume the defaults.
-
-And run with
-
-[source,console]
-----
-$ go run main.go
-----
-
-After the build, with your Web browser of choice, head to port 8080 of the local machine -- http://localhost:8080[http://localhost:8080].
-
-
-// *PIC -- screenshot
-
-
-
-== Using the Sample App
-
-Give yourself a username and password and click *Register*.
-
-Now try out a few queries, and see Search in action for the hotel finder feature..
+include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=using]
 
 
 == Sample App Backend
@@ -102,10 +60,9 @@ func AirportSearch(w http.ResponseWriter, req *http.Request) {
 }
 ----
 
-The https://github.com/Danzibob/try-cb-golang/blob/6.5/main.go[main.go] file also contains the functions for handling users, registration, and N1QL queries -- which you may find instructive for putting together your first Couchbase applications in Go.
+The https://github.com/couchbaselabs/{travel-sample-git-project}/blob/HEAD/{travel-sample-entrypoint}[{travel-sample-entrypoint}] file also contains the functions for handling users, registration, and N1QL queries.
 
 
+include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=data-model]
 
-== Data Model
-
-See the xref:ref:travel-app-data-model.adoc[Travel App Data Model] reference page for more information about the sample data set used.
+include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=rest-api]
