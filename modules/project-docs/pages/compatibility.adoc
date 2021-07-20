@@ -19,35 +19,31 @@ The matrix below denotes the version of Couchbase Server, the version of the Go 
 * ◎ *Compatible*: This combination has been tested previously, and should be compatible.
 This combination is not recommended by our technical support organization.
 It is best to upgrade either the SDK or the Couchbase version you are using.
-* ✔ *Supported*:This combination is subject to ongoing quality assurance, and is fully supported by our technical support organization.
+* ✔ *Supported*: This combination is subject to ongoing quality assurance, and is fully supported by our technical support organization.
 
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
-[cols="40,20,20,20,25"]
+[cols="40,20,25,20"]
 |===
-| | SDK 1.4 | SDK 1.5 | SDK 1.6 | SDK 2.0 - 2.2 
+| | SDK 1.6 | SDK 2.0 - 2.2 | 2.3
 
 | *Server 5.0-5.5*
 | *✔*
-| *✔*
-| *✔*
+| *◎*
 | *◎*
 
 | *Server 6.0*
 | *✔*
 | *✔*
 | *✔*
-| *✔*
 
 | *Server 6.5-6.6*
-| ◎
 | *✔*
 | *✔*
 | *✔*
 
-| *Server 7.0β*
-| *✖*
-| *✖*
+| *Server 7.0*
+| *◎*
 | *◎*
 | *✔*
 |===
