@@ -65,4 +65,10 @@ The https://github.com/couchbaselabs/{travel-sample-git-project}/blob/HEAD/{trav
 
 include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=data-model]
 
-include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=rest-api]
+// TODO: we don't use the partial here, because of the location of swagger.json
+// in swaggerui/
+== REST API
+
+You can explore the REST API here in read-only mode, or once you are running the application, at the `/apidocs` endpoint.
+
+swagger_ui::https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/swaggerui/swagger.json[]
