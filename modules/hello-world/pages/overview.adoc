@@ -76,9 +76,9 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2[API Docs^]
 .What's Hot?
 
 [.content]
-The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area.
-Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. 
-Error handling is improved with extra information.
+Leverage the new Couchbase Server Scopes and Collection features to build multi-tenant micro-service application.
+Integrate with Open Telemetry API to instrument telemetry data for your mission critical workloads that will make troubleshooting and debugging of your applications easier than ever.
+Add an additional layer of security and protect your sensitive workloads using our Client Side Field Level Encryption capability. 
 
 
 [.column]
