@@ -47,6 +47,19 @@ a custom strategy is fairly advanced, the SDK ships with a best effort retry str
 out of the box (BestEffortRetryStrategy). This default will retry the operation until it
 either succeeds or the maximum request lifetime is reached.
 
+Name: *unordered_execution_enabled*::
++
+Default:  `true`
++
+From Couchbase 7.0, Out-of-Order execution allows the server to concurrently handle multiple requests on the same connection, potentially improving performance for durable writes.
+// and multi-document ACID transactions.
+This means that tuning the number of connections (KV endpoints) is no longer necessary as a workaround where data not available in the cache is causing timeouts.
++
+Note, this can only be specified through the query string.
++
+This is set to `true` by default.
+Note, changing the setting will only affect Server versions 7.0 onwards.
+
 
 == Security Options
 
