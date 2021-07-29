@@ -70,14 +70,22 @@ See the notes there for Support details.
 | DP in 5.5 with 1.4
 3+| Since 1.5
 
-| Collections
+| Default Collections
 2+| Not Supported
-| SDK 2.0 for Developer Preview in Server 6.5 & 6.6
-| Since 2.0
+| Developer Preview in 6.5-6.6, SDK 3.0
+| Since 2.1.8
 
-| Scope-Level N1QL Queries
+| Scope-Level N1QL Queries & all Collections features
 3+| Not Supported
-| Developer Preview in 7.0β, SDK 2.1.7
+| Since SDK 2.3.0
+
+| Field Level Encryption v2
+2+| Not Supported
+2+| Since SDK 2.3.0footnote:[Field Level Encryption distributed as separate library.]
+
+| Request Tracing
+2+| Not Supported
+2+| Since SDK 2.0.3 (stable interface from 2.3.0)
 |===
 
 
