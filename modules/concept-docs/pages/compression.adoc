@@ -3,7 +3,7 @@
 :page-topic-type: concept
 :page-edition: Enterprise Edition
 :page-aliases: ../../ROOT/pages/compression-intro.adoc
-include::partial$attributes.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
