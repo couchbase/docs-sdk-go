@@ -1,7 +1,9 @@
 package main
 
 import (
+	"crypto/x509"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"time"
 
@@ -16,11 +18,23 @@ func main() {
 	username := "user"
 	password := "password"
 
+	p, err := ioutil.ReadFile("path/to/ca.pem")
+	if err != nil {
+		panic(err)
+	}
+
+	roots := x509.NewCertPool()
+	roots.AppendCertsFromPEM(p)
+
 	// Initialize the Connection
-	cluster, err := gocb.Connect("couchbases://"+endpoint+"?ssl=no_verify", gocb.ClusterOptions{
+	cluster, err := gocb.Connect("couchbases://"+endpoint, gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
 			Username: username,
 			Password: password,
+		},
+		SecurityConfig: gocb.SecurityConfig{
+			TLSRootCAs: roots,
+			// TLSSkipVerify: true,
 		},
 	})
 	if err != nil {
@@ -37,9 +51,12 @@ func main() {
 	col := bucket.DefaultCollection()
 
 	// Create a N1QL Primary Index (but ignore if it exists)
-	cluster.QueryIndexes().CreatePrimaryIndex(bucketName, &gocb.CreatePrimaryQueryIndexOptions{
+	err = cluster.QueryIndexes().CreatePrimaryIndex(bucketName, &gocb.CreatePrimaryQueryIndexOptions{
 		IgnoreIfExists: true,
 	})
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	type User struct {
 		Name      string   `json:"name"`
@@ -94,4 +111,8 @@ func main() {
 		panic(err)
 	}
 
+	err = cluster.Close(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
