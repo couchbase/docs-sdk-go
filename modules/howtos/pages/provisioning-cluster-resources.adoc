@@ -141,7 +141,7 @@ include::example$collection-manager.go[tag=scopeAdmin, indent=0]
 
 == Index Management
 
-In general,you will rarely need to work with Index Managers from the SDK.
+In general, you will rarely need to work with Index Managers from the SDK.
 For those occasions when you do, please see the relevant API docs:
 
 * QueryIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.QueryIndexes[`Cluster.QueryIndexes()`];
