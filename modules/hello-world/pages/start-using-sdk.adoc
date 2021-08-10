@@ -33,7 +33,7 @@ Information on new features, fixes, and known issues -- as well as information o
 
 == Hello Couchbase
 
-Now you have the Go client installed, open your favourite text editor and try out the following:
+Now you have the Go client installed, open your preferred text editor and try out the following:
 
 [source,golang,indent=0]
 ----
