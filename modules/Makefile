@@ -3,8 +3,8 @@
 GO_VERSION ?="1.13"
 GOCB_VERSION ?="v2.2.1"
 
-CB_EDITION ?=couchbase/server:enterprise-7.0.0
-CB_BUILD ?=beta
+CB_EDITION ?=couchbase/server:enterprise
+CB_BUILD ?=7.0.0
 LOCAL_IMAGE_NAME=cb7-sdk3-ub20
 
 TEST_NAME=""

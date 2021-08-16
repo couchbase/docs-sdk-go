@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=ubuntu:20.04
 
-ARG CB_EDITION=couchbase/server:enterprise-7.0.0
-ARG CB_BUILD=beta
+ARG CB_EDITION=couchbase/server:enterprise
+ARG CB_BUILD=7.0.0
 ARG CB_IMAGE=$CB_EDITION-$CB_BUILD
 
 ARG CB_CLIENT_OS=ubuntu2004
