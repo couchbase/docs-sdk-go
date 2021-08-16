@@ -2,26 +2,35 @@ name: Build Code Samples
 
 on:
   push:
-    branches: [release/2.2]
-    paths:
-      - 'modules/test/*'
-      - 'modules/Makefile'
-      - '**/*.go'
-      - '**/*.mod'
-      - '**/*.sum'
+    branches: [ "release/2.*" ]
   pull_request:
-    branches: [release/2.2]
-    paths:
-      - 'modules/test/*'
-      - 'modules/Makefile'
-      - '**/*.go'
-      - '**/*.mod'
-      - '**/*.sum'
+    branches: [ "release/2.*" ]
+
 env:
   GO_VERSION: 1.13
 
 jobs:
+  # The pre_job uses a smart Github action that will check the provided path filters 
+  # to determine if subsequent jobs should be "skipped" when the filters don't apply.
+  # This ensures that our Github branch protection rules are still satisfied and users
+  # can merge their PRs with skipped status checks where appropriate.
+  # It also provides the ability to cancel outdated workflow runs after branch pushes.
+  # https://github.com/marketplace/actions/skip-duplicate-actions
+  pre_job:
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@master
+        with:
+          cancel_others: 'true' # cancel previous workflow runs when pushing a new commit.
+          paths: '["**/Makefile", "modules/test/**", "**/*.go", "**/*.mod", "**/*.sum"]'
+
   build:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     env:
       working-directory:
@@ -39,3 +48,19 @@ jobs:
       - name: Build code samples
         run: make build
         working-directory: ${{ env.working-directory }}
+      
+      - name: Notify slack on failure
+        # We run this step only on the default 3.1+ branch
+        # because secrets are not accessible on PRs from forks.
+        # Therefore, this notification will only happen when a PR is merged.
+        if: failure() && startsWith(github.ref, 'refs/heads/release/2.*') 
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: ":octocat: Go SDK Automation Failure"
+          text: ":no_entry: Oh noes! The commit has broken the build...please verify :paddlin:"
+          fields: repo,workflow,job,commit,author
+          mention: here
+          if_mention: failure
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
