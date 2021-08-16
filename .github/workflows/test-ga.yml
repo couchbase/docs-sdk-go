@@ -47,7 +47,7 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
       - name: Notify slack on failure
-        # We run this step only on the default 3.1+ branch
+        # We run this step only on the default 2.2+ branch
         # because secrets are not accessible on PRs from forks.
         # Therefore, this notification will only happen when a PR is merged.
         if: failure() && startsWith(github.ref, 'refs/heads/release/2.*') 
