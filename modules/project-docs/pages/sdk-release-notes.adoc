@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.3.0
+$ go get github.com/couchbase/gocb/v2@v2.3.1
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -27,6 +27,23 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.3.1 (17 August 2021)
+
+Version 2.3.1 is a maintenance release for the Go SDK 2.3.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.1?tab=doc[API Documentation]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1140[GOCBC-1140]:
+Fixed issue where `ViewOptions` would return an error when using `group_level`.
+* https://issues.couchbase.com/browse/GOCBC-1144[GOCBC-1144]:
+Added missing `min` function to `Disjunction` search query.
+* https://issues.couchbase.com/browse/GOCBC-1147[GOCBC-1147]:
+Fixed issue where an error occuring whilst fetching the error map during bootstrap could cause an indefinite hang.
+* https://issues.couchbase.com/browse/GOCBC-1149[GOCBC-1149]:
+Fixed issue where `GetAllScopes` would panic on HTTP request send failure.
 
 == Version 2.3.0 (15 July 2021)
 
