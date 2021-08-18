@@ -45,6 +45,19 @@ Fixed issue where an error occuring whilst fetching the error map during bootstr
 * https://issues.couchbase.com/browse/GOCBC-1149[GOCBC-1149]:
 Fixed issue where `GetAllScopes` would panic on HTTP request send failure.
 
+== Version 2.2.5 (17 August 2021)
+
+Version 2.2.5 is a maintenance release for the Go SDK 2.2.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.5?tab=doc[API Documentation]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1147[GOCBC-1147]:
+Fixed issue where an error occuring whilst fetching the error map during bootstrap could cause an indefinite hang.
+* https://issues.couchbase.com/browse/GOCBC-1149[GOCBC-1149]:
+Fixed issue where `GetAllScopes` would panic on HTTP request send failure.
+
 == Version 2.3.0 (15 July 2021)
 
 Version 2.3.0 is the first release in the Go SDK 2.3 series.
