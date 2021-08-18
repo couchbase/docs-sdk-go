@@ -68,7 +68,7 @@
 * xref:ref:travel-app-data-model.adoc[Travel Sample Data Model]
 
 .Project Docs
-* xref:project-docs:sdk-release-notes.adoc#version-2-2-4-15-june-2021[Release Notes]
+* xref:project-docs:sdk-release-notes.adoc#version-2-2-5-17-august-2021[Release Notes]
 * xref:project-docs:compatibility.adoc[Compatibility]
 ** xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migrating to SDK 3 API]
 * xref:project-docs:sdk-licenses.adoc[Licenses]
