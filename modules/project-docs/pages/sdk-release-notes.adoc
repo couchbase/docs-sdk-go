@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.3.1
+$ go get github.com/couchbase/gocb/v2@v2.3.2
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -28,11 +28,11 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
-== Version 2.3.1 (17 August 2021)
+== Version 2.3.2 (21 September 2021)
 
-Version 2.3.1 is a maintenance release for the Go SDK 2.3.0.
+Version 2.3.2 is a maintenance release for the Go SDK 2.3.0.
 
-https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.1?tab=doc[API Documentation]
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.2?tab=doc[API Documentation]
 
 === Fixed Issues
 
@@ -44,6 +44,26 @@ Added missing `min` function to `Disjunction` search query.
 Fixed issue where an error occuring whilst fetching the error map during bootstrap could cause an indefinite hang.
 * https://issues.couchbase.com/browse/GOCBC-1149[GOCBC-1149]:
 Fixed issue where `GetAllScopes` would panic on HTTP request send failure.
+
+== Version 2.3.1 (17 August 2021)
+
+Version 2.3.1 is a maintenance release for the Go SDK 2.3.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.1?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1009[GOCBC-1009]:
+Add support for Eventing function management.
+* https://issues.couchbase.com/browse/GOCBC-1166[GOCBC-1166]:
+Check error codes and fallback to parsing messages in query index management.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1168[GOCBC-1168]:
+Fixed issue where cluster level HTTP operations could hang indefinitely.
+* https://issues.couchbase.com/browse/GOCBC-1170[GOCBC-1170]:
+Fixed issue where Search `ScanConsistency` was sending an incorrect value for `NotBounded`.
 
 == Version 2.2.5 (17 August 2021)
 
