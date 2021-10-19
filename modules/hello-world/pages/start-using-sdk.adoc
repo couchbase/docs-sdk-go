@@ -40,7 +40,7 @@ Now you have the Go client installed, open your preferred text editor and try ou
 include::example$startusing.go[tag=connect]
 ----
 
-If you are connecting to Couchbase Cloud rather than a local Couchbase Server, then also refer to the <<cloud-connections, Cloud section>>, below.
+If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase Capella] rather than a local Couchbase Server, then also refer to the <<cloud-connections, Cloud section>>, below.
 
 Couchbase uses xref:7.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
 Here we will use the _Full Admin_ role created during installation of the Couchbase Data Platform.
@@ -81,10 +81,10 @@ Now that you know the basics, you may wish to go straight to that page.
 
 == Cloud Connections
 
-For developing on Couchbase Cloud, 
+For developing on https://docs.couchbase.com/cloud/index.html[Couchbase Capella], 
 try the https://github.com/couchbase/docs-sdk-go/blob/release/2.3/modules/devguide/examples/go/cloud.go[Cloud-based Hello World program].
 
-If you are not working from the same _Availability Zone_ as your Couchbase Cloud, refer to the following:
+If you are not working from the same _Availability Zone_ as your Capella instance, refer to the following:
 
 * Notes on xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments], 
 * xref:project-docs:compatibility.adoc#network-requirements[Network Requirements], 
