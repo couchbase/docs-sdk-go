@@ -28,6 +28,7 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+
 == Version 2.3.3 (19 October 2021)
 
 Version 2.3.3 is a maintenance release for the Go SDK 2.3.0.
@@ -37,7 +38,7 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.3?tab=doc[API Documentation
 === New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1178[GOCBC-1178]:
-Don't remove poller controller watcher from cluster config updates.
+We no longer remove poller controller watcher from cluster config updates.
 
 === Fixed Issues
 
