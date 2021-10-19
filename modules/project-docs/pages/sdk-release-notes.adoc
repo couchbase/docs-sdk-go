@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.3.2
+$ go get github.com/couchbase/gocb/v2@v2.3.3
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -27,6 +27,26 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+
+== Version 2.3.3 (19 October 2021)
+
+Version 2.3.3 is a maintenance release for the Go SDK 2.3.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.3?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1178[GOCBC-1178]:
+We no longer remove poller controller watcher from cluster config updates.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1177[GOCBC-1177]:
+Fixed issue where a connection being closed by the server during bootstrap could cause the SDK to loop reconnect without backoff.
+* https://issues.couchbase.com/browse/GOCBC-1183[GOCBC-1183]:
+Fixed issue where SSL certificates were be not verified when no root CAs were provided.
+
 
 == Version 2.3.2 (21 September 2021)
 

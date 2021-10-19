@@ -1,7 +1,7 @@
-github.com/couchbase/gocb/v2 v2.3.2 h1:ND7NDs7VHqnkO+pPcbeMToiQS/KW10Yn9woBiFTnljc=
-github.com/couchbase/gocb/v2 v2.3.2/go.mod h1:NmEbg3pWHURqx5rPR3w/BcBRV5MRkc7i2kf0hq2Gdm0=
-github.com/couchbase/gocbcore/v10 v10.0.3 h1:7WGBlEYPt1uM3jovjBR3qQyqWYPsAXwi1g88rZk01FQ=
-github.com/couchbase/gocbcore/v10 v10.0.3/go.mod h1:s6dwBFs4c3+cAzZbo1q0VW+QasudhHJuehE8b8U2YNg=
+github.com/couchbase/gocb/v2 v2.3.3 h1:OItaIrFqXR1ba9J77E2YOU+CSF9G9FHYivV26Xgoi98=
+github.com/couchbase/gocb/v2 v2.3.3/go.mod h1:h4b3UYDnGI89hMW9VypVjAr+EE0Ki4jjlXJrVdmSZhQ=
+github.com/couchbase/gocbcore/v10 v10.0.4 h1:RJ+dSXxMUbrpfgYEEUhMYwPH1S5KvcQYve3D2aKHP28=
+github.com/couchbase/gocbcore/v10 v10.0.4/go.mod h1:s6dwBFs4c3+cAzZbo1q0VW+QasudhHJuehE8b8U2YNg=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
