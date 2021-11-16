@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.3.3
+$ go get github.com/couchbase/gocb/v2@v2.3.4
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -28,6 +28,33 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+== Version 2.3.4 (16 November 2021)
+
+Version 2.3.4 is a maintenance release for the Go SDK 2.3.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.4?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1154[GOCBC-1154]:
+Added support for rate limit errors.
+* https://issues.couchbase.com/browse/GOCBC-1179[GOCBC-1179]:
+Added support to attempt graceful closing of connections.
+* https://issues.couchbase.com/browse/GOCBC-1184[GOCBC-1184]:
+Request error map v2 from the server.
+* https://issues.couchbase.com/browse/GOCBC-1193[GOCBC-1193]:
+Added the response body to query errors.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1185[GOCBC-1185]:
+Fixed issue where data structure operations were retrying on the incorrect error.
+* https://issues.couchbase.com/browse/GOCBC-1186[GOCBC-1186]:
+Fixed issue where logging meter could cause a deadlock on closing the cluster object.
+* https://issues.couchbase.com/browse/GOCBC-1187[GOCBC-1187]:
+Fixed issue where logging meter could log a service/operation pair which has no operations.
+* https://issues.couchbase.com/browse/GOCBC-1194[GOCBC-1194]:
+Fixed issue where we wouldn't try to build a route config with all seed nodes for default network type before trying external network type.
 
 == Version 2.3.3 (19 October 2021)
 
