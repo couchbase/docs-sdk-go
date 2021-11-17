@@ -59,7 +59,7 @@ Fixed issue where logging meter could log a service/operation pair which has no 
 
 * https://issues.couchbase.com/browse/GOCBC-1194[GOCBC-1194]:
 Changed ordering of route config bootstrapping, to check all seed nodes for the default network type first.
-This fixed an issue with stuck deployments after upgrade to server 7.0.2.
+This fixed an issue with stuck deployments using the Eventing service, after upgrade to server 7.0.2.
 
 
 == Version 2.3.3 (19 October 2021)
