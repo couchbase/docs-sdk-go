@@ -36,25 +36,31 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.4?tab=doc[API Documentation
 
 === New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/GOCBC-1154[GOCBC-1154]:
-Added support for rate limit errors.
 * https://issues.couchbase.com/browse/GOCBC-1179[GOCBC-1179]:
 Added support to attempt graceful closing of connections.
-* https://issues.couchbase.com/browse/GOCBC-1184[GOCBC-1184]:
-Request error map v2 from the server.
+
+* https://issues.couchbase.com/browse/GOCBC-1154[GOCBC-1154];
+https://issues.couchbase.com/browse/GOCBC-1184[GOCBC-1184]:
+Added RateLimitFailure and QuotaLimitFailure support for Couchbase Capella.
+
 * https://issues.couchbase.com/browse/GOCBC-1193[GOCBC-1193]:
-Added the response body to query errors.
+Added the ResponseBody field to QueryError and N1qlError, to allow easier debugging and error handling.
 
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1185[GOCBC-1185]:
-Fixed issue where data structure operations were retrying on the incorrect error.
+Fixed an issue with Queue and Set retrying during pop and remove operations.
+
 * https://issues.couchbase.com/browse/GOCBC-1186[GOCBC-1186]:
 Fixed issue where logging meter could cause a deadlock on closing the cluster object.
+
 * https://issues.couchbase.com/browse/GOCBC-1187[GOCBC-1187]:
 Fixed issue where logging meter could log a service/operation pair which has no operations.
+
 * https://issues.couchbase.com/browse/GOCBC-1194[GOCBC-1194]:
-Fixed issue where we wouldn't try to build a route config with all seed nodes for default network type before trying external network type.
+Changed ordering of route config bootstrapping, to check all seed nodes for the default network type first.
+This fixed an issue with stuck deployments after upgrade to server 7.0.2.
+
 
 == Version 2.3.3 (19 October 2021)
 
