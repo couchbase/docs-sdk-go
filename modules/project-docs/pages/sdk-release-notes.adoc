@@ -28,6 +28,41 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+== Version 2.3.5 (14 December 2021)
+
+Version 2.3.5 is a maintenance release for the Go SDK 2.3.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.5?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1152[GOCBC-1152]:
+Added uncommitted API stability support for custom conflict resolution to `BucketSettings`.
+
+* https://issues.couchbase.com/browse/GOCBC-1156[GOCBC-1156];
+Added volatile API stability support for `includeLocations` to `SearchOptions` and `Operator` to search `MatchQuery`.
+
+* https://issues.couchbase.com/browse/GOCBC-1175[GOCBC-1175]:
+Added uncommitted API stability support for `storageBackend` to `BucketSettings`.
+
+* https://issues.couchbase.com/browse/GOCBC-1196[GOCBC-1196]:
+Added the `ErrorText` of the response body field to `AnalyticsError`, `SearchError`, `ManagementError`, and `ViewError`, to allow easier debugging and error handling.
+Renamed the `ResponseBody` of the `QueryError` to be `ErrorText` and contain only the error text.
+Added the `StatusCode` of the response to `AnalyticsError`, `QueryError`, `ManagementError`, and `ViewError`.
+
+* https://issues.couchbase.com/browse/GOCBC-1200[GOCBC-1200]:
+Renamed `ErrRateLimiting` and `ErrQuotaLimiting` to `ErrRateLimited` and `ErrQuotaLimited`.
+Note: this is a breaking change, it not expected to impact any users.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1202[GOCBC-1202]:
+* https://issues.couchbase.com/browse/GOCBC-1211[GOCBC-1211]:
+Fixed issues relating to rate limit error message parsing.
+
+* https://issues.couchbase.com/browse/GOCBC-1210[GOCBC-1210]:
+Fixed issue where a quota limit error was returned rather than rate limit error for key value response status code 0x32.
+
 == Version 2.3.4 (16 November 2021)
 
 Version 2.3.4 is a maintenance release for the Go SDK 2.3.0.
@@ -44,7 +79,7 @@ https://issues.couchbase.com/browse/GOCBC-1184[GOCBC-1184]:
 Added RateLimitFailure and QuotaLimitFailure support for Couchbase Capella.
 
 * https://issues.couchbase.com/browse/GOCBC-1193[GOCBC-1193]:
-Added the ResponseBody field to QueryError and N1qlError, to allow easier debugging and error handling.
+Added the ResponseBody field to QueryError, to allow easier debugging and error handling.
 
 === Fixed Issues
 
