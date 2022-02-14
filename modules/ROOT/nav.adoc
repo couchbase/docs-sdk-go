@@ -18,6 +18,7 @@
 .Advanced Data Operations
 * xref:howtos:concurrent-async-apis.adoc[Async & Batching APIs]
 * xref:howtos:concurrent-document-mutations.adoc[Concurrent Document Mutations]
+* xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions]
 // * xref:howtos:durability.adoc[Durability]
 * xref:howtos:encrypting-using-sdk.adoc[Encrypting Your Data]
 * xref:howtos:transcoders-nonjson.adoc[Transcoders & Non-JSON]
