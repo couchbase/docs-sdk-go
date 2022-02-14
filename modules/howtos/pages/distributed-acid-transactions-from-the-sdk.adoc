@@ -132,7 +132,7 @@ include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-intro]
 
 If you already use N1QL from the Go SDK, then its use in transactions is very similar.
 It returns a similar `TransactionsQueryResult`, and takes most of the same options.
-The main different between `TransactionsQueryResult` and `QueryResult` is that `TransactionsQueryResult` does not stream results.
+The main difference between `TransactionsQueryResult` and `QueryResult` is that `TransactionsQueryResult` does not stream results.
 This means that there are no `Err` or `Close` functions and that result sets are buffered in memory - allowing the SDK to read and handle any errors that occur on the stream before returning a result/error.
 
 You must take care to write `ctx.Query()` inside the lambda however, rather than `cluster.Query()` or `scope.Query()`.
