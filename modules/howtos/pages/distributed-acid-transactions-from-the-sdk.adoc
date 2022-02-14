@@ -29,8 +29,8 @@ Couchbase transactions require no additional components or services to be config
 == Initializing Transactions
 
 The starting point is the `Transactions` object.
-The `Transactions` object is effectively a singleton belonging to a `Cluster` object, once `Transactions` is created its lifetime is bound to the parent `Cluster` object.
-This is because the `Transactions` object performs automated background processes that should not be duplicated.
+The `Transactions` object is effectively a singleton belonging to a `Cluster` object. 
+Once `Transactions` is created, its lifetime is bound to the parent `Cluster` object, this is because the `Transactions` object performs automated background processes that should not be duplicated.
 
 [source,go]
 ----
@@ -59,6 +59,7 @@ include::devguide:example$go/transactions.go[tag=create,indent=0]
 include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=lambda-ctx]
 
 == Examples
+
 A code example is worth a thousand words, so here is a quick summary of the main transaction operations.
 They are described in more detail below.
 
@@ -128,14 +129,15 @@ include::devguide:example$go/transactions.go[tag=getReadOwnWrites,indent=0]
 include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-intro]
 
 === Using N1QL
+
 If you already use N1QL from the Go SDK, then its use in transactions is very similar.
-it returns a similar `TransactionsQueryResult`, and takes most of the same options.
+It returns a similar `TransactionsQueryResult`, and takes most of the same options.
 The main different between `TransactionsQueryResult` and `QueryResult` is that `TransactionsQueryResult` does not stream results.
-This means that there is no `Err` or `Close` functions and that result sets are buffered in memory - allowing the SDK to read and handle any errors that occur on the stream before returning a result/error.
+This means that there are no `Err` or `Close` functions and that result sets are buffered in memory - allowing the SDK to read and handle any errors that occur on the stream before returning a result/error.
 
 You must take care to write `ctx.Query()` inside the lambda however, rather than `cluster.Query()` or `scope.Query()`.
 
-An example of SELECTing some rows from the `travel-sample` bucket:
+An example of selecting some rows from the `travel-sample` bucket:
 
 [source,go]
 ----
@@ -149,7 +151,7 @@ Rather than specifying the full "`travel-sample`.inventory.hotel" name each time
 include::devguide:example$go/transactions.go[tag=querySelectScope,indent=0]
 ----
 
-An example using a `Scope` for an UPDATE:
+An example using a `Scope` for an UPDATE operation:
 
 [source,go]
 ----
@@ -166,19 +168,21 @@ include::devguide:example$go/transactions.go[tag=queryComplex,indent=0]
 ----
 
 === Read Your Own Writes
+
 As with Key-Value operations, N1QL queries support Read Your Own Writes.
 
-This example shows INSERTing a document and then SELECTing it again.
+This example shows inserting a document and then selecting it again.
 
 [source,go]
 ----
 include::devguide:example$go/transactions.go[tag=queryInsert,indent=0]
 ----
-<1> The inserted document is only staged at this point. as the transaction has not yet committed.
+<1> The inserted document is only staged at this point, as the transaction has not yet committed.
 Other transactions, and other non-transactional actors, will not be able to see this staged insert yet.
 <2> But the SELECT can, as we are reading a mutation staged inside the same transaction.
 
 === Mixing Key-Value and N1QL
+
 Key-Value operations and queries can be freely intermixed, and will interact with each other as you would expect.
 
 In this example we insert a document with Key-Value, and read it with a SELECT.
@@ -190,6 +194,7 @@ include::devguide:example$go/transactions.go[tag=queryRyow,indent=0]
 <2> But the SELECT can view it, as the insert was in the same transaction.
 
 === Query Options
+
 Query options can be provided via `TransactionsQueryOptions`, which provides a subset of the options in the Go SDK's `QueryOptions`.
 
 [source,go]
@@ -248,13 +253,16 @@ include::devguide:example$go/transactions.go[tag=full,indent=0]
 
 == Concurrency with Non-Transactional Writes
 
-This release of transactions for Couchbase requires a degree of co-operation from the application. Specifically, the application should ensure that non-transactional writes are never done concurrently with transactional writes, on the same document.
+This release of transactions for Couchbase requires a degree of co-operation from the application. 
+Specifically, the application should ensure that non-transactional writes are never done concurrently with transactional writes, on the same document.
 
-This requirement is to ensure that the strong Key-Value performance of Couchbase was not compromised. A key philosophy of our transactions is that you 'pay only for what you use'.
+This requirement is to ensure that the strong Key-Value performance of Couchbase is not compromised. 
+A key philosophy of our transactions is that you 'pay only for what you use'.
 
 If two such writes do conflict then the transactional write will 'win', overwriting the non-transactional write.
 
-Note this only applies to writes. Any non-transactional reads concurrent with transactions are fine, and are at a Read Committed level.
+Note this only applies to writes. 
+Any non-transactional reads concurrent with transactions are fine, and are at a Read Committed level.
 
 // concurrency
 //include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=concurrency]
@@ -296,14 +304,15 @@ These errors include:
 * Any error returned by your transaction lambda, either deliberately or through an application logic bug.
 * Attempting to insert a document that already exists.
 * Attempting to remove or replace a document that does not exist.
-* Calling ctx.Get on a document key that does not exist.
+* Calling `ctx.Get` on a document key that does not exist.
 
-IMPORTANT: Once one of these errors occurs, the current attempt is irrevocably failed (though the transaction may retry the lambda). It is not possible for the application to catch the error and continue. Once a failure has occurred, all other operations tried in this attempt (including commit) will instantly fail.
+IMPORTANT: Once one of these errors occurs, the current attempt is irrevocably failed (though the transaction may retry the lambda). It is not possible for the application to catch the error and continue. 
+Once a failure has occurred, all other operations tried in this attempt (including commit) will instantly fail.
 
-Transactions, as they are multi-stage and multi-document, also have a concept of partial success/failure.
+Transactions, as they are multi-stage and multi-document, also have a concept of partial success or failure.
 This is signalled to the application through the `TransactionResult.UnstagingComplete` field, described later.
 
-There are three errorz that the transactions library can return to the application: `TransactionFailedError`, `TransactionExpiredError` and `TransactionCommitAmbiguousError`.
+There are three errors that the transactions library can return to the application: `TransactionFailedError`, `TransactionExpiredError` and `TransactionCommitAmbiguousError`.
 
 === TransactionFailed and TransactionExpired
 
@@ -377,9 +386,9 @@ This requires an asynchronous cleanup task, described in this section.
 Creating the `Transactions` object spawns a background cleanup task, whose job it is to periodically scan for expired transactions and clean them up.
 It does this by scanning a subset of the Active Transaction Record (ATR) transaction metadata documents, for each metadata collection used by any transactions.
 As you’ll recall from earlier, an entry for each transaction attempt exists in one of these documents.
-(They are removed during cleanup or at some time after successful completion.)
+They are removed during cleanup or at some time after successful completion.
 
-The default settings are tuned to find expired transactions reasonably quickly, while creating neglible impact from the background reads required by the scanning process
+The default settings are tuned to find expired transactions reasonably quickly, while creating neglible impact from the background reads required by the scanning process.
 To be exact, with default settings it will generally find expired transactions within 60 seconds, and use less than 20 reads per second.
 This is unlikely to impact performance on any cluster, but the settings may be tuned as desired.
 
@@ -391,13 +400,14 @@ All ATRs on a metadata collection will be distributed between all cleanup client
 An application may cleanup transactions created by another application.
 
 It is important to understand that if an application is not running, then cleanup is not running.
-(This is particularly relevant to developers running unit tests or similar.)
+This is particularly relevant to developers running unit tests or similar.
 
 If this is an issue, then the deployment may want to consider running a simple application at all times that just opens a `Transactions` object, to guarantee that cleanup is running.
 When an application is used solely for cleanup it *must* register any collections to monitor via the `CleanupCollections` config option, otherwise the cleanup task will not do any work.
 Only the collections registered will be monitored.
 
 === Configuring Cleanup
+
 [options="header"]
 |====
 | Setting       | Default | Description
@@ -508,7 +518,8 @@ When specified:
     * Any transactions created from this `Transactions` object, will create and use metadata in that collection.
     * The asynchronous cleanup started by this `Transactions` object will be looking for expired transactions only in this collection, unless additional `CleanupCollections` are provided or a transaction explicitly overrides the metadata collection.
 
-You need to ensure that this application has RBAC data read and write privileges to it, and should not delete the collection subsequently as it can interfere with existing transactions. You can use an existing collection or create a new one.
+You need to ensure that this application has RBAC data read and write privileges to it, and should not delete the collection subsequently as it can interfere with existing transactions. 
+You can use an existing collection or create a new one.
 
 Custom metadata collections can also be provided at the transaction level itself:
 
