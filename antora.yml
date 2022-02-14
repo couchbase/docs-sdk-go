@@ -1,5 +1,5 @@
 name: go-sdk
-version: '2.4'
+version: '2.3'
 title: Go SDK
 start_page: hello-world:overview.adoc
 nav:
