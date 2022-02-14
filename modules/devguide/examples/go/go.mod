@@ -12,3 +12,5 @@ require (
 	github.com/sirupsen/logrus v1.6.0
 	github.com/tinylib/msgp v1.1.1
 )
+
+replace github.com/couchbase/gocb/v2 => ../../../../../gocbv2
