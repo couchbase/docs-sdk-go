@@ -39,7 +39,7 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.4.0?tab=doc[API Documentation
 * https://issues.couchbase.com/browse/GOCBC-1172[GOCBC-1172]:
 Added uncommitted API stability support for Query option `PreserveExpiry`.
 
-* https://issues.couchbase.com/browse/GOCBC-1176[GOCBC-1176];
+* https://issues.couchbase.com/browse/GOCBC-1176[GOCBC-1176]:
 Added uncommitted API stability support for collections to query index manager.
 
 * https://issues.couchbase.com/browse/GOCBC-1239[GOCBC-1239]:
