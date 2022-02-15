@@ -28,6 +28,31 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+== Version 2.4.0 (11 February 2021)
+
+Version 2.4.0 is the first release in the Go SDK 2.4 series.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.4.0?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1172[GOCBC-1172]:
+Added uncommitted API stability support for Query option `PreserveExpiry`.
+
+* https://issues.couchbase.com/browse/GOCBC-1176[GOCBC-1176];
+Added uncommitted API stability support for collections to query index manager.
+
+* https://issues.couchbase.com/browse/GOCBC-1239[GOCBC-1239]:
+Added `DurabilityLevelUnknown` as default durability level.
+
+* https://issues.couchbase.com/browse/GOCBC-TXNG-127[TXNG-127]:
+Integrated transactions into the SDK.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1240[GOCBC-1240]:
+Fixed issue where `MutateIn` was not setting durability level.
+
 == Version 2.3.5 (14 December 2021)
 
 Version 2.3.5 is a maintenance release for the Go SDK 2.3.0.
