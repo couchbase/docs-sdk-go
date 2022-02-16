@@ -12,7 +12,7 @@ import (
 func main() {
 }
 
-func initTransactions(cb func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions)) {
+func initTransactions(cb func(cluster *gocb.Cluster, collection *gocb.Collection)) {
 	// tag::init[]
 	// Initialize the Couchbase cluster
 	opts := gocb.ClusterOptions{
@@ -32,14 +32,12 @@ func initTransactions(cb func(cluster *gocb.Cluster, collection *gocb.Collection
 	scope := bucket.Scope("inventory")
 	collection := scope.Collection("airport")
 
-	// Create the single Transactions object
-	transactions, err := cluster.Transactions()
-	if err != nil {
-		panic(err)
-	}
+	transactions := cluster.Transactions()
 	// end::init[]
 
-	cb(cluster, collection, transactions)
+	throwaway(transactions)
+
+	cb(cluster, collection)
 }
 
 func config() {
@@ -59,10 +57,10 @@ func config() {
 }
 
 func create() {
-	initTransactions(func(_cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::create[]
-		result, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
-			// 'ctx' is an AttemptContext, which permits getting, inserting,
+		result, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
+			// The lambda gets passed an AttemptContext object, which permits getting, inserting,
 			// removing and replacing documents, and performing N1QL queries.
 
 			// ... Your transaction logic here ...
@@ -80,11 +78,11 @@ func create() {
 }
 
 func examples() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::examples[]
 		scope := cluster.Bucket("travel-sample").Scope("inventory")
 
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			// Inserting a doc:
 			_, err := ctx.Insert(collection, "doc-a", map[string]interface{}{})
 			if err != nil {
@@ -184,9 +182,9 @@ func examples() {
 }
 
 func insert() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::insert[]
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			_, err := ctx.Insert(collection, "insert-doc", map[string]interface{}{})
 			if err != nil {
 				return err
@@ -203,13 +201,13 @@ func insert() {
 }
 
 func get() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		if _, err := collection.Insert("get-doc", "{}", nil); err != nil {
 			panic(err)
 		}
 
 		// tag::get[]
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			doc, err := ctx.Get(collection, "get-doc")
 			if err != nil {
 				return err
@@ -230,7 +228,7 @@ func get() {
 		// end::get[]
 
 		// tag::getOpt[]
-		_, err = transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err = cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			doc, err := ctx.Get(collection, "get-doc")
 			if err != nil && !errors.Is(err, gocb.ErrDocumentNotFound) {
 				return err
@@ -249,9 +247,9 @@ func get() {
 }
 
 func getReadOwnWrites() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::getReadOwnWrites[]
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			_, err := ctx.Insert(collection, "ownwritesdoc", map[string]interface{}{})
 			if err != nil {
 				return err
@@ -279,13 +277,13 @@ func getReadOwnWrites() {
 }
 
 func replace() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		if _, err := collection.Insert("replace-doc", "{}", nil); err != nil {
 			panic(err)
 		}
 
 		// tag::replace[]
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			doc, err := ctx.Get(collection, "replace-doc")
 			if err != nil {
 				return err
@@ -314,13 +312,13 @@ func replace() {
 }
 
 func remove() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		if _, err := collection.Insert("remove-doc", "{}", nil); err != nil {
 			panic(err)
 		}
 
 		// tag::remove[]
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			doc, err := ctx.Get(collection, "remove-doc")
 			if err != nil {
 				return err
@@ -342,9 +340,9 @@ func remove() {
 }
 
 func querySelect() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::querySelect[]
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			qr, err := ctx.Query("SELECT * FROM `travel-sample`.inventory.hotel WHERE country = $1", &gocb.TransactionQueryOptions{
 				PositionalParameters: []interface{}{"United Kingdom"},
 			})
@@ -378,11 +376,11 @@ func querySelect() {
 }
 
 func querySelectScope() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::querySelectScope[]
 		bucket := cluster.Bucket("travel-sample")
 		scope := bucket.Scope("inventory")
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			qr, err := ctx.Query("SELECT * FROM hotel WHERE country = $1", &gocb.TransactionQueryOptions{
 				PositionalParameters: []interface{}{"United Kingdom"},
 				Scope:                scope,
@@ -417,11 +415,11 @@ func querySelectScope() {
 }
 
 func queryUpdate() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::queryUpdate[]
 		bucket := cluster.Bucket("travel-sample")
 		scope := bucket.Scope("inventory")
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			qr, err := ctx.Query("UPDATE hotel SET price = $1 WHERE url LIKE $2 AND country = $3", &gocb.TransactionQueryOptions{
 				PositionalParameters: []interface{}{99.99, "http://marriot%", "United Kingdom"},
 				Scope:                scope,
@@ -450,11 +448,11 @@ func queryUpdate() {
 }
 
 func queryComplex() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::queryComplex[]
 		bucket := cluster.Bucket("travel-sample")
 		scope := bucket.Scope("inventory")
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			// Find all hotels of the chain
 			qr, err := ctx.Query("SELECT reviews FROM hotel WHERE url LIKE $1 AND country = $2", &gocb.TransactionQueryOptions{
 				PositionalParameters: []interface{}{"http://marriot%", "United Kingdom"},
@@ -487,9 +485,9 @@ func queryComplex() {
 }
 
 func queryInsert() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::queryInsert[]
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			_, err := ctx.Query("INSERT INTO `default` VALUES ('doc', {'hello':'world'})", nil) // <1>
 			if err != nil {
 				return err
@@ -521,9 +519,9 @@ func queryInsert() {
 }
 
 func queryRyow() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::queryRyow[]
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			_, err := ctx.Insert(collection, "queryRyow", map[string]interface{}{"hello": "world"}) // <1>
 			if err != nil {
 				return err
@@ -555,9 +553,9 @@ func queryRyow() {
 }
 
 func queryOptions() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::queryOptions[]
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			_, err := ctx.Query("INSERT INTO `default` VALUES ('queryOpts', {'hello':'world'})", &gocb.TransactionQueryOptions{
 				Profile: gocb.QueryProfileModeTimings,
 			})
@@ -591,8 +589,8 @@ func playerHitsMonster(damage int, playerID, monsterID string) {
 		Level      int `json:"level"`
 	}
 
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			monsterDoc, err := ctx.Get(collection, monsterID)
 			if err != nil {
 				return err
@@ -670,11 +668,11 @@ func rollbackCause() {
 	}
 	costOfItem := 10
 
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::rollbackCause[]
 		var ErrBalanceInsufficient = errors.New("insufficient funds")
 
-		_, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			doc, err := ctx.Get(collection, "customer-name")
 			if err != nil {
 				return err
@@ -747,10 +745,10 @@ func customMetadata() {
 }
 
 func customMetadataTxn() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::customMetadataTxn[]
 		metaCollection := cluster.Bucket("travel-sample").Scope("transactions").Collection("other-metadata")
-		result, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		result, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			// ... transactional code here ...
 			return nil
 		}, &gocb.TransactionOptions{
@@ -763,9 +761,9 @@ func customMetadataTxn() {
 }
 
 func fullErrorHandling() {
-	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection, transactions *gocb.Transactions) {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::fullErrorHandling[]
-		result, err := transactions.Run(func(ctx *gocb.TransactionAttemptContext) error {
+		result, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
 			// ... transactional code here ...
 			return nil
 		}, nil)

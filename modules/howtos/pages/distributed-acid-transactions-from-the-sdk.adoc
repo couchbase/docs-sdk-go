@@ -11,12 +11,6 @@
 
 include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=intro]
 
-You may also want to start with our https://github.com/couchbaselabs/couchbase-transactions-java-examples[transactions examples repository],
-which features useful downloadable examples of using Distributed Transactions.
-
-Javadocs are available https://docs.couchbase.com/sdk-api/couchbase-transactions-java/index.html?overview-summary.html[online].
-
-
 == Requirements
 
 * Couchbase Server 7.0.0 or above.
@@ -29,8 +23,8 @@ Couchbase transactions require no additional components or services to be config
 == Initializing Transactions
 
 The starting point is the `Transactions` object.
-The `Transactions` object is effectively a singleton belonging to a `Cluster` object. 
-Once `Transactions` is created, its lifetime is bound to the parent `Cluster` object, this is because the `Transactions` object performs automated background processes that should not be duplicated.
+The `Transactions` object is effectively a singleton belonging to a `Cluster` object, internally `Transactions` is created on `gocb.Connect(..)` and its lifetime is bound to the parent `Cluster` object.
+Multiple calls to `cluster.Transactions()` will yield the same `Transactions` object, this is because the `Transactions` object performs automated background processes that should not be duplicated.
 
 [source,go]
 ----
@@ -206,7 +200,14 @@ include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-options]
 
 See the xref:howtos:n1ql-queries-with-sdk.adoc#query-options[QueryOptions documentation] for details on these.
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-perf]
+=== Query Performance Advice
+This section is optional reading, and only for those looking to maximise transactions performance.
+
+After the first query statement in a transaction, subsequent Key-Value operations in the lambda are converted into N1QL and executed by the query service rather than the Key-Value data service.
+The operation will behave identically, and this implementation detail can largely be ignored, except for this caveat:
+
+    * These converted Key-Value operations are likely to be slightly slower, as the query service is optimised for statements involving multiple documents. Those looking for the maximum possible performance are recommended to put Key-Value operations before the first query in the lambda, if possible.
+
 
 //include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-single]
 //
@@ -383,10 +384,11 @@ However, there are situations that inevitably created failed, or 'lost' transact
 
 This requires an asynchronous cleanup task, described in this section.
 
-Creating the `Transactions` object spawns a background cleanup task, whose job it is to periodically scan for expired transactions and clean them up.
+Calling `Connect` spawns a background cleanup task, whose job it is to periodically scan for expired transactions and clean them up.
 It does this by scanning a subset of the Active Transaction Record (ATR) transaction metadata documents, for each metadata collection used by any transactions.
 As you’ll recall from earlier, an entry for each transaction attempt exists in one of these documents.
 They are removed during cleanup or at some time after successful completion.
+Note that unless there are any metadata collections registered (either from config or by running a transaction) then the background cleanup task will do no work and so is very lightweight.
 
 The default settings are tuned to find expired transactions reasonably quickly, while creating neglible impact from the background reads required by the scanning process.
 To be exact, with default settings it will generally find expired transactions within 60 seconds, and use less than 20 reads per second.
@@ -402,7 +404,7 @@ An application may cleanup transactions created by another application.
 It is important to understand that if an application is not running, then cleanup is not running.
 This is particularly relevant to developers running unit tests or similar.
 
-If this is an issue, then the deployment may want to consider running a simple application at all times that just opens a `Transactions` object, to guarantee that cleanup is running.
+If this is an issue, then the deployment may want to consider running a simple application at all times that just call `Connect`, to guarantee that cleanup is running.
 When an application is used solely for cleanup it *must* register any collections to monitor via the `CleanupCollections` config option, otherwise the cleanup task will not do any work.
 Only the collections registered will be monitored.
 

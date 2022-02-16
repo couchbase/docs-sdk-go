@@ -3,7 +3,7 @@ module examples
 go 1.13
 
 require (
-	github.com/couchbase/gocb/v2 v2.3.5
+	github.com/couchbase/gocb/v2 v2.4.0
 	github.com/couchbase/gocbencryption/v2 v2.0.0
 	github.com/golang/snappy v0.0.3 // indirect
 	github.com/google/uuid v1.2.0 // indirect
@@ -12,5 +12,3 @@ require (
 	github.com/sirupsen/logrus v1.6.0
 	github.com/tinylib/msgp v1.1.1
 )
-
-replace github.com/couchbase/gocb/v2 => ../../../../../gocbv2
