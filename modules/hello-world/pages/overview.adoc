@@ -76,9 +76,9 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2[API Docs^]
 .What's Hot?
 
 [.content]
-Leverage the new Couchbase Server Scopes and Collection features to build multi-tenant micro-service application.
+Multi-Document xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions] from the Node.js SDK.
+
 Integrate with Open Telemetry API to instrument telemetry data for your mission critical workloads that will make troubleshooting and debugging of your applications easier than ever.
-Add an additional layer of security and protect your sensitive workloads using our Client Side Field Level Encryption capability. 
 
 
 [.column]
