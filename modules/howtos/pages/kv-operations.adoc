@@ -4,11 +4,13 @@
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
 
+include::project-docs:partial$attributes.adoc[]
+
 [abstract]
 {description}
 Here we cover CRUD operations, document expiration, and optimistic locking with CAS.
 
-The complete code sample used on this page can be downloaded from https://github.com/couchbase/docs-sdk-go/blob/release/2.3/modules/devguide/examples/go/kv-crud.go[here]
+The complete code sample used on this page can be downloaded from https://github.com/couchbase/docs-sdk-go/blob/release/{go-current-version}/modules/devguide/examples/go/kv-crud.go[here]
 -- from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Collection operations.
 
 == Documents
@@ -62,7 +64,7 @@ include::devguide:example$go/kv-crud.go[tag=update]
 
 Expiry sets an explicit time to live (TTL) for a document in seconds.
 For a discussion of item (Document) _vs_ Bucket expiration, see the 
-xref:7.0@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
+xref:{version-server}@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
 
 [source,golang,indent=0]
 ----
@@ -75,7 +77,7 @@ Writes in Couchbase are written to a single node, and from there the Couchbase S
 The optional durability parameter, which all mutating operations accept, allows the application to wait until this replication (or persistence) is successful before proceeding.
 
 In Couchbase Server releases before 6.5, Durability was set with two options -- see the xref:1.6@go-sdk::durability.adoc[6.0 Durability documentation] -- covering how many replicas the operation must be propagated to and how many persisted copies of the modified record must exist. 
-Couchbase Data Platform 6.5 refines these two options, with xref:7.0@server:learn:data/durability.adoc[Durable Writes] -- although they remain essentially the same in use.
+Couchbase Data Platform 6.5 refines these two options, with xref:{version-server}@server:learn:data/durability.adoc[Durable Writes] -- although they remain essentially the same in use.
 The Go SDK exposes both of these forms of Durability.
 
 First we will cover the newer durability features available in Couchbase server 6.5 onwards.
@@ -193,7 +195,7 @@ NOTE: Increment & Decrement are considered part of the 'binary' API and as such 
 
 == Scoped KV Operations
 
-It is possible to perform scoped key-value operations on named xref:7.0@server:learn:data/scopes-and-collections.adoc[`Collections`] _with Couchbase Server release 7.0_.
+It is possible to perform scoped key-value operations on named xref:{version-server}@server:learn:data/scopes-and-collections.adoc[`Collections`] _with Couchbase Server release 7.0_.
 See the https://pkg.go.dev/github.com/couchbase/gocb/v2#Collection[API docs] for more information.
 
 Here is an example showing an upsert in the `users` collection, which lives in the `travel-sample.tenant_agent_00` keyspace:

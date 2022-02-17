@@ -4,10 +4,12 @@ Plus notes on Cloud, networks, and AWS Lambda.
 :navtitle: Compatibility
 :page-aliases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
 
+include::project-docs:partial$attributes.adoc[]
+
 [abstract]
 {description}
 
-Couchbase Go SDK 2.3 requires Go version 1.13, or later.
+Couchbase Go SDK {go-current-version} requires Go version 1.13, or later.
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
 
 == Couchbase Version/SDK Version Matrix
@@ -25,12 +27,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 [#table_sdk_versions]
 [cols="40,20,25,20"]
 |===
-| | SDK 1.6 | SDK 2.0 - 2.2 | 2.3
-
-| *Server 5.0-5.5*
-| *✔*
-| *◎*
-| *◎*
+| | SDK 1.6 | SDK 2.0 - 2.2 | 2.3, 2.4
 
 | *Server 6.0*
 | *✔*
@@ -55,37 +52,40 @@ See the notes there for Support details.
 
 .Couchbase Server and SDK Supported Version Matrix
 [.table-merge-cells] 
-[cols="7,7,5,6,5"]
+[cols="7,5,6,5"]
 |===
-| | Server 5.0, 5.1, & 5.5 | Server 6.0 | Server 6.5 & 6.6 | Server 7.0
+| | Server 6.0 | Server 6.5 & 6.6 | Server 7.0
 
 | Enhanced Durability
-4+| All SDK versions
+3+| All SDK versions
 
 | Durable Writes 
-2+| Not Supported
+1+| Not Supported
 2+| Since 2.0
 
 | Analytics
-| DP in 5.5 with 1.4
 3+| Since 1.5
 
 | Default Collections
-2+| Not Supported
+| Not Supported
 | Developer Preview in 6.5-6.6, SDK 2.0
 | Since 2.1.8
 
 | Scope-Level N1QL Queries & all Collections features
-3+| Not Supported
+2+| Not Supported
 | Since SDK 2.3.0
 
 | Field Level Encryption v2
-2+| Not Supported
+| Not Supported
 2+| Since SDK 2.3.0footnote:[Field Level Encryption distributed as separate library.]
 
 | Request Tracing
-2+| Not Supported
+| Not Supported
 2+| Since SDK 2.0.3 (stable interface from 2.3.0)
+
+| Distributed ACID Transactions
+2+| Not Supported
+| Since SDK 2.4.0
 |===
 
 

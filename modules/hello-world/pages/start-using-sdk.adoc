@@ -3,6 +3,8 @@
 :page-aliases: ROOT:getting-started,ROOT:start-using,ROOT:hello-couchbase,ROOT:start-using-sdk
 :navtitle: Start Using the SDK
 
+include::project-docs:partial$attributes.adoc[]
+
 [abstract]
 The Couchbase Go SDK allows you to connect to a Couchbase cluster from Go.
 It is a native Go library and uses the high-performance gocbcore to handle communicating to the cluster over Couchbase’s binary protocols
@@ -57,7 +59,7 @@ include::example$startusing.go[tag=bucket]
 If you installed the travel sample data bucket, replace _bucketName_ with _travel-sample_.
 
 
-The 2.3 SDK supports full integration with the xref:concept-docs:collections.adoc[Collections] feature in the latest release of the Couchbase Data Platform, Couchbase Server 7.0.
+The {go-current-version} SDK supports full integration with the xref:concept-docs:collections.adoc[Collections] feature in the latest release of the Couchbase Data Platform, Couchbase Server 7.0.
 This brings complete support of Collections, allowing Documents to be grouped by purpose or theme, according to a specified _Scope_.
 Here we will use the `users` collection within the `tenant_agent_00` scope from `travel-sample` bucket as an example.
 
@@ -82,7 +84,7 @@ Now that you know the basics, you may wish to go straight to that page.
 == Cloud Connections
 
 For developing on https://docs.couchbase.com/cloud/index.html[Couchbase Capella], 
-try the https://github.com/couchbase/docs-sdk-go/blob/release/2.3/modules/devguide/examples/go/cloud.go[Cloud-based Hello World program].
+try the https://github.com/couchbase/docs-sdk-go/blob/release/{go-current-version}/modules/devguide/examples/go/cloud.go[Cloud-based Hello World program].
 
 If you are not working from the same _Availability Zone_ as your Capella instance, refer to the following:
 

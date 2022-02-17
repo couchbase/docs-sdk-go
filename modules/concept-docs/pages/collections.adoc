@@ -3,12 +3,14 @@
 :page-topic-type: concept
 :nav-title: Collections
 
+include::project-docs:partial$attributes.adoc[]
+
 [abstract]
 {description}
 
-The Collections feature in Couchbase Server is fully implemented in the 2.3 API version of the Couchbase SDK.
+The Collections feature in Couchbase Server is fully implemented in the {go-current-version} API version of the Couchbase SDK.
 
-Information on _Collections_ can be found in the xref:7.0@server:learn:data:scopes-and-collections.adoc[server docs].
+Information on _Collections_ can be found in the xref:{version-server}@server:learn:data:scopes-and-collections.adoc[server docs].
 
 == Using Collections & Scopes
 
