@@ -100,3 +100,5 @@ For further information, please reference the section on installation.
 include::7.0@sdk:shared:partial$network-requirements.adoc[]
 
 include::7.0@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
+
+include::7.0@sdk:shared:partial$api-version.adoc[tag=api-version]
