@@ -189,7 +189,7 @@ include::devguide:example$go/transactions.go[tag=queryRyow,indent=0]
 
 === Query Options
 
-Query options can be provided via `TransactionsQueryOptions`, which provides a subset of the options in the Go SDK's `QueryOptions`.
+Query options can be provided via `TransactionQueryOptions`, which provides a subset of the options in the Go SDK's `QueryOptions`.
 
 [source,go]
 ----
