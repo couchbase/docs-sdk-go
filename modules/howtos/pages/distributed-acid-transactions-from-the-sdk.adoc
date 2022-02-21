@@ -14,7 +14,7 @@ include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=intro]
 == Requirements
 
 * Couchbase Server 7.0.0 or above.
-* Couchbase Go client 2.4.0 or above.
+* Couchbase Go SDK 2.4.0 or above.
 
 == Getting Started
 
