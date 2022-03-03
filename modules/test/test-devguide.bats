@@ -1,6 +1,6 @@
 #!./test/libs/bats/bin/bats
 
-load 'test/test_helper.bash'
+load 'test_helper'
 
 # Test is a bit flaky on the last assertion if not run first. 
 # It seems the search index updates when the other tests run, causing major delay on the

@@ -1,6 +1,6 @@
 # #!./test/libs/bats/bin/bats
 
-load 'test/test_helper.bash'
+load 'test_helper'
 
 @test "[howtos] - analytics.go" {
     runExample $HOWTOS_DIR analytics.go
