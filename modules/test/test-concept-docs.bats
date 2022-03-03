@@ -1,6 +1,6 @@
 #!./test/libs/bats/bin/bats
 
-load 'test/test_helper.bash'
+load 'test_helper'
 
 @test "[concept-docs] - collections.go" {
     runExample $CONCEPT_DOCS_DIR collections.go
