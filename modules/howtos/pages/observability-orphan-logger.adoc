@@ -18,7 +18,7 @@ Since orphans usually indicate a state that is not desirable, the log level for 
 By default, they will be aggregated and logged every 10 seconds, but the event will be skipped if there are no orphans to report.
 This makes sure that the log line will appear close to the corresponding `ErrTimeout` in the logs, while not spamming the log file if there is nothing to report.
 See the next section on how to customize this behavior.
-In the Go SDK `OrphanReporter` is only applicable to the key value service, other services use HTTP which is a blocking operation and cannot create orphaned requests.
+In the Go SDK `OrphanReporter` is only applicable to the key-value service, other services use HTTP which is a blocking operation and cannot create orphaned requests.
 
 The actual body of the message consists of the text `Orphaned responses observed`, followed by a compact JSON representation of the aggregated orphans.
 The following code snippet shows a prettified version of such a JSON blob:
@@ -60,7 +60,7 @@ The following code snippet shows a prettified version of such a JSON blob:
 
 Please note that we do not provide any stability guarantees on the logging output format and it might change between minor versions.
 
-JSON Output Format Descriptions
+.JSON Output Format Descriptions
 [options="header"]
 |====
 | Property       | Description
