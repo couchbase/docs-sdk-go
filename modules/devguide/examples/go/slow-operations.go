@@ -23,3 +23,8 @@ func main() {
 	// #end::config[]
 	throwaway(opts)
 }
+
+// just used so that we can show creation of resources without the linter complaining.
+func throwaway(interface{}) {
+
+}
