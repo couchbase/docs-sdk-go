@@ -1,6 +1,6 @@
 # #!./test/libs/bats/bin/bats
 
-load 'test/test_helper.bash'
+load 'test_helper'
 
 @test "[project-docs] - migrating.go" {
      # Not sure how we can test certificates at the moment, skipping for now.
