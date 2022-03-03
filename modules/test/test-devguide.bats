@@ -1,6 +1,6 @@
 #!./test/libs/bats/bin/bats
 
-load 'test/test_helper.bash'
+load 'test_helper'
 
 # Test is a bit flaky on the last assertion if not run first. 
 # It seems the search index updates when the other tests run, causing major delay on the
@@ -292,4 +292,9 @@ EOF
     assert_output --partial "FirstName:Barry LastName:Sheen Password:bang!"
     assert_output --partial "Addresses:[{HouseName:my house StreetName:my street}"
     assert_output --partial "{HouseName:my other house StreetName:my other street}] Phone:123456}"
+}
+
+@test "[devguide] - slow-operations.go" {
+    runExample $DEVGUIDE_DIR slow-operations.go
+    assert_success
 }
