@@ -47,7 +47,7 @@ Updated SDK dependencies.
 
 * https://issues.couchbase.com/browse/GOCBC-1254[GOCBC-1254]:
 Added `NewLoggingMeter` and `LoggingMeterOptions` for creating the `LoggingMeter`.
-`AggregatingMeterOptions` and `NewAggregatingMeter` will be deprecated in the next dor minor release.
+`AggregatingMeterOptions` and `NewAggregatingMeter` will be deprecated in the next dot minor release.
 
 === Fixed Issues
 
