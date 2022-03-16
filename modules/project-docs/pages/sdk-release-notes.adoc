@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.4.0
+$ go get github.com/couchbase/gocb/v2@v2.4.1
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -28,8 +28,39 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+== Version 2.4.1 (16 March 2022)
 
-== Version 2.4.0 (16 February 2021)
+Version 2.4.1 is a maintenance release for the Go SDK 2.4.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.4.1?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1221[GOCBC-1221]:
+Added support for handling any `retry:true` field in a query error result by retrying it.
+
+* https://issues.couchbase.com/browse/GOCBC-1228[GOCBC-1228]:
+Updated the query used within `BuildDeferredIndexes` in `QueryIndexManager`.
+
+* https://issues.couchbase.com/browse/GOCBC-1244[GOCBC-1244]:
+Updated SDK dependencies.
+
+* https://issues.couchbase.com/browse/GOCBC-1254[GOCBC-1254]:
+Added `NewLoggingMeter` and `LoggingMeterOptions` for creating the `LoggingMeter`.
+`AggregatingMeterOptions` and `NewAggregatingMeter` will be deprecated in the next dot minor release.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1248[GOCBC-1248]:
+Fixed issue where a hard close of a memdclient during a graceful close could trigger a panic.
+* https://issues.couchbase.com/browse/GOCBC-1251[GOCBC-1251]:
+Fixed issue where `SearchOptions` `ConsistentWith` was using an incorrect key within the JSON payload.
+* https://issues.couchbase.com/browse/GOCBC-1256[GOCBC-1256]:
+Fixed issue where config polling could fallback to using the http poller, when no http addresses are registered for use.
+* https://issues.couchbase.com/browse/GOCBC-1258[GOCBC-1258]:
+Fixed issue where log redaction tags were not closed correctly.
+
+== Version 2.4.0 (16 February 2022)
 
 Version 2.4.0 is the first release in the Go SDK 2.4 series, adding multi-document distributed ACID transactions.
 
