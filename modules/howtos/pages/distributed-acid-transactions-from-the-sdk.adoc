@@ -4,17 +4,21 @@
 :page-partial:
 :page-topic-type: howto
 :page-aliases: acid-transactions
+:page-toclevels: 2
 
+include::project-docs:partial$attributes.adoc[]
+include::partial$acid-transactions-attributes.adoc[]
 
 [abstract]
 {description}
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=intro]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=intro]
 
 == Requirements
 
 * Couchbase Server 7.0.0 or above.
 * Couchbase Go SDK 2.4.0 or above.
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
 
 == Getting Started
 
@@ -40,22 +44,20 @@ Transactions can optionally be globally configured at the point of creating the 
 include::devguide:example$go/transactions.go[tag=config,indent=0]
 ----
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=config]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=config]
 
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=creating]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=creating]
 
 [source,go]
 ----
 include::devguide:example$go/transactions.go[tag=create,indent=0]
 ----
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=lambda-ctx]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=lambda-ctx]
 
-== Examples
-
-A code example is worth a thousand words, so here is a quick summary of the main transaction operations.
-They are described in more detail below.
+// Examples
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=examples-intro]
 
 [source,go]
 ----
@@ -63,7 +65,7 @@ include::devguide:example$go/transactions.go[tag=examples,indent=0]
 ----
 
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=mechanics]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=mechanics;!library-cleanup-process]
 
 
 == Key-Value Mutations
@@ -71,8 +73,8 @@ include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=mechanics]
 === Replacing
 
 Replacing a document requires a `ctx.Get()` call first.
-This is necessary so that the transactions library can check that the document is not involved in another transaction.
-If it is, then the transactions library will handle this at the `ctx.Replace()` point.
+This is necessary so that the transaction can check that the document is not involved in another transaction.
+If it is, then the SDK will handle this at the `ctx.Replace()` point.
 Generally, this involves rolling back what has been done so far, and retrying the lambda.
 
 [source,go]
@@ -120,7 +122,7 @@ Gets will 'read your own writes', e.g. this will succeed:
 include::devguide:example$go/transactions.go[tag=getReadOwnWrites,indent=0]
 ----
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-intro]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=query-intro;!library-begin-transaction]
 
 === Using N1QL
 
@@ -152,7 +154,7 @@ An example using a `Scope` for an UPDATE operation:
 include::devguide:example$go/transactions.go[tag=queryUpdate,indent=0]
 ----
 
-And an example combining `SELECT`s and `UPDATE`s.
+And an example combining SELECTs and UPDATEs.
 It's possible to call regular Go functions from the lambda, as shown here, permitting complex logic to be performed.
 Just remember that since the lambda may be called multiple times, so may the method.
 
@@ -171,6 +173,7 @@ This example shows inserting a document and then selecting it again.
 ----
 include::devguide:example$go/transactions.go[tag=queryInsert,indent=0]
 ----
+
 <1> The inserted document is only staged at this point, as the transaction has not yet committed.
 Other transactions, and other non-transactional actors, will not be able to see this staged insert yet.
 <2> But the SELECT can, as we are reading a mutation staged inside the same transaction.
@@ -180,10 +183,12 @@ Other transactions, and other non-transactional actors, will not be able to see 
 Key-Value operations and queries can be freely intermixed, and will interact with each other as you would expect.
 
 In this example we insert a document with Key-Value, and read it with a SELECT.
+
 [source,go]
 ----
 include::devguide:example$go/transactions.go[tag=queryRyow,indent=0]
 ----
+
 <1> As with the 'Read Your Own Writes' example, here the insert is only staged, and so it is not visible to other transactions or non-transactional actors.
 <2> But the SELECT can view it, as the insert was in the same transaction.
 
@@ -196,20 +201,27 @@ Query options can be provided via `TransactionQueryOptions`, which provides a su
 include::devguide:example$go/transactions.go[tag=queryOptions,indent=0]
 ----
 
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-options]
+The supported options are:
+
+* PositionalParameters
+* NamedParameters 
+* ScanConsistency 
+* FlexIndex
+* ClientContextID
+* ScanWait
+* ScanCap
+* PipelineBatch
+* PipelineCap
+* Profile
+* Readonly
+* Raw
 
 See the xref:howtos:n1ql-queries-with-sdk.adoc#query-options[QueryOptions documentation] for details on these.
 
-=== Query Performance Advice
-This section is optional reading, and only for those looking to maximise transactions performance.
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=query-perf]
 
-After the first query statement in a transaction, subsequent Key-Value operations in the lambda are converted into N1QL and executed by the query service rather than the Key-Value data service.
-The operation will behave identically, and this implementation detail can largely be ignored, except for this caveat:
-
-    * These converted Key-Value operations are likely to be slightly slower, as the query service is optimised for statements involving multiple documents. Those looking for the maximum possible performance are recommended to put Key-Value operations before the first query in the lambda, if possible.
-
-
-//include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=query-single]
+// TODO: Add an example for these includes and then uncomment.
+//include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=query-single]
 //
 //[source,java]
 //----
@@ -243,31 +255,16 @@ An asynchronous cleanup process ensures that once the transaction reaches the co
 
 
 // == A Full Transaction Example
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=example]
-
-//A complete version of this example is available on our https://github.com/couchbaselabs/couchbase-transactions-java-examples[GitHub transactions examples page].
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=example]
 
 [source,go]
 ----
 include::devguide:example$go/transactions.go[tag=full,indent=0]
 ----
 
-== Concurrency with Non-Transactional Writes
-
-This release of transactions for Couchbase requires a degree of co-operation from the application. 
-Specifically, the application should ensure that non-transactional writes are never done concurrently with transactional writes, on the same document.
-
-This requirement is to ensure that the strong Key-Value performance of Couchbase is not compromised. 
-A key philosophy of our transactions is that you 'pay only for what you use'.
-
-If two such writes do conflict then the transactional write will 'win', overwriting the non-transactional write.
-
-Note this only applies to writes. 
-Any non-transactional reads concurrent with transactions are fine, and are at a Read Committed level.
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=concurrency]
 
 // concurrency
-//include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=concurrency]
-
 //[source,java]
 //----
 //include::devguide:example$go/transactionsExample.java[tag=concurrency,indent=0]
@@ -294,78 +291,24 @@ include::devguide:example$go/transactions.go[tag=rollbackCause,indent=0]
 
 After a transaction is rolled back, it cannot be committed, no further operations are allowed on it.
 
-== Error Handling
+//  Error Handling
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=error]
 
-As discussed previously, the transactions library will attempt to resolve many errors itself, through a combination of retrying individual operations and the application’s lambda.
-This includes some transient server errors, and conflicts with other transactions.
+There are three errors that Couchbase transactions can return to the application: `TransactionFailedError`, `TransactionExpiredError` and `TransactionCommitAmbiguousError`.
 
-But there are situations that cannot be resolved, and total failure is indicated to the application via errors.
-These errors include:
 
-* Any error returned by your transaction lambda, either deliberately or through an application logic bug.
-* Attempting to insert a document that already exists.
-* Attempting to remove or replace a document that does not exist.
-* Calling `ctx.Get` on a document key that does not exist.
-
-IMPORTANT: Once one of these errors occurs, the current attempt is irrevocably failed (though the transaction may retry the lambda). It is not possible for the application to catch the error and continue. 
-Once a failure has occurred, all other operations tried in this attempt (including commit) will instantly fail.
-
-Transactions, as they are multi-stage and multi-document, also have a concept of partial success or failure.
-This is signalled to the application through the `TransactionResult.UnstagingComplete` field, described later.
-
-There are three errors that the transactions library can return to the application: `TransactionFailedError`, `TransactionExpiredError` and `TransactionCommitAmbiguousError`.
-
-=== TransactionFailed and TransactionExpired
-
-The transaction definitely did not reach the commit point.
-`TransactionFailedError` indicates a fast-failure whereas `TransactionExpiredError` indicates that retries were made until the expiration point was reached, but this distinction is not normally important to the application and generally `TransactionExpiredError` does not need to be handled individually.
-
-Either way, an attempt will have been made to rollback all changes.
-This attempt may or may not have been successful, but the results of this will have no impact on the protocol or other actors.
-No changes from the transaction will be visible (presently with the potential and temporary exception of staged inserts being visible to non-transactional actors, as discussed under Inserting).
-
-*Handling*: Generally, debugging exactly why a given transaction failed requires review of the logs.
-The application may want to try the transaction again later.
-Alternatively, if transaction completion time is not a priority, then transaction expiration times (which default to 15 seconds) can be extended across the board through `TransactionsConfig`:
+//  txnfailed
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
 
 [source,go]
 ----
 include::devguide:example$go/transactions.go[tag=configExpiration,indent=0]
 ----
 
-=== TransactionCommitAmbiguous
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed1]
 
-As discussed previously, each transaction has a 'single point of truth' that is updated atomically to reflect whether it is committed.
-
-However, it is not always possible for the protocol to become 100% certain that the operation was successful, before the transaction expires.
-That is, the operation may have successfully completed on the cluster, or may succeed soon, but the protocol is unable to determine this (whether due to transient network failure or other reason).
-This is important as the transaction may or may not have reached the commit point, e.g. succeeded or failed.
-
-The library returns `TransactionCommitAmbiguousError` to indicate this state. It should be rare to receive this error.
-
-If the transaction had in fact successfully reached the commit point, then the transaction will be fully completed ("unstaged") by the asynchronous cleanup process at some point in the future.
-With default settings this will usually be within a minute, but whatever underlying fault has caused the TransactionCommitAmbiguous may lead to it taking longer.
-
-If the transaction had not in fact reached the commit point, then the asynchronous cleanup process will instead attempt to roll it back at some point in the future.
-If unable to, any staged metadata from the transaction will not be visible, and will not cause problems (e.g. there are safety mechanisms to ensure it will not block writes to these documents for long).
-
-*Handling*: This error can be challenging for an application to handle.
-It may wish to retry the transaction at a later point, or globally extend transactional expiration times to give the protocol additional time to resolve the ambiguity.
-
-=== TransactionResult.UnstagingComplete
-
-This boolean flag indicates whether all documents were able to be unstaged (committed).
-
-For most use-cases it is not an issue if it is false.
-All transactional actors will still all the changes from this transaction, as though it had committed fully.
-The cleanup process is asynchronously working to complete the commit, so that it will be fully visible to non-transactional actors.
-
-The flag is provided for those rare use-cases where the application requires the commit to be fully visible to non-transactional actors, before it may continue.
-In this situation the application can raise an error here, or poll all documents involved until they reflect the mutations.
-
-If you regularly see this flag false, consider increasing the transaction expiration time to reduce the possibility that the transaction times out during the commit.
-
-
+// TODO: Double check if this will be added in future.
+// Doesn't seem to be available for the Go SDK.
 //Similar to `TransactionResult`, `SingleQueryTransactionResult` also has an `unstagingComplete()` method.
 
 === Full Error Handling Example
@@ -386,17 +329,17 @@ This requires an asynchronous cleanup task, described in this section.
 
 Calling `Connect` spawns a background cleanup task, whose job it is to periodically scan for expired transactions and clean them up.
 It does this by scanning a subset of the Active Transaction Record (ATR) transaction metadata documents, for each metadata collection used by any transactions.
-As you’ll recall from earlier, an entry for each transaction attempt exists in one of these documents.
+As you'll recall from <<mechanics,earlier>>, an entry for each transaction attempt exists in one of these documents.
 They are removed during cleanup or at some time after successful completion.
-Note that unless there are any metadata collections registered (either from config or by running a transaction) then the background cleanup task will do no work and so is very lightweight.
 
-The default settings are tuned to find expired transactions reasonably quickly, while creating neglible impact from the background reads required by the scanning process.
+NOTE: Unless there are any metadata collections registered (either from config or by running a transaction) then the background cleanup task will do no work and so is very lightweight.
+
+The default settings are tuned to find expired transactions reasonably quickly, while creating negligible impact from the background reads required by the scanning process.
 To be exact, with default settings it will generally find expired transactions within 60 seconds, and use less than 20 reads per second.
-This is unlikely to impact performance on any cluster, but the settings may be tuned as desired.
+This is unlikely to impact performance on any cluster, but the settings may be <<tuning-cleanup,tuned>> as desired.
 
 All applications connected to the same cluster and running `Transactions` will share in the cleanup, via a low-touch communication protocol on the "_txn:client-record" metadata document that will be created in each metadata collection used during transactions.
-This document is visible and should not be modified externally.
-It is maintained automatically by the transactions library.
+This document is visible and should not be modified externally as is maintained automatically.
 All ATRs on a metadata collection will be distributed between all cleanup clients, so increasing the number of applications will not increase the reads required for scanning.
 
 An application may cleanup transactions created by another application.
@@ -408,6 +351,7 @@ If this is an issue, then the deployment may want to consider running a simple a
 When an application is used solely for cleanup it *must* register any collections to monitor via the `CleanupCollections` config option, otherwise the cleanup task will not do any work.
 Only the collections registered will be monitored.
 
+[#tuning-cleanup]
 === Configuring Cleanup
 
 [options="header"]
@@ -439,8 +383,10 @@ Only the collections registered will be monitored.
 //With most default configurations of the event-bus (see <<Logging>> below), this will cause that event to be logged somewhere visible to the application.
 //If there is not a good reason for the cleanup to be failed (such as a downed node that has not yet been failed-over), then the user is encouraged to report the issue.
 
-//== Logging
-//
+== Logging
+
+To aid troubleshooting, raise the log level on the SDK.
+// TODO: need to add logging details
 //To aid troubleshooting, each transaction maintains a list of log entries, which can be logged on failure like this:
 //
 //[source,java]
@@ -457,20 +403,9 @@ Only the collections registered will be monitored.
 //include::devguide:example$go/transactionsExample.java[tag=config_warn,indent=0]
 //----
 
+Please see the xref:howtos:collecting-information-and-logging.adoc[Go SDK logging documentation] for details.
 
-//By default the Couchbase Java logging event-bus is setup to look for and use SLF4J/logback, log4j1, and log4j2 on the classpath, and to fallback to java.util.Logging.
-//
-//Please see the xref:howtos:collecting-information-and-logging.adoc[Java SDK logging documentation] for details.
-//
-//Most applications will have their own preferred Java logging solution in-place already.
-//For those starting from scratch here is a complete example using the basic `java.util.Logging`:
-//
-//[source,java]
-//----
-//include::devguide:example$go/transactionsExample.java[tag=full-logging,indent=0]
-//----
-
-//
+// TODO: re-add this once tracing becomes available
 //== Tracing
 //
 //This telemetry is particularly useful for monitoring performance.
@@ -508,7 +443,7 @@ Only the collections registered will be monitored.
 //----
 //
 //
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-1]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-1]
 
 [source,go]
 ----
@@ -568,4 +503,4 @@ This will override any metadata collection that has been provided at the `Transa
 //
 //
 //
-include::7.0@sdk:shared:partial$acid-transactions.adoc[tag=further]
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=further]

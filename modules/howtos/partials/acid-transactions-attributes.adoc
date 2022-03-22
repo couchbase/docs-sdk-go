@@ -1,0 +1,23 @@
+// These attributes are used in sdk::shared:partial$acid-transactions.adoc 
+
+// intro
+:durability-exception: pass:q[`ErrDurabilityImpossible`]
+
+
+// creating
+:lambda-attempt-ctx: pass:q[a `TransactionAttemptContext`]
+:collection-insert: pass:q[`collection.Insert()`]
+:ctx-insert: pass:q[`ctx.Insert()`]
+
+
+// error
+:ctx-get: pass:q[`ctx.Get()`]
+:error-unstaging-complete: pass:q[`TransactionResult.UnstagingComplete` field]
+
+
+// txnfailed
+:transaction-failed: TransactionFailedError
+:transaction-expired: TransactionExpiredError
+:transaction-config: TransactionsConfig
+:transaction-commit-ambiguous: TransactionCommitAmbiguousError
+:txnfailed-unstaging-complete: TransactionResult.UnstagingComplete
