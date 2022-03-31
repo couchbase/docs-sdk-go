@@ -2,30 +2,45 @@
 :description: Provisioning cluster resources is managed at the collection or bucket level, depending upon the service affected.
 :navtitle: Provisioning Cluster Resources
 :page-aliases: ROOT:managing-clusters
+:page-toclevels: 2
+
+// API refs
+:bucket-api-reference: pass:q[BucketManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.Buckets[`Cluster.Buckets()`]]
+:user-api-reference: pass:q[UserManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.Users[`Cluster.Users()`]]
+:query-api-reference: pass:q[QueryIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.QueryIndexes[`Cluster.QueryIndexes()`]]
+:analytics-api-reference: pass:q[AnalyticsIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.AnalyticsIndexes[`Cluster.AnalyticsIndexes()`]]
+:search-api-reference: pass:q[SearchIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.SearchIndexes[`Cluster.SearchIndexes()`]]
+:collection-api-reference: pass:q[CollectionManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Bucket.Collections[`Bucket.Collections()`]]
+:view-api-reference: pass:q[ ViewIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Bucket.ViewIndexes[`Bucket.ViewIndexes()`]]
+
+// one-view-update-warning common partial
+:upsertDesignDocument: pass:q[`UpsertDesignDocument` method]
+:getDesignDocument: pass:q[`GetDesignDocument`]
+
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
 Common use cases are outlined here, less common use cases are covered in the https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc[API docs].
 
-include::7.0@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
+include::{version-server}@sdk:shared:partial$flush-info-pars.adoc[tag=management-intro]
 
 The Go SDK also comes with some convenience functionality for common Couchbase management requests.
 
 Management operations in the SDK may be performed through several interfaces depending on the object:
 
-* BucketManager -- `Cluster.Buckets()`
-* UserManager -- `Cluster.Users()`
-// see xref
-* QueryIndexManager -- `Cluster.QueryIndexes()`
-* AnalyticsIndexManager -- `Cluster.AnalyticsIndexes()`
-* SearchIndexManager -- `Cluster.SearchIndexes()`
-* CollectionManager -- `Bucket.Collections()`
-* ViewIndexManager -- `Bucket.ViewIndexes()`.
+* {bucket-api-reference}
+* {user-api-reference}
+* {query-api-reference} 
+* {analytics-api-reference}
+* {search-api-reference}
+* {collection-api-reference}
+* {view-api-reference}
 
 NOTE: When using a Couchbase version earlier than 6.5, you must create a valid Bucket connection using `cluster.Bucket(name)` before you can use cluster level managers.
 
 
-== Creating and Removing Buckets
+== Bucket Management
 
 The `BucketManager` interface may be used to create and delete buckets from the Couchbase cluster.
 It is instantiated through the `Cluster.Buckets()` method.
@@ -37,7 +52,7 @@ include::devguide:example$go/provisioning-resources-buckets.go[tag=creatingbucke
 
 The `CreateBucketSettings` and `BucketSettings` structs are used for creating and updating buckets, `BucketSettings` is also used for exposing information about existing buckets.
 
-include::7.0@sdk:shared:partial$flush-info-pars.adoc[tag=update-bucket-warning]
+include::{version-server}@sdk:shared:partial$flush-info-pars.adoc[tag=update-bucket-warning]
 
 Here is the list of parameters available:
 
@@ -77,9 +92,9 @@ include::devguide:example$go/provisioning-resources-buckets.go[tag=removeBucket]
 ----
 
 [#go-flushing]
-== Flushing Buckets
+=== Flushing Buckets
 
-include::7.0@sdk:shared:partial$flush-info-pars.adoc[tag=flush-intro]
+include::{version-server}@sdk:shared:partial$flush-info-pars.adoc[tag=flush-intro]
 
 You can flush a bucket in the SDK by using the `Flush` method:
 
@@ -92,7 +107,7 @@ The `Flush` operation may fail if the bucket does not have flush enabled, in tha
 
 == Collection Management
 
-The CollectionManager interface may be used to create and delete scopes and collections from the Couchbase cluster.
+The `CollectionManager` interface may be used to create and delete scopes and collections from the Couchbase cluster.
 It is instantiated through the `Bucket.Collections()` method.
 Refer to the https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Bucket.Collections[`CollectionManager` API documentation]
 for further details.
@@ -141,21 +156,74 @@ include::example$collection-manager.go[tag=scopeAdmin, indent=0]
 
 == Index Management
 
-In general, you will rarely need to work with Index Managers from the SDK.
-For those occasions when you do, please see the relevant API docs:
+include::{version-server}@sdk:shared:partial$flush-info-pars.adoc[tag=index-management-intro]
 
-* QueryIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.QueryIndexes[`Cluster.QueryIndexes()`];
-* AnalyticsIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.AnalyticsIndexes[`Cluster.AnalyticsIndexes()`];
-* SearchIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Cluster.SearchIndexes[`Cluster.SearchIndexes()`];
-* ViewIndexManager -- https://pkg.go.dev/github.com/couchbase/gocb/v2?tab=doc#Bucket.ViewIndexes[`Bucket.ViewIndexes()`].
+=== QueryIndexManager
 
-// * Query
+The `QueryIndexManager` interface contains the means for managing indexes used for queries.
+It can be instantiated through the `Cluster.QueryIndexes()` method.
+
+[source,golang]
+----
+include::example$query-index-manager.go[tag=creating-index-mgr,indent=0]
+----
+
+include::{version-server}@sdk:shared:partial$flush-info-pars.adoc[tag=query-index-manager-intro]
+
+The example below shows how to create a simple primary index, restricted to a named scope and collection, by calling the `CreatePrimaryIndex()` function.
+Note that you cannot provide a named scope or collection separately, both must be set for the `QueryIndexManager` to create an index on the relevant keyspace path. 
+
+.Creating a primary index
+
+[source,golang]
+----
+include::example$query-index-manager.go[tag=primary,indent=0]
+----
+
+When a primary index name is not specified, the SDK will create the index as `#primary` by default.
+However, if you wish to provide a custom name, you can simply set a `CustomName` property in the `CreatePrimaryQueryIndexOptions` struct.
+
+You may have noticed that the example also sets the `IgnoreIfExists` boolean flag. 
+When set to `true`, this optional argument ensures that an error is not thrown if an index under the same name already exists.
+
+Creating a _secondary_ index follows a similar approach, with some minor differences:
+
+.Creating a secondary index
+
+[source,golang]
+----
+include::example$query-index-manager.go[tag=secondary,indent=0]
+----
+
+The `CreateIndex()` function requires an index name to be provided, along with the fields to create the index on.
+Like the _primary_ index, you can restrict a _secondary_ index to a named scope and collection by passing some options.
+
+Indexes can easily take a long time to build if they contain a lot of documents.
+In these situations, it is more ideal to build indexes in the background.
+To achieve this we can use the `Deferred` boolean option, and set it to `true`.
+
+.Deferring index creation
+
+[source,golang]
+----
+include::example$query-index-manager.go[tag=defer-indexes,indent=0]
+----
+
+To delete a query index you can use the `DropIndex()` or `DropPrimaryIndex()` functions. 
+Which one you use depends on the type of query index you wish to drop from the database.
+
+.Deleting an index
+
+[source,golang]
+----
+include::example$query-index-manager.go[tag=drop-primary-or-secondary-index,indent=0]
+----
 
 // * Search - note & link to FTS page & API?
 
-== View Management
+== Views Management
 
-include::7.0@sdk:shared:partial$flush-info-pars.adoc[tag=view-management]
+include::{version-server}@sdk:shared:partial$flush-info-pars.adoc[tag=view-management]
 
 In the SDK, design documents are represented by the `DesignDocument` and `View` structs.
 All operations on design documents are performed on the `ViewIndexManager` instance:
@@ -172,7 +240,7 @@ The following example upserts a design document with two views:
 include::devguide:example$go/provisioning-resources-views.go[tag=createView]
 ----
 
-include::7.0@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
+include::{version-server}@sdk:shared:partial$flush-info-pars.adoc[tag=one-view-update-warning]
 
 Note the use of `DesignDocumentNamespaceDevelopment`, the other option is `DesignDocumentNamespaceProduction`.
 This parameter specifies whether the design document should be created as development, or as production -- with the former running over only a small fraction of the documents.

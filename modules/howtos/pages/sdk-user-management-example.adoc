@@ -1,5 +1,5 @@
 = User Management
-:description: pass:q[The Java SDK lets you create _users_, assign them _roles_ and associated _privileges_, and remove them from the system.]
+:description: pass:q[The Go SDK lets you create _users_, assign them _roles_ and associated _privileges_, and remove them from the system.]
 :navtitle: Provisioning Cluster Resources
 :page-aliases: ROOT:sdk-user-management-example.adoc
 
@@ -9,9 +9,9 @@
 == User-Management APIs
 
 Users who have been assigned the *Admin* role for the cluster are able to create, edit, and remove users.
-The Java SDK provides APIs to support these activities.
+The Go SDK provides APIs to support these activities.
 A high-level summary of the APIs can be found in xref:concept-docs:sdk-user-management-overview.adoc[User-Management],
-and details of all options in the https://docs.couchbase.com/sdk-api/couchbase-java-client/com/couchbase/client/java/manager/user/UserManager.html[UserManager API docs].
+and details of all options in the https://pkg.go.dev/github.com/couchbase/gocb/v2#UserManager[UserManager API docs].
 
 == Using the UserManager API
 
