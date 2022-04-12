@@ -242,6 +242,9 @@ include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=query-pe
 //include::devguide:example$go/transactionsExample.java[tag=querySingleConfigured,indent=0]
 //----
 
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=n1ql-rbac]
+
+
 == Committing
 
 Committing is automatic: if no errors are returned, the transaction will be committed.
