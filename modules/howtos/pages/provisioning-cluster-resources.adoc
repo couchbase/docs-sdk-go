@@ -59,7 +59,7 @@ Here is the list of parameters available:
 |====
 | Name | Description | Can be updated
 | `Name string` | The name of the bucket, required for creation. | false
-| `FlushEnabled boolean` | Enables flushing to be performed on this bucket (see the <<go-flushing>> section below). | true
+| `FlushEnabled boolean` | Enables flushing to be performed on this bucket (see the <<Flushing Buckets>> section below). | true
 | `ReplicaIndexDisabled boolean` | Whether or not to replicate indexes. | false
 | `RAMQuotaMB uint64` | How much memory should each node use for the bucket, required for creation. | true
 | `NumReplicas uint32` | The number of replicas to use for the bucket. | true
@@ -91,7 +91,6 @@ Once you no longer need to use the bucket, you can remove it:
 include::devguide:example$go/provisioning-resources-buckets.go[tag=removeBucket]
 ----
 
-[#go-flushing]
 === Flushing Buckets
 
 include::{version-server}@sdk:shared:partial$flush-info-pars.adoc[tag=flush-intro]
