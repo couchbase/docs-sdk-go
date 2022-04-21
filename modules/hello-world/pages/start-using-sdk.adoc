@@ -2,19 +2,46 @@
 :description: Installing the Couchbase Go SDK & a Hello World example program.
 :page-aliases: ROOT:getting-started,ROOT:start-using,ROOT:hello-couchbase,ROOT:start-using-sdk
 :navtitle: Start Using the SDK
+:page-toclevels: 2
 
 include::project-docs:partial$attributes.adoc[]
 
-[abstract]
-The Couchbase Go SDK allows you to connect to a Couchbase cluster from Go.
-It is a native Go library and uses the high-performance gocbcore to handle communicating to the cluster over Couchbase’s binary protocols
 
-The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, 
-and adding support for future Couchbase Server features like xref:concept-docs:collections.adoc[Collections and Scopes]
-(available in Couchbase Server 7.0).
-The Go 2.x SDK also introduces improved error handling providing extra error information.
+== Hello Couchbase
 
-If you're upgrading your application from Couchbase Go SDK 1.x, please read our xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migration Guide].
+On this page we show you how to quickly get up and running -- installing the Couchbase Go SDK, and trying out the Hello World code example against Couchbase Capella, or against a local Couchbase cluster.
+
+We will go through the code sample step by step, but for those in a hurry to see it, here it is:
+
+[{tabs}] 
+==== 
+Couchbase Capella Sample::
++
+--
+If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase Capella], be sure to get the correct endpoint as well as user, password, and bucket  -- and see the <<cloud-connections, Cloud section>>, below.
+
+[source,go]
+----
+include::devguide:example$CloudConnect.java[tag=cloud-connect,indent=0]
+----
+--
+
+Local Couchbase Server::
++ 
+-- 
+[source.try-it,go]
+----
+include::example$StartUsing.java[tags=**]
+----
+
+As well as the Go SDK (see below), and a running instance of Couchbase Server, you will need to load up the Travel Sample Bucket
+using either the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
+or the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
+--
+====
+
+The Travel Sample bucket comes pre-loaded with the trial version of Couchbase Capella
+
 
 
 == Installing the SDK
@@ -27,13 +54,12 @@ You can use `go get` to download the SDK:
 $ go get github.com/couchbase/gocb/v2@v2.4.1
 ----
 
+More details on installation can be found xref:project-docs:sdk-full-installation.adoc[here].
+
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-Currently we support using the Couchbase Go Client with Go releases 1.13 and up.
-Older versions may work, but are not supported.
 
-Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref:1.6@go-sdk::relnotes-go-sdk.html[release notes].
 
-== Hello Couchbase
+== Step by Step
 
 Now you have the Go client installed, open your preferred text editor and try out the following:
 
@@ -81,24 +107,34 @@ KV Operations are described in detail on the xref:howtos:kv-operations.adoc[KV O
 Now that you know the basics, you may wish to go straight to that page.
 
 
-== Cloud Connections
+== Next Steps
 
-For developing on https://docs.couchbase.com/cloud/index.html[Couchbase Capella], 
-try the https://github.com/couchbase/docs-sdk-go/blob/release/{go-current-version}/modules/devguide/examples/go/cloud.go[Cloud-based Hello World program].
+Now you're up and running, try one of the following:
 
-If you are not working from the same _Availability Zone_ as your Capella instance, refer to the following:
+// Should search and analytics be removed?
 
-* Notes on xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments], 
-* xref:project-docs:compatibility.adoc#network-requirements[Network Requirements], 
-* If you have a consumer-grade router which has problems with DNS-SRV records review our xref:howtos:troubleshooting-cloud-connections.adoc#troubleshooting-host-not-found[Troubleshooting Guide].
+* Our xref:hello-world:sample-application.adoc[Travel Sample Application] demonstrates all the basics you need to know;
+* Explore xref:howtos:kv-operations.adoc[Key Value Operations] (CRUD) against a document database;
+* Or xref:howtos:n1ql-queries-with-sdk.adoc[Query] with our SQL-based N1QL language;
+// * Try longer-running queries with our xref:howtos:analytics-using-sdk.adoc[Analytics Service];
+// * A xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search];
+* Or read up on xref:concept-docs:data-services.adoc[which service fits your use case].
 
-
-== Additional Resources
+=== Additional Resources
 
 The API reference is generated for each release and can be found https://pkg.go.dev/github.com/couchbase/gocb/v2[here].
 Older API references are linked from their respective sections in the xref:project-docs:sdk-release-notes.adoc[Release Notes].
 
-xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 to 3 page] highlights the main differences to be aware of when migrating your code.
+xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 API (Go 1.x) to API 3 page (Go 2.x SDK)] highlights the main differences to be aware of when migrating your code.
 
 Couchbase welcomes community contributions to the Go SDK.
 The Go SDK source code is available on https://github.com/couchbase/gocb[GitHub].
+
+=== Troubleshooting
+
+* Couchbase Server is designed to work in the same WAN or availability zone as the client application.
+If you're running the SDK on your laptop against a Capella cluster, see further information on:
+** Notes on xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments].
+** xref:project-docs:compatibility.adoc#network-requirements[Network Requirements].
+** If you have a consumer-grade router which has problems with DNS-SRV records review our xref:howtos:troubleshooting-cloud-connections.adoc#troubleshooting-host-not-found[Troubleshooting Guide].
+* Our https://forums.couchbase.com/c/go-sdk/23[community forum] is a great source of help.

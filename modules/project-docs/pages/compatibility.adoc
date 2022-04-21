@@ -9,8 +9,9 @@ include::project-docs:partial$attributes.adoc[]
 [abstract]
 {description}
 
-Couchbase Go SDK {go-current-version} requires Go version 1.13, or later.
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
+At time of writing (April 2022), this is 1.17 and 1.18.
+Older versions may remain compatible, but are not supported.
 
 == Couchbase Version/SDK Version Matrix
 

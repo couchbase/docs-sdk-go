@@ -1,0 +1,34 @@
+= Couchbase Go SDK Installation
+:description: Installation instructions for the Couchbase Go Client.
+:navtitle: Full Installation
+:page-partial:
+:page-topic-type: project-doc
+
+[abstract]
+{description}
+
+
+
+The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, 
+and adding support for future Couchbase Server features like xref:concept-docs:collections.adoc[Collections and Scopes]
+(available in Couchbase Server 7.0).
+The Go 2.x SDK also introduces improved error handling providing extra error information.
+
+If you're upgrading your application from Couchbase Go SDK 1.x, please read our xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migration Guide].
+
+
+== Installing the SDK
+
+Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. 
+You can use `go get` to download the SDK:
+
+[source,console]
+----
+$ go get github.com/couchbase/gocb/v2@v2.4.1
+----
+
+NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
+Older versions may work, but are not supported.
+
+Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref:sdk-release-notes.adoc[release notes].
+
