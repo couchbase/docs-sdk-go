@@ -49,6 +49,43 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
 
+
+
+== Platform Compatibility
+
+The Couchbase Go SDK is tested and supported on the following platforms:
+
+****
+[discrete]
+=== GNU/Linux
+
+* Amazon Linux 2.
+* Red Hat Enterprise Linux 7 & 8;
+* CentOS 7 & 8.
+* Ubuntu (LTS) 16.04 (_Xenial_), 18.04 (_Bionic_), & 20.04 (_Focal_).
+* Debian 9 (_Stretch_) & 10 (_Buster_).
+* Alpine Linux
+
+[discrete]
+=== Microsoft Windows
+
+Microsoft Windows 10 / All LTS releases from Windows Server 2016.
+
+[discrete]
+=== Mac OS X
+
+The current and previous two releases of OS X.
+At time of writing (April 2022): 10.15 (_Catalina_), 11 (_Big Sur_), and 12 (_Monterey_).
+M1 ARM  architecture is fully supported in the 3.3 .NET SDK.
+****
+
+Although installable or compilable on many other platforms, we cannot provide support for untested combinations.
+
+=== ARM Processor Support
+
+Go 2.5 SDK supports AWS Amazon Graviton2 and Apple M1 ARM processors.
+
+
 == Couchbase New Feature Availability Matrix
 
 .Couchbase Server and SDK Supported Version Matrix
@@ -96,10 +133,10 @@ The Couchbase Go SDK is installed and managed using `gopkg`, in accordance with 
 As a result, specific versions are installed within a specific developer environment.
 The SDK follows http://semver.org/[Semantic Versioning^] and typically release an update of the SDK the third Tuesday of each month.
 In order to update your specific developer environment to this new version, you will have to instruct Go to `go get` that specific version.
-For further information, please reference the section on installation.
+For further information, please reference the section on xref:sdk-full-installation.adoc[installation].
 
-include::7.0@sdk:shared:partial$network-requirements.adoc[]
+include::{version-server}@sdk:shared:partial$network-requirements.adoc[]
 
-include::7.0@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
+include::{version-server}@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
 
-include::7.0@sdk:shared:partial$api-version.adoc[tag=api-version]
+include::{version-server}@sdk:shared:partial$api-version.adoc[tag=api-version]
