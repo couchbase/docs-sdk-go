@@ -3,13 +3,13 @@
 include::project-docs:partial$attributes.adoc[]
 :page-aliases: ROOT:concurrent-document-mutations.adoc
 
-include::7.0@sdk:shared:partial$cas.adoc[tag=intro]
+include::7.1@sdk:shared:partial$cas.adoc[tag=intro]
 
-include::7.0@sdk:shared:partial$cas.adoc[tag=demo]
+include::7.1@sdk:shared:partial$cas.adoc[tag=demo]
 
-include::7.0@sdk:shared:partial$cas.adoc[tag=example]
+include::7.1@sdk:shared:partial$cas.adoc[tag=example]
 
-include::7.0@sdk:shared:partial$cas.adoc[tag=errors]
+include::7.1@sdk:shared:partial$cas.adoc[tag=errors]
 
 [source,golang,indent=0]
 ----
@@ -19,11 +19,11 @@ include::devguide:example$go/using-cas.go[tag=handlingerrors]
 Sometimes more logic is needed when performing updates, for example, if a property is mutually exclusive with another property; only one or the other can exist, but not both.
 
 
-include::7.0@sdk:shared:partial$cas.adoc[tag=performance]
+include::7.1@sdk:shared:partial$cas.adoc[tag=performance]
 
-include::7.0@sdk:shared:partial$cas.adoc[tag=format]
+include::7.1@sdk:shared:partial$cas.adoc[tag=format]
 
-include::7.0@sdk:shared:partial$cas.adoc[tag=locking]
+include::7.1@sdk:shared:partial$cas.adoc[tag=locking]
 
 [source,golang,indent=0]
 ----

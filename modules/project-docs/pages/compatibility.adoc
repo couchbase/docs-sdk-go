@@ -40,7 +40,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 | *✔*
 | *✔*
 
-| *Server 7.0*
+| *Server 7.0-7.1*
 | *◎*
 | *◎*
 | *✔*
@@ -49,7 +49,10 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
 
+== Capella Compatibility
 
+At time of release, the Couchbase 2.5 Go SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service. 
+To make development easier, the 2.5 SDK includes the Capella client certificate ready installed.
 
 == Platform Compatibility
 
@@ -92,7 +95,7 @@ Go 2.5 SDK supports AWS Amazon Graviton2 and Apple M1 ARM processors.
 [.table-merge-cells] 
 [cols="7,5,6,5"]
 |===
-| | Server 6.0 | Server 6.5 & 6.6 | Server 7.0
+| | Server 6.0 | Server 6.5 & 6.6 | Server 7.0-7.1
 
 | Enhanced Durability
 3+| All SDK versions

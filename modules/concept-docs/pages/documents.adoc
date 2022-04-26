@@ -29,7 +29,7 @@ Although query and path-based (Sub-Document) services are available, the simplic
 
 
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=document]
+include::7.1@sdk:shared:partial$documents.adoc[tag=document]
 
 == Primitive Key-Value Operations
 
@@ -42,9 +42,9 @@ Get(docid string, options *gocb.GetOptions) (*GetResult, error)
 Remove(docid string, options *gocb.RemoveOptions) (*MutationResult, error)
 ----
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=crud-overview]
+include::7.1@sdk:shared:partial$documents.adoc[tag=crud-overview]
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=store-update]
+include::7.1@sdk:shared:partial$documents.adoc[tag=store-update]
 
 [NOTE]
 ====
@@ -55,7 +55,7 @@ If you wish to only modify certain parts of a document, you can use xref:subdocu
 include::example$documents.go[tag=mutate-in]
 ----
 
-or xref:7.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
+or xref:7.1@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
 
 [source,sql]
 ----
@@ -63,7 +63,7 @@ update `travel-sample`.inventory.airline SET sale_price = msrp * 0.75 WHERE msrp
 ----
 ====
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=get_generic]
+include::7.1@sdk:shared:partial$documents.adoc[tag=get_generic]
 
 [source,sql]
 ----
@@ -86,21 +86,21 @@ include::example$documents.go[tag=lookup-in]
 
 // Counters
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=counters1]
+include::7.1@sdk:shared:partial$documents.adoc[tag=counters1]
 
 [source,go,indent=0]
 ----
 include::example$documents.go[tag=counters]
 ----
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=counters2]
+include::7.1@sdk:shared:partial$documents.adoc[tag=counters2]
 
 [source,golang,indent=0]
 ----
 include::example$documents.go[tag=counter-increment]
 ----
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=counters3]
+include::7.1@sdk:shared:partial$documents.adoc[tag=counters3]
 
 
 === Use Cases
@@ -110,22 +110,22 @@ This enables you to work with counters using `Get()` and `Replace()` operations 
 You will find several ways of working with counters https://pkg.go.dev/github.com/couchbase/gocb/v2#BinaryCollection.Decrement[in the API docs].
 
 // Expiry
-include::7.0@sdk:shared:partial$documents.adoc[tag=expiration]
+include::7.1@sdk:shared:partial$documents.adoc[tag=expiration]
 
 
 ////
-include::7.0@sdk:shared:partial$documents.adoc[tag=]
+include::7.1@sdk:shared:partial$documents.adoc[tag=]
 
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=]
+include::7.1@sdk:shared:partial$documents.adoc[tag=]
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=]
+include::7.1@sdk:shared:partial$documents.adoc[tag=]
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=]
+include::7.1@sdk:shared:partial$documents.adoc[tag=]
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=]
+include::7.1@sdk:shared:partial$documents.adoc[tag=]
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=]
+include::7.1@sdk:shared:partial$documents.adoc[tag=]
 
-include::7.0@sdk:shared:partial$documents.adoc[tag=]
+include::7.1@sdk:shared:partial$documents.adoc[tag=]
 ////

@@ -21,5 +21,5 @@ For complex and long-running queries, involving large ad hoc join, set, aggregat
 
 == Additional Resources
 
-* Start with our  xref:7.0@server:analytics:primer-beer.adoc[introductory primer].
+* Start with our  xref:7.1@server:analytics:primer-beer.adoc[introductory primer].
 * Read the practical introduction xref:howtos:analytics-using-sdk.adoc[using analytics from the SDK].

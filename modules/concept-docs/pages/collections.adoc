@@ -1,5 +1,5 @@
 = Collections & Scopes
-:description: pass:q[Fully supported in Couchbase Server 7.0.]
+:description: pass:q[Fully supported in Couchbase Server 7.1.]
 :page-topic-type: concept
 :nav-title: Collections
 

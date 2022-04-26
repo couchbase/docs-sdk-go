@@ -13,7 +13,7 @@
 [.column]
 ====== {empty}
 [.content]
-The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, and adding support for future Couchbase Server features like Collections and Scopes (available in Couchbase Server 7.0).
+The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, and adding support for Couchbase Server features like Collections and Scopes (available from Couchbase Server 7.0).
 The Go 2.x SDK also introduces improved error handling providing extra error information.
 
 

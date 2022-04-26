@@ -1,2 +1,2 @@
-include::7.0@sdk:pages:partial$user-management.adoc[]
+include::7.1@sdk:pages:partial$user-management.adoc[]
 

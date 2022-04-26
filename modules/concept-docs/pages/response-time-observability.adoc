@@ -7,4 +7,4 @@
 [abstract]
 {description}
 
-include::7.0@sdk:shared:partial$rto.adoc[tag=rto]
+include::7.1@sdk:shared:partial$rto.adoc[tag=rto]

@@ -9,7 +9,7 @@
 Several data structures are supported by the SDK, including map, list, queue, and set.
 
 
-include::7.0@sdk:shared:partial$data-model.adoc[tag=intro]
+include::7.1@sdk:shared:partial$data-model.adoc[tag=intro]
 
 == Data Structures 
 

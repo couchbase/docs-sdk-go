@@ -1,1 +1,1 @@
-include::7.0@sdk:pages:partial$data-services.adoc[]
+include::7.1@sdk:pages:partial$data-services.adoc[]
