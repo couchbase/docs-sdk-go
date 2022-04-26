@@ -36,7 +36,7 @@ func main() {
 		},
 		SecurityConfig: gocb.SecurityConfig{
 			TLSRootCAs: roots,
-			// WARNING: DO not set this to true in production, only use this for testing!
+			// WARNING: Do not set this to true in production, only use this for testing!
 			// TLSSkipVerify: true,
 		},
 	})
