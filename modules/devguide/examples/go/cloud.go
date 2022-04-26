@@ -1,30 +1,26 @@
+// tag::imports[]
 package main
 
 import (
-	"crypto/x509"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"time"
 
 	"github.com/couchbase/gocb/v2"
 )
 
+// end::imports[]
+
 func main() {
 	// Uncomment following line to enable logging
 	// gocb.SetLogger(gocb.VerboseStdioLogger())
-	endpoint := "cb.<your endpoint address>.dp.cloud.couchbase.com"
-	bucketName := "couchbasecloudbucket"
-	username := "user"
-	password := "password"
 
-	p, err := ioutil.ReadFile("path/to/ca.pem")
-	if err != nil {
-		panic(err)
-	}
-
-	roots := x509.NewCertPool()
-	roots.AppendCertsFromPEM(p)
+	// tag::connect[]
+	// Update this to your cluster details
+	endpoint := "cb.<your-endpoint>.cloud.couchbase.com"
+	bucketName := "travel-sample"
+	username := "username"
+	password := "Password123!"
 
 	// Initialize the Connection
 	cluster, err := gocb.Connect("couchbases://"+endpoint, gocb.ClusterOptions{
@@ -32,38 +28,37 @@ func main() {
 			Username: username,
 			Password: password,
 		},
-		SecurityConfig: gocb.SecurityConfig{
-			TLSRootCAs: roots,
-			// TLSSkipVerify: true,
-		},
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
+	// end::connect[]
 
+	// tag::bucket[]
 	bucket := cluster.Bucket(bucketName)
 
 	err = bucket.WaitUntilReady(5*time.Second, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
+	// end::bucket[]
 
-	col := bucket.DefaultCollection()
+	// tag::collection[]
+	// Get a reference to the default collection, required for older Couchbase server versions
+	// col := bucket.DefaultCollection()
 
-	// Create a N1QL Primary Index (but ignore if it exists)
-	err = cluster.QueryIndexes().CreatePrimaryIndex(bucketName, &gocb.CreatePrimaryQueryIndexOptions{
-		IgnoreIfExists: true,
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
+	col := bucket.Scope("tenant_agent_00").Collection("users")
+	// end::collection[]
 
+	// tag::document[]
 	type User struct {
 		Name      string   `json:"name"`
 		Email     string   `json:"email"`
 		Interests []string `json:"interests"`
 	}
+	// end::document[]
 
+	// tag::upsert[]
 	// Create and store a Document
 	_, err = col.Upsert("u:kingarthur",
 		User{
@@ -74,7 +69,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// end::upsert[]
 
+	// tag::get[]
 	// Get the document back
 	getResult, err := col.Get("u:kingarthur", nil)
 	if err != nil {
@@ -87,7 +84,9 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("User: %v\n", inUser)
+	// end::get[]
 
+	// tag::query[]
 	// Perform a N1QL Query
 	queryResult, err := cluster.Query(
 		fmt.Sprintf("SELECT name FROM `%s` WHERE $1 IN interests", bucketName),
@@ -110,9 +109,5 @@ func main() {
 	if err := queryResult.Err(); err != nil {
 		panic(err)
 	}
-
-	err = cluster.Close(nil)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// end::query[]
 }

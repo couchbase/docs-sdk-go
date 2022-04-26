@@ -1,63 +1,112 @@
 package main
 
 import (
+	"crypto/x509"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"time"
 
-	gocb "github.com/couchbase/gocb/v2"
+	"github.com/couchbase/gocb/v2"
 )
 
-var bucketName = "travel-sample"
-
-// #tag::connect[]
 func main() {
-	cluster, err := gocb.Connect(
-		"localhost",
-		gocb.ClusterOptions{
-			Username: "Administrator",
-			Password: "password",
-		})
+	// Uncomment following line to enable logging
+	// gocb.SetLogger(gocb.VerboseStdioLogger())
+
+	// tag::connect[]
+	// Update this to your cluster details
+	bucketName := "travel-sample"
+	username := "Administrator"
+	password := "password"
+
+	p, err := ioutil.ReadFile("path/to/ca.pem")
 	if err != nil {
 		panic(err)
 	}
-	// #end::connect[]
 
-	// #tag::bucket[]
-	// get a bucket reference
+	roots := x509.NewCertPool()
+	roots.AppendCertsFromPEM(p)
+
+	// Initialize the Connection
+	cluster, err := gocb.Connect("couchbases://127.0.0.1", gocb.ClusterOptions{
+		Authenticator: gocb.PasswordAuthenticator{
+			Username: username,
+			Password: password,
+		},
+		SecurityConfig: gocb.SecurityConfig{
+			TLSRootCAs: roots,
+			// WARNING: DO not set this to true in production, only use this for testing!
+			// TLSSkipVerify: true,
+		},
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	// end::connect[]
+
 	bucket := cluster.Bucket(bucketName)
 
-	// We wait until the bucket is definitely connected and setup.
 	err = bucket.WaitUntilReady(5*time.Second, nil)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-	// #end::bucket[]
 
-	// #tag::collection[]
-	// get a user-defined collection reference
-	scope := bucket.Scope("tenant_agent_00")
-	collection := scope.Collection("users")
-	// #end::collection[]
+	// Get a reference to the default collection, required for older Couchbase server versions
+	// col := bucket.DefaultCollection()
 
-	// #tag::upsert-get[]
-	// Upsert Document
-	upsertData := map[string]string{"name": "mike"}
-	upsertResult, err := collection.Upsert("my-document", upsertData, &gocb.UpsertOptions{})
+	col := bucket.Scope("tenant_agent_00").Collection("users")
+
+	type User struct {
+		Name      string   `json:"name"`
+		Email     string   `json:"email"`
+		Interests []string `json:"interests"`
+	}
+
+	// Create and store a Document
+	_, err = col.Upsert("u:kingarthur",
+		User{
+			Name:      "Arthur",
+			Email:     "kingarthur@couchbase.com",
+			Interests: []string{"Holy Grail", "African Swallows"},
+		}, nil)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-	fmt.Println(upsertResult.Cas())
 
-	// Get Document
-	getResult, err := collection.Get("my-document", &gocb.GetOptions{})
+	// Get the document back
+	getResult, err := col.Get("u:kingarthur", nil)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
-	var myContent interface{}
-	if err := getResult.Content(&myContent); err != nil {
+	var inUser User
+	err = getResult.Content(&inUser)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("User: %v\n", inUser)
+
+	// Perform a N1QL Query
+	queryResult, err := cluster.Query(
+		fmt.Sprintf("SELECT name FROM `%s` WHERE $1 IN interests", bucketName),
+		&gocb.QueryOptions{PositionalParameters: []interface{}{"African Swallows"}},
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Print each found Row
+	for queryResult.Next() {
+		var result interface{}
+		err := queryResult.Row(&result)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(result)
+	}
+
+	if err := queryResult.Err(); err != nil {
 		panic(err)
 	}
-	fmt.Println(myContent)
-	// #end::upsert-get[]
 }
