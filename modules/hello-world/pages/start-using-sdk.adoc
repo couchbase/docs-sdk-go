@@ -9,7 +9,7 @@ include::project-docs:partial$attributes.adoc[]
 
 == Hello Couchbase
 
-On this page we show you how to quickly get up and running -- installing the Couchbase Go SDK, and trying out the Hello World code example against Couchbase Capella, or against a local Couchbase cluster.
+On this page we show you how to quickly get up and running -- installing the Couchbase Go SDK, and trying out the Hello World code example against Couchbase Capella, or against a local Couchbase cluster.
 
 We will go through the code sample step by step, but for those in a hurry to see it, here it is:
 
@@ -18,11 +18,11 @@ We will go through the code sample step by step, but for those in a hurry to see
 Couchbase Capella Sample::
 +
 --
-If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase Capella], be sure to get the correct endpoint as well as user, password, and bucket  -- and see the <<cloud-connections, Cloud section>>, below.
+To connect to xref:cloud::index.adoc[Couchbase Capella], be sure to get the correct endpoint as well as user, password and bucket name.
 
 [source,go]
 ----
-include::devguide:example$CloudConnect.java[tag=cloud-connect,indent=0]
+include::devguide:example$go/cloud.go[tags=**]
 ----
 --
 
@@ -31,7 +31,7 @@ Local Couchbase Server::
 -- 
 [source.try-it,go]
 ----
-include::example$StartUsing.java[tags=**]
+include::example$startusing.go[tags=**]
 ----
 
 As well as the Go SDK (see below), and a running instance of Couchbase Server, you will need to load up the Travel Sample Bucket
@@ -40,72 +40,172 @@ or the xref:{version-server}@server:manage:manage-settings/install-sample-bucket
 --
 ====
 
-The Travel Sample bucket comes pre-loaded with the trial version of Couchbase Capella
+The Couchbase Capella free trial version comes with the Travel Sample Bucket, and its Query indexes, loaded and ready.
 
 
-
-== Installing the SDK
+== Quick Installation
 
 Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. 
 You can use `go get` to download the SDK:
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.4.1
+$ go get github.com/couchbase/gocb/v2@v2.5.0
 ----
 
 More details on installation can be found xref:project-docs:sdk-full-installation.adoc[here].
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
 
-
 == Step by Step
 
-Now you have the Go client installed, open your preferred text editor and try out the following:
+At this point we want to transition from the terminal to your code editor of choice.
+
+Let's now create an empty file named `main.go` and walk through adding code step-by-step:
+
+* Connect to a single node cluster, bucket, and collection;
+* Add and retrieve a new document;
+* Look up (SQL-type query) the new document by attribute value.
+
+=== Prerequisites
+
+Here are all of the imports that you will need to run the sample code.
+
+[source,golang]
+----
+include::devguide:example$go/cloud.go[tags=imports,indent=0]
+----
+
+Now, create an empty `main()` function.
 
 [source,golang,indent=0]
 ----
-include::example$startusing.go[tag=connect]
+func main() {
+	// add code here...
+}
 ----
 
-If you are connecting to https://docs.couchbase.com/cloud/index.html[Couchbase Capella] rather than a local Couchbase Server, then also refer to the <<cloud-connections, Cloud section>>, below.
+We will update this function as we go along the steps in this guide.
 
-Couchbase uses xref:7.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
-Here we will use the _Full Admin_ role created during installation of the Couchbase Data Platform.
-For production client code, you will want to use more appropriate, restrictive settings -- but here we want to get you up and running quickly.
-If you're developing client code on the same VM or machine as the Couchbase Server, your URI can be _localhost_.
+=== Connection
 
-To access the KV (Key/Value) API or to query views, you need to open a `Bucket`:
+The basic connection details that you'll need are given below -- for more background information, refer to the xref:howtos:managing-connections.adoc#connection-strings[Managing Connections page].
 
-[source,golang,indent=0]
+In the `main()` function, add the following:
+
+[tabs]
+====
+Couchbase Capella::
++
+--
+IMPORTANT: Couchbase Capella requires mandatory use of TLS (Transport Layer Security).
+As of Go SDK version 2.5.0, the standard certificate required to connect to a Capella cluster is automatically included with no additional configuration.
+
+[source,golang]
 ----
-include::example$startusing.go[tag=bucket]
+include::devguide:example$go/cloud.go[tag=connect,indent=0]
 ----
 
-If you installed the travel sample data bucket, replace _bucketName_ with _travel-sample_.
+Couchbase Capella uses xref:cloud:organizations:organization-projects-overview.adoc[Roles] to control user access to database resources.
+For the purposes of this example, we can use the _Organization Owner_ role automatically assigned to a user account during installation of the Capella cluster.
+This role grants full access to a Capella organization, including full data access to all projects and clusters.
+In a production scenario, we strongly recommend setting up users with more granular access roles as a best practice. 
 
+For the SDK client to access cluster data, you will need to set up credentials for your database by xref:cloud:get-started:cluster-and-data.adoc#credentials[following these steps].
 
-The {go-current-version} SDK supports full integration with the xref:concept-docs:collections.adoc[Collections] feature in the latest release of the Couchbase Data Platform, Couchbase Server 7.0.
-This brings complete support of Collections, allowing Documents to be grouped by purpose or theme, according to a specified _Scope_.
+--
+Local Couchbase Server::
++
+--
+[source,golang]
+----
+include::example$startusing.go[tag=connect,indent=0]
+----
+
+Couchbase uses xref:{version-server}@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
+For the purposes of this example, we are connecting to Couchbase using the _Full Admin_ role created during the installation of our Couchbase Server.
+
+Couchbase RBAC is fully described in the xref:{version-server}@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users, Groups, and Roles] page.
+--
+====
+
+Following successful authentication, the bucket can be opened:
+
+[source,golang]
+----
+include::devguide:example$go/cloud.go[tag=bucket,indent=0]
+----
+
+NOTE: We are working with the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample] data bucket. 
+If you are not, update the `bucketName` variable used in the example with your own.
+
+The {go-current-version} SDK supports full integration with the xref:concept-docs:collections.adoc[Collections] feature introduced in Couchbase Server 7.0.
+_Collections_ allow documents to be grouped by purpose or theme, according to a specified _Scope_.
 Here we will use the `users` collection within the `tenant_agent_00` scope from `travel-sample` bucket as an example.
 
-[source,golang,indent=0]
+[source,golang]
 ----
-include::example$startusing.go[tag=collection]
+include::devguide:example$go/cloud.go[tag=collection,indent=0]
 ----
 
-The code shows how you would use a named collection and scope. A named or default collection will provide the same functionality as bucket-level operations did in previous versions of Couchbase Server.
+The code shows how you would use a named collection and scope. 
+A named or default collection will provide the same functionality as bucket-level operations did in previous versions of Couchbase Server.
 
 The `DefaultCollection` must be used when connecting to a 6.6 cluster or earlier.
 
-[source,golang,indent=0]
+=== Document Addition and Retrieval
+
+Let's create a struct in our application that we can add to our `travel-sample` bucket that conforms to the structure of a document of type user.
+
+[source,golang]
 ----
-include::example$startusing.go[tag=upsert-get]
+include::devguide:example$go/cloud.go[tag=document,indent=0]
 ----
 
-KV Operations are described in detail on the xref:howtos:kv-operations.adoc[KV Operations page].
-Now that you know the basics, you may wish to go straight to that page.
+xref:howtos:kv-operations.adoc[Document Operations] operations, such as storing and retrieving documents, can be done using `Collection.Upsert()` and `Collection.Get()`.
+Simply pass the key (and value, if applicable) to the relevant methods.
 
+The following function will _upsert_ a document into the database:
+
+[source,golang]
+----
+include::devguide:example$go/cloud.go[tag=upsert,indent=0]
+----
+
+Now, let's retrieve that document using a key-value operation. 
+The following function runs a get for a document key and logs out the result in our console:
+
+[source,golang]
+----
+include::devguide:example$go/cloud.go[tag=get,indent=0]
+----
+
+=== SQL++ Lookup
+
+Couchbase N1QL queries are performed by invoking `Cluster.Query()`.
+In the code below we will query Couchbase to retrieve users with a particular interest and print the results.
+
+[source,golang]
+----
+include::devguide:example$go/cloud.go[tag=query,indent=0]
+----
+
+=== Execute!
+
+Now we can run our code using the following command:
+
+[source,console]
+----
+$ go run main.go
+----
+
+The results you should expect are as follows:
+
+[source,console]
+----
+User: {Arthur kingarthur@couchbase.com [Holy Grail African Swallows]}
+map[name:Arthur]
+----
 
 == Next Steps
 
