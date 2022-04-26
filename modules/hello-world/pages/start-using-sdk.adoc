@@ -109,7 +109,7 @@ include::devguide:example$go/cloud.go[tag=connect,indent=0]
 Couchbase Capella uses xref:cloud:organizations:organization-projects-overview.adoc[Roles] to control user access to database resources.
 For the purposes of this example, we can use the _Organization Owner_ role automatically assigned to a user account during installation of the Capella cluster.
 This role grants full access to a Capella organization, including full data access to all projects and clusters.
-In a production scenario, you may wish to set up users with more granular access roles. 
+In a production scenario, we strongly recommend setting up users with more granular access roles as a best practice. 
 
 For the SDK client to access cluster data, you will need to set up credentials for your database by xref:cloud:get-started:cluster-and-data.adoc#credentials[following these steps].
 

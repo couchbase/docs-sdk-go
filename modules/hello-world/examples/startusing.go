@@ -22,7 +22,7 @@ func main() {
 
 	p, err := ioutil.ReadFile("path/to/ca.pem")
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	roots := x509.NewCertPool()
@@ -101,12 +101,12 @@ func main() {
 		var result interface{}
 		err := queryResult.Row(&result)
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 		fmt.Println(result)
 	}
 
 	if err := queryResult.Err(); err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }

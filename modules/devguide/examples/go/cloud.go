@@ -101,13 +101,13 @@ func main() {
 		var result interface{}
 		err := queryResult.Row(&result)
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 		fmt.Println(result)
 	}
 
 	if err := queryResult.Err(); err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	// end::query[]
 }
