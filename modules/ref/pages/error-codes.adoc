@@ -6,39 +6,39 @@
 [abstract]
 {description}
 
-include::7.0@sdk:shared:partial$error-ref.adoc[tag=intro]
+include::7.1@sdk:shared:partial$error-ref.adoc[tag=intro]
 
 == Shared Error Definitions 
 
-include::7.0@sdk:shared:partial$error-ref.adoc[tag=shared]
+include::7.1@sdk:shared:partial$error-ref.adoc[tag=shared]
 
 
 == KeyValue Error Definitions
-include::7.0@sdk:shared:partial$error-ref.adoc[tag=kv]
+include::7.1@sdk:shared:partial$error-ref.adoc[tag=kv]
 
 
 == Query Error Definitions
-include::7.0@sdk:shared:partial$error-ref.adoc[tag=query]
+include::7.1@sdk:shared:partial$error-ref.adoc[tag=query]
 
 
 == Analytics Error Definitions
-include::7.0@sdk:shared:partial$error-ref.adoc[tag=analytics]
+include::7.1@sdk:shared:partial$error-ref.adoc[tag=analytics]
 
 
 == Search Error Definition
-include::7.0@sdk:shared:partial$error-ref.adoc[tag=search]
+include::7.1@sdk:shared:partial$error-ref.adoc[tag=search]
 
 
 == View Error Definitions
-include::7.0@sdk:shared:partial$error-ref.adoc[tag=views]
+include::7.1@sdk:shared:partial$error-ref.adoc[tag=views]
 
 
 == Management API Error Definitions
-include::7.0@sdk:shared:partial$error-ref.adoc[tag=mgmnt]
+include::7.1@sdk:shared:partial$error-ref.adoc[tag=mgmnt]
 
 
 == Field-Level Encryption Error Definitions
-include::7.0@sdk:shared:partial$error-ref.adoc[tag=fle]
+include::7.1@sdk:shared:partial$error-ref.adoc[tag=fle]
 
 
 ////
@@ -52,7 +52,7 @@ This range is reserved for sdk-specific error codes which are not standardized, 
 
 
 == Connecting to Cloud
-include::7.0@sdk:shared:partial$error-ref.adoc[tag=cloud]
+include::7.1@sdk:shared:partial$error-ref.adoc[tag=cloud]
 
 .no such host
 [source,terminal] 
