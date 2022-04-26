@@ -104,7 +104,7 @@ On the server side, each server node must be configured to advertise its externa
 This is done with the `setting-alternate-address` CLI command introduced in Couchbase Server 6.5.
 A node configured in this way will advertise two addresses: one for connecting from the same network, and another for connecting from an external network.
 
-// todo link to https://docs.couchbase.com/server/7.0/cli/cbcli/couchbase-cli-setting-alternate-address.html
+// todo link to https://docs.couchbase.com/server/7.1/cli/cbcli/couchbase-cli-setting-alternate-address.html
 
 On the client side, the externally visible ports must be used when connecting.
 If the external ports are not the default, you can specify custom ports as part of your connection string.

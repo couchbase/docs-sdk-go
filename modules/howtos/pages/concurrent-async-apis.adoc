@@ -17,7 +17,7 @@ Using goroutines to perform parallel operations against the SDK means that you c
 In the following examples we'll look at loading the data from one of the Couchbase sample datasets, the beer dataset. 
 This dataset is around 7300 JSON files, each file representing a document.  
 This sample looks for the dataset in the default location for a Linux install, 
-you can find the default locations for other operation systems in our xref:https://docs.couchbase.com/server/7.0/cli/cli-intro.html[CLI reference].
+you can find the default locations for other operation systems in our xref:https://docs.couchbase.com/server/7.1/cli/cli-intro.html[CLI reference].
 
 First we need to connect to the server and create a cluster object:
 
