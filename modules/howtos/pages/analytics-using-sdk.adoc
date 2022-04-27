@@ -6,14 +6,14 @@
 [abstract]
 {description}
 
-For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operations, Couchbase Data Platform offers the xref:7.1@server:analytics:introduction.adoc[Couchbase Analytics Service (CBAS)].
+For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operations, Couchbase Data Platform offers the xref:7.0@server:analytics:introduction.adoc[Couchbase Analytics Service (CBAS)].
 This is the analytic counterpart to our xref:n1ql-queries-with-sdk.adoc[operational data focussed Query Service].
 The analytics service is available in Couchbase Data Platform 6.0 and later (developer preview in 5.5).
 
 
 == Getting Started
 
-After familiarizing yourself with our xref:7.1@server:analytics:primer-beer.adoc[introductory primer],
+After familiarizing yourself with our xref:7.0@server:analytics:primer-beer.adoc[introductory primer],
 in particular creating a dataset and linking it to a bucket to shadow the operational data,
 try Couchbase Analytics using the Go SDK.
 Intentionally, the API for analytics is very similar to that of the query service.
@@ -84,7 +84,7 @@ include::example$analytics.go[tag=options]
 
 These query results may contain various sorts of data and metadata,
 depending upon the nature of the query,
-as you will have seen when working through our xref:7.1@server:analytics:primer-beer.adoc[introductory primer].
+as you will have seen when working through our xref:7.0@server:analytics:primer-beer.adoc[introductory primer].
 
 Results are iterated using the `Next` function.
 Within the `for` loop the result is read using the `Row` by supplying a pointer to the variable in which to store the value.

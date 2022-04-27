@@ -28,7 +28,7 @@ include::7.1@sdk:shared:partial$auth-overview.adoc[tag=cert-auth]
 
 == Authenticating the Go Client by Certificate
 
-For sample procedures whereby certificates can be generated and deployed, see xref:7.1@server:manage:manage-security/manage-certificates.adoc[Manage Certificates].
+For sample procedures whereby certificates can be generated and deployed, see xref:7.0@server:manage:manage-security/manage-certificates.adoc[Manage Certificates].
 The rest of this document assumes that the processes there, or something similar, have been followed.
 That is:
 
