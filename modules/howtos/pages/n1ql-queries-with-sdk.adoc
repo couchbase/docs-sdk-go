@@ -10,13 +10,13 @@ Querying can solve typical programming tasks such as finding a user profile by e
 
 Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
 xref:#_additional_resources[Further resources] for learning about N1QL are listed at the bottom of the page.
-Before you get started you may wish to checkout the xref:7.1@server:n1ql:n1ql-language-reference/index.adoc[N1QL intro page], or just dive in with a query against our travel sample data set.
+Before you get started you may wish to checkout the xref:7.0@server:n1ql:n1ql-language-reference/index.adoc[N1QL intro page], or just dive in with a query against our travel sample data set.
 In this case, the one thing that you need to know is that in order to make a Bucket queryable, it must have at least one index defined.
 You can define a _primary_ index on a bucket. 
 When a primary index is defined you can issue non-covered queries on the bucket as well.
 
 Use
-xref:7.1@server::tools/cbq-shell.html[cbq], our interactive Query shell.
+xref:7.0@server::tools/cbq-shell.html[cbq], our interactive Query shell.
 Open it, and enter the following:
 
 [source,n1ql]
@@ -183,7 +183,7 @@ The query engine will ensure that actually no data is mutated when parsing and p
 
 == Querying at Scope Level
 
-It is possible to query off the xref:7.1@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with Couchbase Server release 7.0_,
+It is possible to query off the xref:7.0@server:learn:data/scopes-and-collections.adoc[`Scope` level] _with Couchbase Server release 7.0_,
 using the `scope.Query()` method.
 It takes the statement as a required argument, and then allows additional options if needed.
 
@@ -205,7 +205,7 @@ Be sure to check that your use case fits your selection of query service.
 
 // For a deeper dive into N1QL from the SDK, refer to our xref:[N1QL SDK concept doc].
 
-The xref:7.1@server:n1ql:n1ql-language-reference/index.adoc[Server doc N1QL intro] introduces up a complete guide to the N1QL language, including all of the latest additions.
+The xref:7.0@server:n1ql:n1ql-language-reference/index.adoc[Server doc N1QL intro] introduces up a complete guide to the N1QL language, including all of the latest additions.
 
 The http://query.pub.couchbase.com/tutorial/#1[N1QL interactive tutorial] is a good introduction to the basics of N1QL use.
 
