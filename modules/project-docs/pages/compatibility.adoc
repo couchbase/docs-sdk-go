@@ -2,7 +2,8 @@
 :description: Features available in different SDK versions, and compatibility between Server and SDK. \
 Plus notes on Cloud, networks, and AWS Lambda.
 :navtitle: Compatibility
-:page-aliases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
+:page-a:page-toclevels: 2
+liases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
 
 include::project-docs:partial$attributes.adoc[]
 
@@ -49,7 +50,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
 
-== Capella Compatibility
+=== Capella Compatibility
 
 At time of release, the Couchbase 2.5 Go SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service. 
 To make development easier, the 2.5 SDK includes the Capella client certificate ready installed.
