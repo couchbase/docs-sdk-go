@@ -162,7 +162,7 @@ Let's create a struct in our application that we can add to our `travel-sample` 
 include::devguide:example$go/cloud.go[tag=document,indent=0]
 ----
 
-xref:howtos:kv-operations.adoc[Document Operations] operations, such as storing and retrieving documents, can be done using `Collection.Upsert()` and `Collection.Get()`.
+xref:howtos:kv-operations.adoc[Document operations], such as storing and retrieving documents, can be done using `Collection.Upsert()` and `Collection.Get()`.
 Simply pass the key (and value, if applicable) to the relevant methods.
 
 The following function will _upsert_ a document into the database:
