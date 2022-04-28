@@ -14,17 +14,48 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 == SDK Installation
 
+== SDK Installation
+
 [source,console]
 ----
 $ go get github.com/couchbase/gocb/v2@v2.5.0
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-Older versions may work, but are not supported. 
+Older versions may work, but are not supported.
 
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.5.0 (28 April 2022)
+
+Version 2.5.0 is the first release in the Go SDK 2.5 series.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.0?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1125[GOCBC-1125]:
+Deprecated `Cas` on Binary Append and Prepend as the server does not support this.
+Usage of `Cas` on these operations will now return an error.
+
+* https://issues.couchbase.com/browse/GOCBC-1203[GOCBC-1203]:
+Added `CompressionOptions` to `ClusterOptions`, defaulting to compression being enabled.
+
+* https://issues.couchbase.com/browse/GOCBC-1255[GOCBC-1255]:
+Deprecated `AggregatingMeterOptions` and `NewAggregatingMeter`.
+
+* https://issues.couchbase.com/browse/GOCBC-1265[GOCBC-1265]:
+Bundle Capella CA certificate with the SDK.
+
+* https://issues.couchbase.com/browse/GOCBC-1253[TXNG-1253]:
+Removed `ServerDurationDisabled` from `ThresholdLoggingOptions`.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1267[GOCBC-1267]:
+Fixed issue where `GetAllIndexes` could incorrectly omit the default collection.
 
 == Version 2.4.1 (16 March 2022)
 
