@@ -14,8 +14,6 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 == SDK Installation
 
-== SDK Installation
-
 [source,console]
 ----
 $ go get github.com/couchbase/gocb/v2@v2.5.0
