@@ -9,7 +9,7 @@
 {description}
 
 These pages cover the 2.x versions of the Couchbase Go SDK (3.x SDK API).
-For release notes, download links, and installation methods for 1.6 and earlier releases of the Couchbase Go Client, please see the xref:1.6@go-sdk::sdk-release-notes.adoc[1.x Go Release Notes & Download Archive].
+For release notes, download links, and installation methods for 1.6 and earlier releases of the Couchbase Go Client, please see the https://docs-archive.couchbase.com/go-sdk/1.4/relnotes-go-sdk.html[1.x Go Release Notes & Download Archive].
 
 
 == SDK Installation
