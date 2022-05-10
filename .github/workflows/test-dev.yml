@@ -6,8 +6,8 @@ on:
 
 env:
   REGISTRY: registry.gitlab.com/cb-vanilla/server
-  CB_EDITION: 7.0.0
-  CB_BUILD: 5295
+  CB_EDITION: 7.1.0
+  CB_BUILD: 2556 
 
 jobs:
   pre_job:
