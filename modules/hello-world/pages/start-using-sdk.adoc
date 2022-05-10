@@ -35,8 +35,8 @@ include::example$startusing.go[tags=**]
 ----
 
 As well as the Go SDK (see below), and a running instance of Couchbase Server, you will need to load up the Travel Sample Bucket
-using either the xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
-or the xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
+using either the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
+or the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
 --
 ====
 
@@ -122,10 +122,10 @@ Local Couchbase Server::
 include::example$startusing.go[tag=connect,indent=0]
 ----
 
-Couchbase uses xref:7.0@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
+Couchbase uses xref:7.1@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
 For the purposes of this example, we are connecting to Couchbase using the _Full Admin_ role created during the installation of our Couchbase Server.
 
-Couchbase RBAC is fully described in the xref:7.0@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users, Groups, and Roles] page.
+Couchbase RBAC is fully described in the xref:7.1@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users, Groups, and Roles] page.
 --
 ====
 
@@ -136,7 +136,7 @@ Following successful authentication, the bucket can be opened:
 include::devguide:example$go/cloud.go[tag=bucket,indent=0]
 ----
 
-NOTE: We are working with the xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample] data bucket. 
+NOTE: We are working with the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample] data bucket. 
 If you are not, update the `bucketName` variable used in the example with your own.
 
 The {go-current-version} SDK supports full integration with the xref:concept-docs:collections.adoc[Collections] feature introduced in Couchbase Server 7.0.

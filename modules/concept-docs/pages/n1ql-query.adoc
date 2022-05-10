@@ -27,10 +27,10 @@ include::example$n1ql-query.go[tag=prepared-statement]
 
 == Indexes
 
-The Couchbase query service makes use of xref:7.0@server:learn:services-and-indexes/indexes/indexes.adoc[_indexes_] in order to do its work.
+The Couchbase query service makes use of xref:7.1@server:learn:services-and-indexes/indexes/indexes.adoc[_indexes_] in order to do its work.
 Indexes replicate subsets of documents from data nodes over to index nodes, 
 allowing specific data (for example, specific document properties) to be retrieved quickly, 
-and to distribute load away from data nodes in xref:7.0@server:learn:services-and-indexes/services/services.adoc[MDS] topologies.
+and to distribute load away from data nodes in xref:7.1@server:learn:services-and-indexes/services/services.adoc[MDS] topologies.
 
 [IMPORTANT]
 In order to make a bucket queryable, it must have at least one index defined.
@@ -65,7 +65,7 @@ Indexes help improve the performance of a query.
 When an index includes the actual values of all the fields specified in the query, 
 the index _covers_ the query, and eliminates the need to fetch the actual values from the Data Service.
 An index, in this case, is called a _covering index_, and the query is called a _covered_ query.
-For more information, see xref:7.0@server:n1ql:n1ql-language-reference/covering-indexes.adoc[Covering Indexes].
+For more information, see xref:7.1@server:n1ql:n1ql-language-reference/covering-indexes.adoc[Covering Indexes].
 
 You can also create and define indexes in the SDK using:
 
@@ -107,7 +107,7 @@ include::{version-server}@sdk:shared:partial$n1ql-queries.adoc[tag=index-consist
 
 The following options are available:
 
-include::7.0@server:learn:page$services-and-indexes/indexes/index-replication.adoc[tag=scan_consistency]
+include::7.1@server:learn:page$services-and-indexes/indexes/index-replication.adoc[tag=scan_consistency]
 ////
 * `not_bounded`: Executes the query immediately, without requiring any consistency for the query.
 If index-maintenance is running behind, out-of-date results may be returned.
