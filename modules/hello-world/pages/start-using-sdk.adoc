@@ -50,7 +50,7 @@ You can use `go get` to download the SDK:
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.5.0
+$ go get github.com/couchbase/gocb/v2@v2.5.1
 ----
 
 More details on installation can be found xref:project-docs:sdk-full-installation.adoc[here].
