@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.5.0
+$ go get github.com/couchbase/gocb/v2@v2.5.1
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -25,6 +25,35 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.5.1 (22 June 2022)
+
+Version 2.5.1 is a maintenance release for the Go SDK 2.5.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.1?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1159[GOCBC-1159]:
+Improved support for serverless environments.
+
+* https://issues.couchbase.com/browse/GOCBC-1250[GOCBC-1250]:
+Added support for single query transactions via `QueryOptions` `AsTransaction`.
+
+* https://issues.couchbase.com/browse/GOCBC-1298[GOCBC-1298]:
+Masked the underlying error reason for `TransactionOperationFailedError`.
+
+* https://issues.couchbase.com/browse/GOCBC-1213[GOCBC-1213]:
+Added uncommitted API level support for `UserManager` `ChangePassword`.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1300[GOCBC-1300]:
+Fixed issue where transactions lost cleanup would not remove deleted collections from the cleanup list.
+
+* https://issues.couchbase.com/browse/GOCBC-1304[GOCBC-1304]:
+Fixed issue where transactions lost cleanup could temporarily block further responses being processed for a connection.
+
 
 == Version 2.5.0 (28 April 2022)
 
