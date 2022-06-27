@@ -103,3 +103,5 @@ The Go SDK can be combined with many other projects in the broader Go ecosystem 
 ++++
 </div>
 ++++
+
+include::7.1@sdk:shared:partial$archive.adoc[tag=link]
