@@ -179,4 +179,4 @@ why your operation failed through the various error types:
 include::example$migrating.go[tag=handleerrorext,indent=0]
 ----
 
-
+include::7.1@sdk:shared:partial$archive.adoc[tag=migration]
