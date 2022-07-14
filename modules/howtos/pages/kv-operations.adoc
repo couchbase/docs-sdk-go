@@ -3,6 +3,7 @@
 :navtitle: KV Operations
 :page-topic-type: howto
 :page-aliases: document-operations.adoc
+:page-toclevels: 2
 
 include::project-docs:partial$attributes.adoc[]
 
@@ -192,6 +193,10 @@ include::devguide:example$go/kv-counter.go[tag=decrement]
 ----
 
 NOTE: Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change.
+
+
+include::7.1@sdk:shared:partial$atomic.adoc[tag=xdcr]
+
 
 == Scoped KV Operations
 
