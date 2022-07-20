@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.5.1
+$ go get github.com/couchbase/gocb/v2@v2.5.2
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -25,6 +25,26 @@ Older versions may work, but are not supported.
 === API Documentation
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+== Version 2.5.2 (20 July 2022)
+
+Version 2.5.2 is a maintenance release for the Go SDK 2.5.0.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.2?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1246(GOCBC-1246):
+Added uncomitted stability support for `TransactionLogger` to `TransactionResult`.
+* https://issues.couchbase.com/browse/GOCBC-1314(GOCBC-1314):
+Improved logging in the lost transactions process.
+* https://issues.couchbase.com/browse/GOCBC-1318(GOCBC-1318):
+Changed `WaitUntilReady` to always wait for any explicitly defined services to be online.
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1320(GOCBC-1320):
+Fixed issue where vbucket hashing function wasn't masking out the 16th bit of the key.
 
 == Version 2.5.1 (22 June 2022)
 
