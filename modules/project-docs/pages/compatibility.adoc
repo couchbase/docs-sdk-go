@@ -108,7 +108,7 @@ Go 2.5 SDK supports AWS Amazon Graviton2 and Apple M1 ARM processors.
 | Analytics
 3+| Since 1.5
 
-| Default Collections
+| Collections
 | Not Supported
 | Developer Preview in 6.5-6.6, SDK 2.0
 | Since 2.1.8
