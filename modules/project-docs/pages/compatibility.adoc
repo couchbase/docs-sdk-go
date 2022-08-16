@@ -4,6 +4,7 @@ Plus notes on Cloud, networks, and AWS Lambda.
 :navtitle: Compatibility
 :page-a:page-toclevels: 2
 liases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
+:page-toclevels: 2
 
 include::project-docs:partial$attributes.adoc[]
 
@@ -13,6 +14,7 @@ include::project-docs:partial$attributes.adoc[]
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
 At time of writing (April 2022), this is 1.17 and 1.18.
 Older versions may remain compatible, but are not supported.
+
 
 == Couchbase Version/SDK Version Matrix
 
@@ -54,6 +56,10 @@ See the notes there for Support details.
 
 At time of release, the Couchbase 2.5 Go SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service. 
 To make development easier, the 2.5 SDK includes the Capella client certificate ready installed.
+
+include::{version-server}@sdk:shared:partial$capella.adoc[tag=cloud]
+
+
 
 == Platform Compatibility
 
