@@ -52,7 +52,7 @@ See the notes there for Support details.
 
 === Capella Compatibility
 
-At time of release, the Couchbase 2.5 Go SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service. 
+At time of release, the Couchbase 2.4 Go SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service. 
 
 include::7.0@sdk:shared:partial$capella.adoc[tag=cloud]
 
