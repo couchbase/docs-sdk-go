@@ -21,3 +21,7 @@
 :transaction-config: TransactionsConfig
 :transaction-commit-ambiguous: TransactionCommitAmbiguousError
 :txnfailed-unstaging-complete: TransactionResult.UnstagingComplete
+
+// lambda
+:lambda: function literal
+:intro-lambda: pass:q[a `function literal`]

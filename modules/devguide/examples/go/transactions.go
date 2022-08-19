@@ -77,6 +77,42 @@ func create() {
 	})
 }
 
+func createSimple() {
+	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
+		// tag::create-simple[]
+		result, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
+			if _, err := ctx.Insert(collection, "doc1", map[string]interface{}{}); err != nil {
+				return err
+			}
+
+			// Replace
+			doc, err := ctx.Get(collection, "doc1")
+			if err != nil {
+				return err
+			}
+
+			var content map[string]interface{}
+			err = doc.Content(&content)
+			if err != nil {
+				return err
+			}
+			content["transactions"] = "are awesome"
+			_, err = ctx.Replace(doc, content)
+			if err != nil {
+				return err
+			}
+
+			return nil
+		}, nil)
+		if err != nil {
+			log.Printf("%+v", err)
+		}
+		// end::create-simple[]
+
+		throwaway(result)
+	})
+}
+
 func examples() {
 	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::examples[]
@@ -556,9 +592,9 @@ func queryOptions() {
 	initTransactions(func(cluster *gocb.Cluster, collection *gocb.Collection) {
 		// tag::queryOptions[]
 		_, err := cluster.Transactions().Run(func(ctx *gocb.TransactionAttemptContext) error {
-			_, err := ctx.Query("INSERT INTO `default` VALUES ('queryOpts', {'hello':'world'})", &gocb.TransactionQueryOptions{
-				Profile: gocb.QueryProfileModeTimings,
-			})
+			_, err := ctx.Query("INSERT INTO `default` VALUES ('queryOpts', {'hello':'world'})",
+				&gocb.TransactionQueryOptions{Profile: gocb.QueryProfileModeTimings},
+			)
 			if err != nil {
 				return err
 			}
@@ -693,7 +729,7 @@ func rollbackCause() {
 		}, nil)
 		var ambigErr gocb.TransactionCommitAmbiguousError
 		if errors.As(err, &ambigErr) {
-			// This exception can only be thrown at the commit point, after the
+			// This error can only be thrown at the commit point, after the
 			// BalanceInsufficient logic has been passed, so there is no need to
 			// check getCause here.
 			fmt.Println("Transaction possibly committed")
@@ -805,6 +841,4 @@ func priceFromRecentReviews(qe *gocb.TransactionQueryResult) float32 {
 }
 
 // just used so that we can show creation of resources without the linter complaining.
-func throwaway(interface{}) {
-
-}
+func throwaway(interface{}) {}

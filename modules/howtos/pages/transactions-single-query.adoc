@@ -1,0 +1,33 @@
+// TODO: Add when available for Go SDK (Currently this is "Uncommitted")
+// See "AsTransaction" for reference - https://pkg.go.dev/github.com/couchbase/gocb/v2#QueryOptions
+//= Single Query Transactions
+//:description: Learn how to perform bulk-loading transactions with the Python SDKd.
+//:page-partial:
+//:page-topic-type: howto
+//:page-pagination: full
+//
+//include::project-docs:partial$attributes.adoc[]
+//
+//[abstract]
+//{description}
+//
+//include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=single-query-transactions-intro]
+//
+//[source,java]
+//----
+//include::devguide:example$go/transactionsExample.java[tag=querySingle,indent=0]
+//----
+//
+//You can also run a single query transaction against a particular `Scope` (these examples will exclude the full error handling for brevity):
+//
+//[source,java]
+//----
+//include::devguide:example$go/transactionsExample.java[tag=querySingleScoped,indent=0]
+//----
+//
+//and configure it:
+//
+//[source,java]
+//----
+//include::devguide:example$go/transactionsExample.java[tag=querySingleConfigured,indent=0]
+//----
