@@ -1,7 +1,7 @@
 = Distributed ACID Transactions
 :description:  A high-level overview of Distributed ACID Transactions with Couchbase.
 :page-toclevels: 2
-:page-pagination: next
+:page-pagination: full
 
 include::project-docs:partial$attributes.adoc[]
 include::howtos:partial$acid-transactions-attributes.adoc[]
