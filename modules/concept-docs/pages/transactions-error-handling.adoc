@@ -1,0 +1,34 @@
+= Error Handling
+:description:  Handling transaction errors with Couchbase.
+:page-toclevels: 2
+:page-pagination: prev
+
+[abstract]
+{description}
+
+include::project-docs:partial$attributes.adoc[]
+include::howtos:partial$acid-transactions-attributes.adoc[]
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=error-intro]
+
+== Transaction Errors
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=error]
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
+
+[source,go]
+----
+include::devguide:example$go/transactions.go[tag=configExpiration,indent=0]
+----
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed1]
+
+=== Full Error Handling Example
+
+Pulling all of the above together, this is the suggested best practice for error handling:
+
+[source,go]
+----
+include::devguide:example$go/transactions.go[tag=fullErrorHandling,indent=0]
+----

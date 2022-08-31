@@ -1,0 +1,35 @@
+// TODO: Add when available for Go SDK
+//= Tracing
+//:description: Tracing Couchbase Distributed ACID transactions.
+//:page-partial:
+//:page-topic-type: howto
+//:page-pagination: full
+//
+//[abstract]
+//{description}
+//
+//If configured, detailed telemetry on each transaction can be output that is compatible with various external systems including OpenTelemetry and its predecessor OpenTracing.
+//This telemetry is particularly useful for monitoring performance.
+//
+//See the xref:howtos:observability-tracing.adoc[SDK Request Tracing documentation] for how to configure this.
+//
+//// TODO: Check if this is still the case?
+//Tracing should currently be regarded as 'developer preview' functionality, as the spans and attributes output may change over time.
+//
+//== Parent Spans
+//
+//The application may wish to indicate that the transaction is part of a larger span -- for instance, a user request.
+//It can do this by passing that as a parent span.
+//
+//This can be done using the SDK's `RequestTracer` abstraction as so:
+//[source,java]
+//----
+//include::example$TransactionsExample.java[tag=tracing,indent=0]
+//----
+//
+//Or if you have an existing OpenTelemetry span you can easily convert it to a Couchbase `RequestSpan` and pass it to the SDK:
+//
+//[source,java]
+//----
+//include::example$TransactionsExample.java[tag=tracing-wrapped,indent=0]
+//----

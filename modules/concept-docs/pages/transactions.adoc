@@ -1,0 +1,89 @@
+= Distributed ACID Transactions
+:description:  A high-level overview of Distributed ACID Transactions with Couchbase.
+:page-toclevels: 2
+:page-pagination: next
+
+include::project-docs:partial$attributes.adoc[]
+include::howtos:partial$acid-transactions-attributes.adoc[]
+
+[abstract]
+{description}
+
+For a practical guide, see xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions from the Java SDK].
+
+== Overview
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=intro]
+
+== Transaction Mechanics
+
+The starting point is the `Transactions` object, which is effectively a singleton belonging to a `Cluster` object.
+Internally `Transactions` is created on `gocb.Connect(...)` and its lifetime is bound to the parent `Cluster` object.
+
+[source,go]
+----
+include::devguide:example$go/transactions.go[tag=init,indent=0]
+----
+
+NOTE: Multiple calls to `cluster.Transactions()` will yield the same `Transactions` object.
+This is because the `Transactions` object performs automated xref:concept-docs:transactions-cleanup.adoc[background processes] that should not be duplicated.
+
+[source,go]
+----
+include::devguide:example$/go/transactions.go[tag=create-simple,indent=0]
+----
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=mechanics;!library-cleanup-process]
+
+=== Rollback
+
+When an error is thrown, either by the application from the {lambda}, or by the transactions logic itself (e.g. on a failed operation), then that attempt is rolled back.
+
+The application's {lambda} may or may not be retried, depending on the error that occurred.
+The general rule for retrying is whether the transaction is likely to succeed on a retry.
+For example, if this transaction is trying to write a document that is currently involved in another transaction (a write-write conflict), this will lead to a retry as that is likely a transient state.
+But if the transaction is trying to get a document that does not exist, it will not retry.
+
+If the transaction is not retried then it will return a  `{transaction-failed}` error, and its `Unwrap` function can be used for more details on the failure.
+
+The application can use this to signal why it triggered a rollback, as so:
+
+[source,go]
+----
+include::devguide:example$go/transactions.go[tag=rollbackCause,indent=0]
+----
+
+After a transaction is rolled back, it cannot be committed, no further operations are allowed on it, and the SDK will not try to automatically commit it at the end of the code block.
+
+== Transaction Operations
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=query;!library-begin-transaction]
+
+== Concurrency with Non-Transactional Writes
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=concurrency]
+
+== Custom Metadata Collections
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-1,indent=0]
+
+[source,go]
+----
+include::devguide:example$/go/transactions.go[tag=customMetadata,indent=0]
+----
+
+When specified:
+
+    * Any transactions created from this `Transactions` object, will create and use metadata in that collection.
+    * The asynchronous cleanup started by this `Transactions` object will be looking for expired transactions only in this collection, unless additional `CleanupCollections` are provided or a transaction explicitly overrides the metadata collection.
+
+Custom metadata collections can also be provided at the transaction level itself.
+
+[source,go]
+----
+include::devguide:example$go/transactions.go[tag=customMetadataTxn,indent=0]
+----
+
+This will override any metadata collection that has been provided at the `Transactions` level.
+
+include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=integrated-sdk-custom-metadata-2,indent=0]

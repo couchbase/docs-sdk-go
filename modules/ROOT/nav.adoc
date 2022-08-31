@@ -14,11 +14,18 @@
 * xref:howtos:full-text-searching-with-sdk.adoc[Search]
 * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]
 
+.Transactions
+* xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[How-to Guide]
+// TODO: Add Single Query and Tracing when available in Go SDK
+//** xref:howtos:transactions-single-query.adoc[Single Query Transactions]
+//** xref:howtos:transactions-tracing.adoc[Tracing]
+* xref:concept-docs:transactions.adoc[Key Concepts]
+** xref:concept-docs:transactions-cleanup.adoc[Cleanup]
+** xref:concept-docs:transactions-error-handling.adoc[Error Handling]
 
 .Advanced Data Operations
 * xref:howtos:concurrent-async-apis.adoc[Async & Batching APIs]
 * xref:howtos:concurrent-document-mutations.adoc[Concurrent Document Mutations]
-* xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions]
 // * xref:howtos:durability.adoc[Durability]
 * xref:howtos:encrypting-using-sdk.adoc[Encrypting Your Data]
 * xref:howtos:transcoders-nonjson.adoc[Transcoders & Non-JSON]
