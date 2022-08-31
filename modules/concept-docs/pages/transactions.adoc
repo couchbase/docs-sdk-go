@@ -9,7 +9,7 @@ include::howtos:partial$acid-transactions-attributes.adoc[]
 [abstract]
 {description}
 
-For a practical guide, see xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions from the Java SDK].
+For a practical guide, see xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions from the Go SDK].
 
 == Overview
 
