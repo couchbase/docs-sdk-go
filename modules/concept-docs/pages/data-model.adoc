@@ -1,4 +1,4 @@
-= The Data Model
+= Data Model
 :description: Couchbase's use of JSON as a storage format allows powerful search and query over documents.
 :nav-title: Data Model
 :page-topic-type: concept

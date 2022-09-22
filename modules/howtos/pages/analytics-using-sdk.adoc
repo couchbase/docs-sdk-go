@@ -1,4 +1,4 @@
-= Analytics using the Go SDK
+= Analytics
 :description: Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
 :page-topic-type: howto
 :page-edition: Enterprise Edition

@@ -1,6 +1,5 @@
-= Errors & Exceptions Reference
+= Error Messages
 :description: The standardized error codes returned by the Couchbase Go SDK, from cloud connection to sub-document.
-:nav-title: Error Codes
 :page-topic-type: ref
 
 [abstract]

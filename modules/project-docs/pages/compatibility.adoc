@@ -1,4 +1,4 @@
-= Compatibility of Couchbase Features, Couchbase Server Versions, and the Couchbase Go SDK
+= Compatibility
 :description: Features available in different SDK versions, and compatibility between Server and SDK. \
 Plus notes on Cloud, networks, and AWS Lambda.
 :navtitle: Compatibility

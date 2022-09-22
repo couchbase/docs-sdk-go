@@ -1,4 +1,4 @@
-= Diagnosing and preventing Network Problems with Health Check
+= Health Check
 :description: In today's distributed and virtual environments, users will often not have full administrative control over their whole network.
 :navtitle: Health Check
 :page-topic-type: howto
