@@ -1,4 +1,4 @@
-= Choosing an API
+= Async and Batching APIs
 :description: The Go SDK offers a synchronous blocking interface but this does not stop you from using it asynchronously, \
 or from performing bulk operations concurrently.
 :navtitle: Choosing an API

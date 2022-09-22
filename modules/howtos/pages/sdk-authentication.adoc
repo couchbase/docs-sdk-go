@@ -1,4 +1,4 @@
-= Authenticating against Couchbase Server
+= Authentication
 :description: As well as Role-Based Access Control (RBAC), Couchbase offers connection with Certificate Authentication, and works transparently with LDAP.
 :page-topic-type: howto
 :page-edition: Enterprise Edition

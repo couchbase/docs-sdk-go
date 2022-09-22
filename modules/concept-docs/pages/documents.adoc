@@ -1,4 +1,4 @@
-= Document 
+= Documents
 :description: Couchbase supports CRUD operations, various data structures, and binary documents.
 :nav-title: Documents & Doc Ops
 :page-topic-type: concept

@@ -1,6 +1,5 @@
-= Distributed Transactions from the Go SDK
+= Using Couchbase Transactions
 :description: A practical guide to using Couchbase’s distributed ACID transactions, via the Go SDK.
-:navtitle: ACID Transactions
 :page-partial:
 :page-topic-type: howto
 :page-aliases: acid-transactions
@@ -15,7 +14,7 @@ include::howtos:partial$acid-transactions-attributes.adoc[]
 
 This guide will show you examples of how to perform multi-document ACID (atomic, consistent, isolated, and durable) database transactions within your application, using the Couchbase Go SDK.
 
-Refer to the xref:concept-docs:transactions.adoc[Distributed ACID Transactions] concept material for a high-level overview.
+Refer to the xref:concept-docs:transactions.adoc[] page for a high-level overview.
 
 == Prerequisites
 

@@ -1,4 +1,4 @@
-= Extended Attributes
+= XATTR and Virtual XATTR
 :description: Extended Attributes (XATTR) are metadata that can be provided on a per-application basis.
 :nav-title: XATTR
 :page-topic-type: concept

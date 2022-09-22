@@ -1,4 +1,4 @@
-= Distributed ACID Transactions
+= Transaction Concepts
 :description:  A high-level overview of Distributed ACID Transactions with Couchbase.
 :page-toclevels: 2
 :page-pagination: full
@@ -9,7 +9,7 @@ include::howtos:partial$acid-transactions-attributes.adoc[]
 [abstract]
 {description}
 
-For a practical guide, see xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions from the Go SDK].
+For a practical guide, see xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[].
 
 == Overview
 

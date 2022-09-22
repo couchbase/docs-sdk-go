@@ -1,4 +1,4 @@
-= Durability & Failure
+= Failure Considerations
 :description: Data durability refers to the fault tolerance and persistence of data in the face of software or hardware failure.
 :page-topic-type: concept
 :page-aliases: ROOT:failure-considerations,ROOT:durability,ROOT:enhanced-durability

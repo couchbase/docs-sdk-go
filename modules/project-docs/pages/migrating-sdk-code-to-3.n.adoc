@@ -1,6 +1,5 @@
-= Migrating from Go SDK 1.x to SDK 2.x
+= Migrating to SDK 3 API
 :description: The SDK 3.x API used in Go SDK 2.x breaks the existing 2.x APIs (used in Go SDK 1.6) in order to provide a number of improvements.
-:nav-title: Migrating to the SDK 3.x API
 :page-topic-type: concept
 :page-aliases: ROOT:migrate
 

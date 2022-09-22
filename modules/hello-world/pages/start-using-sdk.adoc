@@ -1,7 +1,6 @@
-= Install and Start Using the Go SDK with Couchbase Server
+= Start Using the Go SDK
 :description: Installing the Couchbase Go SDK & a Hello World example program.
 :page-aliases: ROOT:getting-started,ROOT:start-using,ROOT:hello-couchbase,ROOT:start-using-sdk
-:navtitle: Start Using the SDK
 :page-toclevels: 2
 
 include::project-docs:partial$attributes.adoc[]
