@@ -1,10 +1,12 @@
 = Start Using the Go SDK
-:description: Installing the Couchbase Go SDK & a Hello World example program.
+:description: A quick start guide to get you up and running with Couchbase and the Go SDK.
 :page-aliases: ROOT:getting-started,ROOT:start-using,ROOT:hello-couchbase,ROOT:start-using-sdk
 :page-toclevels: 2
 
 include::project-docs:partial$attributes.adoc[]
 
+[abstract]
+{description}
 
 == Hello Couchbase
 
