@@ -1,2 +1,3 @@
-include::7.1@sdk:pages:partial$user-management.adoc[]
+include::project-docs:partial$attributes.adoc[]
 
+include::{version-common}@sdk:pages:partial$user-management.adoc[]

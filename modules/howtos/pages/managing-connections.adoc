@@ -3,6 +3,8 @@
 :page-topic-type: concept
 :page-aliases: ROOT:managing-connections,howtos:multi-network,ROOT:connecting,ROOT:connection-advanced
 
+include::project-docs:partial$attributes.adoc[]
+
 [abstract]
 {description}
 It contains best practices as well as information on TLS/SSL and other advanced connection options.
@@ -183,7 +185,7 @@ E.....@.@.............+....Z.'yZ..#........
 .%v.....4....m*...A.2I.1.&.*,6+..#..#.5
 ----
 
-include::7.1@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
+include::{version-common}@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
 DNS SRV bootstrapping is available in the Go SDK.
 In order to make the SDK actually use the SRV records, you need to enable DNS SRV on the environment and pass in the host name from your records (here `example.com`):
@@ -197,6 +199,6 @@ If the DNS SRV records could not be loaded properly you'll get the exception log
 
 Also, if you pass in more than one node, DNS SRV bootstrap will not be attempted.
 
-include::7.1@sdk:shared:partial$managing-connections.adoc[tag=cloud]
+include::{version-common}@sdk:shared:partial$managing-connections.adoc[tag=cloud]
 
 NOTE: Connection to https://docs.couchbase.com/cloud/index.html[Couchbase Capella] requires Couchbase Go SDK 2.0 and up, unless you use a xref:1.6@go-sdk:ROOT:managing-connections.adoc#cloud-connections[workaround in 1.6].

@@ -10,13 +10,13 @@
 
 include::project-docs:partial$attributes.adoc[]
 
-include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=abstract]
+include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=abstract]
 
-include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=quick-start]
+include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=quick-start]
 
-include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=bring-your-own]
+include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=bring-your-own]
 
-include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=using]
+include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=using]
 
 
 == Sample App Backend
@@ -63,7 +63,7 @@ func AirportSearch(w http.ResponseWriter, req *http.Request) {
 The https://github.com/couchbaselabs/{travel-sample-git-project}/blob/HEAD/{travel-sample-entrypoint}[{travel-sample-entrypoint}] file also contains the functions for handling users, registration, and N1QL queries.
 
 
-include::{version-server}@sdk:shared:partial$sample-application.adoc[tag=data-model]
+include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=data-model]
 
 // TODO: we don't use the partial here, because of the location of swagger.json
 // in swaggerui/

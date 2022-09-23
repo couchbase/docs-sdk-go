@@ -4,6 +4,8 @@
 :lang: Go
 :page-aliases: ROOT:sdk-xattr-example.adoc
 
+include::project-docs:partial$attributes.adoc[]
+
 [abstract]
 {description}
 
@@ -454,4 +456,4 @@ a quote or backslash) and then encapsulating it in backticks (`pass:c[`path`]`).
 NOTE: Currently, paths cannot exceed 1024 characters, and cannot be more than 32 levels deep.
 
 
-include::7.1@sdk:shared:partial$sdk-xattr-overview.adoc[tag=extended_attributes]
+include::{version-common}@sdk:shared:partial$sdk-xattr-overview.adoc[tag=extended_attributes]

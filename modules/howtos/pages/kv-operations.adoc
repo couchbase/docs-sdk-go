@@ -194,7 +194,7 @@ include::devguide:example$go/kv-counter.go[tag=decrement]
 NOTE: Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change.
 
 
-include::7.1@sdk:shared:partial$atomic.adoc[tag=xdcr]
+include::{version-common}@sdk:shared:partial$atomic.adoc[tag=xdcr]
 
 
 == Scoped KV Operations

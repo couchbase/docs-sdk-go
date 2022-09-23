@@ -13,7 +13,7 @@ For a practical guide, see xref:howtos:distributed-acid-transactions-from-the-sd
 
 == Overview
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=intro]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=intro]
 
 == Transaction Mechanics
 
@@ -33,7 +33,7 @@ This is because the `Transactions` object performs automated xref:concept-docs:t
 include::devguide:example$/go/transactions.go[tag=create-simple,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=mechanics;!library-cleanup-process]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=mechanics;!library-cleanup-process]
 
 === Rollback
 
@@ -57,15 +57,15 @@ After a transaction is rolled back, it cannot be committed, no further operation
 
 == Transaction Operations
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tags=query;!library-begin-transaction]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=query;!library-begin-transaction]
 
 == Concurrency with Non-Transactional Writes
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=concurrency]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=concurrency]
 
 == Custom Metadata Collections
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-1,indent=0]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=custom-metadata-1,indent=0]
 
 [source,go]
 ----
@@ -86,4 +86,4 @@ include::devguide:example$go/transactions.go[tag=customMetadataTxn,indent=0]
 
 This will override any metadata collection that has been provided at the `Transactions` level.
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=integrated-sdk-custom-metadata-2,indent=0]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=integrated-sdk-custom-metadata-2,indent=0]
