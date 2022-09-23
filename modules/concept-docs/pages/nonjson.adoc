@@ -4,10 +4,12 @@
 :page-aliases: ROOT:nonjson
 :page-topic-type: concept
 
+include::project-docs:partial$attributes.adoc[]
+
 [abstract]
 {description}
 
-include::7.1@sdk:shared:partial$nonjson.adoc[tag=intro]
+include::{version-common}@sdk:shared:partial$nonjson.adoc[tag=intro]
 
-include::7.1@sdk:shared:partial$nonjson.adoc[tag=using]
+include::{version-common}@sdk:shared:partial$nonjson.adoc[tag=using]
 

@@ -42,20 +42,20 @@ Refer to the xref:{version-server}@server:learn:security/roles.adoc[Roles] page 
 --
 ====
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
 
 == Creating a Transaction
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=creating]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=creating]
 
 [source,go]
 ----
 include::devguide:example$go/transactions.go[tag=examples,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=lambda-ctx]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=lambda-ctx]
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=creating-error]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=creating-error]
 
 === Logging
 
@@ -242,7 +242,7 @@ include::devguide:example$go/transactions.go[tag=queryRyow,indent=0]
 <1> The key-value insert operation is only staged, and so it is not visible to other transactions or non-transactional actors.
 <2> But the `SELECT` can view it, as the insert was in the same transaction.
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=rbac]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=rbac]
 
 == Concurrent Operations
 
@@ -282,7 +282,7 @@ For example, if you want to change the level of durability which must be attaine
 include::devguide:example$go/transactions.go[tag=config,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=config]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=config]
 
 == Additional Resources
 

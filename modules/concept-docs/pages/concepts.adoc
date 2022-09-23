@@ -1,7 +1,9 @@
 = Overview
 :page-topic-type: landing-page
 
-include::7.1@sdk:shared:partial$concepts.adoc[tag=concepts]
+include::project-docs:partial$attributes.adoc[]
+
+include::{version-common}@sdk:shared:partial$concepts.adoc[tag=concepts]
 
 
 

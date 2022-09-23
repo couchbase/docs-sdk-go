@@ -9,20 +9,20 @@
 include::project-docs:partial$attributes.adoc[]
 include::howtos:partial$acid-transactions-attributes.adoc[]
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=error-intro]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=error-intro]
 
 == Transaction Errors
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=error]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=error]
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed]
 
 [source,go]
 ----
 include::devguide:example$go/transactions.go[tag=configExpiration,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed1]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed1]
 
 === Full Error Handling Example
 

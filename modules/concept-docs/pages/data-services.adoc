@@ -1,1 +1,3 @@
-include::7.1@sdk:pages:partial$data-services.adoc[]
+include::project-docs:partial$attributes.adoc[]
+
+include::{version-common}@sdk:pages:partial$data-services.adoc[]

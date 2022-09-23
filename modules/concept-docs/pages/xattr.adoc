@@ -4,14 +4,16 @@
 :page-topic-type: concept
 :page-aliases: sdk-xattr-overview,ROOT:sdk-xattr-overview
 
+include::project-docs:partial$attributes.adoc[]
+
 [abstract]
 {description}
 
-include::7.1@sdk:shared:partial$sdk-xattr-overview.adoc[tag=intro_extended_attributes]
+include::{version-common}@sdk:shared:partial$sdk-xattr-overview.adoc[tag=intro_extended_attributes]
 
-include::7.1@sdk:shared:partial$sdk-xattr-overview.adoc[tag=using_extended_attributes]
+include::{version-common}@sdk:shared:partial$sdk-xattr-overview.adoc[tag=using_extended_attributes]
 
-include::7.1@sdk:shared:partial$sdk-xattr-overview.adoc[tag=virtual_extended_attributes]
+include::{version-common}@sdk:shared:partial$sdk-xattr-overview.adoc[tag=virtual_extended_attributes]
 
 [source,golang,indent=0]
 ----

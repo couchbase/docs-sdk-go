@@ -3,22 +3,24 @@
 :nav-title: Errors & Diagnostics
 :page-topic-type: concept
 
+include::project-docs:partial$attributes.adoc[]
+
 [abstract]
 {description}
 
 
 == General Approach to Go Exceptions
 
-include::7.1@sdk:shared:partial$errors.adoc[tag=exception]
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=exception]
 
-// include::7.1@sdk:shared:partial$errors.adoc[tag=ref]
+// include::{version-common}@sdk:shared:partial$errors.adoc[tag=ref]
 
-include::7.1@sdk:shared:partial$errors.adoc[tag=durability]
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=durability]
 
-include::7.1@sdk:shared:partial$errors.adoc[tag=diag]
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=diag]
 
 // Slow Operations Logging
-include::7.1@sdk:shared:partial$errors.adoc[tag=observability]
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=observability]
 
 // until opentelemetry release for link below, could add note on API to expose own tracing features?
-// include::7.1@sdk:shared:partial$errors.adoc[tag=rto]
+// include::{version-common}@sdk:shared:partial$errors.adoc[tag=rto]
