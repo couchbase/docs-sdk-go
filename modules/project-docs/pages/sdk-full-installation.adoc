@@ -1,6 +1,5 @@
-= Couchbase Go SDK Installation
+= Full Installation
 :description: Installation instructions for the Couchbase Go Client.
-:navtitle: Full Installation
 :page-partial:
 :page-topic-type: project-doc
 

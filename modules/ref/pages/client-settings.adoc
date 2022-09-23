@@ -1,8 +1,9 @@
 = Client Settings
 :description: pass:q[Client settings using `ConnectOptions` for bootstrapping, timeouts, reliability, and performance.]
-:nav-title: Client Settings
 :page-topic-type: reference
 :page-aliases: ROOT:client-settings
+
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
@@ -244,4 +245,4 @@ operation responses from the server.  This should generally not be set.
 
 // section on wide area network support
 
-include::6.5@sdk:shared:partial$client-settings-wide-network.adoc[]
+include::{version-common}@sdk:shared:partial$client-settings-wide-network.adoc[]

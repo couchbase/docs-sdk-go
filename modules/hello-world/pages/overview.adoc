@@ -1,38 +1,23 @@
-= Couchbase Go SDK 2.5
-:page-type: landing-page
+= Couchbase Go SDK 2.6
 :page-layout: landing-page-top-level-sdk
 :page-role: tiles
 :!sectids:
 
+= Couchbase Go SDK 2.6
 
-++++
-<div class="card-row two-column-row">
-++++
+[source,go]
+----
+include::example$overview.go[tag=overview,indent=0]
+----
 
-
-[.column]
-====== {empty}
-[.content]
 The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, and adding support for Couchbase Server features like Collections and Scopes (available from Couchbase Server 7.0).
 The Go 2.x SDK also introduces improved error handling providing extra error information.
 
+{empty} +
 
-[.column]
-[.content]
-[source,golang,indent=0]
-----
-include::example$overview.go[tag=overview]
-----
+== icon:database[] Using Your Database
 
-
-++++
-</div>
-++++
-
-[.column]
-====== {empty}
-
-== Couchbase Go SDK 2.5
+How-to guides to help you start your development journey with Couchbase and the Go SDK.
 
 ++++
 <div class="card-row three-column-row">
@@ -40,68 +25,90 @@ include::example$overview.go[tag=overview]
 
 
 [.column]
-====== {empty}
 .Getting Started
-
-[.content]
-Dive right in with a xref:start-using-sdk.adoc[quick install and Hello World].
-Try out our xref:sample-application.adoc[Travel Sample Application].
-And take a look at the xref:howtos:working-with-collections.adoc[Collections feature].
-
-
-[.column]
-====== {empty}
-.Practical Howto Docs
-
-[.content]
-Connect to our services -- xref:howtos:kv-operations.adoc[data (KV)]; 
-xref:howtos:n1ql-queries-with-sdk.adoc[Query]; 
-xref:howtos:full-text-searching-with-sdk.adoc[Search]; 
-xref:howtos:analytics-using-sdk.adoc[Analytics]; 
-xref:howtos:view-queries-with-sdk.adoc[Views] -- 
-and the xref:howtos:subdocument-operations.adoc[Sub-Document API].
+* xref:hello-world:start-using-sdk.adoc[]
+* xref:howtos:kv-operations.adoc[]
+* xref:howtos:n1ql-queries-with-sdk.adoc[]
+* xref:howtos:full-text-searching-with-sdk.adoc[]
+* xref:hello-world:sample-application.adoc[]
 
 [.column]
-====== {empty}
-.Reference Guides
-
-[.content]
-The documentation supplements the practical Howto docs with references and xref:concept-docs:concepts.adoc[concept guides], for those who prefer a broader understanding before diving in and coding.
-[]
-https://pkg.go.dev/github.com/couchbase/gocb/v2[API Docs^]
-
+.Transactions
+* xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[]
+* xref:concept-docs:transactions.adoc[]
 
 [.column]
-====== {empty}
-.What's Hot?
-
-[.content]
-Multi-Document xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed ACID Transactions] from the Node.js SDK.
-
-Integrate with Open Telemetry API to instrument telemetry data for your mission critical workloads that will make troubleshooting and debugging of your applications easier than ever.
-
+.Working with Data
+* xref:howtos:subdocument-operations.adoc[]
+* xref:howtos:analytics-using-sdk.adoc[]
+* xref:howtos:encrypting-using-sdk.adoc[]
+* xref:howtos:working-with-collections.adoc[Working with Collections]
 
 [.column]
-====== {empty}
-.About
-
-[.content]
-Those useful nuts-and-bolts guides to 
-xref:project-docs:compatibility.adoc[compatibility tables]; 
-xref:project-docs:sdk-release-notes.adoc[release notes]; 
-xref:project-docs:get-involved.adoc[contribution guide]; and the 
-xref:project-docs:migrating-sdk-code-to-3.n.adoc[migration guide] for moving to the 2.x API.
+.Managing Couchbase
+* xref:howtos:managing-connections.adoc[]
+* xref:howtos:sdk-authentication.adoc[]
+* xref:howtos:provisioning-cluster-resources.adoc[]
+* xref:howtos:sdk-user-management-example.adoc[]
 
 [.column]
-====== {empty}
-.Community
-
-[.content]
-For community help, visit the https://forums.couchbase.com/c/go-sdk/23[Couchbase forums^].
-The Go SDK can be combined with many other projects in the broader Go ecosystem and beyond -- in the https://blog.couchbase.com/?s=Golang[Couchbase Blog^] there are several examples.
+.Errors & Diagnostics
+* xref:howtos:error-handling.adoc[]
+* xref:howtos:collecting-information-and-logging.adoc[]
+* xref:howtos:slow-operations-logging.adoc[]
 
 ++++
 </div>
 ++++
 
-include::{version-common}@sdk:shared:partial$archive.adoc[tag=link]
+== icon:graduation-cap[] Learn
+
+Take a deep-dive into the SDK concept material and learn more about Couchbase.
+
+++++
+<div class="card-row three-column-row">
+++++
+
+[.column]
+.Data Concepts
+* xref:concept-docs:data-model.adoc[]
+* xref:concept-docs:data-services.adoc[Service Selection]
+* xref:concept-docs:encryption.adoc[Field Level Encryption]
+
+[.column]
+.Errors & Diagnostics Concepts
+* xref:concept-docs:errors.adoc[]
+* xref:concept-docs:response-time-observability.adoc[]
+* xref:concept-docs:durability-replication-failure-considerations.adoc[]
+
+++++
+</div>
+++++
+
+== icon:book[] Resources
+
+Useful resources to help support your development experience with Couchbase and the Go SDK.
+
+++++
+<div class="card-row three-column-row">
+++++
+
+[.column]
+.Reference
+* https://pkg.go.dev/github.com/couchbase/gocb/v2[API Reference]
+* xref:ref:client-settings.adoc[]
+* xref:ref:error-codes.adoc[]
+* xref:ref:glossary.adoc[Glossary]
+* xref:ref:travel-app-data-model.adoc[]
+
+[.column]
+.Project Docs
+* xref:project-docs:sdk-release-notes.adoc[]
+* xref:project-docs:compatibility.adoc[Compatibility]
+* https://docs-archive.couchbase.com/home/index.html[Older Versions Archive]
+* xref:project-docs:migrating-sdk-code-to-3.n.adoc[]
+* xref:project-docs:sdk-full-installation.adoc[]
+
+++++
+</div>
+++++
