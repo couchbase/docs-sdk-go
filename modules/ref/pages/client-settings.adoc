@@ -225,6 +225,12 @@ UserManager, CollectionManager, QueryIndexManager, etc.) if not overridden by a 
 timeout. The default is quite high because some operations (such as flushing a bucket,
 for example) might take a long time.
 
+Name: *ServerWaitBackoff*::
++
+Default:  `5s`
++
+The Server Wait Backoff is used across a cluster as the period of time waited between
+key/value reconnect attempts to a node after a connection failure occurs.
 
 == IO Options
 

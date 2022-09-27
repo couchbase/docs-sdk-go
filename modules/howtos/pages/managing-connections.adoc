@@ -67,6 +67,7 @@ using encrypted connections or unencrypted connections.
 Depending on the environment and network latency, bootstrapping the SDK fully might take a little longer than the default key-value timeout of 2.5 seconds.
 This means that whilst bootstrap is occurring any operations that you make might timeout.
 To prevent those early timeouts from happening, you can use the `WaitUntilReady` method which will return a timeout error if bootstrap isn't completed in the specified time.
+Note that `WaitUntilReady` does not actually retry connecting, the retry is rechecking the connection state.
 If you are working at the _Cluster_ level, then add to the `cluster()` in the xref:#connecting-to-a-cluster[earlier example]:
 [source,golang]
 ----
