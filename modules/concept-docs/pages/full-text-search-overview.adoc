@@ -1,1 +1,3 @@
-include::7.1@sdk:pages:partial$search.adoc[]
+include::project-docs:partial$attributes.adoc[]
+
+include::{version-common}@sdk:pages:partial$search.adoc[]

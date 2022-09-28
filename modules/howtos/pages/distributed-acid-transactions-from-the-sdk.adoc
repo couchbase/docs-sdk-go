@@ -1,6 +1,5 @@
-= Distributed Transactions from the Go SDK
+= Using Couchbase Transactions
 :description: A practical guide to using Couchbase’s distributed ACID transactions, via the Go SDK.
-:navtitle: ACID Transactions
 :page-partial:
 :page-topic-type: howto
 :page-aliases: acid-transactions
@@ -15,7 +14,7 @@ include::howtos:partial$acid-transactions-attributes.adoc[]
 
 This guide will show you examples of how to perform multi-document ACID (atomic, consistent, isolated, and durable) database transactions within your application, using the Couchbase Go SDK.
 
-Refer to the xref:concept-docs:transactions.adoc[Distributed ACID Transactions] concept material for a high-level overview.
+Refer to the xref:concept-docs:transactions.adoc[] page for a high-level overview.
 
 == Prerequisites
 
@@ -43,20 +42,20 @@ Refer to the xref:{version-server}@server:learn:security/roles.adoc[Roles] page 
 --
 ====
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=requirements]
 
 == Creating a Transaction
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=creating]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=creating]
 
 [source,go]
 ----
 include::devguide:example$go/transactions.go[tag=examples,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=lambda-ctx]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=lambda-ctx]
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=creating-error]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=creating-error]
 
 === Logging
 
@@ -243,7 +242,7 @@ include::devguide:example$go/transactions.go[tag=queryRyow,indent=0]
 <1> The key-value insert operation is only staged, and so it is not visible to other transactions or non-transactional actors.
 <2> But the `SELECT` can view it, as the insert was in the same transaction.
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=rbac]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=rbac]
 
 == Concurrent Operations
 
@@ -283,7 +282,7 @@ For example, if you want to change the level of durability which must be attaine
 include::devguide:example$go/transactions.go[tag=config,indent=0]
 ----
 
-include::{version-server}@sdk:shared:partial$acid-transactions.adoc[tag=config]
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=config]
 
 == Additional Resources
 

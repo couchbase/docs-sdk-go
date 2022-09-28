@@ -1,13 +1,14 @@
 = Buckets and Clusters
 :description: The Couchbase Go SDK provides an API for managing a Couchbase cluster programmatically.
-:navtitle: Buckets & Clusters
 :page-topic-type: concept
 :page-aliases: managing-clusters
+
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
 
-include::7.1@sdk:shared:partial$clusters-buckets.adoc[tag=management]
+include::{version-common}@sdk:shared:partial$clusters-buckets.adoc[tag=management]
 
 Management operations in the Go SDK may be performed through several interfaces depending on the object:
 

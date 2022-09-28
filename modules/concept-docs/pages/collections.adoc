@@ -1,4 +1,4 @@
-= Collections & Scopes
+= Collections and Scopes
 :description: pass:q[Fully supported in Couchbase Server 7.1.]
 :page-topic-type: concept
 :nav-title: Collections
@@ -12,7 +12,7 @@ The Collections feature in Couchbase Server is fully implemented in the {go-curr
 
 Information on _Collections_ can be found in the xref:7.1@server:learn:data:scopes-and-collections.adoc[server docs].
 
-== Using Collections & Scopes
+== Using Collections and Scopes
 
 Access a non-default collection, in the default scope, with:
 

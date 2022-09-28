@@ -1,8 +1,10 @@
-= Authenticating against Couchbase Server
+= Authentication
 :description: As well as Role-Based Access Control (RBAC), Couchbase offers connection with Certificate Authentication, and works transparently with LDAP.
 :page-topic-type: howto
 :page-edition: Enterprise Edition
 :page-aliases: ROOT:sdk-authentication-overview
+
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
@@ -21,9 +23,9 @@ include::devguide:example$go/connecting.go[tag=simpleconnect]
 ----
 
 
-include::7.1@sdk:shared:partial$auth-overview.adoc[tag=rbac]
+include::{version-common}@sdk:shared:partial$auth-overview.adoc[tag=rbac]
 
-include::7.1@sdk:shared:partial$auth-overview.adoc[tag=cert-auth]
+include::{version-common}@sdk:shared:partial$auth-overview.adoc[tag=cert-auth]
 
 
 == Authenticating the Go Client by Certificate
@@ -41,7 +43,7 @@ include::devguide:example$go/connecting-cca.go[tag=certconnect]
 ----
 
 
-include::7.1@sdk:shared:partial$auth-overview.adoc[tag=ldap]
+include::{version-common}@sdk:shared:partial$auth-overview.adoc[tag=ldap]
 
 [source,golang,indent=0]
 ----

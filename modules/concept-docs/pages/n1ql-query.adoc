@@ -1,6 +1,5 @@
-= Querying with N1QL
+= Query
 :description: Parallel data management for complex queries over many records, using a familiar SQL-like syntax.
-:nav-title: Querying with N1QL
 :page-topic-type: concept
 :page-aliases: ROOT:n1ql-query,
 
@@ -9,11 +8,11 @@ include::project-docs:partial$attributes.adoc[]
 [abstract]
 {description}
 
-include::{version-server}@sdk:shared:partial$n1ql-queries.adoc[tag=intro]
+include::{version-common}@sdk:shared:partial$n1ql-queries.adoc[tag=intro]
 
 
 // Prepared Statements for Query Optimization
-include::{version-server}@sdk:shared:partial$n1ql-queries.adoc[tag=prepared]
+include::{version-common}@sdk:shared:partial$n1ql-queries.adoc[tag=prepared]
 
 NOTE: In Go SDK {go-current-version} and earlier, the `adhoc` parameter is `Adhoc`.
 It is set to `false` by default -- set to `true` for a plan _not_ to be prepared, or a prepared plan _not_ to be reused.
@@ -103,7 +102,7 @@ include::example$n1ql-query.go[tag=deferred-index]
 
 // == Index Consistency
 
-include::{version-server}@sdk:shared:partial$n1ql-queries.adoc[tag=index-consistency]
+include::{version-common}@sdk:shared:partial$n1ql-queries.adoc[tag=index-consistency]
 
 The following options are available:
 

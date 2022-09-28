@@ -1,10 +1,11 @@
-= Request Tracing and Metrics
+= Tracing
 :description: Tracing and Metrics provide fine-grained insight into how an application is performing, and helps to diagnose when it is not.
-:nav-title: Request Tracing and Metrics
 :page-topic-type: concept
 :page-aliases: ROOT:threshold-logging.adoc
+
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
 
-include::7.1@sdk:shared:partial$rto.adoc[tag=rto]
+include::{version-common}@sdk:shared:partial$rto.adoc[tag=rto]

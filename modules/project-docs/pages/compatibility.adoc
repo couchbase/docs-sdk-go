@@ -1,4 +1,4 @@
-= Compatibility of Couchbase Features, Couchbase Server Versions, and the Couchbase Go SDK
+= Compatibility
 :description: Features available in different SDK versions, and compatibility between Server and SDK. \
 Plus notes on Cloud, networks, and AWS Lambda.
 :navtitle: Compatibility
@@ -54,7 +54,7 @@ See the notes there for Support details.
 At time of release, the Couchbase {go-current-version} Go SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service. 
 To make development easier, the {go-current-version} SDK includes the Capella client certificate ready installed.
 
-include::{version-server}@sdk:shared:partial$capella.adoc[tag=cloud]
+include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
 
 
 
@@ -142,10 +142,10 @@ The SDK follows http://semver.org/[Semantic Versioning^] and typically release a
 In order to update your specific developer environment to this new version, you will have to instruct Go to `go get` that specific version.
 For further information, please reference the section on xref:sdk-full-installation.adoc[installation].
 
-include::{version-server}@sdk:shared:partial$network-requirements.adoc[]
+include::{version-common}@sdk:shared:partial$network-requirements.adoc[]
 
-include::{version-server}@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
+include::{version-common}@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
 
-include::{version-server}@sdk:shared:partial$api-version.adoc[tag=api-version]
+include::{version-common}@sdk:shared:partial$api-version.adoc[tag=api-version]
 
-include::7.1@sdk:shared:partial$archive.adoc[tag=link]
+include::{version-common}@sdk:shared:partial$archive.adoc[tag=link]

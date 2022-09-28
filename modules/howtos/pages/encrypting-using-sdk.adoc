@@ -1,4 +1,4 @@
-= Field Level Encryption from the Go SDK
+= Encrypting Your Data
 :description: A practical guide for getting started with Field-Level Encryption, showing how to encrypt and decrypt JSON fields using the Go SDK.
 :page-topic-type: howto
 :page-edition: Enterprise Edition

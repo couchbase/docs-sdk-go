@@ -1,8 +1,10 @@
-= Document 
+= Documents
 :description: Couchbase supports CRUD operations, various data structures, and binary documents.
 :nav-title: Documents & Doc Ops
 :page-topic-type: concept
 :page-aliases: ROOT:documents,ROOT:documents-basics,ROOT:documents-atomic
+
+include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
@@ -29,7 +31,7 @@ Although query and path-based (Sub-Document) services are available, the simplic
 
 
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=document]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=document]
 
 == Primitive Key-Value Operations
 
@@ -42,9 +44,9 @@ Get(docid string, options *gocb.GetOptions) (*GetResult, error)
 Remove(docid string, options *gocb.RemoveOptions) (*MutationResult, error)
 ----
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=crud-overview]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=crud-overview]
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=store-update]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=store-update]
 
 [NOTE]
 ====
@@ -63,7 +65,7 @@ update `travel-sample`.inventory.airline SET sale_price = msrp * 0.75 WHERE msrp
 ----
 ====
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=get_generic]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=get_generic]
 
 [source,sql]
 ----
@@ -86,21 +88,21 @@ include::example$documents.go[tag=lookup-in]
 
 // Counters
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=counters1]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=counters1]
 
 [source,go,indent=0]
 ----
 include::example$documents.go[tag=counters]
 ----
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=counters2]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=counters2]
 
 [source,golang,indent=0]
 ----
 include::example$documents.go[tag=counter-increment]
 ----
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=counters3]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=counters3]
 
 
 === Use Cases
@@ -110,22 +112,22 @@ This enables you to work with counters using `Get()` and `Replace()` operations 
 You will find several ways of working with counters https://pkg.go.dev/github.com/couchbase/gocb/v2#BinaryCollection.Decrement[in the API docs].
 
 // Expiry
-include::7.1@sdk:shared:partial$documents.adoc[tag=expiration]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=expiration]
 
 
 ////
-include::7.1@sdk:shared:partial$documents.adoc[tag=]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=]
 
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=]
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=]
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=]
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=]
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=]
 
-include::7.1@sdk:shared:partial$documents.adoc[tag=]
+include::{version-common}@sdk:shared:partial$documents.adoc[tag=]
 ////

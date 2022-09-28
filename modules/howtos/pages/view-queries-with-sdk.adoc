@@ -1,14 +1,16 @@
-= MapReduce Views Using the Go SDK with Couchbase Server
+= MapReduce Views
 :description: You can use MapReduce views to create queryable indexes in Couchbase Server.
 :navtitle: MapReduce Views
 :page-topic-type: howto
 :page-aliases: ROOT:view-queries-with-sdk,ROOT:geo-spatial-views
 
+include::project-docs:partial$attributes.adoc[]
+
 [abstract]
 {description}
 
-// include::{version-server}@sdk:shared:partial$views.adoc[tag=deprecate]
-include::7.1@sdk:shared:partial$views.adoc[tag=deprecate]
+// include::{version-common}@sdk:shared:partial$views.adoc[tag=deprecate]
+include::{version-common}@sdk:shared:partial$views.adoc[tag=deprecate]
 
 
 == MapReduce Views
