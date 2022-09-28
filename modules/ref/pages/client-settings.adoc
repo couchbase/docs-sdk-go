@@ -230,7 +230,7 @@ Name: *server_wait_backoff*::
 +
 Default:  `5s`
 +
-The server_wait_backoff is used across a cluster as the period of time waited between
+The `server_wait_backoff` is used across a cluster as the period of time waited between
 key/value reconnect attempts to a node after a connection failure occurs.
 +
 Note, this can only be specified through the connection string.
