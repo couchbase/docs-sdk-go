@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.5.2
+$ go get github.com/couchbase/gocb/v2@v2.5.3
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -25,6 +25,16 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+== Version 2.5.3 (21 September 2022)
+
+Version 2.5.3 is a maintenance release for the Go SDK 2.5.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.3?tab=doc[API Documentation]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1338[GOCBC-1338]:
+Fixed issue where `lazyCircuitBreaker` was not using 64-bit aligned values.
 
 == Version 2.5.2 (20 July 2022)
 
