@@ -130,11 +130,32 @@ NOTE: Any TLS certificates must be set up at the point where the connections are
 [#ssl]
 == Secure Connections
 
-Couchbase Server Enterprise Edition supports full encryption of client-side traffic using Transport Layer Security (TLS).
+Couchbase Server Enterprise Edition and Couchbase Capella support full encryption of client-side traffic using Transport Layer Security (TLS).
 That includes key-value type operations, queries, and configuration communication.
-Make sure you have the Enterprise Edition of Couchbase Server before proceeding with configuring encryption on the client side.
+Make sure you have the Enterprise Edition of Couchbase Server, or a Couchbase Capella account, before proceeding with configuring encryption on the client side.
 
-To configure encryption for the Go SDK:
+
+[{tabs}]
+====
+Couchbase Capella::
++
+--
+The Go SDK bundles Capella’s standard root certificate by default.
+This means you don’t need any additional configuration to enable TLS -- simply use `couchbases://` in your connection string.
+
+NOTE: Capella's root certificate is *not* signed by a well known CA (Certificate Authority).
+However, as the certificate is bundled with the SDK, it is trusted by default.
+--
+
+Couchbase Server::
++
+--
+As of SDK 2.6, if you connect to a Couchbase Server cluster with a root certificate issued by a trusted CA (Certificate Authority), you no longer need to configure this in the `SecurityConfig` settings.
+
+The cluster's root certificate just needs to be issued by a CA whose certificate is in the system store.
+This includes well known CAs (e.g., GoDaddy, Verisign, etc...), plus any other CA certificates that you wish to add.
+
+You can still provide a certificate explicitly if necessary:
 
 . Get the CA certificate from the cluster and save it in a text file.
 . Enable encryption on the client side and point it to the file containing the certificate.
@@ -185,6 +206,7 @@ E.....@.@.............+....Z.'yZ..#........
 ..... ...xuG.O=.#.........?.Q)8..D...S.W.4.-#....@7...^.Gk.4.t..C+......6..)}......N..m..o.3...d.,.	...W.....U..
 .%v.....4....m*...A.2I.1.&.*,6+..#..#.5
 ----
+====
 
 include::{version-common}@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
