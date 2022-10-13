@@ -15,20 +15,31 @@ func main() {
 	// Uncomment following line to enable logging
 	// gocb.SetLogger(gocb.VerboseStdioLogger())
 
-	// tag::connect[]
+	// tag::connect-info[]
 	// Update this to your cluster details
-	endpoint := "cb.<your-endpoint>.cloud.couchbase.com"
+	connectionString := "cb.<your-endpoint>.cloud.couchbase.com"
 	bucketName := "travel-sample"
 	username := "username"
-	password := "Password123!"
+	password := "Password!123"
+	// end::connect-info[]
 
-	// Initialize the Connection
-	cluster, err := gocb.Connect("couchbases://"+endpoint, gocb.ClusterOptions{
+	// tag::connect[]
+	options := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
 			Username: username,
 			Password: password,
 		},
-	})
+	}
+
+	// Sets a pre-configured profile called "wan-development" to help avoid latency issues
+	// when accessing Capella from a different Wide Area Network
+	// or Availability Zone (e.g. your laptop).
+	if err := options.ApplyProfile(gocb.ClusterConfigProfileWanDevelopment); err != nil {
+		log.Fatal(err)
+	}
+
+	// Initialize the Connection
+	cluster, err := gocb.Connect("couchbases://"+connectionString, options)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -50,21 +61,19 @@ func main() {
 	col := bucket.Scope("tenant_agent_00").Collection("users")
 	// end::collection[]
 
-	// tag::document[]
+	// tag::upsert[]
+	// Create and store a Document
 	type User struct {
 		Name      string   `json:"name"`
 		Email     string   `json:"email"`
 		Interests []string `json:"interests"`
 	}
-	// end::document[]
 
-	// tag::upsert[]
-	// Create and store a Document
-	_, err = col.Upsert("u:kingarthur",
+	_, err = col.Upsert("u:jade",
 		User{
-			Name:      "Arthur",
-			Email:     "kingarthur@couchbase.com",
-			Interests: []string{"Holy Grail", "African Swallows"},
+			Name:      "Jade",
+			Email:     "jade@test-email.com",
+			Interests: []string{"Swimming", "Rowing"},
 		}, nil)
 	if err != nil {
 		log.Fatal(err)
@@ -73,7 +82,7 @@ func main() {
 
 	// tag::get[]
 	// Get the document back
-	getResult, err := col.Get("u:kingarthur", nil)
+	getResult, err := col.Get("u:jade", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -88,9 +97,10 @@ func main() {
 
 	// tag::query[]
 	// Perform a N1QL Query
-	queryResult, err := cluster.Query(
-		fmt.Sprintf("SELECT name FROM `%s` WHERE $1 IN interests", bucketName),
-		&gocb.QueryOptions{PositionalParameters: []interface{}{"African Swallows"}},
+	inventoryScope := bucket.Scope("inventory")
+	queryResult, err := inventoryScope.Query(
+		fmt.Sprintf("SELECT * FROM airline WHERE id=10"),
+		&gocb.QueryOptions{},
 	)
 	if err != nil {
 		log.Fatal(err)

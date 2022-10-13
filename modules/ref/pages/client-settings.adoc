@@ -2,6 +2,7 @@
 :description: pass:q[Client settings using `ConnectOptions` for bootstrapping, timeouts, reliability, and performance.]
 :page-topic-type: reference
 :page-aliases: ROOT:client-settings
+:page-toclevels: 2
 
 include::project-docs:partial$attributes.adoc[]
 
@@ -255,3 +256,52 @@ operation responses from the server.  This should generally not be set.
 // section on wide area network support
 
 include::{version-common}@sdk:shared:partial$client-settings-wide-network.adoc[]
+
+== Configuration Profiles
+
+Configuration Profiles provide predefined client settings that allow you to quickly configure an environment for common use-cases.
+When using a configuration profile, the current client settings are overridden with the values provided in the profile.
+Any property that is not specified in the profile is left unchanged.
+
+CAUTION: The Configuration Profiles feature is currently a xref:java-sdk:project-docs:compatibility.adoc#interface-stability[Volatile API] and may be subject to change.
+
+=== WAN Development
+
+*Setting:* `ClusterOptions`
+
+*Method:* `ApplyProfile(gocb.ClusterConfigProfileWanDevelopment)`
+
+A `ClusterConfigProfileWanDevelopment` configuration profile can be used to modify client settings for development or high-latency environments.
+This profile changes the default timeouts.
+
+
+.Profile Settings
+[cols="1,1"]
+|===
+| Setting | Value
+
+| `ConnectTimeout`
+| 20s
+
+| `KVTimeout`
+| 20s
+
+| `KVDurableTimeout`
+| 20s
+
+| `ViewTimeout`
+| 120s
+
+| `queryTimeout`
+| 120s
+
+| `AnalyticsTimeout`
+| 120s
+
+| `SearchTimeout`
+| 120s
+
+| `ManagementTimeout`
+| 120s
+|===
+

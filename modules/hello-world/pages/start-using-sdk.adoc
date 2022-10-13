@@ -2,15 +2,23 @@
 :description: A quick start guide to get you up and running with Couchbase and the Go SDK.
 :page-aliases: ROOT:getting-started,ROOT:start-using,ROOT:hello-couchbase,ROOT:start-using-sdk
 :page-toclevels: 2
+:page-pagination: next
+:page-topic-type: tutorial
 
 include::project-docs:partial$attributes.adoc[]
 
 [abstract]
 {description}
 
-== Hello Couchbase
+In this guide, you will learn:
 
-On this page we show you how to quickly get up and running -- installing the Couchbase Go SDK, and trying out the Hello World code example against Couchbase Capella, or against a local Couchbase cluster.
+* How to xref:connect[connect to Couchbase Capella or Couchbase Server].
+
+* How to xref:add-and-retrieve-documents[add and retrieve Documents].
+
+* How to xref:sql-lookup[lookup documents] with the {sqlpp_url}[{sqlpp} (formerly N1QL)] query language.
+
+== Hello Couchbase
 
 We will go through the code sample step by step, but for those in a hurry to see it, here it is:
 
@@ -43,7 +51,6 @@ or the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#instal
 
 The Couchbase Capella free trial version comes with the Travel Sample Bucket, and its Query indexes, loaded and ready.
 
-
 == Quick Installation
 
 Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. 
@@ -51,26 +58,56 @@ You can use `go get` to download the SDK:
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.5.1
+$ go get github.com/couchbase/gocb/v2
 ----
 
 More details on installation can be found xref:project-docs:sdk-full-installation.adoc[here].
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
 
+== Prerequisites
+
+The following code samples assume:
+
+[tabs]
+====
+Couchbase Capella::
++
+--
+* You have signed up to https://cloud.couchbase.com/sign-up[Couchbase Capella].
+
+* You have created your own bucket, or loaded the Travel Sample dataset.
+Note, the Travel Sample dataset is installed automatically by the Capella free trial.
+
+* A user is created with permissions to access the cluster (at least Application Access permissions).
+See the xref:cloud:get-started:cluster-and-data.adoc#credentials[Capella connection page] for more details.
+
+IMPORTANT: Couchbase Capella uses xref:cloud:organizations:organization-projects-overview.adoc[Roles] to control user access to database resources.
+For the purposes of this guide, you can use the *Organization Owner* role automatically assigned to your account during installation of the Capella cluster.
+In a production scenario, we strongly recommend setting up users with more granular access roles as a best practice.
+--
+
+Couchbase Server::
++
+--
+* xref:{version-server}@server:getting-started/do-a-quick-install.adoc[Couchbase Server] is installed and accessible locally.
+
+* You have created your own bucket, or loaded the Travel Sample dataset using the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface].
+
+* A user is created with permissions to access your cluster (at least Application Access permissions).
+See xref:{version-server}@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users, Groups and Roles] for more details.
+
+IMPORTANT: Couchbase Server uses xref:{version-server}@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
+In this guide we suggest using the *Full Admin* role created during setup of your local Couchbase Server cluster.
+For production client code, you will want to use more appropriate, restrictive settings.
+--
+====
+
 == Step by Step
 
-At this point we want to transition from the terminal to your code editor of choice.
+Create an empty file named `main.go` and walk through adding code step-by-step.
 
-Let's now create an empty file named `main.go` and walk through adding code step-by-step:
-
-* Connect to a single node cluster, bucket, and collection;
-* Add and retrieve a new document;
-* Look up (SQL-type query) the new document by attribute value.
-
-=== Prerequisites
-
-Here are all of the imports that you will need to run the sample code.
+Here are all the imports needed to run the sample code:
 
 [source,golang]
 ----
@@ -86,20 +123,41 @@ func main() {
 }
 ----
 
-We will update this function as we go along the steps in this guide.
+In your `main()` function, add the following variables and update them accordingly:
 
-=== Connection
+[{tabs}]
+====
+Couchbase Capella::
++
+--
+[source,golang]
+----
+include::devguide:example$go/cloud.go[tag=connect-info,indent=0]
+----
+--
 
-The basic connection details that you'll need are given below -- for more background information, refer to the xref:howtos:managing-connections.adoc#connection-strings[Managing Connections page].
+Local Couchbase Server::
++
+--
 
-In the `main()` function, add the following:
+[source,golang]
+----
+include::example$startusing.go[tag=connect-info,indent=0]
+----
+--
+====
+
+=== Connect
+
+Connect to your cluster by calling the `Cluster.Connect()` function and pass it your connection details.
+The basic connection details that you’ll need are given below -- for more background information, see xref:howtos:managing-connections.adoc[].
 
 [tabs]
 ====
 Couchbase Capella::
 +
 --
-IMPORTANT: Couchbase Capella requires mandatory use of TLS (Transport Layer Security).
+Couchbase Capella requires mandatory use of TLS (Transport Layer Security).
 As of Go SDK version 2.5.0, the standard certificate required to connect to a Capella cluster is automatically included with no additional configuration.
 
 [source,golang]
@@ -107,13 +165,11 @@ As of Go SDK version 2.5.0, the standard certificate required to connect to a Ca
 include::devguide:example$go/cloud.go[tag=connect,indent=0]
 ----
 
-Couchbase Capella uses xref:cloud:organizations:organization-projects-overview.adoc[Roles] to control user access to database resources.
-For the purposes of this example, we can use the _Organization Owner_ role automatically assigned to a user account during installation of the Capella cluster.
-This role grants full access to a Capella organization, including full data access to all projects and clusters.
-In a production scenario, we strongly recommend setting up users with more granular access roles as a best practice. 
+When accessing Capella from a different Wide Area Network or Availability Zone, you may experience latency issues with the default connection settings.
+SDK 2.6 introduces a `wan-development` Configuration Profile, which provides pre-configured timeout settings suitable for working in high latency environments.
+Basic usage is shown in the example above, but if you want to learn more see xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments].
 
-For the SDK client to access cluster data, you will need to set up credentials for your database by xref:cloud:get-started:cluster-and-data.adoc#credentials[following these steps].
-
+CAUTION: The Configuration Profiles feature is currently a xref:java-sdk:project-docs:compatibility.adoc#interface-stability[Volatile API] and may be subject to change.
 --
 Local Couchbase Server::
 +
@@ -123,73 +179,67 @@ Local Couchbase Server::
 include::example$startusing.go[tag=connect,indent=0]
 ----
 
-Couchbase uses xref:7.1@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
-For the purposes of this example, we are connecting to Couchbase using the _Full Admin_ role created during the installation of our Couchbase Server.
-
-Couchbase RBAC is fully described in the xref:7.1@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users, Groups, and Roles] page.
+If you're developing client code on the same VM or machine as the Couchbase Server, you can just set the `connectionString` variable to equal `localhost`.
 --
 ====
 
-Following successful authentication, the bucket can be opened:
+Following successful authentication, add this code snippet to access your `Bucket`:
 
 [source,golang]
 ----
 include::devguide:example$go/cloud.go[tag=bucket,indent=0]
 ----
 
-NOTE: We are working with the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc[travel-sample] data bucket. 
-If you are not, update the `bucketName` variable used in the example with your own.
+=== Add and Retrieve Documents
 
-The {go-current-version} SDK supports full integration with the xref:concept-docs:collections.adoc[Collections] feature introduced in Couchbase Server 7.0.
+The Go SDK supports full integration with the xref:concept-docs:collections.adoc[Collections] feature introduced in Couchbase Server 7.0.
 _Collections_ allow documents to be grouped by purpose or theme, according to a specified _Scope_.
-Here we will use the `users` collection within the `tenant_agent_00` scope from `travel-sample` bucket as an example.
+
+Here we refer to the `users` collection within the `tenant_agent_00` scope from the Travel Sample bucket as an example, but you may replace this with your own data.
 
 [source,golang]
 ----
 include::devguide:example$go/cloud.go[tag=collection,indent=0]
 ----
 
+[IMPORTANT]
+====
+.For Local Couchbase Server only
+The `DefaultCollection` must be used when connecting to a 6.6 cluster or earlier -- see comment in the code snippet above.
+====
+
 The code shows how you would use a named collection and scope. 
 A named or default collection will provide the same functionality as bucket-level operations did in previous versions of Couchbase Server.
 
-The `DefaultCollection` must be used when connecting to a 6.6 cluster or earlier.
+xref:howtos:kv-operations.adoc[Data operations], such as storing and retrieving documents, can be done using `Collection.Upsert()` and `Collection.Get()`.
 
-=== Document Addition and Retrieval
-
-Let's create a struct in our application that we can add to our `travel-sample` bucket that conforms to the structure of a document of type user.
-
-[source,golang]
-----
-include::devguide:example$go/cloud.go[tag=document,indent=0]
-----
-
-xref:howtos:kv-operations.adoc[Document operations], such as storing and retrieving documents, can be done using `Collection.Upsert()` and `Collection.Get()`.
-Simply pass the key (and value, if applicable) to the relevant methods.
-
-The following function will _upsert_ a document into the database:
+Add the following code to create a new document:
 
 [source,golang]
 ----
 include::devguide:example$go/cloud.go[tag=upsert,indent=0]
 ----
 
-Now, let's retrieve that document using a key-value operation. 
-The following function runs a get for a document key and logs out the result in our console:
+Now, let's retrieve it using a key-value (data) operation.
 
 [source,golang]
 ----
 include::devguide:example$go/cloud.go[tag=get,indent=0]
 ----
 
-=== SQL++ Lookup
+=== {sqlpp} Lookup
 
-Couchbase N1QL queries are performed by invoking `Cluster.Query()`.
-In the code below we will query Couchbase to retrieve users with a particular interest and print the results.
+Couchbase {sqlpp} queries are performed by invoking `Cluster.Query()` or `Scope.Query`.
+
+Cluster level queries require you to specify the fully qualified keyspace each time (e.g. `travel-sample.inventory.airline`).
+However, with a Scope level query you only need to specify the Collection name -- which in this case is `airline`:
 
 [source,golang]
 ----
 include::devguide:example$go/cloud.go[tag=query,indent=0]
 ----
+
+You can learn more about {sqlpp} queries on the xref:howtos:n1ql-queries-with-sdk.adoc[] page.
 
 === Execute!
 
@@ -204,8 +254,8 @@ The results you should expect are as follows:
 
 [source,console]
 ----
-User: {Arthur kingarthur@couchbase.com [Holy Grail African Swallows]}
-map[name:Arthur]
+User: {Jade jade@test-email.com [Swimming Rowing]}
+map[airline:map[callsign:MILE-AIR country:United States iata:Q5 icao:MLA id:10 name:40-Mile Air type:airline]]
 ----
 
 == Next Steps
@@ -216,7 +266,7 @@ Now you're up and running, try one of the following:
 
 * Our xref:hello-world:sample-application.adoc[Travel Sample Application] demonstrates all the basics you need to know;
 * Explore xref:howtos:kv-operations.adoc[Key Value Operations] (CRUD) against a document database;
-* Or xref:howtos:n1ql-queries-with-sdk.adoc[Query] with our SQL-based N1QL language;
+* Or xref:howtos:n1ql-queries-with-sdk.adoc[Query] with our SQL-based {sqlpp} query language;
 // * Try longer-running queries with our xref:howtos:analytics-using-sdk.adoc[Analytics Service];
 // * A xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search];
 * Or read up on xref:concept-docs:data-services.adoc[which service fits your use case].
