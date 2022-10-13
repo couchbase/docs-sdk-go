@@ -1,9 +1,7 @@
 package main
 
 import (
-	"crypto/x509"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"time"
 
@@ -14,30 +12,20 @@ func main() {
 	// Uncomment following line to enable logging
 	// gocb.SetLogger(gocb.VerboseStdioLogger())
 
-	// tag::connect[]
+	// tag::connect-info[]
 	// Update this to your cluster details
+	connectionString := "localhost"
 	bucketName := "travel-sample"
 	username := "Administrator"
 	password := "password"
+	// end::connect-info[]
 
-	p, err := ioutil.ReadFile("path/to/ca.pem")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	roots := x509.NewCertPool()
-	roots.AppendCertsFromPEM(p)
-
-	// Initialize the Connection
-	cluster, err := gocb.Connect("couchbases://127.0.0.1", gocb.ClusterOptions{
+	// tag::connect[]
+	// For a secure cluster connection, use `couchbases://<your-cluster-ip>` instead.
+	cluster, err := gocb.Connect("couchbase://"+connectionString, gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
 			Username: username,
 			Password: password,
-		},
-		SecurityConfig: gocb.SecurityConfig{
-			TLSRootCAs: roots,
-			// WARNING: Do not set this to true in production, only use this for testing!
-			// TLSSkipVerify: true,
 		},
 	})
 	if err != nil {
@@ -64,18 +52,18 @@ func main() {
 	}
 
 	// Create and store a Document
-	_, err = col.Upsert("u:kingarthur",
+	_, err = col.Upsert("u:jade",
 		User{
-			Name:      "Arthur",
-			Email:     "kingarthur@couchbase.com",
-			Interests: []string{"Holy Grail", "African Swallows"},
+			Name:      "Jade",
+			Email:     "jade@test-email.com",
+			Interests: []string{"Swimming", "Rowing"},
 		}, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Get the document back
-	getResult, err := col.Get("u:kingarthur", nil)
+	getResult, err := col.Get("u:jade", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -88,9 +76,10 @@ func main() {
 	fmt.Printf("User: %v\n", inUser)
 
 	// Perform a N1QL Query
-	queryResult, err := cluster.Query(
-		fmt.Sprintf("SELECT name FROM `%s` WHERE $1 IN interests", bucketName),
-		&gocb.QueryOptions{PositionalParameters: []interface{}{"African Swallows"}},
+	inventoryScope := bucket.Scope("inventory")
+	queryResult, err := inventoryScope.Query(
+		fmt.Sprintf("SELECT * FROM airline WHERE id=10"),
+		&gocb.QueryOptions{},
 	)
 	if err != nil {
 		log.Fatal(err)
