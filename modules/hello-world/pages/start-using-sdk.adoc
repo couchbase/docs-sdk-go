@@ -170,6 +170,7 @@ SDK 2.6 introduces a `wan-development` Configuration Profile, which provides pre
 Basic usage is shown in the example above, but if you want to learn more see xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments].
 
 CAUTION: The Configuration Profiles feature is currently a xref:java-sdk:project-docs:compatibility.adoc#interface-stability[Volatile API] and may be subject to change.
+
 --
 Local Couchbase Server::
 +
@@ -179,7 +180,8 @@ Local Couchbase Server::
 include::example$startusing.go[tag=connect,indent=0]
 ----
 
-If you're developing client code on the same VM or machine as the Couchbase Server, you can just set the `connectionString` variable to equal `localhost`.
+For developing locally on the same machine as Couchbase Server, your URI can be `couchbase://localhost` as shown here. 
+For production deployments, you will want to use a secure server, with `couchbases://`.
 --
 ====
 
