@@ -169,7 +169,7 @@ When accessing Capella from a different Wide Area Network or Availability Zone, 
 SDK 2.6 introduces a `wan-development` Configuration Profile, which provides pre-configured timeout settings suitable for working in high latency environments.
 Basic usage is shown in the example above, but if you want to learn more see xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments].
 
-CAUTION: The Configuration Profiles feature is currently a xref:java-sdk:project-docs:compatibility.adoc#interface-stability[Volatile API] and may be subject to change.
+CAUTION: The Configuration Profiles feature is currently a xref:go-sdk:project-docs:compatibility.adoc#interface-stability[Volatile API] and may be subject to change.
 
 --
 Local Couchbase Server::
