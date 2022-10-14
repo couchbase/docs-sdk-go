@@ -263,7 +263,7 @@ Configuration Profiles provide predefined client settings that allow you to quic
 When using a configuration profile, the current client settings are overridden with the values provided in the profile.
 Any property that is not specified in the profile is left unchanged.
 
-CAUTION: The Configuration Profiles feature is currently a xref:java-sdk:project-docs:compatibility.adoc#interface-stability[Volatile API] and may be subject to change.
+CAUTION: The Configuration Profiles feature is currently a xref:go-sdk:project-docs:compatibility.adoc#interface-stability[Volatile API] and may be subject to change.
 
 === WAN Development
 
