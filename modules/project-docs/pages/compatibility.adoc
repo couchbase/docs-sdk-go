@@ -90,7 +90,7 @@ Although installable or compilable on many other platforms, we cannot provide su
 
 === ARM Processor Support
 
-Go 2.5 SDK supports AWS Amazon Graviton2 and Apple M1 ARM processors.
+AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04 (from SDK 2.6).
 
 
 == Couchbase New Feature Availability Matrix
