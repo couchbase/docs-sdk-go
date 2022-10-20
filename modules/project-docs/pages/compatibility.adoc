@@ -31,13 +31,9 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 [#table_sdk_versions]
 [cols="40,20,25"]
 |===
-| | SDK 2.0 - 2.2 | 2.3 - 2.5
+| | SDK 2.0 - 2.2 | 2.3 - 2.6
 
-| *Server 6.0*
-| *✔*
-| *✔*
-
-| *Server 6.5-6.6*
+| *Server 6.6*
 | *✔*
 | *✔*
 
@@ -96,43 +92,38 @@ AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04 (from S
 == Couchbase New Feature Availability Matrix
 
 .Couchbase Server and SDK Supported Version Matrix
-[.table-merge-cells] 
-[cols="7,5,6,5"]
+[.table-merge-cells]
+[cols="7,5,6"]
 |===
-| | Server 6.0 | Server 6.5 & 6.6 | Server 7.0-7.1
+| | Server 6.6 | Server 7.0-7.1
 
 | Enhanced Durability
-3+| All SDK versions
+2+| All SDK versions
 
-| Durable Writes 
-1+| Not Supported
+| Durable Writes
 2+| Since 2.0
 
 | Analytics
-3+| Since 1.5
+2+| Since 1.5
 
 | Collections
-| Not Supported
-| Developer Preview in 6.5-6.6, SDK 2.0
+| Developer Preview in 6.6, SDK 2.0
 | Since 2.1.8
 
 | Scope-Level N1QL Queries & all Collections features
-2+| Not Supported
+| Not Supported
 | Since SDK 2.3.0
 
 | Field Level Encryption v2
-| Not Supported
 2+| Since SDK 2.3.0footnote:[Field Level Encryption distributed as separate library.]
 
 | Request Tracing
-| Not Supported
 2+| Since SDK 2.0.3 (stable interface from 2.3.0)
 
 | Distributed ACID Transactions
-2+| Not Supported
+| Not Supported
 | Since SDK 2.4.0
 |===
-
 
 == Couchbase Go SDK
 
