@@ -42,13 +42,13 @@ https://issues.couchbase.com/browse/GOCBC-1331[GOCBC-1331]:
 Significant refactoring work to kv bootstrap, including pipelining fetching a config from the cluster.
 
 * https://issues.couchbase.com/browse/GOCBC-1316[GOCBC-1316]:
-Added support for transactions ExtInsertExisting - allowing `ErrDocumentExists` to be be ignored in transactional inserts.
+Added support for transactions `ExtInsertExisting` - allowing `ErrDocumentExists` to be be ignored in transactional inserts.
 
 * https://issues.couchbase.com/browse/GOCBC-1341[GOCBC-1341]:
 Added volatile level API support for `ConfigProfile`.
 
 * https://issues.couchbase.com/browse/GOCBC-1352[GOCBC-1352]:
-Added support for trusting the system cert store when TLS is enabled with no `CertPool` registered and `SkipVerify` not set .
+Added support for trusting the system cert store when TLS is enabled with no `CertPool` registered and `SkipVerify` not set.
 
 * https://issues.couchbase.com/browse/GOCBC-1356[GOCBC-1356]:
 Updated the behaviour when `MutateIn` or `Insert` returns `NOT_STORED` from the server to return a `ErrDocumentExists`.
