@@ -35,6 +35,15 @@ Using a user created in the SDK to access data:
 include::devguide:example$go/user-management.go[tag=operations]
 ----
 
+From SDK 2.6, you can also perform password rotation on the currently authenticated user without the need for elevated permissions.
+
+CAUTION: The SDK instance becomes invalidated after changing the user's password, so you need to re-authenticate your SDK client with the new password.
+If you don't, you will start to see authentication errors.
+
+[source,golang]
+----
+include::devguide:example$go/change-password.go[tag=change-password]
+----
 
 == Further Reading
 

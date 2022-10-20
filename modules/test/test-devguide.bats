@@ -2,7 +2,7 @@
 
 load 'test_helper'
 
-# Test is a bit flaky on the last assertion if not run first. 
+# Test is a bit flaky on the last assertion if not run first.
 # It seems the search index updates when the other tests run, causing major delay on the
 # expected result for the last assertion.
 @test "[devguide] - search.go" {
@@ -53,36 +53,36 @@ load 'test_helper'
 }
 
 @test "[devguide] - concurrent-async.go" {
-    runExample $DEVGUIDE_DIR concurrent-async.go 
+    runExample $DEVGUIDE_DIR concurrent-async.go
     assert_success
     assert_output --partial "Completed"
 }
 
 @test "[devguide] - concurrent-batch.go" {
-    runExample $DEVGUIDE_DIR concurrent-batch.go 
+    runExample $DEVGUIDE_DIR concurrent-batch.go
     assert_success
     assert_output --partial "Loaded 7303 docs"
     assert_output --partial "Completed"
 }
 
 @test "[devguide] - connecting-cca.go" {
-      # Not sure how we can test certificates at the moment, skipping for now.
+    # Not sure how we can test certificates at the moment, skipping for now.
     skip "Example requires certificates"
 
-    runExample $DEVGUIDE_DIR connecting-cca.go 
+    runExample $DEVGUIDE_DIR connecting-cca.go
     assert_success
 }
 
 @test "[devguide] - connecting.go" {
-     # Not sure how we can test multiple couchbase server nodes at the moment, skipping for now.
+    # Not sure how we can test multiple couchbase server nodes at the moment, skipping for now.
     skip "Example requires multiple nodes"
 
-    runExample $DEVGUIDE_DIR connecting.go 
+    runExample $DEVGUIDE_DIR connecting.go
     assert_success
 }
 
 @test "[devguide] - custom-logging.go" {
-    runExample $DEVGUIDE_DIR custom-logging.go 
+    runExample $DEVGUIDE_DIR custom-logging.go
     assert_success
 }
 
@@ -112,12 +112,13 @@ load 'test_helper'
 }
 
 @test "[devguide] - kv-durability-observe.go" {
-    EXPECTED_OUTPUT=$(cat <<-EOF
+    EXPECTED_OUTPUT=$(
+        cat <<-EOF
 Document Retrieved: Durabilty PersistTo Test Value
 Document Retrieved: Durabilty ReplicateTo Test Value
 Document Retrieved: Durabilty ReplicateTo and PersistTo Test Value
 EOF
-)
+    )
     runExample $DEVGUIDE_DIR kv-durability-observe.go
     assert_success
     assert_output --partial "$EXPECTED_OUTPUT"
@@ -217,7 +218,7 @@ EOF
 }
 
 @test "[devguide] - transcoding-custom.go" {
-    # Example doesn't seem to be runnable (possibly update in future), 
+    # Example doesn't seem to be runnable (possibly update in future),
     # we can be satisfied that it compiles/builds correctly at this point in time.
     # Skipping for now.
     skip "Example is not runnable at this point in time"
@@ -252,11 +253,12 @@ EOF
 }
 
 @test "[devguide] - views-key.go" {
-EXPECTED_OUTPUT=$(cat <<-EOF
+    EXPECTED_OUTPUT=$(
+        cat <<-EOF
 Document ID: landmark_26480
 Landmark named Circle Bar has value <nil>
 EOF
-)
+    )
 
     runExample $DEVGUIDE_DIR views-key.go
     assert_success
@@ -264,7 +266,8 @@ EOF
 }
 
 @test "[devguide] - views-startkey.go" {
-EXPECTED_OUTPUT=$(cat <<-EOF
+    EXPECTED_OUTPUT=$(
+        cat <<-EOF
 Document ID: landmark_16320
 Landmark named United Kingdom has value <nil>
 Document ID: landmark_25731
@@ -274,7 +277,7 @@ Landmark named United States has value <nil>
 Document ID: landmark_37519
 Landmark named United States has value <nil>
 EOF
-)
+    )
 
     runExample $DEVGUIDE_DIR views-startkey.go
     assert_success
@@ -296,5 +299,10 @@ EOF
 
 @test "[devguide] - slow-operations.go" {
     runExample $DEVGUIDE_DIR slow-operations.go
+    assert_success
+}
+
+@test "[devguide] - change-password.go" {
+    runExample $DEVGUIDE_DIR change-password.go
     assert_success
 }
