@@ -2,6 +2,7 @@
 :description: You can query for documents in Couchbase using the N1QL query language, a language based on SQL, but designed for structured and flexible JSON documents.
 :page-topic-type: howto
 :page-aliases: n1ql-query,ROOT:querying.adoc
+:page-pagination: full
 
 [abstract]
 {description}

@@ -1,6 +1,7 @@
 = Search
 :description: You can use the Full Text Search service (FTS) to create queryable full-text indexes in Couchbase Server.
 :page-topic-type: howto
+:page-pagination: full
 
 
 [abstract]
