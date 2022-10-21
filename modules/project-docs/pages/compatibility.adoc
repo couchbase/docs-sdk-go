@@ -12,7 +12,7 @@ include::project-docs:partial$attributes.adoc[]
 {description}
 
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-At time of writing (April 2022), this is 1.17 and 1.18.
+At time of writing (October 2022), this is 1.18 and 1.19.
 Older versions may remain compatible, but are not supported.
 
 
@@ -78,8 +78,8 @@ Microsoft Windows 10 / All LTS releases from Windows Server 2016.
 === Mac OS X
 
 The current and previous two releases of OS X.
-At time of writing (April 2022): 10.15 (_Catalina_), 11 (_Big Sur_), and 12 (_Monterey_).
-M1 ARM  architecture is fully supported in the 3.3 .NET SDK.
+At time of writing (October 2022): 13 (_Ventura_), 12 (_Monterey_), and 11 (_Big Sur_).
+M1 ARM  architecture is fully supported in the 2.6 Go SDK.
 ****
 
 Although installable or compilable on many other platforms, we cannot provide support for untested combinations.
