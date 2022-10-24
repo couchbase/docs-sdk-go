@@ -4,7 +4,7 @@
 :content-type: tutorial
 :page-topic-type: tutorial
 :page-aliases: ROOT:sample-application,ROOT:tutorial4,ROOT:sample-app-backend
-:page-pagination: full
+:page-pagination: prev
 
 :travel-sample-git-project: try-cb-golang
 :travel-sample-entrypoint: main.go
