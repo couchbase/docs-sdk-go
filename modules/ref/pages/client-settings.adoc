@@ -198,7 +198,7 @@ Name: *QueryTimeout*::
 +
 Default:  `75s`
 +
-The Query timeout is used on all N1QL query operations if not overridden by a custom
+The Query timeout is used on all {sqlpp_url}[{sqlpp} (formerly N1QL)] query operations if not overridden by a custom
 timeout. Note that it is set to such a high timeout compared to key/value since it
 can affect hundreds or thousands of rows.
 

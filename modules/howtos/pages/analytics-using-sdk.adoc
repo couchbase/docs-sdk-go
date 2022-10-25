@@ -1,5 +1,5 @@
 = Analytics
-:description: Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
+:description: Parallel data management for complex queries over many records, using a familiar SQL-like syntax.
 :page-topic-type: howto
 :page-edition: Enterprise Edition
 
@@ -134,7 +134,7 @@ For a listing of available `Metrics` in `MetaData`, see the xref:concept-docs:an
 
 In addition to creating a dataset with a WHERE clause to filter the results to documents with certain characteristics, you can also create a dataset against a named collection, for example:
 
-[source,n1ql]
+[source,sqlpp]
 ----
 ALTER COLLECTION `travel-sample`.inventory.airport ENABLE ANALYTICS;
 
@@ -161,4 +161,4 @@ include::devguide:example$go/analytics-collection-scope.go[tag=handle-scope,inde
 
 == Additional Resources
 
-To learn more about using N1QL for Analytics -- the first commercial implementation of SQL\++ -- see our https://sqlplusplus-tutorial.couchbase.com/tutorial/#1[Tutorial Introduction to SQL++ for SQL users].
+To learn more about using {sqlpp_url}[{sqlpp} (formerly N1QL)] for Analytics see our https://sqlplusplus-tutorial.couchbase.com/tutorial/#1[Tutorial Introduction to {sqlpp} for SQL users].

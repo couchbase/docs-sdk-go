@@ -1,5 +1,5 @@
 = Query
-:description: You can query for documents in Couchbase using the N1QL query language, a language based on SQL, but designed for structured and flexible JSON documents.
+:description: You can query for documents in Couchbase using the {sqlpp} query language, a language based on SQL, but designed for structured and flexible JSON documents.
 :page-topic-type: howto
 :page-aliases: n1ql-query,ROOT:querying.adoc
 :page-pagination: full
@@ -8,9 +8,9 @@
 {description}
 Querying can solve typical programming tasks such as finding a user profile by email address, facebook login, or user ID.
 
-Our query service uses N1QL, which will be fairly familiar to anyone who's used any dialect of SQL.
-xref:#_additional_resources[Further resources] for learning about N1QL are listed at the bottom of the page.
-Before you get started you may wish to checkout the xref:7.1@server:n1ql:n1ql-language-reference/index.adoc[N1QL intro page], or just dive in with a query against our travel sample data set.
+Our query service uses {sqlpp_url}[{sqlpp} (formerly N1QL)], which will be fairly familiar to anyone who's used any dialect of SQL.
+xref:#_additional_resources[Further resources] for learning about {sqlpp} are listed at the bottom of the page.
+Before you get started you may wish to checkout the xref:7.1@server:n1ql:n1ql-language-reference/index.adoc[{sqlpp} intro page], or just dive in with a query against our travel sample data set.
 In this case, the one thing that you need to know is that in order to make a Bucket queryable, it must have at least one index defined.
 You can define a _primary_ index on a bucket. 
 When a primary index is defined you can issue non-covered queries on the bucket as well.
@@ -19,7 +19,7 @@ Use
 xref:7.1@server::tools/cbq-shell.html[cbq], our interactive Query shell.
 Open it, and enter the following:
 
-[source,n1ql]
+[source,sqlpp]
 ----
 CREATE PRIMARY INDEX ON `travel-sample`
 ----
@@ -30,7 +30,7 @@ NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/A
 
 == Getting Started
 
-After familiarizing yourself with the basics on how the N1QL query language works and how to query it from the UI you can use it from the Go SDK.
+After familiarizing yourself with the basics on how the {sqlpp} query language works and how to query it from the UI you can use it from the Go SDK.
 Here's a complete example of doing an query and handling the results:
 
 [source,golang,indent=0]
@@ -38,7 +38,7 @@ Here's a complete example of doing an query and handling the results:
 include::example$query.go[tag=simple]
 ----
 
-NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connection using `cluster.Bucket(name)` before you can use N1QL.
+NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connection using `cluster.Bucket(name)` before you can use {sqlpp}.
 
 Let's break it down. A query is always performed at the `Cluster` level, using the `Query` method.
 It takes the statement as a required argument and then allows to provide additional options if needed (in the example above, no options are specified).
@@ -200,14 +200,14 @@ A complete list of `QueryOptions` can be found in the https://pkg.go.dev/github.
 
 == Additional Resources
 
-NOTE: N1QL is not the only query option in Couchbase.
-Be sure to check that your use case fits your selection of query service.
+//NOTE: {sqlpp} is not the only query option in Couchbase.
+//Be sure to check that your use case fits your selection of query service.
 
-// For a deeper dive into N1QL from the SDK, refer to our xref:[N1QL SDK concept doc].
+// For a deeper dive into {sqlpp} from the SDK, refer to our xref:[{sqlpp} SDK concept doc].
 
-The xref:7.1@server:n1ql:n1ql-language-reference/index.adoc[Server doc N1QL intro] introduces up a complete guide to the N1QL language, including all of the latest additions.
+The xref:7.1@server:n1ql:n1ql-language-reference/index.adoc[Server doc {sqlpp} intro] introduces up a complete guide to the {sqlpp} language, including all of the latest additions.
 
-The http://query.pub.couchbase.com/tutorial/#1[N1QL interactive tutorial] is a good introduction to the basics of N1QL use.
+The http://query.pub.couchbase.com/tutorial/#1[{sqlpp} interactive tutorial] is a good introduction to the basics of {sqlpp} use.
 
 // Indexes / GSI links?
 

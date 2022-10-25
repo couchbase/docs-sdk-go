@@ -57,7 +57,7 @@ If you wish to only modify certain parts of a document, you can use xref:subdocu
 include::example$documents.go[tag=mutate-in]
 ----
 
-or xref:7.1@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
+or xref:7.1@server:n1ql:n1ql-language-reference/update.adoc[{sqlpp} UPDATE] to update documents based on specific query criteria:
 
 [source,sql]
 ----

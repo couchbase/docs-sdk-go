@@ -104,7 +104,7 @@ include::devguide:example$go/transcoding-rawjson.go[tag=rawjsonunmarshal]
 It is most common to store JSON with Couchbase.
 However, it is possible to store non-JSON documents, such as raw binary data, perhaps using an concise binary encoding like https://msgpack.org[MessagePack] or https://cbor.io/[CBOR], in the Key-Value store.
 
-NOTE: It's important to note that the Couchbase Data Platform includes multiple components other than the Key-Value store -- including N1QL (Query) and its indexes, FTS (Search), analytics, and eventing -- and these are optimized for JSON and will either ignore or provide limited functionality with non-JSON documents.
+NOTE: It's important to note that the Couchbase Data Platform includes multiple components other than the Key-Value store -- including {sqlpp_url}[{sqlpp} (formerly N1QL)] and its indexes, FTS (Search), analytics, and eventing -- and these are optimized for JSON and will either ignore or provide limited functionality with non-JSON documents.
 
 Also note that some simple data types can be stored directly as JSON, without recourse to non-JSON transcoding.
 A valid JSON document can be a simple integer (`42`), string (`"hello"`), array (`[1,2,3]`), boolean (`true`, `false`) and the JSON `null` value.

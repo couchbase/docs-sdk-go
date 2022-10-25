@@ -61,7 +61,7 @@ func AirportSearch(w http.ResponseWriter, req *http.Request) {
 }
 ----
 
-The https://github.com/couchbaselabs/{travel-sample-git-project}/blob/HEAD/{travel-sample-entrypoint}[{travel-sample-entrypoint}] file also contains the functions for handling users, registration, and N1QL queries.
+The https://github.com/couchbaselabs/{travel-sample-git-project}/blob/HEAD/{travel-sample-entrypoint}[{travel-sample-entrypoint}] file also contains the functions for handling users, registration, and {sqlpp_url}[{sqlpp} (formerly N1QL)] queries.
 
 
 include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=data-model]

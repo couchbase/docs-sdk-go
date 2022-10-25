@@ -38,14 +38,14 @@ You can define a _primary index_ on a bucket.
 When a _primary_ index is defined you can issue non-covered (see below) queries on the bucket as well.
 This includes using the `META` function in the queries.
 
-[source,n1ql]
+[source,sqlpp]
 ----
 CREATE PRIMARY INDEX ON `travel-sample`
 ----
 
 You can also define indexes over given document fields and then use those fields in the query:
 
-[source,n1ql]
+[source,sqlpp]
 ----
 CREATE INDEX ix_name ON `travel-sample`(name);
 CREATE INDEX ix_email ON `travel-sample`(email);
@@ -53,7 +53,7 @@ CREATE INDEX ix_email ON `travel-sample`(email);
 
 This would allow you to query the _travel-sample_ bucket regarding a document's `name` or `email` properties, thus:
 
-[source,n1ql]
+[source,sqlpp]
 ----
 SELECT name, email
 FROM `travel-sample`
@@ -115,7 +115,7 @@ If index-maintenance is running behind, the query waits for it to catch up.
 * `request_plus`: Executes the query, requiring the indexes first to be updated to the timestamp of the current query-request.
 If index-maintenance is running behind, the query waits for it to catch up.
 
-For N1QL, the default consistency is `not_bounded`.
+For {sqlpp}, the default consistency is `not_bounded`.
 ////
 
 Consider the following snippet:

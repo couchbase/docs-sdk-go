@@ -1,5 +1,5 @@
 = Analytics
-:description: Parallel data management for complex queries over many records, using a familiar N1QL-like syntax.
+:description: Parallel data management for complex queries over many records, using a familiar SQL-like syntax.
 :nav-title: Analytics for SDK Users
 :page-topic-type: concept
 :page-aliases: analytics

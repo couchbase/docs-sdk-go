@@ -26,11 +26,11 @@ While full-document retrievals retrieve the entire document and full document up
 You should use sub-document operations when you are modifying only portions of a document, and full-document operations when the contents of a document is to change significantly.	
 
 
-IMPORTANT: The Sub-Document operations described on this page are for _Key-Value_ requests only: they are not related to Sub-Document N1QL queries.
-(Sub-document N1QL queries are explained in the section xref:n1ql-queries-with-sdk.adoc[Querying with N1QL].)	
+IMPORTANT: The Sub-Document operations described on this page are for _Key-Value_ requests only: they are not related to Sub-Document {sqlpp_url}[{sqlpp} (formerly N1QL)] queries.
+Sub-document {sqlpp} queries are explained in the xref:n1ql-queries-with-sdk.adoc[Query page].
 
 In order to use Sub-Document operations you need to specify a _path_ indicating the location of the Sub-Document.
-The _path_ follows <<Path syntax,N1QL syntax>>.
+The _path_ follows <<Path syntax,{sqlpp} syntax>>.
 
 Considering the document:
 
@@ -414,7 +414,7 @@ When receiving a top-level error code, you should traverse the results of the co
 
 == Path Syntax
 
-Path syntax largely follows N1QL conventions: A path is divided into components, with each component referencing a specific _level_ in a document hierarchy.
+Path syntax largely follows {sqlpp} conventions: A path is divided into components, with each component referencing a specific _level_ in a document hierarchy.
 Components are separated by dots (`.`) in the case where the element left of the dot is a dictionary, or by brackets (`[n]`) where the element left of the bracket is an array and `n` is the index within the array.
 
 As a special extension, you can indicate the _last element_ of an array by using an index of `-1`, for example to get the last element of the array in the document
@@ -438,7 +438,7 @@ For example:
 
 must be referenced as `literal\"quote.array`.
 
-If the path also has special path characters (i.e. a dot or brackets) it may be escaped using N1QL escapes.
+If the path also has special path characters (i.e. a dot or brackets) it may be escaped using {sqlpp} escapes.
 
 Considering the document
 

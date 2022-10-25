@@ -122,7 +122,7 @@ Most key-value operations are idempotent.
 For those that aren't, such as a Sub-Document `arrayAppend` call, or a counter increment, the application should, on an ambiguous result, first read the document to see if that change was applied.
 
 == Query and Analytics Errors
-A N1QL query either returns results or `QueryError`, like so:
+A {sqlpp_url}[{sqlpp} (formerly N1QL)] query either returns results or `QueryError`, like so:
 
 [source,golang,indent=0]
 ----

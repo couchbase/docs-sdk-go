@@ -26,7 +26,7 @@ As an example here is a KeyValue document fetch:
 include::example$migrating.go[tag=getresult,indent=0]
 ----
 
-Compare this to a N1QL query:
+Compare this to a {sqlpp_url}[{sqlpp} (formerly N1QL)] query:
 
 [source,golang]
 ----

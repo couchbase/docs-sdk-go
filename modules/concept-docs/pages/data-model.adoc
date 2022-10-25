@@ -22,7 +22,7 @@ Data structures in Couchbase are similar in concept to data structures in Go:
 Values can be placed in the beginning or end of a list, and can be accessed using numeric indexes.
 * *Set* is a wrapper over a _list_ which provides the ability to handle unique values.
 
-These data structures are stored as JSON documents in Couchbase, and can therefore be accessed using N1QL, Full Text Search, and normal key-value operations.
+These data structures are stored as JSON documents in Couchbase, and can therefore be accessed using {sqlpp_url}[{sqlpp} (formerly N1QL)], Full Text Search, and normal key-value operations.
 Data structures can also be manipulated using the traditional sub-document and full-document KV APIs.
 
 Using the data structures API may help your application in two ways:
