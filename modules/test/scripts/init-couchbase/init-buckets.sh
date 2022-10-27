@@ -65,7 +65,7 @@ curl --fail -s -u ${CB_USER}:${CB_PSWD} -X PUT \
 echo
 echo "Waiting for travel-sample-index to be ready..."
 until curl --fail -s -u ${CB_USER}:${CB_PSWD} http://${CB_HOST}:8094/api/index/travel-sample-index/count |
-    jq -e '.count' | grep 31591 >/dev/null; do # there are 31591 docs to be processed in this index...
+    jq -e '.count' | grep 917 >/dev/null; do # there are 917 docs to be processed in this index...
     echo "Waiting for travel-sample-index to be ready. Trying again in 10 seconds."
     sleep 10
 done
