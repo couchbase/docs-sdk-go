@@ -30,7 +30,7 @@ The most current and up to date API Documentation is always available through th
 
 Version 2.5.4 is a maintenance release for the Go SDK 2.5.
 
-https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.3?tab=doc[API Documentation]
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.4?tab=doc[API Documentation]
 
 === Fixed Issues
 
