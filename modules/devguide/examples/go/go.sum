@@ -1,8 +1,8 @@
 github.com/couchbase/gocb/v2 v2.2.0/go.mod h1:3D9lwKlaZFTbQk2Pw0OmfqIXuhmYSCVg0zIljY3ecgo=
-github.com/couchbase/gocb/v2 v2.5.3 h1:Av1CdgqAcroF+3fQ2q3UrPST2T+v8vj81UcNdOSpsnw=
-github.com/couchbase/gocb/v2 v2.5.3/go.mod h1:vXZeeZV6Kt2PSriPNenGjsiP4mnyN1TYw6B80cQ5QiQ=
-github.com/couchbase/gocbcore/v10 v10.1.5 h1:5BTbWYL/Iz00OLq7ohsYT2ONuiaGAkD/qhn2nZOfBxY=
-github.com/couchbase/gocbcore/v10 v10.1.5/go.mod h1:qkPnOBziCs0guMEEvd0cRFo+AjOW0yEL99cU3I4n3Ao=
+github.com/couchbase/gocb/v2 v2.5.4 h1:7aWoVvg/C6OL3QZyZXzTNuMLbtYhipJV/QOkyqR4jqY=
+github.com/couchbase/gocb/v2 v2.5.4/go.mod h1:alZpkl4KFJc9fhCmeftbIewDdQiIh5hoMUpjiE+dM2g=
+github.com/couchbase/gocbcore/v10 v10.1.6 h1:Idbk5JWHY2AhjiHu1lLxpY5A5vr+wbnWgeVd+v0VDac=
+github.com/couchbase/gocbcore/v10 v10.1.6/go.mod h1:qkPnOBziCs0guMEEvd0cRFo+AjOW0yEL99cU3I4n3Ao=
 github.com/couchbase/gocbcore/v9 v9.1.0/go.mod h1:jOSQeBSECyNvD7aS4lfuaw+pD5t6ciTOf8hrDP/4Nus=
 github.com/couchbase/gocbencryption/v2 v2.0.0 h1:EQupas64rh9PtHNOXCHC4ed8hyYRaWz3hDG4QUB5XgE=
 github.com/couchbase/gocbencryption/v2 v2.0.0/go.mod h1:GLo7IqD1M9mEsy1twIUHnlkuJlCdzgpRzXMIryBLEUg=
