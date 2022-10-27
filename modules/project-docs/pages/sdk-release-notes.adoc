@@ -60,6 +60,20 @@ Fixed issue where a nil agent value could cause logging `TransactionATRLocation`
 * https://issues.couchbase.com/browse/GOCBC-1348[GOCBC-1348]:
 Fixed issue where a race on creating a client record could lead to a panic.
 
+== Version 2.5.4 (27 October 2022)
+
+Version 2.5.4 is a maintenance release for the Go SDK 2.5.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.3?tab=doc[API Documentation]
+
+=== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1347[GOCBC-1347]:
+Fixed issue where a nil agent value could cause logging `TransactionATRLocation` to log a panic.
+
+* https://issues.couchbase.com/browse/GOCBC-1348[GOCBC-1348]:
+Fixed issue where a race on creating a client record could lead to a panic.
+
 == Version 2.5.3 (21 September 2022)
 
 Version 2.5.3 is a maintenance release for the Go SDK 2.5.
