@@ -7,7 +7,7 @@ on:
     branches: [ "release/2.*" ]
 
 env:
-  GO_VERSION: 1.13
+  GO_VERSION: 1.18
 
 jobs:
   # The pre_job uses a smart Github action that will check the provided path filters 
