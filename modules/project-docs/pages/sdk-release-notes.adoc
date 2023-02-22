@@ -25,6 +25,7 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+
 == Version 2.6.1 (22 February 2023)
 
 Version 2.6.1 is a maintenance release for the Go SDK 2.6.
@@ -36,16 +37,17 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.6.1?tab=doc[API Documentation
 * https://issues.couchbase.com/browse/GOCBC-1322[GOCBC-1322]:
 Added volatile support for kv range scan.
 * https://issues.couchbase.com/browse/GOCBC-1373[GOCBC-1373]:
-    - Added uncommitted support for `CollectionQueryIndexManager`.
-    - Added support for sending `query_context` when `Scope` is set on `TransactionQueryyOptions`.
-    - Added support for handling query error code 1197 as feature not available.
+** Added uncommitted support for `CollectionQueryIndexManager`.
+** Added support for sending `query_context` when `Scope` is set on `TransactionQueryyOptions`.
+** Added support for handling query error code 1197 as feature not available.
 
 === Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1376[GOCBC-1376]:
 Fixed issue where lost cleanup would log an incorrectly formatted log line, leading to spamming the log.
 * https://issues.couchbase.com/browse/GOCBC-1387[GOCBC-1387]:
-Fixed issue where an edge case could trigger a race between releasing connection buffers and reading on the connection - leading to a panic.
+Fixed issue where an edge case could trigger a race between releasing connection buffers and reading on the connection -- leading to a panic.
+
 
 == Version 2.6.0 (20 October 2022)
 
