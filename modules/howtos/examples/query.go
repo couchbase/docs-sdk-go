@@ -30,7 +30,10 @@ func main() {
 		panic(err)
 	}
 
-	results, err := cluster.Query("SELECT \"hello\" as greeting;", nil)
+	results, err := cluster.Query("SELECT \"hello\" as greeting;", &gocb.QueryOptions{
+		// Note that we set Adhoc to true to prevent this query being run as a prepared statement.
+		Adhoc: true,
+	})
 	if err != nil {
 		panic(err)
 	}

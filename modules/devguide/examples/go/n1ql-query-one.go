@@ -31,7 +31,7 @@ func main() {
 
 	// #tag::one[]
 	query := "SELECT x.* FROM `travel-sample`.inventory.hotel x WHERE x.`type`=$1 LIMIT 1;"
-	rows, err := cluster.Query(query, &gocb.QueryOptions{PositionalParameters: []interface{}{"hotel"}})
+	rows, err := cluster.Query(query, &gocb.QueryOptions{PositionalParameters: []interface{}{"hotel"}, Adhoc: true})
 
 	// check query was successful
 	if err != nil {

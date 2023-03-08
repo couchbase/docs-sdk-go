@@ -33,7 +33,7 @@ func main() {
 	query := "SELECT x.* FROM `travel-sample`.inventory.hotel x WHERE x.`city`=$city LIMIT 10;"
 	params := make(map[string]interface{}, 1)
 	params["city"] = "San Francisco"
-	rows, err := cluster.Query(query, &gocb.QueryOptions{NamedParameters: params})
+	rows, err := cluster.Query(query, &gocb.QueryOptions{NamedParameters: params, Adhoc: true})
 	// #end::named-params[]
 
 	// check query was successful

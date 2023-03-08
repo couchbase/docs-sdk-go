@@ -79,7 +79,7 @@ func main() {
 	inventoryScope := bucket.Scope("inventory")
 	queryResult, err := inventoryScope.Query(
 		fmt.Sprintf("SELECT * FROM airline WHERE id=10"),
-		&gocb.QueryOptions{},
+		&gocb.QueryOptions{Adhoc: true},
 	)
 	if err != nil {
 		log.Fatal(err)

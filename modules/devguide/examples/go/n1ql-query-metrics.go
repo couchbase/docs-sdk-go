@@ -33,6 +33,7 @@ func main() {
 	query := "SELECT x.* FROM `travel-sample`.inventory.airport x LIMIT 10;"
 	rows, err := cluster.Query(query, &gocb.QueryOptions{
 		Metrics: true,
+		Adhoc:   true,
 	})
 	// check query was successful
 	if err != nil {
