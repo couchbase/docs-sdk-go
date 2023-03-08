@@ -30,7 +30,7 @@ func main() {
 
 	// #tag::results[]
 	query := "SELECT x.* FROM `travel-sample`.inventory.hotel x LIMIT 10;"
-	rows, err := cluster.Query(query, &gocb.QueryOptions{})
+	rows, err := cluster.Query(query, &gocb.QueryOptions{Adhoc: true})
 	// check query was successful
 	if err != nil {
 		panic(err)

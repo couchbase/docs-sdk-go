@@ -31,7 +31,7 @@ func main() {
 
 	// #tag::pos-params[]
 	query := "SELECT x.* FROM `travel-sample`.inventory.hotel x WHERE x.`city`=$1 LIMIT 10;"
-	rows, err := cluster.Query(query, &gocb.QueryOptions{PositionalParameters: []interface{}{"San Francisco"}})
+	rows, err := cluster.Query(query, &gocb.QueryOptions{PositionalParameters: []interface{}{"San Francisco"}, Adhoc: true})
 	// #end::pos-params[]
 
 	// check query was successful

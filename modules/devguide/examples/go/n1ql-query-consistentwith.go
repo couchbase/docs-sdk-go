@@ -31,9 +31,9 @@ func main() {
 
 	collection := b.Scope("inventory").Collection("hotel")
 
-    // NOTE: This currently fails with Couchbase Internal Server error.
-    // Server issue tracked here: https://issues.couchbase.com/browse/MB-46876
-    // Add back in once Couchbase Server 7.0.1 is available, which will fix this issue.
+	// NOTE: This currently fails with Couchbase Internal Server error.
+	// Server issue tracked here: https://issues.couchbase.com/browse/MB-46876
+	// Add back in once Couchbase Server 7.0.1 is available, which will fix this issue.
 	// #tag::consistentwith[]
 	// create / update document (mutation)
 	result, err := collection.Upsert("id", struct {
@@ -53,6 +53,7 @@ func main() {
 		&gocb.QueryOptions{
 			ConsistentWith:       state,
 			PositionalParameters: []interface{}{"San Francisco"},
+			Adhoc:                true,
 		},
 	)
 	// #end::consistentwith[]

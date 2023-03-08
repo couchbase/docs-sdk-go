@@ -142,6 +142,9 @@ The query service provides an array of options to customize your query. The foll
 | `ScanConsistency QueryScanConsistency` | Sets a different scan consistency for this query.
 |====
 
+NOTE: Unlike other SDKs the Go SDK defaults to sending queries as https://docs.couchbase.com/server/current/guides/prep-statements.html[prepared statements].
+Care should be taken to set `Adhoc` to true for any queries that are not explicitly intended to be prepared.
+
 == Scan Consistency
 
 By default, the query engine will return whatever is currently in the index at the time of query (this mode is also called `QueryScanConsistencyNotBounded`).
