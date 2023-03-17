@@ -19,11 +19,11 @@ If you're upgrading your application from Couchbase Go SDK 1.x, please read our 
 == Installing the SDK
 
 Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. 
-You can use `go get` to download the SDK:
+You can install the Go SDK by adding the following to your module's `go.mod` file:
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.6.1
+require github.com/couchbase/gocb/v2 v2.6.1
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
