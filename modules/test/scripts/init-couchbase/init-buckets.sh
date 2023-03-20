@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# ===============================================
+# NOTE: Any changes made to this file will not be 
+# automatically reflected in `make cb-start` as
+# the Makefile does not use the mounted version
+# of this file in the Docker image. You will need
+# to rebuild the image via `make cb-build` before
+# running `make cb-start`.
+# ===============================================
+
 # exit immediately if a command fails or if there are unset vars
 set -euo pipefail
 
@@ -38,11 +47,13 @@ curl --fail -s -u ${CB_USER}:${CB_PSWD} -H "Content-Type: application/json" -d '
 }' http://${CB_HOST}:8095/analytics/service
 
 echo "create scoped airport dataset"
-curl --fail -v -u ${CB_USER}:${CB_PSWD} -H "Content-Type: application/json" -d '{
-    "statement": "ALTER COLLECTION `travel-sample`.`inventory`.`airport` ENABLE ANALYTICS;",
-    "pretty":true,
-    "client_context_id":"test"
-}' http://${CB_HOST}:8095/analytics/service
+echo "Skipping..."
+# These are already setup in the official Couchbase Enterprise docker image.
+#curl --fail -v -u ${CB_USER}:${CB_PSWD} -H "Content-Type: application/json" -d '{
+#    "statement": "ALTER COLLECTION `travel-sample`.`inventory`.`airport` ENABLE ANALYTICS;",
+#    "pretty":true,
+#    "client_context_id":"test"
+#}' http://${CB_HOST}:8095/analytics/service
 
 curl --fail -v -u ${CB_USER}:${CB_PSWD} -H "Content-Type: application/json" -d '{
     "statement": "CONNECT LINK Local;",
@@ -62,11 +73,14 @@ curl --fail -s -u ${CB_USER}:${CB_PSWD} -X PUT \
     -d @/init-couchbase/travel-sample-index.json
 
 echo
-echo "Waiting for travel-sample-index to be ready..."
-until curl --fail -s -u ${CB_USER}:${CB_PSWD} http://${CB_HOST}:8094/api/index/travel-sample-index/count |
+counter=0
+
+until curl -s -u ${CB_USER}:${CB_PSWD} http://${CB_HOST}:8094/api/index/travel-sample-index/count |
     jq -e '.count' | grep 31591 >/dev/null; do # there are 31591 docs to be processed in this index...
-    echo "Waiting for travel-sample-index to be ready. Trying again in 10 seconds."
-    sleep 10
+    echo -e "Waiting for travel-sample-index to be ready. Current item count: $(curl -s -u ${CB_USER}:${CB_PSWD} http://${CB_HOST}:8094/api/index/travel-sample-index/count | jq -e '.count')/31591 ($counter seconds elapsed)"
+    counter=$((counter+20))
+    sleep 20
 done
+echo "travel-sample-index ready"
 
 echo "Done."

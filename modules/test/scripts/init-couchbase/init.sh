@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# ===============================================
+# NOTE: Any changes made to this file will not be 
+# automatically reflected in `make cb-start` as
+# the Makefile does not use the mounted version
+# of this file in the Docker image. You will need
+# to rebuild the image via `make cb-build` before
+# running `make cb-start`.
+# ===============================================
+
 CB_USER="${CB_USER:-Administrator}"
 CB_PSWD="${CB_PSWD:-password}"
 CB_HOST="${CB_HOST:-127.0.0.1}"
@@ -11,7 +20,7 @@ CB_SERVICES="${CB_SERVICES:-data,query,index,fts,analytics}"
 CB_KV_RAMSIZE="${CB_KV_RAMSIZE:-1024}"
 CB_INDEX_RAMSIZE="${CB_INDEX_RAMSIZE:-256}"
 CB_FTS_RAMSIZE="${CB_FTS_RAMSIZE:-256}"
-CB_EVENTING_RAMSIZE="${CB_EVENTING_RAMSIZE:-0}"
+CB_EVENTING_RAMSIZE="${CB_EVENTING_RAMSIZE:-256}"
 CB_ANALYTICS_RAMSIZE="${CB_ANALYTICS_RAMSIZE:-1024}"
 
 CB_INDEXER_PORT="${CB_INDEXER_PORT:-9102}"
