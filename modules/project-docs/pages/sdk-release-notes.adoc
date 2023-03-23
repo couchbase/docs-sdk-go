@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.6.1
+$ go get github.com/couchbase/gocb/v2@v2.6.2
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -25,6 +25,22 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
+== Version 2.6.2 (23 March 2023)
+
+Version 2.6.2 is a maintenance release for the Go SDK 2.6.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.6.2?tab=doc[API Documentation]
+
+=== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1392[GOCBC-1392]:
+Added support for `NumReplicas` to create (primary) index options.
+* https://issues.couchbase.com/browse/GOCBC-1393[GOCBC-1393]:
+Updated behaviour for when queries are retried when enhanced prepared statements are used (i.e. prepared statements against server version >= 6.5.0).
+When an error is translated to a `QueryPreparedStatementFailureRetryReason` it will invalidate the prepared statement cache entry and attempt to reprepare the statement.
+* https://issues.couchbase.com/browse/GOCBC-1395[GOCBC-1395]:
+Improved timeout error handling for http based services - if we know that an operation has already timed out then we will now immediately return a timeout error.
+Retry reason context is now carried throughout the lifetime of an entire prepared statement request.
 
 == Version 2.6.1 (22 February 2023)
 
