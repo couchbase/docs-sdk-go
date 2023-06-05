@@ -37,7 +37,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 | *✔*
 | *✔*
 
-| *Server 7.0-7.1*
+| *Server 7.0-7.2*
 | *◎*
 | *✔*
 |===
