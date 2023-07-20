@@ -51,20 +51,6 @@ or the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#instal
 
 The Couchbase Capella free trial version comes with the Travel Sample Bucket, and its Query indexes, loaded and ready.
 
-== Quick Installation
-
-Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. 
-You can use `go get` to download the SDK:
-
-[source,console]
-----
-$ go get github.com/couchbase/gocb/v2
-----
-
-More details on installation can be found xref:project-docs:sdk-full-installation.adoc[here].
-
-NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-
 == Prerequisites
 
 The following code samples assume:
@@ -74,6 +60,8 @@ The following code samples assume:
 Couchbase Capella::
 +
 --
+* You have initalised a https://go.dev/blog/using-go-modules[Go module], and have a `go.mod` file in your working directory.
+
 * You have signed up to https://cloud.couchbase.com/sign-up[Couchbase Capella].
 
 * You have created your own bucket, or loaded the Travel Sample dataset.
@@ -90,6 +78,8 @@ In a production scenario, we strongly recommend setting up users with more granu
 Couchbase Server::
 +
 --
+* You have initalised a https://go.dev/blog/using-go-modules[Go module], and have a `go.mod` file in your working directory.
+
 * xref:{version-server}@server:getting-started/do-a-quick-install.adoc[Couchbase Server] is installed and accessible locally.
 
 * You have created your own bucket, or loaded the Travel Sample dataset using the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface].
@@ -102,6 +92,20 @@ In this guide we suggest using the *Full Admin* role created during setup of you
 For production client code, you will want to use more appropriate, restrictive settings.
 --
 ====
+
+== Quick Installation
+
+Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. 
+You can use `go get` to download the SDK:
+
+[source,console]
+----
+$ go get github.com/couchbase/gocb/v2
+----
+
+More details on installation can be found xref:project-docs:sdk-full-installation.adoc[here].
+
+NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
 
 == Step by Step
 

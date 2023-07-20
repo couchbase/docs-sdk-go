@@ -13,7 +13,7 @@ and adding support for future Couchbase Server features like xref:concept-docs:c
 (available from Couchbase Server 7.0 onwards).
 The Go 2.x SDK also introduces improved error handling providing extra error information.
 
-If you're upgrading your application from Couchbase Go SDK 1.x, please read our xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migration Guide].
+If you're upgrading your application from Couchbase Go SDK 1.x, please read the xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migration Guide].
 
 
 == Installing the SDK
@@ -21,13 +21,15 @@ If you're upgrading your application from Couchbase Go SDK 1.x, please read our 
 Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. 
 You can use `go get` to download the SDK:
 
+IMPORTANT: `go get` only works if you have initialised a https://go.dev/blog/using-go-modules[Go module], and have a `go.mod` file in your working directory.
+
 [source,console]
 ----
 $ go get github.com/couchbase/gocb/v2@v2.6.3
 ----
 
-NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-Older versions may work, but are not supported.
+NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], Couchbase supports both the current, and the previous, versions of Go.
+Earlier versions may work, but aren't supported.
 
-Information on new features, fixes, and known issues -- as well as information on how to install older release versions -- is in the xref:sdk-release-notes.adoc[release notes].
+Information about new features, fixes, and known issues-as well as information about how to install earlier release versions-is in the xref:sdk-release-notes.adoc[release notes].
 
