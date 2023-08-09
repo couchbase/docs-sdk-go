@@ -29,7 +29,7 @@ $ go get github.com/couchbase/gocb/v2@v2.6.3
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], Couchbase supports both the current, and the previous, versions of Go.
-Earlier versions may work, but aren't supported.
+Earlier versions may work, but are not supported.
 
-Information about new features, fixes, and known issues-as well as information about how to install earlier release versions-is in the xref:sdk-release-notes.adoc[release notes].
+Information about new features, fixes, and known issues -- as well as information about how to install earlier release versions -- is in the xref:sdk-release-notes.adoc[release notes].
 
