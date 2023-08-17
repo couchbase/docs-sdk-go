@@ -15,22 +15,13 @@ Couchbase gives you a lot of flexibility, but it is recommended that you equip y
 The Go SDK works nicely with the https://golang.org/pkg/errors/[errors package] to interrogate errors.
 Of course, you can also just log them and fail the operation.
 
-The first way to use the information embedded into these errors (each error type contains different information) is to use `errors.As`:
-
-[source,golang,indent=0]
-----
-include::devguide:example$go/error-handling.go[tag=as]
-----
-
-This approach can be difficult to use as you need to know the Status Code for the error that you want to find.
-Another approach for the most common errors that you are likely to encounter is to use `errors.Is`:
+You can use `errors.Is` as follows:
 
 [source,golang,indent=0]
 ----
 include::devguide:example$go/error-handling.go[tag=is]
 ----
 
-This approach requires far less knowledge about the low level information within the Go SDK. 
 You can, of course, just log or print out the error as usual and the SDK will try to include as much information as it can in the error message logged (via the usual `err.Error()`).
 
 The type of operation will influence the type of the underlying error returned. 
