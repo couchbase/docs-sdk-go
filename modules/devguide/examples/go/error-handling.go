@@ -28,7 +28,6 @@ func main() {
 		panic(err)
 	}
 
-	errorsAs(collection)
 	errorsIs(collection)
 	errDocumentNotFound(collection)
 	errDocumentExists(collection)
@@ -36,24 +35,6 @@ func main() {
 	errDurabilityAmbiguous(collection)
 	realWorldErrHandling(collection)
 	queryError(cluster)
-}
-
-func errorsAs(collection *gocb.Collection) {
-	// #tag::as[]
-	_, err := collection.Get("key", nil)
-	if err != nil {
-		var kvError *gocb.KeyValueError
-		if errors.As(err, &kvError) {
-			fmt.Println(kvError.StatusCode) // the memcached error code
-			fmt.Println(kvError.Opaque)     // the unique identifier for the operation
-			if kvError.StatusCode == 0x01 {
-				fmt.Println("Document could not be found") // maybe do something like return a 404 to your user
-			}
-		} else {
-			fmt.Printf("An unknown error occurred: %v", err)
-		}
-	}
-	// #end::as[]
 }
 
 func errorsIs(collection *gocb.Collection) {
