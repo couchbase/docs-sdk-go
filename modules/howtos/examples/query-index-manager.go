@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// tag::creating-index-mgr[]
-	cluster, err := gocb.Connect("localhost", gocb.ClusterOptions{
+	cluster, err := gocb.Connect("your-ip", gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
 			Username: "Administrator",
 			Password: "password",

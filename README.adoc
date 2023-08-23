@@ -1,6 +1,3 @@
-image:https://github.com/couchbase/docs-sdk-go/actions/workflows/build.yml/badge.svg?branch=release%2F2.6[link="https://github.com/couchbase/docs-sdk-go/actions/workflows/build.yml"] 
-image:https://github.com/couchbase/docs-sdk-go/actions/workflows/test-ga.yml/badge.svg?branch=release%2F2.6[link="https://github.com/couchbase/docs-sdk-go/actions/workflows/test-ga.yml"]
-
 = Couchbase Go SDK Documentation
 // Settings:
 ifdef::env-github[]
@@ -12,11 +9,13 @@ endif::[]
 :url-ui: {url-org}/docs-ui
 :url-playbook: {url-org}/docs-site
 
+image:https://github.com/couchbase/docs-sdk-go/actions/workflows/test-samples.yml/badge.svg?branch=release%2F2.6[link="https://github.com/couchbase/docs-sdk-go/actions/workflows/test-samples.yml"] 
+
 This repository hosts the documentation source for the Couchbase Go SDK.
 
 == Contributing
 
-Check out our {url-contribute}[contributing guide] to learn how to:
+Check out the {url-contribute}[contributing guide] to learn how to:
 
 * submit a bug or feedback issue
 * set up your documentation workspace
@@ -32,90 +31,91 @@ Keep in mind these key repository features:
 
 * Component name, version, and start page are configured in each branch's _antora.yml_ file.
 * The navigation for all of the modules is stored in the ROOT module's _nav.adoc_ file.
-* Production branches use the *release/X.Y* naming pattern (e.g., release/5.5, release/6.0).
+* Production branches use the *release/X.Y* naming pattern (for example, release/5.5, release/6.0).
  ** The {url-playbook}[docs site playbook] instructs Antora to automatically aggregate any branch names that start with *release/*.
 
 == Documentation Site Toolchain
 
 The documentation source files are marked up with AsciiDoc.
-Once merged into a version branch, the source files and their assets are aggregated, converted to HTML, and published by Antora to our staging and production sites.
+Once merged into a version branch, the source files and their assets are aggregated, converted to HTML, and published by Antora to the staging and production sites.
 The docs components and {url-ui}[site UI] are orchestrated by the {url-playbook}[docs site playbook].
 See the contributing guide to learn more.
 
-== Documentation Code Sample Testing
+== Automated Testing
 
-To ensure that the code samples included in the documentation are correct and produce the results we expect, we have setup scripts that build and test each example file.
+This repository performs a check on the sample code upon opening a Pull Request. 
+These tests need to succeed to perform the merge.
 
-For testing we use the https://github.com/bats-core/bats-core[bats-core] automation framework to run the code and https://github.com/ztombol/bats-assert[bats-assert] assertion library to make assertions on the output where necessary.
+=== Test Framework Structure
 
-The tests run against the latest Couchbase Server docker image with the relevant SDK (Go in this case) provided alongside it.
+image::TestInfra.png[]
 
-To facilitate running the tests there is a `Makefile` in the `/modules` directory of the project.
+The following steps conduct the check:
 
-There you will find all the relevant commands needed to execute the docker container and the test/build scripts.
+1. The user opens a PR, triggering the GitHub Action
+2. The action creates a GitHub runner VM, and copies the repository over
+3. The runner starts the Docker test framework with `docker compose --profile prod up --abort-on-container-exit`. The flag is to verify the database container is also killed when the tests finish.
+4. The database and SDK containers start. The following two steps occur concurrently.
+** Database Container: Uses the `server/sandbox` image from Docker Hub. This image configures and starts Couchbase, setting up a one node cluster with the travel-sample bucket installed.
+** SDK Container: Builds the SDK image from a debian python base image, copying the repository over, and installing dependencies. It then uses `wait-for-couchbase` to ping the Couchbase container, until it confirms the database is fully configured and running.
+5. Once the SDK confirms the database is ready for tests, it runs the bats test file. Bats retries each test up to three times upon failure.
+6. When the tests have completed, both the SDK and Couchbase containers should die. If they persist, such as in a case where the test framework crashes, the GitHub Action instead destroys them.
 
-=== Running a test
-Before you can run the tests you will need to ensure you have Docker and npm available on your machine.
+=== Testing Code Samples Locally
 
-To run the example tests you will need to build the testing Docker image, run the container and execute your tests.
+You may want to run tests locally if you're adding/updating a code sample.
+The only prerequisites are a local copy of this repository, and https://www.docker.com/[Docker].
+You can start the local test environment by running the following command:
 
-TIP: After your first build of the docker image you won't need to build it every time you want to run the tests.
+[source, console]
+----
+docker compose --profile local up
+----
 
-Here are the steps required to achieve this:
+This creates two Docker containers with the same structure as described in <<Test Framework Structure>>, with the following changes:
 
-- `cd` into the `/modules` directory and run `make cb-build` to build a local image of Couchbase Server + Go SDK.
+* The bats tests are not automatically performed once Couchbase has finished configuring
+* The repository files in the container mount onto the SDK repository in your local machine. 
+This means any changes you make to the files on your local machine are instantly reflected in the container.
 
-- Once that has completed succesfully you can run `make cb-start` to run the docker container.
+To run tests, you either need to use the 
+https://docs.docker.com/desktop/use-desktop/container/#integrated-terminal[Integrated Terminal] 
+feature on Docker Desktop, or SSH into the container from the command line. 
+You can use the following command to use the SDK container shell:
 
-Note that this can take some time as it will configure couchbase server with all the required test data (e.g. travel-sample bucket) for the examples to run successfully.
+[source, console]
+----
+docker exec -it python-sdk-local /bin/bash
+----
 
-- If you run `docker ps` in a separate shell you should see a container called `cb-test` running.
-```
-CONTAINER ID   IMAGE                        COMMAND                  CREATED          STATUS          PORTS                                                                           NAMES
-ed861cf827ec   couchbase:cb7-sdk3-go-ub20   "/entrypoint.sh couc…"   51 minutes ago   Up 51 minutes   11207/tcp, 11210-11211/tcp, 0.0.0.0:8091-8096->8091-8096/tcp, 18091-18096/tcp   cb-test
-```
+Once within the container, run the following command to run a single test:
 
-- Once the container is up you can run `make TEST_NAME="startusing.go" single-test` to run an individual test.
+[source, console]
+----
+bats -f "<test_name>" test.bats
+----
 
-- You should expect to see the following output in your shell:
-```
- ✓ [hello-world] - startusing.go [539]
+The `-f` flag only runs tests that match the given regular expression.
+As test names are in a standard format, you can also run the following to test all the files in a given module:
 
-1 test, 0 failures in 1 seconds
-```
+[source, console]
+----
+bats -f "<module name>" test.bats
+----
 
-- If you want to run all the code sample tests you can also execute `make tests`.
+=== Creating a New Test
 
-- To stop the docker container you can simply run `make cb-stop`, this will stop and remove the docker container, but will keep the local image should you need to start it up again.
+To add a new test, append the following to the `test.bats` file.
 
-TIP: Because we mount the `/modules` directory in the `cb-test` container, you will see your local code changes reflected in the container instantly, so there is no need to stop and start the container when debugging your code.
+[source, bats]
+----
+@test "[<module>] - <code_file>" {
+  runExample $<module_dir_var> <code_file>
+  assert_success
+}
+----
 
-=== Creating a new test
-If you look at the `/modules/test` directory you will find files with the *.bats* extension, which are essentially our test files.
-
-Depending on where your code sample is going to be located (e.g. `/modules/devguide`), you will see a corresponding test file in the test directory. 
-This is mainly to keep the tests organised and easy to find.
-
-Here is an example test case:
-```
-@test "[devguide] - your-example-file.go" {
-    runExample <your-example-file-name.go>
-    assert_success
-    assert_output --partial "some assertion substring"
-} 
-```
-
-*runExample* is simply a helper function provided in `test_helper.bash`, which takes care of invoking your `go run` command. The idea is that any generic test functions can be placed there to be used across any test.
-
-*assert_success* is a helper function provied by the `bats-assert` library and checks whether your command has successfully exited with a status of 0. 
-If not, it will fail the test.
-
-*assert_output --partial* is another bats-assert helper that checks if the output of your code sample contains the substring provided. 
-The assertion will fail if the string is not found.
-
-Note that it will not always be necessary to assert the output of your code sample, in those cases just using `assert_success` will be enough.
-
-=== CI - Github Actions
-When submitting a PR, the code sample tests will run against your changes in the same manner as your local machine using Github Actions.
-
-You can see the workflow definitions in the `.github` folder.
+You can find the module directory variables in `test_helper.bash`.
+The test name is `"[<module>] - <code_file>"`. 
+The name can be anything, but this standard format allows you to carry out single tests, as described in the preceding section.
+For more information about creating tests, see the https://bats-core.readthedocs.io/en/stable/writing-tests.html[bats documentation].

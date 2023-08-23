@@ -19,7 +19,7 @@ func main() {
 			Password: "password",
 		},
 	}
-	cluster, err := gocb.Connect("localhost", opts)
+	cluster, err := gocb.Connect("your-ip", opts)
 	if err != nil {
 		panic(err)
 	}
@@ -32,7 +32,7 @@ func main() {
 	}
 
 	{
-	    fmt.Println("Example - [prepared-statement]")
+		fmt.Println("Example - [prepared-statement]")
 		// tag::prepared-statement[]
 		query := "SELECT count(*) FROM `travel-sample`.inventory.airport where country = $1;"
 		rows, err := cluster.Query(query, &gocb.QueryOptions{
@@ -54,7 +54,7 @@ func main() {
 	}
 
 	{
-	    fmt.Println("Example - [create-index]")
+		fmt.Println("Example - [create-index]")
 		// tag::create-index[]
 		mgr := cluster.QueryIndexes()
 		if err := mgr.CreatePrimaryIndex(bucketName, nil); err != nil {
@@ -84,7 +84,7 @@ func main() {
 	}
 
 	{
-	    fmt.Println("Example - [deferred-index]")
+		fmt.Println("Example - [deferred-index]")
 		// tag::deferred-index[]
 		mgr := cluster.QueryIndexes()
 		if err := mgr.CreatePrimaryIndex(bucketName,
@@ -129,7 +129,7 @@ func main() {
 	}
 
 	{
-	    fmt.Println("Example - [index-consistency]")
+		fmt.Println("Example - [index-consistency]")
 		// tag::index-consistency[]
 		random := rand.Intn(10000000)
 		user := struct {
@@ -156,7 +156,7 @@ func main() {
 	}
 
 	{
-	    fmt.Println("Example - [index-consistency-request-plus]")
+		fmt.Println("Example - [index-consistency-request-plus]")
 		// tag::index-consistency-request-plus[]
 		_, err := cluster.Query(
 			"SELECT name, email, random, META().id FROM `travel-sample`.inventory.airport WHERE $1 IN name",

@@ -1,3 +1,5 @@
 test/results/*
 node_modules/
 .vscode
+*/go.mod
+*/go.sum

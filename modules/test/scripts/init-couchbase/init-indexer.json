@@ -1,7 +1,0 @@
-{
-  "indexer.settings.inmemory_snapshot.fdb.interval": 3000,
-  "indexer.settings.inmemory_snapshot.interval": 3000,
-  "indexer.settings.inmemory_snapshot.moi.interval": 3000,
-  "indexer.stream_reader.fdb.syncBatchInterval": 20000,
-  "indexer.stream_reader.moi.syncBatchInterval": 20000
-}

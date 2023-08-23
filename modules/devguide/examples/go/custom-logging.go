@@ -60,7 +60,7 @@ func main() {
 		},
 	}
 
-	cluster, err := gocb.Connect("couchbase://localhost", opts)
+	cluster, err := gocb.Connect("couchbase://your-ip", opts)
 	if err != nil {
 		panic(err)
 	}

@@ -81,7 +81,7 @@ func main() {
 			Password: "password",
 		},
 	}
-	connString := "localhost"
+	connString := "your-ip"
 	cluster, err := gocb.Connect(connString, opts)
 	if err != nil {
 		panic(err)

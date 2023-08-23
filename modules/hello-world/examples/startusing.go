@@ -14,7 +14,7 @@ func main() {
 
 	// tag::connect-info[]
 	// Update this to your cluster details
-	connectionString := "localhost"
+	connectionString := "your-ip"
 	bucketName := "travel-sample"
 	username := "Administrator"
 	password := "password"

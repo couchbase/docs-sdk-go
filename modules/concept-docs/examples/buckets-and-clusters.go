@@ -11,7 +11,7 @@ func main() {
 			Password: "password",
 		},
 	}
-	cluster, err := gocb.Connect("localhost", opts)
+	cluster, err := gocb.Connect("your-ip", opts)
 	if err != nil {
 		panic(err)
 	}
@@ -20,9 +20,9 @@ func main() {
 	bucketMgr := cluster.Buckets()
 	createBucketSettings := gocb.CreateBucketSettings{
 		BucketSettings: gocb.BucketSettings{
-			Name:                 "myBucket",
-			RAMQuotaMB:           150,
-			BucketType:           gocb.CouchbaseBucketType,
+			Name:       "myBucket",
+			RAMQuotaMB: 100,
+			BucketType: gocb.CouchbaseBucketType,
 		},
 	}
 	if err := bucketMgr.CreateBucket(createBucketSettings, &gocb.CreateBucketOptions{}); err != nil {

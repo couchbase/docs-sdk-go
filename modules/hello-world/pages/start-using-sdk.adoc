@@ -184,7 +184,7 @@ Local Couchbase Server::
 include::example$startusing.go[tag=connect,indent=0]
 ----
 
-For developing locally on the same machine as Couchbase Server, your URI can be `couchbase://localhost` as shown here. 
+For developing locally on the same machine as Couchbase Server, your URI can be `couchbase://localhost`. 
 For production deployments, you will want to use a secure server, with `couchbases://`.
 --
 ====

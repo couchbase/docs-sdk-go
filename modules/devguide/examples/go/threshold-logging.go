@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/couchbase/gocb/v2"
 	"time"
+
+	"github.com/couchbase/gocb/v2"
 )
 
 func main() {
@@ -20,7 +21,7 @@ func main() {
 		Tracer: tLogger,
 	}
 	// end::configure[]
-	connString := "localhost"
+	connString := "your-ip"
 	cluster, err := gocb.Connect(connString, opts)
 	if err != nil {
 		panic(err)

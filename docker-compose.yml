@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  # Docker uses services names as DNS records.
+  # Calling the db container this means the
+  # connection strings in the samples work but,
+  # still look like placeholders.
+  your-ip:
+    image: couchbase/server-sandbox:7.1.1
+    ports:
+      - "8091-8095:8091-8095"
+      - "9102:9102"
+      - "11210:11210"
+    expose:
+      - "8091"
+      - "8094"
+    container_name: Couchbase-7.1.1
+    profiles:
+      - prod
+      - local
+
+  # The GH Action uses this profile to run tests.
+  go-sdk-repo:
+    build: .
+    depends_on:
+      - your-ip
+    container_name: go-sdk
+    profiles: 
+      - prod
+
+  # This profile is for local use creating tests.
+  local-go-sdk-repo:
+    build:
+      dockerfile: local-tests.Dockerfile
+    depends_on:
+      - your-ip
+    container_name: go-sdk-local
+    volumes:
+      - .:/app
+    profiles: 
+      - local

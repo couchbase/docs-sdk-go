@@ -22,7 +22,7 @@ func initTransactions(cb func(cluster *gocb.Cluster, collection *gocb.Collection
 		},
 	}
 
-	cluster, err := gocb.Connect("localhost", opts)
+	cluster, err := gocb.Connect("your-ip", opts)
 	if err != nil {
 		panic(err)
 	}
@@ -754,7 +754,7 @@ func rollbackCause() {
 
 func configExpiration() {
 	// tag::configExpiration[]
-	cluster, err := gocb.Connect("localhost", gocb.ClusterOptions{
+	cluster, err := gocb.Connect("your-ip", gocb.ClusterOptions{
 		TransactionsConfig: gocb.TransactionsConfig{
 			Timeout: 120 * time.Second,
 		},
@@ -766,7 +766,7 @@ func configExpiration() {
 
 func customMetadata() {
 	// tag::customMetadata[]
-	cluster, err := gocb.Connect("localhost", gocb.ClusterOptions{
+	cluster, err := gocb.Connect("your-ip", gocb.ClusterOptions{
 		TransactionsConfig: gocb.TransactionsConfig{
 			MetadataCollection: &gocb.TransactionKeyspace{
 				BucketName:     "travel-sample",

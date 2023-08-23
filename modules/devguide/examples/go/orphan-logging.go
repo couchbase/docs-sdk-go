@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/couchbase/gocb/v2"
 	"time"
+
+	"github.com/couchbase/gocb/v2"
 )
 
 func main() {
@@ -19,8 +20,8 @@ func main() {
 			SampleSize:     10,
 		},
 	}
-	// end::configure[]
-	connString := "localhost"
+	// end::configuyour-ip
+	connString := "your-ip"
 	cluster, err := gocb.Connect(connString, opts)
 	if err != nil {
 		panic(err)

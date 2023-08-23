@@ -1,6 +1,84 @@
-#!./test/libs/bats/bin/bats
+# #!./test/libs/bats/bin/bats
 
 load 'test_helper'
+
+@test "[hello-world] - startusing.go" {
+    runExample $HELLO_WORLD_DIR startusing.go
+    assert_success
+    assert_output --partial "User: {Jade jade@test-email.com [Swimming Rowing]}"
+}
+
+### Howtos tests
+
+@test "[howtos] - analytics.go" {
+    skip "Service not enabled"
+    runExample $HOWTOS_DIR analytics.go
+    assert_success
+    assert_output --partial "map[greeting:hello]"
+}
+
+@test "[howtos] - query.go" {
+    runExample $HOWTOS_DIR query.go
+    assert_success
+    assert_output --partial "map[greeting:hello]"
+}
+
+@test "[howtos] - collection-manager.go" {
+    runExample $HOWTOS_DIR collection-manager.go
+    assert_success
+    assert_output --partial "drop-scope"
+}
+
+@test "[howtos] - subdoc.go" {
+    echo "create example document"
+    cbimport json --verbose \
+        -c your-ip -u Administrator -p password \
+        -b travel-sample \
+        -f lines \
+        -d file:///modules/test/fixtures/customer123.json \
+        -g customer123
+    echo
+
+    runExample $HOWTOS_DIR subdoc.go
+    assert_success
+}
+
+@test "[howtos] - query-index-manager.go" {
+    runExample $HOWTOS_DIR query-index-manager.go
+    assert_success
+}
+
+### Concept docs tests
+
+@test "[concept-docs] - collections.go" {
+    runExample $CONCEPT_DOCS_DIR collections.go
+    assert_success
+    assert_output --partial "Done"
+}
+
+@test "[concept-docs] - buckets-and-clusters.go" {
+    runExample $CONCEPT_DOCS_DIR buckets-and-clusters.go
+    assert_success
+}
+
+@test "[concept-docs] - documents.go" {
+    runExample $CONCEPT_DOCS_DIR documents.go
+    assert_success
+    assert_output --partial "Current value: 0"
+    assert_output --partial "RESULT: 5"
+}
+
+@test "[concept-docs] - n1ql-query.go" {
+    runExample $CONCEPT_DOCS_DIR n1ql-query.go
+    assert_success
+}
+
+@test "[concept-docs] - xattr.go" {
+    runExample $CONCEPT_DOCS_DIR xattr.go
+    assert_success
+}
+
+### Devguide tests
 
 # Test is a bit flaky on the last assertion if not run first.
 # It seems the search index updates when the other tests run, causing major delay on the
@@ -18,28 +96,33 @@ load 'test_helper'
 }
 
 @test "[devguide] - analytics-named-placeholders.go" {
+    skip "Service not enabled"
     runExample $DEVGUIDE_DIR analytics-named-placeholders.go
     assert_success
     assert_output --partial "Result count: 221"
 }
 
 @test "[devguide] - analytics-positional-placeholders.go" {
+    skip "Service not enabled"
     runExample $DEVGUIDE_DIR analytics-positional-placeholders.go
     assert_success
     assert_output --partial "Result count: 221"
 }
 
 @test "[devguide] - analytics-query-one.go" {
+    skip "Service not enabled"
     runExample $DEVGUIDE_DIR analytics-query-one.go
     assert_success
 }
 
 @test "[devguide] - analytics-collection-scope.go" {
+    skip "Service not enabled"
     runExample $DEVGUIDE_DIR analytics-collection-scope.go
     assert_success
 }
 
 @test "[devguide] - analytics-simple-query.go" {
+    skip "Service not enabled"
     runExample $DEVGUIDE_DIR analytics-simple-query.go
     assert_success
 }
