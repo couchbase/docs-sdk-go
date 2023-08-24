@@ -110,7 +110,10 @@ curl -u Administrator:password -X POST http://${CB_HOST}:8091/sampleBuckets/inst
 sleep 3
 log Couchbase Server ready
 
-# Set up go modules
+# Turn off shell exiting upon error
+set +e
+
+# Create/population go.mod files
 log Setting up Go modules
 
 log concept-docs...
@@ -118,17 +121,17 @@ cd ../modules/concept-docs/examples
 go mod init test
 go get github.com/couchbase/gocb/v2
 
-log howtos
+log howtos...
 cd ../../howtos/examples
 go mod init test
 go get github.com/couchbase/gocb/v2
 
-log hello-world
+log hello-world...
 cd ../../hello-world/examples
 go mod init test
 go get github.com/couchbase/gocb/v2
 
-log devguide
+log devguide...
 cd ../../devguide/examples/go
 go mod init test
 go get github.com/couchbase/gocb/v2
@@ -139,6 +142,9 @@ go get github.com/tinylib/msgp
 cd ../../../../tests
 
 echo Done
+
+# Turn shell exiting upon error back on
+set -e
 
 # Check if we should run the tests
 if [ $1 -eq 1 ]

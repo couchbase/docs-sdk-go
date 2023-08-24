@@ -1,5 +1,6 @@
 test/results/*
 .vscode
 .DS_Store
-*/go.mod
-*/go.sum
+go.mod
+go.sum
+*.out

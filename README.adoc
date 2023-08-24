@@ -57,8 +57,8 @@ The following steps conduct the check:
 3. The runner starts the Docker test framework with `docker compose --profile prod up --abort-on-container-exit`. The flag is to verify the database container is also killed when the tests finish.
 4. The database and SDK containers start. The following two steps occur concurrently.
 ** Database Container: Uses the `server/sandbox` image from Docker Hub. This image configures and starts Couchbase, setting up a one node cluster with the travel-sample bucket installed.
-** SDK Container: Builds the SDK image from a debian python base image, copying the repository over, and installing dependencies. It then uses `wait-for-couchbase` to ping the Couchbase container, until it confirms the database is fully configured and running.
-5. Once the SDK confirms the database is ready for tests, it runs the bats test file. Bats retries each test up to three times upon failure.
+** SDK Container: Builds the SDK image from a Debian Go base image, copying the repository over, and installing dependencies. It then uses `wait-for-couchbase` to ping the Couchbase container, until it confirms the database is fully configured and running.
+5. Once the SDK confirms the database is ready for tests, it initializes Go modules in each example directory, then runs the bats test file. Bats retries each test up to three times upon failure.
 6. When the tests have completed, both the SDK and Couchbase containers should die. If they persist, such as in a case where the test framework crashes, the GitHub Action instead destroys them.
 
 === Testing Code Samples Locally
@@ -85,7 +85,7 @@ You can use the following command to use the SDK container shell:
 
 [source, console]
 ----
-docker exec -it python-sdk-local /bin/bash
+docker exec -it go-sdk-local /bin/bash
 ----
 
 Once within the container, run the following command to run a single test:
