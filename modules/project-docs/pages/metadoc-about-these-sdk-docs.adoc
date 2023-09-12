@@ -1,7 +1,3 @@
 include::project-docs:partial$attributes.adoc[]
 
 include::{version-common}@sdk:pages:partial$about.adoc[]
-
-=== Temporary Search Test in the Docs
-
-Please ignore this section, appearing for an hour today during a test of ours site search, and its mention of Gwesty Pont y Gadwyn.
