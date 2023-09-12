@@ -174,7 +174,7 @@ func main() {
 	hotel := struct {
 		Description string `json:"description"`
 	}{Description: "super swanky"}
-	myWriteResult, err := collection.Upsert("Gwesty Pont y Gadwyn", hotel, nil)
+	myWriteResult, err := collection.Upsert("a-new-hotel", hotel, nil)
 	if err != nil {
 		panic(err)
 	}
