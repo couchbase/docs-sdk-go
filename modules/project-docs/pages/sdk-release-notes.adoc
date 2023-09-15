@@ -134,11 +134,6 @@ Fixed issue where a race on creating a client record could lead to a panic.
 
 == Go SDK 2.5 Releases
 
-We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
-All patch releases for each dot minor release should be API compatible, and safe to upgrade;
-any changes to expected behavior are noted in the release notes that follow.
-
-
 === Version 2.5.4 (27 October 2022)
 
 Version 2.5.4 is a maintenance release for the Go SDK 2.5.
@@ -254,11 +249,6 @@ Fixed issue where `GetAllIndexes` could incorrectly omit the default collection.
 
 == Go SDK 2.4 Releases
 
-We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
-All patch releases for each dot minor release should be API compatible, and safe to upgrade;
-any changes to expected behavior are noted in the release notes that follow.
-
-
 === Version 2.4.1 (16 March 2022)
 
 Version 2.4.1 is a maintenance release for the Go SDK 2.4.0.
@@ -319,11 +309,6 @@ Fixed issue where `MutateIn` was not setting durability level.
 
 
 == Go SDK 2.3 Releases
-
-We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
-All patch releases for each dot minor release should be API compatible, and safe to upgrade;
-any changes to expected behavior are noted in the release notes that follow.
-
 
 === Version 2.3.5 (14 December 2021)
 
@@ -451,6 +436,9 @@ Fixed issue where an error occuring whilst fetching the error map during bootstr
 * https://issues.couchbase.com/browse/GOCBC-1149[GOCBC-1149]:
 Fixed issue where `GetAllScopes` would panic on HTTP request send failure.
 
+
+== Go SDK 2.2 Releases
+
 === Version 2.2.5 (17 August 2021)
 
 Version 2.2.5 is a maintenance release for the Go SDK 2.2.0.
@@ -504,14 +492,6 @@ Fixed issue where any errors returned from the Search service were not being pro
 Fixed issue where Query errors were sometimes not being parsed correctly.
 * https://issues.couchbase.com/browse/GOCBC-1132[GOCBC-1132]:
 Fixed issue where benchmarks would not compile.
-
-
-== Go SDK 2.2 Releases
-
-We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
-All patch releases for each dot minor release should be API compatible, and safe to upgrade;
-any changes to expected behavior are noted in the release notes that follow.
-
 
 === Version 2.2.4 (15 June 2021)
 
@@ -610,31 +590,6 @@ Fixed issue where `GetAllDesignDocuments` was ignoring the provided `namespace`.
 Fixed issue where an extra, empty, origin was added to user roles on fetching the user.
 
 
-=== Version 2.2.1 (16 February 2021)
-
-Version 2.2.1 is a maintenance release for the Go SDK 2.2.0.
-
-https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.1?tab=doc[API Documentation]
-
-==== New Features and Behavioral Changes
-
-* https://issues.couchbase.com/browse/GOCBC-1017[GOCBC-1017]:
-Updated server endpoints for collections manager.
-* https://issues.couchbase.com/browse/GOCBC-1040[GOCBC-1040]:
-Updated json serialization of errors to include the underlying cause.
-* https://issues.couchbase.com/browse/GOCBC-1054[GOCBC-1054]:
-Updated `MutateIn` to allow a blank path with `RemoveSpec`.
-
-==== Fixed Issues
-
-* https://issues.couchbase.com/browse/GOCBC-1047[GOCBC-1047]:
-Fixed issue where `GetAllScopes` was not setting the max expiry value for any collections.
-* https://issues.couchbase.com/browse/GOCBC-1052[GOCBC-1052]:
-Fixed issue where `GetAllDesignDocuments` was ignoring the provided `namespace`.
-* https://issues.couchbase.com/browse/GOCBC-1061[GOCBC-1061]:
-Fixed issue where an extra, empty, origin was added to user roles on fetching the user.
-
-
 === Version 2.2.0 (15 December 2020)
 
 Version 2.2.0 is the first release in the Go SDK 2.2 series.
@@ -674,11 +629,6 @@ Fixed issue where bootstrapping against a non-kv node could never successfully f
 
 
 == Go SDK 2.1 Releases
-
-We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
-All patch releases for each dot minor release should be API compatible, and safe to upgrade;
-any changes to expected behavior are noted in the release notes that follow.
-
 
 === Version 2.1.8 (17 November 2020)
 
@@ -922,12 +872,6 @@ Add support for the `WaitForReady` operation, support waiting for the KeyValue s
 
 
 == Go SDK 2.0 Releases
-
-We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
-All patch releases for each dot minor release should be API compatible, and safe to upgrade;
-any changes to expected behavior are noted in the release notes that follow.
-
-
 
 === Version 2.0.4 (21 April 2020)
 
