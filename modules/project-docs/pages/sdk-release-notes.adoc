@@ -1,6 +1,7 @@
 = Release Notes
 :description: Release notes, installation instructions, and download archive for the Couchbase Go Client.
 :page-topic-type: project-doc
+:page-toclevels: 2
 :page-aliases: relnotes-go-sdk,ROOT:relnotes-go-sdk,ROOT:sdk-release-notes,ROOT:release-notes
 
 // tag::latest[]
@@ -8,7 +9,7 @@
 {description}
 
 These pages cover the 2.x versions of the Couchbase Go SDK (3.x SDK API).
-For release notes, download links, and installation methods for 1.6 and earlier releases of the Couchbase Go Client, please see the https://docs-archive.couchbase.com/go-sdk/1.4/relnotes-go-sdk.html[1.x Go Release Notes & Download Archive].
+For release notes, download links, and installation methods for 1.6 and earlier releases of the Couchbase Go Client, please see the https://docs-archive.couchbase.com/go-sdk/1.6/relnotes-go-sdk.html[1.x Go Release Notes & Download Archive].
 
 
 == SDK Installation
@@ -25,31 +26,42 @@ Older versions may work, but are not supported.
 
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
-== Version 2.6.3 (18 April 2023)
+
+
+
+[#latest-release]
+== Go SDK 2.6 Releases
+
+We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
+All patch releases for each dot minor release should be API compatible, and safe to upgrade;
+any changes to expected behavior are noted in the release notes that follow.
+
+
+=== Version 2.6.3 (18 April 2023)
 
 Version 2.6.3 is a maintenance release for the Go SDK 2.6.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.6.3?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1403[GOCBC-1403]:
 Updated CCCP polling to start running on startup rather than waiting for memcached connections to fetch a cluster config.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1400[GOCBC-1400]:
 Fixed issue where connection string parsing was missing some timeout values.
 * https://issues.couchbase.com/browse/GOCBC-1402[GOCBC-1402]:
 Fixed issue where wan-development config profile was missing some timeout values.
 
-== Version 2.6.2 (23 March 2023)
+=== Version 2.6.2 (23 March 2023)
 
 Version 2.6.2 is a maintenance release for the Go SDK 2.6.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.6.2?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1392[GOCBC-1392]:
 Added support for `NumReplicas` to create (primary) index options.
@@ -60,13 +72,13 @@ When an error is translated to a `QueryPreparedStatementFailureRetryReason` it w
 Improved timeout error handling for http based services - if we know that an operation has already timed out then we will now immediately return a timeout error.
 Retry reason context is now carried throughout the lifetime of an entire prepared statement request.
 
-== Version 2.6.1 (22 February 2023)
+=== Version 2.6.1 (22 February 2023)
 
 Version 2.6.1 is a maintenance release for the Go SDK 2.6.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.6.1?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1322[GOCBC-1322]:
 Added volatile support for kv range scan.
@@ -75,7 +87,7 @@ Added volatile support for kv range scan.
 ** Added support for sending `query_context` when `Scope` is set on `TransactionQueryyOptions`.
 ** Added support for handling query error code 1197 as feature not available.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1376[GOCBC-1376]:
 Fixed issue where lost cleanup would log an incorrectly formatted log line, leading to spamming the log.
@@ -83,13 +95,13 @@ Fixed issue where lost cleanup would log an incorrectly formatted log line, lead
 Fixed issue where an edge case could trigger a race between releasing connection buffers and reading on the connection -- leading to a panic.
 
 
-== Version 2.6.0 (20 October 2022)
+=== Version 2.6.0 (20 October 2022)
 
 Version 2.6.0 is the first release in the Go SDK 2.6 series.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.6.0?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1159[GOCBC-1159]:
 Added support for refreshing the DNS SRV record when cluster becomes uncontactable, if applicable.
@@ -111,20 +123,29 @@ Added support for trusting the system cert store when TLS is enabled with no `Ce
 * https://issues.couchbase.com/browse/GOCBC-1356[GOCBC-1356]:
 Updated the behaviour when `MutateIn` or `Insert` returns `NOT_STORED` from the server to return a `ErrDocumentExists`.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1347[GOCBC-1347]:
 Fixed issue where a nil agent value could cause logging `TransactionATRLocation` to log a panic.
 * https://issues.couchbase.com/browse/GOCBC-1348[GOCBC-1348]:
 Fixed issue where a race on creating a client record could lead to a panic.
 
-== Version 2.5.4 (27 October 2022)
+
+
+== Go SDK 2.5 Releases
+
+We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
+All patch releases for each dot minor release should be API compatible, and safe to upgrade;
+any changes to expected behavior are noted in the release notes that follow.
+
+
+=== Version 2.5.4 (27 October 2022)
 
 Version 2.5.4 is a maintenance release for the Go SDK 2.5.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.4?tab=doc[API Documentation]
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1347[GOCBC-1347]:
 Fixed issue where a nil agent value could cause logging `TransactionATRLocation` to log a panic.
@@ -132,31 +153,31 @@ Fixed issue where a nil agent value could cause logging `TransactionATRLocation`
 * https://issues.couchbase.com/browse/GOCBC-1348[GOCBC-1348]:
 Fixed issue where a race on creating a client record could lead to a panic.
 
-== Version 2.5.3 (21 September 2022)
+=== Version 2.5.3 (21 September 2022)
 
 Version 2.5.3 is a maintenance release for the Go SDK 2.5.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.3?tab=doc[API Documentation]
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1338[GOCBC-1338]:
 Fixed issue where `lazyCircuitBreaker` was not using 64-bit aligned values.
 
-=== Known Issues
+==== Known Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1347[GOCBC-1347]:
 Known issue where a nil agent value could cause logging `TransactionATRLocation` to log a panic.
 * https://issues.couchbase.com/browse/GOCBC-1348[GOCBC-1348]:
 Known issue where a race on creating a client record can lead to a panic.
 
-== Version 2.5.2 (20 July 2022)
+=== Version 2.5.2 (20 July 2022)
 
 Version 2.5.2 is a maintenance release for the Go SDK 2.5.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.2?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1246[GOCBC-1246]:
 Added uncomitted stability support for `TransactionLogger` to `TransactionResult`.
@@ -165,19 +186,19 @@ Improved logging in the lost transactions process.
 * https://issues.couchbase.com/browse/GOCBC-1318[GOCBC-1318]:
 Changed `WaitUntilReady` to always wait for any explicitly defined services to be online.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1320[GOCBC-1320]:
 Fixed issue where vbucket hashing function wasn't masking out the 16th bit of the key.
 
 
-== Version 2.5.1 (22 June 2022)
+=== Version 2.5.1 (22 June 2022)
 
 Version 2.5.1 is a maintenance release for the Go SDK 2.5.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.1?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1159[GOCBC-1159]:
 Improved support for serverless environments.
@@ -191,7 +212,7 @@ Masked the underlying error reason for `TransactionOperationFailedError`.
 * https://issues.couchbase.com/browse/GOCBC-1213[GOCBC-1213]:
 Added uncommitted API level support for `UserManager` `ChangePassword`.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1300[GOCBC-1300]:
 Fixed issue where transactions lost cleanup would not remove deleted collections from the cleanup list.
@@ -200,13 +221,13 @@ Fixed issue where transactions lost cleanup would not remove deleted collections
 Fixed issue where transactions lost cleanup could temporarily block further responses being processed for a connection.
 
 
-== Version 2.5.0 (28 April 2022)
+=== Version 2.5.0 (28 April 2022)
 
 Version 2.5.0 is the first release in the Go SDK 2.5 series.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.5.0?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1125[GOCBC-1125]:
 Deprecated `Cas` on Binary Append and Prepend as the server does not support this.
@@ -224,18 +245,27 @@ Bundle Capella CA certificate with the SDK.
 * https://issues.couchbase.com/browse/GOCBC-1253[TXNG-1253]:
 Removed `ServerDurationDisabled` from `ThresholdLoggingOptions`.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1267[GOCBC-1267]:
 Fixed issue where `GetAllIndexes` could incorrectly omit the default collection.
 
-== Version 2.4.1 (16 March 2022)
+
+
+== Go SDK 2.4 Releases
+
+We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
+All patch releases for each dot minor release should be API compatible, and safe to upgrade;
+any changes to expected behavior are noted in the release notes that follow.
+
+
+=== Version 2.4.1 (16 March 2022)
 
 Version 2.4.1 is a maintenance release for the Go SDK 2.4.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.4.1?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1221[GOCBC-1221]:
 Added support for handling any `retry:true` field in a query error result by retrying it.
@@ -250,7 +280,7 @@ Updated SDK dependencies.
 Added `NewLoggingMeter` and `LoggingMeterOptions` for creating the `LoggingMeter`.
 `AggregatingMeterOptions` and `NewAggregatingMeter` will be deprecated in the next dot minor release.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1248[GOCBC-1248]:
 Fixed issue where a hard close of a memdclient during a graceful close could trigger a panic.
@@ -261,13 +291,13 @@ Fixed issue where config polling could fallback to using the http poller, when n
 * https://issues.couchbase.com/browse/GOCBC-1258[GOCBC-1258]:
 Fixed issue where log redaction tags were not closed correctly.
 
-== Version 2.4.0 (16 February 2022)
+=== Version 2.4.0 (16 February 2022)
 
 Version 2.4.0 is the first release in the Go SDK 2.4 series, adding multi-document distributed ACID transactions.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.4.0?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1172[GOCBC-1172]:
 Added uncommitted API stability support for Query option `PreserveExpiry`.
@@ -281,19 +311,27 @@ Added `DurabilityLevelUnknown` as default durability level.
 * https://issues.couchbase.com/browse/GOCBC-TXNG-127[TXNG-127]:
 Integrated transactions into the SDK.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1240[GOCBC-1240]:
 Fixed issue where `MutateIn` was not setting durability level.
 
 
-== Version 2.3.5 (14 December 2021)
+
+== Go SDK 2.3 Releases
+
+We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
+All patch releases for each dot minor release should be API compatible, and safe to upgrade;
+any changes to expected behavior are noted in the release notes that follow.
+
+
+=== Version 2.3.5 (14 December 2021)
 
 Version 2.3.5 is a maintenance release for the Go SDK 2.3.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.5?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1152[GOCBC-1152]:
 Added uncommitted API stability support for custom conflict resolution to `BucketSettings`.
@@ -313,7 +351,7 @@ Added the `StatusCode` of the response to `AnalyticsError`, `QueryError`, `Manag
 Renamed `ErrRateLimiting` and `ErrQuotaLimiting` to `ErrRateLimited` and `ErrQuotaLimited`.
 Note: this is a breaking change, it not expected to impact any users.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1202[GOCBC-1202]:
 * https://issues.couchbase.com/browse/GOCBC-1211[GOCBC-1211]:
@@ -323,13 +361,13 @@ Fixed issues relating to rate limit error message parsing.
 Fixed issue where a quota limit error was returned rather than rate limit error for key value response status code 0x32.
 
 
-== Version 2.3.4 (16 November 2021)
+=== Version 2.3.4 (16 November 2021)
 
 Version 2.3.4 is a maintenance release for the Go SDK 2.3.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.4?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1179[GOCBC-1179]:
 Added support to attempt graceful closing of connections.
@@ -341,7 +379,7 @@ Added RateLimitFailure and QuotaLimitFailure support for Couchbase Capella.
 * https://issues.couchbase.com/browse/GOCBC-1193[GOCBC-1193]:
 Added the ResponseBody field to QueryError, to allow easier debugging and error handling.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1185[GOCBC-1185]:
 Fixed an issue with Queue and Set retrying during pop and remove operations.
@@ -357,18 +395,18 @@ Changed ordering of route config bootstrapping, to check all seed nodes for the 
 This fixed an issue with stuck deployments using the Eventing service, after upgrade to server 7.0.2.
 
 
-== Version 2.3.3 (19 October 2021)
+=== Version 2.3.3 (19 October 2021)
 
 Version 2.3.3 is a maintenance release for the Go SDK 2.3.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.3?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1178[GOCBC-1178]:
 We no longer remove poller controller watcher from cluster config updates.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1177[GOCBC-1177]:
 Fixed issue where a connection being closed by the server during bootstrap could cause the SDK to loop reconnect without backoff.
@@ -376,33 +414,33 @@ Fixed issue where a connection being closed by the server during bootstrap could
 Fixed issue where SSL certificates were be not verified when no root CAs were provided.
 
 
-== Version 2.3.2 (21 September 2021)
+=== Version 2.3.2 (21 September 2021)
 
 Version 2.3.2 is a maintenance release for the Go SDK 2.3.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.2?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1009[GOCBC-1009]:
 Add support for Eventing function management.
 * https://issues.couchbase.com/browse/GOCBC-1166[GOCBC-1166]:
 Check error codes and fallback to parsing messages in query index management.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1168[GOCBC-1168]:
 Fixed issue where cluster level HTTP operations could hang indefinitely.
 * https://issues.couchbase.com/browse/GOCBC-1170[GOCBC-1170]:
 Fixed issue where Search `ScanConsistency` was sending an incorrect value for `NotBounded`.
 
-== Version 2.3.1 (17 August 2021)
+=== Version 2.3.1 (17 August 2021)
 
 Version 2.3.1 is a maintenance release for the Go SDK 2.3.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.1?tab=doc[API Documentation]
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1140[GOCBC-1140]:
 Fixed issue where `ViewOptions` would return an error when using `group_level`.
@@ -413,26 +451,26 @@ Fixed issue where an error occuring whilst fetching the error map during bootstr
 * https://issues.couchbase.com/browse/GOCBC-1149[GOCBC-1149]:
 Fixed issue where `GetAllScopes` would panic on HTTP request send failure.
 
-== Version 2.2.5 (17 August 2021)
+=== Version 2.2.5 (17 August 2021)
 
 Version 2.2.5 is a maintenance release for the Go SDK 2.2.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.5?tab=doc[API Documentation]
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1147[GOCBC-1147]:
 Fixed issue where an error occuring whilst fetching the error map during bootstrap could cause an indefinite hang.
 * https://issues.couchbase.com/browse/GOCBC-1149[GOCBC-1149]:
 Fixed issue where `GetAllScopes` would panic on HTTP request send failure.
 
-== Version 2.3.0 (15 July 2021)
+=== Version 2.3.0 (15 July 2021)
 
 Version 2.3.0 is the first release in the Go SDK 2.3 series.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.3.0?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-935[GOCBC-935]:
 Added support for Analytics remote and external link management.
@@ -452,7 +490,7 @@ Updated errors returned on Query error code return of 12009.
 * https://issues.couchbase.com/browse/GOCBC-1130[GOCBC-1130]:
 Updated Query error handling to return an authentication error on error code 13104.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1095[GOCBC-1095]:
 Fixed issue where View error contents were being parsed incorrectly.
@@ -467,13 +505,21 @@ Fixed issue where Query errors were sometimes not being parsed correctly.
 * https://issues.couchbase.com/browse/GOCBC-1132[GOCBC-1132]:
 Fixed issue where benchmarks would not compile.
 
-== Version 2.2.4 (15 June 2021)
+
+== Go SDK 2.2 Releases
+
+We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
+All patch releases for each dot minor release should be API compatible, and safe to upgrade;
+any changes to expected behavior are noted in the release notes that follow.
+
+
+=== Version 2.2.4 (15 June 2021)
 
 Version 2.2.4 is a maintenance release for the Go SDK 2.2.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.4?tab=doc[API Documentation]
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1095[GOCBC-1095]:
 Fixed issue where errors returned from views was parsed incorrectly.
@@ -486,13 +532,13 @@ Fixed issue where parsing search errors was using the incorrect field.
 * https://issues.couchbase.com/browse/GOCBC-1100[GOCBC-1100]:
 Fixed issue where the `took` field in search metrics was parsed incorrectly.
 
-== Version 2.2.3 (20 April 2021)
+=== Version 2.2.3 (20 April 2021)
 
 Version 2.2.3 is a maintenance release for the Go SDK 2.2.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.3?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1071[GOCBC-1071]:
 Updated SDK to use new protocol level changes for get collection id.
@@ -503,7 +549,7 @@ During bootstrap don't retry authentication if the error is request cancelled.
 * https://issues.couchbase.com/browse/GOCBC-1081[GOCBC-1081]:
 During CCCP polling don't retry request if the error is request cancelled.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1074[GOCBC-1074]:
 Fixed issue where threshold log tracer was missing fields in log output.
@@ -515,13 +561,13 @@ Fixed issue where bootstrapping a node during an SDK wide reconnect would cause 
 Fixed issue where the poller controller could deadlock if a node reported a bucket not found at the same time as CCCP successfully fetched a cluster config for the first time.
 
 
-== Version 2.2.2 (16 March 2021)
+=== Version 2.2.2 (16 March 2021)
 
 Version 2.2.2 is a maintenance release for the Go SDK 2.2.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.2?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1010[GOCBC-1010]:
 Added uncommitted support for collections to `SearchOptions`.
@@ -532,20 +578,20 @@ Various performance enhancements to improve CPU usage.
 * https://issues.couchbase.com/browse/GOCBC-1068[GOCBC-1068]:
 Dropped log level to warn for when applying a cluster config object is preempted.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1070[GOCBC-1070]:
 Fixed issue where `BucketManager` `FlushBucket` didn't return `ErrBucketNotFound` when the bucket doesn't exist.
 * https://issues.couchbase.com/browse/GOCBC-1066[GOCBC-1066]:
 Fixed issue where shutting down cluster config polling could lead to a panic.
 
-== Version 2.2.1 (16 February 2021)
+=== Version 2.2.1 (16 February 2021)
 
 Version 2.2.1 is a maintenance release for the Go SDK 2.2.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.1?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1017[GOCBC-1017]:
 Updated server endpoints for collections manager.
@@ -554,7 +600,7 @@ Updated json serialization of errors to include the underlying cause.
 * https://issues.couchbase.com/browse/GOCBC-1054[GOCBC-1054]:
 Updated `MutateIn` to allow a blank path with `RemoveSpec`.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1047[GOCBC-1047]:
 Fixed issue where `GetAllScopes` was not setting the max expiry value for any collections.
@@ -564,13 +610,13 @@ Fixed issue where `GetAllDesignDocuments` was ignoring the provided `namespace`.
 Fixed issue where an extra, empty, origin was added to user roles on fetching the user.
 
 
-== Version 2.2.1 (16 February 2021)
+=== Version 2.2.1 (16 February 2021)
 
 Version 2.2.1 is a maintenance release for the Go SDK 2.2.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.1?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1017[GOCBC-1017]:
 Updated server endpoints for collections manager.
@@ -579,7 +625,7 @@ Updated json serialization of errors to include the underlying cause.
 * https://issues.couchbase.com/browse/GOCBC-1054[GOCBC-1054]:
 Updated `MutateIn` to allow a blank path with `RemoveSpec`.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1047[GOCBC-1047]:
 Fixed issue where `GetAllScopes` was not setting the max expiry value for any collections.
@@ -589,14 +635,14 @@ Fixed issue where `GetAllDesignDocuments` was ignoring the provided `namespace`.
 Fixed issue where an extra, empty, origin was added to user roles on fetching the user.
 
 
-== Version 2.2.0 (15 December 2020)
+=== Version 2.2.0 (15 December 2020)
 
 Version 2.2.0 is the first release in the Go SDK 2.2 series.
 It brings enhancements and bug fixes over 2.1.8, and improves compatibility with Server 6.6 and with 7.0β.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.2.0?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-869[GOCBC-869]:
 `BucketSettings` `MaxTTL` field deprecated in favour of `MaxExpiry`.
@@ -617,7 +663,7 @@ Updated `QueryOptions` `FlexIndex` support to API stability committed.
 * https://issues.couchbase.com/browse/GOCBC-1026[GOCBC-1026]:
 Updated `BucketSettings` ephemeral eviction policies support to API stability committed.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1022[GOCBC-1022]:
 Fixed issue where having multiple buckets open could cause view requests to be sent to an incorrect bucket.
@@ -627,13 +673,20 @@ Fixed issue where having multiple buckets open could cause view manager requests
 Fixed issue where bootstrapping against a non-kv node could never successfully fully connect.
 
 
-== Version 2.1.8 (17 November 2020)
+== Go SDK 2.1 Releases
+
+We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
+All patch releases for each dot minor release should be API compatible, and safe to upgrade;
+any changes to expected behavior are noted in the release notes that follow.
+
+
+=== Version 2.1.8 (17 November 2020)
 
 Version 2.1.8 is a maintenance release for the Go SDK 2.1.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.8?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-937[GOCBC-937]:
 Added uncommitted support for `GeoPolygon` search queries.
@@ -642,18 +695,18 @@ Added document id to key value errors.
 * https://issues.couchbase.com/browse/GOCBC-1006[GOCBC-1006]:
 Changed the log level for retry strategy retries from info to debug.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-1007[GOCBC-1007]:
 Fixed issue some operations were being incorrectly sent to the retry orchestrator on errors.
 
-== Version 2.1.7 (20 October 2020)
+=== Version 2.1.7 (20 October 2020)
 
 Version 2.1.7 is a maintenance release for the Go SDK 2.1.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.7?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-938[GOCBC-938]:
 Added uncommitted support for `FlexIndex` to `QueryOptions`.
@@ -669,7 +722,7 @@ These values are now coerced into JSON `null` values before sending.
 * https://issues.couchbase.com/browse/GOCBC-1001[GOCBC-1001]:
 Added missing `Terms`, `DateRanges`, and `NumericRanges` fields to `SearchFacetResult`.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-977[GOCBC-977]:
 Fixed issue where analytics `GetPendingMutations` was looking for the incorrect data structure in the HTTP response body.
@@ -681,18 +734,18 @@ Fixed issue where authentication mechanisms were not correctly iterated on boots
 Fixed issue where the `Map` datastructure was using invalid paths for `At` and `Exists`.
 
 
-== Version 2.1.6 (15 September 2020)
+=== Version 2.1.6 (15 September 2020)
 
 Version 2.1.6 is a maintenance release for the Go SDK 2.1.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.6?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-979[GOCBC-979]:
 Add ExpiryTime to GetResult, providing the point in time at which a document will expire.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-969[GOCBC-969]:
 Fixed issue where the SDK would attempt to parse query metrics even if they weren't present.
@@ -703,13 +756,13 @@ Fixed issue where it was possible for more than one request to trigger switching
 * https://issues.couchbase.com/browse/GOCBC-981[GOCBC-981]:
 Fixed issue where setting the `network` connection string property to `default` would be discarded.
 
-== Version 2.1.5 (18 August 2020)
+=== Version 2.1.5 (18 August 2020)
 
 Version 2.1.5 is a maintenance release for the Go SDK 2.1.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.5?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-926[GOCBC-926]:
 Added a new `Cluster` level option to set which authentication mechanisms to use.
@@ -718,7 +771,7 @@ Exposed the `ThresholdLogTracer` and corresponding options so that threshold log
 The threshold logger can then be set on the `Cluster` level options as `Tracer`.
 Note: The threshold logger is the default tracer used by the SDK.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-718[GOCBC-718]:
 Fixed issue where errors would be silently swallwed when performing JSON unmarshalling of search and view queries.
@@ -728,13 +781,13 @@ Fixed issue where the SDK was not performing HELLO with the JSON feature enabled
 * https://issues.couchbase.com/browse/GOCBC-968[GOCBC-968]:
 Fixed issue where n1ql indexes were being created using prepared statements.
 
-== Version 2.1.4 (21 July 2020)
+=== Version 2.1.4 (21 July 2020)
 
 Version 2.1.4 is a maintenance release for the Go SDK 2.1.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.4?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-889[GOCBC-889]:
 Added support for remaining service types to `WaitUntilReadyOptions`.
@@ -743,7 +796,7 @@ Added support for ephemeral bucket eviction types in the `BucketManager`.
 * https://issues.couchbase.com/browse/GOCBC-951[GOCBC-951]:
 Adjusted the default max idle http connection timeout to be 4.5s from unlimited.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-925[GOCBC-925]:
 Fixed issue where errors could not be accessed for queries responding with a HTTP 200 status code but containing errors.
@@ -759,24 +812,24 @@ Fixed issue where `MaxTTL` was being sent as nanoseconds rather than seconds whe
 * https://issues.couchbase.com/browse/GOCBC-955[GOCBC-955]:
 Fixed issue where xattrs were being reordered when being moved to the front of the list in subdoc operations.
 
-== Version 2.1.3 (1 July 2020)
+=== Version 2.1.3 (1 July 2020)
 
 Version 2.1.3 is an off-cadence release for the Go SDK 2.1.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.3?tab=doc[API Documentation]
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-941[GOCBC-941]:
 Fixed issue where `WaitUntilReady` at the `Cluster` level would always timeout.
 
-== Version 2.1.2 (16 June 2020)
+=== Version 2.1.2 (16 June 2020)
 
 Version 2.1.2 is a maintenance release for the Go SDK 2.1.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.2?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-907[GOCBC-907]:
 Enhance search query errors to include the index name and error text from the server.
@@ -785,7 +838,7 @@ Ensure that only available services are used for Ping if no services specified.
 * https://issues.couchbase.com/browse/GOCBC-923[GOCBC-923]:
 Updated const declarations to add types to improve API reference.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-879[GOCBC-879],
 https://issues.couchbase.com/browse/GOCBC-890[GOCBC-890]:
@@ -803,19 +856,19 @@ Fixed issue where enhanced durability could be incorrectly set as unsupported on
 * https://issues.couchbase.com/browse/GOCBC-914[GOCBC-914]:
 Fixed issue where operations using named collections could be sent with an incorrect collection ID in queued before the collection is known.
 
-== Known issues
+=== Known issues
 * https://issues.couchbase.com/browse/GOCBC-941[GOCBC-941]:
 Performing `Cluster` level `WaitUntilReady` never completes within the timeout.
 This issue was introduced whilst fixing the behaviour for operations at the `Cluster` level when the `WaitUntilReady` call is not used.
 The workaround for this is to not use the `Cluster` level `WaitUntilReady` call, `Cluster` level operations will now be queued until the SDK has connected and setup anyway.
 
-== Version 2.1.1 (19 May 2020)
+=== Version 2.1.1 (19 May 2020)
 
 Version 2.1.1 is a maintenance release for the Go SDK 2.1.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.1?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-778[GOCBC-778]:
 Updated legacy durability polling to use a backoff rather than a fixed interval.
@@ -830,7 +883,7 @@ Improved logging to always log the cluster config when fetched.
 * https://issues.couchbase.com/browse/GOCBC-888[GOCBC-888]:
 Re-enabled HTTP dispatch traces.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-691[GOCBC-691]:
 Fixed issue where operations on unknown collections (when using 6.5 developer preview) are not automatically retried.
@@ -841,7 +894,7 @@ Fixed issue where an invalid cluster config would trigger a shutdown of the unde
 * https://issues.couchbase.com/browse/GOCBC-884[GOCBC-884]:
 Fixed issue where `UpsertUser` sent an invalid request if a role was specified with no bucket.
 
-=== Known issues
+==== Known issues
 
 * https://issues.couchbase.com/browse/GOCBC-879[GOCBC-879], 
 https://issues.couchbase.com/browse/GOCBC-890[GOCBC-890]:
@@ -852,14 +905,14 @@ To mitigate this the `err := WaitUntilReady(time.Duration, WaitUntilReadyOptions
 . Return a `TimeoutError` if connections are not ready within the specified time limit.
 
 
-== Version 2.1.0 (21 April 2020)
+=== Version 2.1.0 (21 April 2020)
 
 Version 2.1.0 is a maintenance release for the Go SDK 2.0.0.
 This release contains updating to a new major release of the core part of the SDK.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.1.0?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-843[GOCBC-843]:
 Updated to the new version of gocbcore.
@@ -868,18 +921,26 @@ This change includes a key behavioral change of no longer reporting non-configur
 Add support for the `WaitForReady` operation, support waiting for the KeyValue service to be ready.
 
 
-== Version 2.0.4 (21 April 2020)
+== Go SDK 2.0 Releases
+
+We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
+All patch releases for each dot minor release should be API compatible, and safe to upgrade;
+any changes to expected behavior are noted in the release notes that follow.
+
+
+
+=== Version 2.0.4 (21 April 2020)
 
 Version 2.0.4 is a maintenance release for the Go SDK 2.0.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.0.4?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-844[GOCBC-844]:
 Updated to the latest version of gocbconnstr.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-838[GOCBC-838]:
 Fixed issue where HTTP endpoints were being used when SSL is enabled.
@@ -891,13 +952,13 @@ Fixed issue where using `PasswordAuthenticator` with a root CA and SSL would cau
 Fixed issue where search consistency options were not being set in the request payload.
 
 
-== Version 2.0.3 (17 March 2020)
+=== Version 2.0.3 (17 March 2020)
 
 Version 2.0.3 is a maintenance release for the Go SDK 2.0.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.0.3?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-662[GOCBC-662]:
 The server requires that any subdoc xattr ops are at the beginning of the ops list. 
@@ -919,7 +980,7 @@ Removed `context.Context` from search index manager operations.
 Note that whilst this is a breaking change it was deemed best to break it and make sure any users who are using it know that they are using unused functionality.
 
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-814[GOCBC-814]:
 Fixed issue where search was looking for incorrect field in the JSON response.
@@ -927,29 +988,29 @@ Fixed issue where search was looking for incorrect field in the JSON response.
 Fixed issue where opening a bucket with the same name twice led to incorrect behaviour on both buckets.
 
 
-== Version 2.0.2 (21 February 2020)
+=== Version 2.0.2 (21 February 2020)
 
 Version 2.0.2 is an off-cycle release for the Go SDK 2.0.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.0.2?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-805[GOCBC-805]:
 Updated timeout behavior across the SDK to be consistent. If an operation level timeout is provided then it is used, otherwise the respective global timeout is used.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-804[GOCBC-804]:
 Fixed issue with timeouts not being respected for HTTP requests, leading to them never timing out.
 
-== Version 2.0.1 (19 February 2020)
+=== Version 2.0.1 (19 February 2020)
 
 Version 2.0.1 is a maintenance release for the Go SDK 2.0.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.0.1?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-775[GOCBC-775]:
 Improve error message for when performing cluster level operations with no connections available.
@@ -958,7 +1019,7 @@ Added support for KVDurableTimeout.
 * https://issues.couchbase.com/browse/GOCBC-786[GOCBC-786]:
 Improve error messages for the UserManager GetUser function.
 
-=== Fixed Issues
+==== Fixed Issues
 
 * https://issues.couchbase.com/browse/GOCBC-701[GOCBC-701]:
 Fixed issue with enhanced prepared statements not being used.
@@ -985,13 +1046,13 @@ Fixed issue with user manager sometimes parsing user role origins incorrectly.
 * https://issues.couchbase.com/browse/GOCBC-796[GOCBC-796]:
 Fixed issue with cccp poller hanging if the get cluster config op timed out.
 
-== Version 2.0.0 (18 January 2020)
+=== Version 2.0.0 (18 January 2020)
 
 Version 2.0.0 is the first release for the Go SDK 2.0.0.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.0.0?tab=doc[API Documentation]
 
-=== New Features and Behavioral Changes
+==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-510[GOCBC-510]:
 Dropped support for connecting using the http scheme.
@@ -1017,7 +1078,7 @@ Updated expiry options to be `time.Duration`.
 Moved authenticator to ClusterOptions.
 
 
-== Pre-releases
+=== Pre-releases
 
 Numerous _Alpha_ and _Beta_ releases were made in the run-up to the 2.0 release, and although unsupported, the release notes and download links are retained for archive purposes xref:3.0-pre-release-notes.adoc[here].
 
