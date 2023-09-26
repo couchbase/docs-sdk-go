@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.6.3
+$ go get github.com/couchbase/gocb/v2@v2.6.4
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -36,6 +36,16 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+=== Version 2.6.4 (26 September 2023)
+
+Version 2.6.4 is a maintenance release for the Go SDK 2.6.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.6.4?tab=doc[API Documentation]
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1479[GOCBC-1479]:
+Do not apply cluster configs during bootstrap if select bucket fails.
 
 === Version 2.6.3 (18 April 2023)
 
