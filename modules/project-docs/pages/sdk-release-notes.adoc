@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.6.3
+$ go get github.com/couchbase/gocb/v2@v2.6.4
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -35,6 +35,17 @@ The most current and up to date API Documentation is always available through th
 We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
+
+=== Version 2.6.4 (26 September 2023)
+
+Version 2.6.4 is a maintenance release for the Go SDK 2.6.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.6.4?tab=doc[API Documentation]
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1479[GOCBC-1479]:
+Cluster configs fetched during bootstrap are now only applied if select bucket succeeds.
 
 
 === Version 2.6.3 (18 April 2023)
@@ -55,6 +66,7 @@ Fixed issue where connection string parsing was missing some timeout values.
 * https://issues.couchbase.com/browse/GOCBC-1402[GOCBC-1402]:
 Fixed issue where wan-development config profile was missing some timeout values.
 
+
 === Version 2.6.2 (23 March 2023)
 
 Version 2.6.2 is a maintenance release for the Go SDK 2.6.
@@ -71,6 +83,7 @@ When an error is translated to a `QueryPreparedStatementFailureRetryReason` it w
 * https://issues.couchbase.com/browse/GOCBC-1395[GOCBC-1395]:
 Improved timeout error handling for http based services - if we know that an operation has already timed out then we will now immediately return a timeout error.
 Retry reason context is now carried throughout the lifetime of an entire prepared statement request.
+
 
 === Version 2.6.1 (22 February 2023)
 
