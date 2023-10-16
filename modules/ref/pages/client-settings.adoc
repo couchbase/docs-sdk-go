@@ -181,7 +181,9 @@ Name: *KVDurableTimeout*::
 +
 Default: `10s`
 +
-Key/Value operations with enhanced durability requirements may take longer to complete, so they have a separate default timeout [From Go SDK 2.0.1].
+Key/Value operations with enhanced durability requirements may take longer to complete, so they have a separate default timeout.
++
+*Do not* set this above 65s, which is the maximum possible `SyncWrite` timeout on the Server side.
 +
 WARNING: The `KVDurableTimeout` property is not part of the stable API and may change or be removed at any time.
 
