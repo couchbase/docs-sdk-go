@@ -180,6 +180,8 @@ include::6.5@sdk:shared:partial$documents.adoc[tag=exp-note]
 
 The value of a document can be increased or decreased atomically using `Binary().Increment()` and `Binary().Decrement()`.
 
+NOTE: Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change.
+
 .Increment
 [source,golang,indent=0]
 ----
@@ -192,8 +194,11 @@ include::devguide:example$go/kv-counter.go[tag=increment]
 include::devguide:example$go/kv-counter.go[tag=decrement]
 ----
 
-NOTE: Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change.
+TIP: Setting the document expiry time only works when a document is created, and it is not possible to update the expiry time of an existing counter document with the Increment method -- to do this during an increment, use with the `Touch()` method.
 
+
+
+// Atomicity Across Data Centers
 
 include::{version-common}@sdk:shared:partial$atomic.adoc[tag=xdcr]
 
