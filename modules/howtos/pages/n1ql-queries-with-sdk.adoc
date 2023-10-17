@@ -28,6 +28,10 @@ or replace _travel-sample_ with a different Bucket name to build an index on a d
 
 NOTE: The default installation places cbq in `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows.
 
+Note that building indexes is covered in more detail on the xref:concept-docs:n1ql-query.adoc#index-building[Query concept page] --
+and in the https://pkg.go.dev/github.com/couchbase/gocb/v2#CollectionQueryIndexManager[API Reference].
+
+
 == Getting Started
 
 After familiarizing yourself with the basics on how the {sqlpp} query language works and how to query it from the UI you can use it from the Go SDK.
