@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.6.4
+$ go get github.com/couchbase/gocb/v2@v2.6.5
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -35,6 +35,24 @@ The most current and up to date API Documentation is always available through th
 We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
+
+=== Version 2.6.5 (18 October 2023)
+
+Version 2.6.5 is a maintenance release for the Go SDK 2.6.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.6.4?tab=doc[API Documentation]
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1489[GOCBC-1489]:
+Exposed `ErrCircuitBreakOpen` as API stability uncommitted.
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1485[GOCBC-1485]:
+Fixed issue where operations queue for collection id refresh would not be dequeued on refresh.
+* https://issues.couchbase.com/browse/GOCBC-1493[GOCBC-1493]:
+Fixed issue where key value operation transcoding errors would be swallowed by the SDK.
 
 === Version 2.6.4 (26 September 2023)
 
