@@ -208,6 +208,36 @@ E.....@.@.............+....Z.'yZ..#........
 ----
 ====
 
+
+== Protostellar
+
+
+Couchbase's next generation connection protocol, introduced in Go SDK 2.7 and Couchbase Autonomous Operator 2.6, can be enabled simply by changing the connection string to `couchbase2://` but there are a few differences to be aware of, described <<#limitations,below>>.
+
+The protocol implements a gRPC-style interface between the SDK and Couchbase Server (in this case, only available in the Server running on Kubernetes, with xref:operator::overview.adoc[Couchbase Autonomous Operator].
+
+
+
+=== Limitations
+
+The protostellar protocol will not work with certain legacy features: MapReduce Views, Memcached buckets.
+
+The following are not currently implemented over the `couchbase2://` protocol:
+
+* Authentication by client certificate.
+* Multi-document ACID transactions.
+* Analytics service.
+* Health Check.
+
+There are some different behaviors seen with this protocol:
+
+* Some config options are unsupported -- see the xref:ref:client-settings.adoc[Settings page].
+* The SDK will poll the gRPC channels until they are in a good state, or return an error, or timeout while waiting -- in our standard protocol there is an option of setting `waitUntilReady()` for just certain services to become available.
+* Some error codes are more generic -- in cases where the client would not be expected to need to take specific action.
+
+
+
+
 include::{version-common}@sdk:shared:partial$dnssrv-pars.adoc[tag=dnssrv]
 
 DNS SRV bootstrapping is available in the Go SDK.

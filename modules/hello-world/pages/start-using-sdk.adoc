@@ -196,6 +196,13 @@ Following successful authentication, add this code snippet to access your `Bucke
 include::devguide:example$go/cloud.go[tag=bucket,indent=0]
 ----
 
+[TIP]
+.Connecting to Kubernetes
+====
+Couchbase's large number of ports across the URLs of many services can be proxied by using the `couchbase2://` protocol in the connection string -- read more on the xref:howtos:managing-connections.adoc#protostellar[Connections] page.
+====
+
+
 === Add and Retrieve Documents
 
 The Go SDK supports full integration with the xref:concept-docs:collections.adoc[Collections] feature introduced in Couchbase Server 7.0.

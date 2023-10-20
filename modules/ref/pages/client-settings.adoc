@@ -307,3 +307,14 @@ This profile changes the default timeouts.
 | 120s
 |===
 
+
+== Protostellar Protocol
+
+Using the xref:howtos:managing-connections.adoc#protostellar[Protostellar] protocol (to connect to Couchbase Server running on xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6 or newer) should not need any changes to config.
+
+Some settings will be ignored -- and this will be logged at `WARNING` level -- but should cause no error.
+Currently, these include:
+
+* Compression
+* `numKvConnections`
+

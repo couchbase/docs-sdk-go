@@ -95,34 +95,38 @@ AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04 (from S
 [.table-merge-cells]
 [cols="7,5,6"]
 |===
-| | Server 6.6 | Server 7.0-7.1
+| | Server 6.6 | Server 7.0-7.1 | Server 7.2
 
 | Enhanced Durability
-2+| All SDK versions
+3+| All SDK versions
 
 | Durable Writes
-2+| Since 2.0
+3+| Since 2.0
 
 | Analytics
-2+| Since 1.5
+3+| Since 1.5
 
 | Collections
 | Developer Preview in 6.6, SDK 2.0
-| Since 2.1.8
+2+| Since 2.1.8
 
 | Scope-Level {sqlpp} Queries & all Collections features
 | Not Supported
-| Since SDK 2.3.0
+2+| Since SDK 2.3.0
 
 | Field Level Encryption v2
-2+| Since SDK 2.3.0footnote:[Field Level Encryption distributed as separate library.]
+3+| Since SDK 2.3.0footnote:[Field Level Encryption distributed as separate library.]
 
 | Request Tracing
-2+| Since SDK 2.0.3 (stable interface from 2.3.0)
+3+| Since SDK 2.0.3 (stable interface from 2.3.0)
 
 | Distributed ACID Transactions
 | Not Supported
-| Since SDK 2.4.0
+2+| Since SDK 2.4.0
+
+| Protostellar connection protocol
+2+| Not Supported
+| With xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6+
 |===
 
 == Couchbase Go SDK
