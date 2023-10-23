@@ -308,11 +308,11 @@ This profile changes the default timeouts.
 |===
 
 
-== Protostellar Protocol
+== Cloud Native Gateway
 
-Using the xref:howtos:managing-connections.adoc#protostellar[Protostellar] protocol (to connect to Couchbase Server running on xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6 or newer) should not need any changes to config.
+Using the xref:howtos:managing-connections.adoc#cloud-native-gateway[Cloud Native Gateway] protocol (to connect to Couchbase Server running on xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6 or newer) should not need any changes to config.
 
-Some settings will be ignored -- and this will be logged at `WARNING` level -- but should cause no error.
+Some settings will be ignored -- and this will be logged at `WARNING` level.
 Currently, these include:
 
 * Compression

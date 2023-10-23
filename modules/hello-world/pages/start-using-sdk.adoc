@@ -197,9 +197,9 @@ include::devguide:example$go/cloud.go[tag=bucket,indent=0]
 ----
 
 [TIP]
-.Connecting to Kubernetes
+.Connecting to Cloud Native Gateway, for Kubernetes or OpenShift
 ====
-Couchbase's large number of ports across the URLs of many services can be proxied by using the `couchbase2://` protocol in the connection string -- read more on the xref:howtos:managing-connections.adoc#protostellar[Connections] page.
+Couchbase's large number of ports across the URLs of many services can be proxied by using a `couchbase2://` endpoint as the connection string -- read more on the xref:howtos:managing-connections.adoc#cloud-native-gateway[Connections] page.
 ====
 
 

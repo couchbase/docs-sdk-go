@@ -12,7 +12,7 @@ include::project-docs:partial$attributes.adoc[]
 {description}
 
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-At time of writing (October 2022), this is 1.18 and 1.19.
+At time of writing (October 2023), this is 1.20 and 1.19.
 Older versions may remain compatible, but are not supported.
 
 
@@ -31,7 +31,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 [#table_sdk_versions]
 [cols="40,20,25"]
 |===
-| | SDK 2.0 - 2.2 | 2.3 - 2.6
+| | SDK 2.0 - 2.2 | 2.3 - 2.7
 
 | *Server 6.6*
 | *✔*
@@ -78,8 +78,8 @@ Microsoft Windows 10 / All LTS releases from Windows Server 2016.
 === Mac OS X
 
 The current and previous two releases of OS X.
-At time of writing (October 2022): 13 (_Ventura_), 12 (_Monterey_), and 11 (_Big Sur_).
-M1 ARM  architecture is fully supported in the 2.6 Go SDK.
+At time of writing (October 2023): 14 (Sonoma), 13 (Ventura), and 12 (Monterey).
+M1 ARM  architecture is fully supported in the {sdk_dot_minor} Go SDK.
 ****
 
 Although installable or compilable on many other platforms, we cannot provide support for untested combinations.
@@ -93,7 +93,7 @@ AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04 (from S
 
 .Couchbase Server and SDK Supported Version Matrix
 [.table-merge-cells]
-[cols="7,5,6"]
+[cols="7,5,6,7"]
 |===
 | | Server 6.6 | Server 7.0-7.1 | Server 7.2
 
@@ -124,9 +124,9 @@ AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04 (from S
 | Not Supported
 2+| Since SDK 2.4.0
 
-| Protostellar connection protocol
+| Cloud Native Gateway
 2+| Not Supported
-| With xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6+
+| From SDK 2.7.0 (with xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6+)
 |===
 
 == Couchbase Go SDK

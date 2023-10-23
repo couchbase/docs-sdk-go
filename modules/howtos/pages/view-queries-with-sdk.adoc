@@ -1,5 +1,5 @@
 = MapReduce Views
-:description: You can use MapReduce views to create queryable indexes in Couchbase Server.
+:description: Our legacy MapReduce Views Service is best replaced by the scalable Query Service.
 :navtitle: MapReduce Views
 :page-topic-type: howto
 :page-aliases: ROOT:view-queries-with-sdk,ROOT:geo-spatial-views
@@ -10,51 +10,29 @@ include::project-docs:partial$attributes.adoc[]
 {description}
 
 // include::{version-common}@sdk:shared:partial$views.adoc[tag=deprecate]
-include::{version-common}@sdk:shared:partial$views.adoc[tag=deprecate]
 
 
-== MapReduce Views
+// option 1 - C++ - redirect to migration page, and add note at end.
 
-The normal CRUD methods allow you to look up a document by its ID.
-A MapReduce (_view_ query) allows you to lookup one or more documents based on various criteria.
-MapReduce views are comprised of a _map_ function that is executed once per document (this is done incrementally, so this is not run each time you query the view) and an optional _reduce_ function that performs aggregation on the results of the _map_ function.
-The _map_ and _reduce_ functions are stored on the server and written in JavaScript.
-
-MapReduce queries can be further customized during query time to allow only a subset (or range) of the data to be returned.
-
-TIP: See the xref:7.1@server:learn:views/views-writing.adoc[Incremental MapReduce Views] and xref:7.1@server:learn:views/views-querying.adoc[Querying Data with Views] sections of the general documentation to learn more about views and their architecture.
+// option 2 - most others - this common page, with per-sdk archive link at end.
 
 
-== Querying Views through the Go SDK
 
-Once you have a view defined, it can be queried from the Go SDK by using the `ViewQuery` method on a Bucket instance.
+////
+Views are a legacy service which pre-dates the {name-sdk}.
+Your use case is most likely to be met by the xref:howtos:n1ql-queries-with-sdk.adoc[Query service].
+////
 
-The following example is the definition of a `by_country` view in a _"landmarks-by-country"_ design document.
-This view checks whether a document is a landmark and has a country.
-If it does, it emits the landmark's country into the index.
-This view allows landmarks to be queried for by country.
-For example, it's now possible to ask the question "What countries start with U?"
+xref:{version-server}@server:learn:views/views-intro.adoc[MapReduce Views] date from the earliest days of Couchbase and although still maintained and supported for legacy use, they are deprecated in Couchbase Server, and will eventually be removed.
 
-[source,golang,indent=0]
-----
-include::devguide:example$go/views-startkey.go[tag=landmarksviewstart]
-----
+Views are the only service which does not benefit from xref:{version-server}@server:learn:services-and-indexes/services/services.adoc#services-and-multi-dimensional-scaling[Multi-Dimensional Scaling], and is rarely the best choice over, say, xref:howtos:n1ql-queries-with-sdk.adoc[our Query service] if you are starting a fresh application.
+See our discussion document on xref:concept-docs:data-services.adoc[the best service for you to use].
 
-The following example is the definition of a `by_name` view in a _"landmarks-by-name"_ design document in the _"travel-sample"_ sample dataset.
-This view checks whether a document is a landmark and has a name.
-If it does, it emits the landmark's name into the index.
-This view allows landmarks to be queried for by its _"name"_ field.
+CAUTION: If you are provisioning Views on Couchbase Server for a legacy application, _they must run on a 
+xref:{version-server}@server:learn:buckets-memory-and-storage/storage-engines.adoc#couchstore[couchstore] bucket_.
 
-[source,golang,indent=0]
-----
-include::devguide:example$go/views-key.go[tag=landmarksview]
-----
 
-Once a view result is obtained then it can be iterated over and the ID, keys and values extracted.
+We will maintain support for Views in the SDKs for so long as it can be used with a supported version of Couchbase Server.
 
-[source,golang,indent=0]
-----
-include::devguide:example$go/views-key.go[tag=results]
-----
+Information on using MapReduce Views with the SDK can still be accessed in our https://docs-archive.couchbase.com/go-sdk/2.2/howtos/view-queries-with-sdk.html[documentation archive].
 
-Take care to ensure you call `Err` after accessing rows to check for any errors returned.

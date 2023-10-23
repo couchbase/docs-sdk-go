@@ -8,9 +8,10 @@ asciidoc:
   attributes:
     server_version: '7.2'
     sdk_current_version: '2.7.0'
-    sdk_dot_minor: 2.7.0
+    sdk_dot_minor: 2.7
     sdk_dot_major: 2.x
     version-server: '7.2'
+    version-common: '7.2'
     name_platform: 'Go'
     name-sdk: Go SDK
     sdk_api: '3.4'

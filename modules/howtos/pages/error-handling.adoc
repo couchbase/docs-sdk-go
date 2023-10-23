@@ -122,6 +122,17 @@ include::devguide:example$go/error-handling.go[tag=query]
 
 Analytics works in an identical fashion, raising an `AnalyticsError`.
 
+
+
+
+== Cloud Native Gateway
+
+If you connect to the Kubernetes or OpenShift over our xref:howtos:managing-connections.adoc#cloud-native-gateway[CloudNative Gateway], using the new `couchbase2://` endpoints, there are a few changes in the error messages returned.
+
+Some error codes are more generic -- in cases where the client would not be expected to need to take specific action -- but should cause no problem, unless you have written code looking at individual strings within the error messages.
+
+
+
 == Additional Resources
 Errors & Exception handling is an expansive topic.
 Here, we have covered examples of the kinds of exception scenarios that you are most likely to face.
