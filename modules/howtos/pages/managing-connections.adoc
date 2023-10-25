@@ -233,9 +233,10 @@ The following are not currently implemented over the `couchbase2://` protocol:
 
 There are some different behaviors seen with this protocol:
 
-* Some config options are unsupported -- see the xref:ref:client-settings.adoc#cloud-native-gatewry[Settings page].
+* Some config options are unsupported -- see the xref:ref:client-settings.adoc#cloud-native-gateway[Settings page].
 * The SDK will poll the gRPC channels until they are in a good state, or return an error, or timeout while waiting -- in our standard protocol there is an option of setting `waitUntilReady()` for just certain services to become available.
 * Some error codes are more generic -- in cases where the client would not be expected to need to take specific action -- but should cause no problem, unless you have written code looking at individual strings within the error messages.
+* Although documents continue to be stored compressed by Couchbase Server, they will not be transmitted in compressed form (to and from the client) over the wire, using `couchbase2://`.
 
 
 
