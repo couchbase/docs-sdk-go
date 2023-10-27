@@ -12,7 +12,7 @@ include::project-docs:partial$attributes.adoc[]
 {description}
 
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-At time of writing (October 2023), this is 1.20 and 1.19.
+At time of writing (October 2023), this is 1.20 and 1.21.
 Older versions may remain compatible, but are not supported.
 
 
