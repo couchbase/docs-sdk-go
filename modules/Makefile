@@ -1,6 +1,6 @@
 .PHONY: build
 
-GO_VERSION ?="1.13"
+GO_VERSION ?="1.19"
 GOCB_VERSION ?="v2.2.1"
 
 CB_EDITION ?=couchbase/server:enterprise
