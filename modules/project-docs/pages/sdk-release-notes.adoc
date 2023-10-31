@@ -44,29 +44,29 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.7.0?tab=doc[API Documentation
 
 ==== New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/GOCBC-1322][GOCBC-1322]:
+* https://issues.couchbase.com/browse/GOCBC-1322[GOCBC-1322]:
 Added RangeScan support as API stability volatile.
-* https://issues.couchbase.com/browse/GOCBC-1391][GOCBC-1391]:
+* https://issues.couchbase.com/browse/GOCBC-1391[GOCBC-1391]:
 Deprecated the use of `CollectionName` and `ScopeName` for query index options blocks, use `collection.QueryIndexes()` instead.
-* https://issues.couchbase.com/browse/GOCBC-1394][GOCBC-1394]:
+* https://issues.couchbase.com/browse/GOCBC-1394[GOCBC-1394]:
 Updated requests against HTTP APIs to always encode URIs.
-* https://issues.couchbase.com/browse/GOCBC-1397][GOCBC-1397]:
+* https://issues.couchbase.com/browse/GOCBC-1397[GOCBC-1397]:
 Added support for the `couchbase2://` protocol.
-* https://issues.couchbase.com/browse/GOCBC-1414][GOCBC-1414]:
+* https://issues.couchbase.com/browse/GOCBC-1414[GOCBC-1414]:
 The SDK no longer supports Go versions below 1.19, due to versions enforced by dependencies.
-* https://issues.couchbase.com/browse/GOCBC-1434][GOCBC-1434]:
+* https://issues.couchbase.com/browse/GOCBC-1434[GOCBC-1434]:
 Added `LookupInAnyReplica` and `LookupInAllReplicas` support as API stability volatile.
-* https://issues.couchbase.com/browse/GOCBC-1436][GOCBC-1436]:
+* https://issues.couchbase.com/browse/GOCBC-1436[GOCBC-1436]:
 Added `UseReplica` to `QueryOptions` as API stability uncommitted.
-* https://issues.couchbase.com/browse/GOCBC-1439][GOCBC-1439]:
+* https://issues.couchbase.com/browse/GOCBC-1439[GOCBC-1439]:
 Added support for Config Push Negotiation and faster failover.
-* https://issues.couchbase.com/browse/GOCBC-1454][GOCBC-1454]:
+* https://issues.couchbase.com/browse/GOCBC-1454[GOCBC-1454]:
 Added support for JSON marshalling/unmarshalling of search indexes.
-* https://issues.couchbase.com/browse/GOCBC-1457][GOCBC-1457]:
+* https://issues.couchbase.com/browse/GOCBC-1457[GOCBC-1457]:
 Reduced the default http idle timeout to 1s.
-* https://issues.couchbase.com/browse/GOCBC-1459][GOCBC-1459]:
+* https://issues.couchbase.com/browse/GOCBC-1459[GOCBC-1459]:
 Added support for history retention settings to bucket and collections managers, at API stability uncommitted.
-* https://issues.couchbase.com/browse/GOCBC-1461][GOCBC-1461]:
+* https://issues.couchbase.com/browse/GOCBC-1461[GOCBC-1461]:
 Updated `ExistsSpec` response to handle `ContentAt` better:
     ** Assign true if the path does exists
     ** Assign false if the path does not exist
@@ -74,12 +74,13 @@ Updated `ExistsSpec` response to handle `ContentAt` better:
 
 ==== Fixed Issues
 
-* https://issues.couchbase.com/browse/GOCBC-1471][GOCBC-1471]:
+* https://issues.couchbase.com/browse/GOCBC-1471[GOCBC-1471]:
 Fixed issue where calling `.Bucket` immediately after `.Connect` could lead to the config poller failing to stop.
-* https://issues.couchbase.com/browse/GOCBC-1479][GOCBC-1479]:
+* https://issues.couchbase.com/browse/GOCBC-1479[GOCBC-1479]:
 Fixed issue where a cluster config fetched as a part of bootstrap would be applied even if select bucket failed.
-* https://issues.couchbase.com/browse/GOCBC-1460][GOCBC-1460]:
+* https://issues.couchbase.com/browse/GOCBC-1460[GOCBC-1460]:
 Fixed issue where a path mismatch status code was not converted to `ErrPathMismatch`.
+
 
 == Go SDK 2.6 Releases
 
