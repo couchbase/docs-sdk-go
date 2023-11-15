@@ -1,9 +1,9 @@
 module examples
 
-go 1.13
+go 1.19
 
 require (
-	github.com/couchbase/gocb/v2 v2.6.4
+	github.com/couchbase/gocb/v2 v2.7.0
 	github.com/couchbase/gocbencryption/v2 v2.0.0
 	github.com/philhofer/fwd v1.0.0 // indirect
 	github.com/pquerna/ffjson v0.0.0-20190930134022-aa0246cd15f7

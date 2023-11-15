@@ -46,7 +46,7 @@ include::{version-common}@sdk:shared:partial$migration.adoc[tag=lang]
 The Go SDK 2.x is available for download using the go modules system.  All releases are posted to the couchbase/gocb
 GitHub repository and can be used by simply importing `github.com/couchbase/gocb/v2` and invoking `go get`.
 
-IMPORTANT: Go SDK 2.x has a minimum required Go version of 1.13, although we recommend running the latest LTS version with the highest patch version available.
+IMPORTANT: Go SDK 2.x has a minimum required Go version of 1.19, although we recommend running the latest LTS version with the highest patch version available.
 
 Almost all configuration for the SDK can be specified through the ConnectOptions which are passed to the
 `gocb.Connect` call in the SDK.  In addition to this, as with SDK 2.0, the majority of these options can
