@@ -25,7 +25,7 @@ IMPORTANT: `go get` only works if you have initialised a https://go.dev/blog/usi
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.6.4
+$ go get github.com/couchbase/gocb/v2@v2.7.0
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], Couchbase supports both the current, and the previous, versions of Go.
