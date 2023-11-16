@@ -126,7 +126,7 @@ AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04 (from S
 
 | Cloud Native Gateway
 2+| Not Supported
-| From SDK 2.7.0 (with xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6+)
+| From SDK 2.7.0 (with xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6.1+)
 |===
 
 == Couchbase Go SDK
