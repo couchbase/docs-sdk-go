@@ -42,6 +42,8 @@ Version 2.7.0 is the first release in the Go SDK 2.7 series.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.7.0?tab=doc[API Documentation]
 
+Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
+
 ==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1322[GOCBC-1322]:
@@ -53,7 +55,7 @@ Updated requests against HTTP APIs to always encode URIs.
 * https://issues.couchbase.com/browse/GOCBC-1397[GOCBC-1397]:
 Added support for the `couchbase2://` protocol.
 * https://issues.couchbase.com/browse/GOCBC-1414[GOCBC-1414]:
-The SDK no longer supports Go versions below 1.19, due to versions enforced by dependencies.
+The SDK no longer works with Go versions below 1.19, due to versions enforced by dependencies.
 * https://issues.couchbase.com/browse/GOCBC-1434[GOCBC-1434]:
 Added `LookupInAnyReplica` and `LookupInAllReplicas` support as API stability volatile.
 * https://issues.couchbase.com/browse/GOCBC-1436[GOCBC-1436]:
@@ -71,6 +73,8 @@ Updated `ExistsSpec` response to handle `ContentAt` better:
     ** Assign true if the path does exists
     ** Assign false if the path does not exist
     ** Return an error for all other statuses
+* https://issues.couchbase.com/browse/GOCBC-1540[GOCBC-1540]:
+Added support for `ErrDocumentTooDeep` which is only used in `couchbase2` mode, equivalent to `ErrPathTooDeep`.
 
 ==== Fixed Issues
 
@@ -81,6 +85,12 @@ Fixed issue where a cluster config fetched as a part of bootstrap would be appli
 * https://issues.couchbase.com/browse/GOCBC-1460[GOCBC-1460]:
 Fixed issue where a path mismatch status code was not converted to `ErrPathMismatch`.
 
+==== Breaking Fixes
+
+* https://issues.couchbase.com/browse/GOCBC-1530[GOCBC-1530]:
+Fixed issue where `Append` and `Prepend` could directly return a `gocbcore.ErrNotStored` error, this is now translated to a `gocb.ErrDocumentNotFound` error.
+* https://issues.couchbase.com/browse/GOCBC-1545[GOCBC-1545]:
+Fixed issue where `Projections` as a part of a `Get` operation would return any path level errors, these are now silently ignored.
 
 == Go SDK 2.6 Releases
 
