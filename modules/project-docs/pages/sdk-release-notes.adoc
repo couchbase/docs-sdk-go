@@ -65,7 +65,8 @@ Added support for Config Push Negotiation and faster failover.
 * https://issues.couchbase.com/browse/GOCBC-1454[GOCBC-1454]:
 Added support for JSON marshalling/unmarshalling of search indexes.
 * https://issues.couchbase.com/browse/GOCBC-1457[GOCBC-1457]:
-Reduced the default http idle timeout to 1s.
+Reduced the default timeout for idle HTTP connections to 1 second. 
+The previous default (4.5 seconds) was too close to the 5-second server-side timeout, and could lead to spurious request failures 
 * https://issues.couchbase.com/browse/GOCBC-1459[GOCBC-1459]:
 Added support for history retention settings to bucket and collections managers, at API stability uncommitted.
 * https://issues.couchbase.com/browse/GOCBC-1461[GOCBC-1461]:
