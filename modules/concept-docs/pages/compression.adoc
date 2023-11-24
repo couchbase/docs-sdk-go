@@ -82,11 +82,20 @@ The server may change compression settings for the bucket at any time, but it is
 
 While the tiniest of documents will not be reduced in size by compressing, there is another category of slightly larger documents in whose case the time overhead of compressing and decompressing outweighs the slight advantage of marginally reduced transmission time from client to server or back.
 
-To safeguard against the case of several thousand documents stealing CPU time to barely discernable advantage, a threshold for minimum doument size to compress is set in the SDK, with a sensible default value - that value can be seen for your chosen SDK in its API documentation (normally 32 bytes), and you can override this to disable compression:
+To safeguard against the case of several thousand documents stealing CPU time to barely discernable advantage, a threshold for minimum doument size to compress is set in the SDK, 
+with a sensible default value of 32 bytes that you can modify in two ways:
 
-* For Java, to disable compression from client to server, http://docs.couchbase.com/sdk-api/couchbase-core-io-1.6.0/com/couchbase/client/core/env/DefaultCoreEnvironment.Builder.html#compressionMinSize-int-[set `compressionMinSize` to max int (2147483647)^].
-Alternatively, to disable compression in both directions, set the Java system property `com.couchbase.snappyEnabled` to `False`.
-* For .NET, Snappy compression is not currently supported.
-* For SDKs using LCB's connstr (Node.js, PHP, Python), override the default with `"compression=off"` in your connection string.
-Additionally, for Python you can set the `couchbase.bucket.Bucket.compression` property to `COMPRESS_NONE`.
+* `MinSize` -- specifies the minimum _size_ of the document to consider compression.
+* `MinRatio` -- specifies the minimal compress ratio (compressed / original) acceptible, for the document to be sent compressed.
+
+Both of these settings are detailed in the https://pkg.go.dev/github.com/couchbase/gocb/v2#CompressionConfig[API Reference].
+
+
+== Configuring Compression
+
+As well as the changes to the document size threshold configuration, mentioned earlier, 
+you can disable compression by setting  `CompressionMode = "off"`.
+
+This can be done in the xref:ref:client-settings.adoc[ConnectionOptions()], or in the xref:howtos:managing-connections.adoc#connection-strings[Connection String].
+
 * For Go, can also be disabled by using `compression=off` in the connection string.
