@@ -97,5 +97,3 @@ As well as the changes to the document size threshold configuration, mentioned e
 you can disable compression by setting  `CompressionMode = "off"`.
 
 This can be done in the xref:ref:client-settings.adoc[ConnectionOptions()], or in the xref:howtos:managing-connections.adoc#connection-strings[Connection String].
-
-* For Go, can also be disabled by using `compression=off` in the connection string.
