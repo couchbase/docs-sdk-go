@@ -1,4 +1,4 @@
-= Release Notes
+= SDK Release Notes
 :description: Release notes, installation instructions, and download archive for the Couchbase Go Client.
 :page-topic-type: project-doc
 :page-toclevels: 2
