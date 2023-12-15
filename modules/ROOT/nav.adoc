@@ -73,7 +73,7 @@
 * xref:ref:travel-app-data-model.adoc[Travel Sample Data Model]
 
 .Project Docs
-* xref:project-docs:sdk-release-notes.adoc[]
+* xref:project-docs:sdk-release-notes.adoc[Release Notes]
 * xref:project-docs:compatibility.adoc[]
 ** xref:project-docs:migrating-sdk-code-to-3.n.adoc[]
 ** xref:howtos:working-with-collections.adoc[Working with Collections]
