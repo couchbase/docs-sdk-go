@@ -94,6 +94,6 @@ Both of these settings are detailed in the https://pkg.go.dev/github.com/couchba
 == Configuring Compression
 
 As well as the changes to the document size threshold configuration, mentioned earlier, 
-you can disable compression by setting  `CompressionMode = "off"`.
+you can disable compression by setting `Disabled = false`
 
-This can be done in the xref:ref:client-settings.adoc[ConnectionOptions()], or in the xref:howtos:managing-connections.adoc#connection-strings[Connection String].
+This can be done in the https://pkg.go.dev/github.com/couchbase/gocb/v2#ClusterOptions[ClusterOptions()] added to `gocb.Connect`, and passed through the xref:howtos:managing-connections.adoc#connection-strings[Connection String].
