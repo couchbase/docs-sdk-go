@@ -154,6 +154,14 @@ Default:  `5s`
 The period of time which canary operations are permitted to take before they are
 marked as a failure.
 
+[TIP]
+.Cloud Native Gateway
+====
+If using the `couchbase2://` connection protocol with xref:howtos:managing-connections.adoc#cloud-native-gateway[Cloud Native Gateway], 
+note that circuit breaker options are not available when using this protocol.
+The connection protocol uses a separate queue per node, and thus avoids the main cause of possible cascading failure.
+====
+
 
 == Timeout Options
 
