@@ -2,7 +2,7 @@ module examples
 
 go 1.19
 
-require github.com/couchbase/gocb/v2 v2.7.0
+require github.com/couchbase/gocb/v2 v2.7.1
 
 require (
 	github.com/couchbase/gocbcore/v10 v10.3.0 // indirect
