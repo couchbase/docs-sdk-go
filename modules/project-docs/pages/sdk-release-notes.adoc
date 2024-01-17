@@ -45,15 +45,16 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.7.1?tab=doc[API Documentation
 ==== New Features and Behavioral Changes
 
 * https://issues.couchbase.com/browse/GOCBC-1494[GOCBC-1494]:
-Improvements to Query error handling. Added handling for some additional query error codes.
+Improvements to Query error handling. 
+Added handling for some additional Query error codes.
 * https://issues.couchbase.com/browse/GOCBC-1549[GOCBC-1549]:
-Add the ability to specify both positional and named parameters in queries.
+Added the ability to specify both positional and named parameters in queries.
 * https://issues.couchbase.com/browse/GOCBC-1558[GOCBC-1558]:
 Added the `ErrDocumentNotLocked` error which is returned when KV responds with a `NOT_LOCKED` status.
 * https://issues.couchbase.com/browse/GOCBC-1561[GOCBC-1561]:
-Display the error description from the KV error map when an unknown KV status is received.
+.the SDK now displays the error description from the KV error map when an unknown KV status is received.
 * https://issues.couchbase.com/browse/GOCBC-1579[GOCBC-1579]:
-Added support for MaxExpiry value of -1 ('No Expiry') in collection management operations.
+Added support for `MaxExpiry` value of -1 ('No Expiry') in collection management operations.
 * https://issues.couchbase.com/browse/GOCBC-1560[GOCBC-1560]:
 Added support in the `couchbase2` mode for history retention settings in the bucket management API.
 * https://issues.couchbase.com/browse/GOCBC-1562[GOCBC-1562]:
@@ -66,7 +67,7 @@ Fixed issue where the SDK's prepared query cache was not differentiating between
 * https://issues.couchbase.com/browse/GOCBC-1581[GOCBC-1581]:
 Fixed issue where the partition counts in `SearchMetrics` were not populated.
 * https://issues.couchbase.com/browse/GOCBC-1588[GOCBC-1588]:
-Fixed issue with the `couchbase2` mode where Conjunction, Disjunction and Boolean search queries always failed with an 'invalid query' error.
+Fixed issue with the `couchbase2` mode where Conjunction, Disjunction, and Boolean search queries always failed with an 'invalid query' error.
 
 === Version 2.7.0 (21 November 2023)
 
