@@ -52,7 +52,7 @@ Added the ability to specify both positional and named parameters in queries.
 * https://issues.couchbase.com/browse/GOCBC-1558[GOCBC-1558]:
 Added the `ErrDocumentNotLocked` error which is returned when KV responds with a `NOT_LOCKED` status.
 * https://issues.couchbase.com/browse/GOCBC-1561[GOCBC-1561]:
-.the SDK now displays the error description from the KV error map when an unknown KV status is received.
+The SDK now displays the error description from the KV error map when an unknown KV status is received.
 * https://issues.couchbase.com/browse/GOCBC-1579[GOCBC-1579]:
 Added support for `MaxExpiry` value of -1 ('No Expiry') in collection management operations.
 * https://issues.couchbase.com/browse/GOCBC-1560[GOCBC-1560]:
