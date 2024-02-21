@@ -36,6 +36,7 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
 === Version 2.7.2 (20 February 2024)
 
 Version 2.7.2 is a maintenance release for the Go SDK 2.7.
@@ -44,25 +45,26 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.7.2?tab=doc[API Documentation
 
 ==== New Features and Behavioral Changes
 
-* https://issues.couchbase.com/browse/GOCBC-1470[GOCBC-1470]
-Added a V2 Collection management API, accessed via `Bucket.CollectionsV2()`, which has improved method signatures for `CreateCollection`, `UpdateCollection` and `DropCollection`.
-* https://issues.couchbase.com/browse/GOCBC-1580[GOCBC-1580]
+* https://issues.couchbase.com/browse/GOCBC-1470[GOCBC-1470]:
+Added a V2 Collection management API, accessed via `Bucket.CollectionsV2()`, which has improved method signatures for `CreateCollection`, `UpdateCollection`, and `DropCollection`.
+* https://issues.couchbase.com/browse/GOCBC-1580[GOCBC-1580]:
 Exposed constants for the `unit` setting of `SearchSortGeoDistance`.
-* https://issues.couchbase.com/browse/GOCBC-1584[GOCBC-1584]
+* https://issues.couchbase.com/browse/GOCBC-1584[GOCBC-1584]:
 Added support for compressing data between the SDK and server in `couchbase2` mode.
-* https://issues.couchbase.com/browse/GOCBC-1585[GOCBC-1585]
+* https://issues.couchbase.com/browse/GOCBC-1585[GOCBC-1585]:
 Exposed non-idempotent requests that fail because of the socket closing while they are in-flight to the retry orchestrator (`SocketCloseInFlightRetryReason` retry reason).
-* https://issues.couchbase.com/browse/GOCBC-1590[GOCBC-1590]
+* https://issues.couchbase.com/browse/GOCBC-1590[GOCBC-1590]:
 Added support for `FlushBucket` in `couchbase2` mode.
-* https://issues.couchbase.com/browse/GOCBC-1591[GOCBC-1591]
+* https://issues.couchbase.com/browse/GOCBC-1591[GOCBC-1591]:
 Added support for `Scope.Search()` and `Scope.SearchIndexes()` for querying and managing scoped search indexes.
 
 ==== Fixed Issues
 
-* https://issues.couchbase.com/browse/GOCBC-1367[GOCBC-1367]
+* https://issues.couchbase.com/browse/GOCBC-1367[GOCBC-1367]:
 Fixed issue where `ExpiryTime` in `GetResult` had the epoch value instead of zero time (`time.Time{}`) when the document has no expiry.
-* https://issues.couchbase.com/browse/GOCBC-1599[GOCBC-1599]
+* https://issues.couchbase.com/browse/GOCBC-1599[GOCBC-1599]:
 Fixed issue where the `DropIndex` search management operation was not converting server errors to any of the known error values (e.g. `ErrIndexNotFound`) where applicable.
+
 
 === Version 2.7.1 (17 January 2024)
 
