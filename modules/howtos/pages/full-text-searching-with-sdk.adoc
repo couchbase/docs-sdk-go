@@ -105,7 +105,7 @@ In this first example we are performing a single vector query:
 SearchRequest request = SearchRequest
         .create(VectorSearch.create(VectorQuery.create("vector_field", vectorQuery)));
 
-SearchResult result = scope.search("travel-sample-index", request);
+SearchResult result = scope.search("vector-index", request);
 ----
 
 Let's break this down.
@@ -135,7 +135,7 @@ SearchRequest request = SearchRequest
                         VectorQuery.create("vector_field", vectorQuery).numCandidates(2).boost(0.3),
                         VectorQuery.create("vector_field", anotherVectorQuery).numCandidates(5).boost(0.7)));
 
-SearchResult result = scope.search("travel-sample-index", request);
+SearchResult result = scope.search("vector-index", request);
 ----
 
 How the results are combined (ANDed or ORed) can be controlled with `vectorSearchOptions().vectorQueryCombination()`.
@@ -148,7 +148,7 @@ You can combine a traditional FTS query with vector queries:
 SearchRequest request = SearchRequest.create(SearchQuery.matchAll())
         .vectorSearch(VectorSearch.create(VectorQuery.create("vector_field", vectorQuery)));
 
-SearchResult result = scope.search("travel-sample-index", request);
+SearchResult result = scope.search("vector-and-fts-index", request);
 ----
 
 How the results are combined (ANDed or ORed) can be controlled with `vectorSearchOptions().vectorQueryCombination()`.
