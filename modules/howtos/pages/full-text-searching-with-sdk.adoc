@@ -13,18 +13,23 @@ It uses natural language processing for querying documents, provides relevance s
 Some of the supported query types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
 The Go SDK exposes an API for performing FTS queries which abstracts some of the complexity of using the underlying REST API.
 
-NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connection using `cluster.Bucket(name)` before you can use Search.
 
 // As of Couchbase Server 6.5, FTS...
 
 == Getting Started
 
 After familiarizing yourself with how to create and query a search index in the UI you can query it from the SDK.
-Search queries are executed at Cluster level (not bucket or collection).
-As of Couchbase Server 6.5+ they do also not require a bucket to be opened first.
-In older versions of Couchbase Server, even though executed at Cluster level, a bucket must be opened before performing queries.
+From Couchbase Server 7.6, Search queries are executed at the Scope level, or the Cluster level --
+for earlier versions of Couchbase, it's just the Cluster level.
 Search queries, facets, and sorting have a slightly different import from other components of `gocb`, you can import them using `import "github.com/couchbase/gocb/v2/search"`.
 
+There are two APIs for querying search: `cluster.searchQuery()`, and `cluster.search()`.
+Both are also available at the Scope level.
+
+The former API supports FTS queries (`SearchQuery`), while the latter additionally supports the `VectorSearch` added in 7.6.
+Most of this documentation will focus on the former API, as the latter is in @Stability.Volatile status.
+
+We will perform an FTS query here - see the <<vector search>> section for examples of that.
 Here is a simple MatchQuery that looks for the text “swanky” using a defined index:
 
 [source,golang,indent=0]
@@ -78,6 +83,88 @@ Facets can only be accessed once all the rows have been iterated.
 ----
 include::devguide:example$go/search.go[tag=iteratingfacets]
 ----
+
+
+
+== Scoped vs Global Indexes
+The FTS APIs exist at both the `Cluster` and `Scope` levels.
+
+This is because FTS supports, as of Couchbase Server 7.6, a new form of "scoped index" in addition to the traditional "global index".
+
+It's important to use the `Cluster.searchQuery()` / `Cluster.search()` for global indexes, and `Scope.searchQuery()` / `Scope.search()` for scoped indexes.
+
+== Vector Search
+As of Couchbase Server 7.6, the FTS service supports vector search in additional to traditional full text search queries.
+// todo link to the server docs when available
+
+=== Examples
+==== Single vector query
+In this first example we are performing a single vector query:
+[source,java]
+----
+SearchRequest request = SearchRequest
+        .create(VectorSearch.create(VectorQuery.create("vector_field", vectorQuery)));
+
+SearchResult result = scope.search("travel-sample-index", request);
+----
+
+Let's break this down.
+We create a `SearchRequest`, which can contain a traditional FTS query `SearchQuery` and/or the new `VectorSearch`.
+Here we are just using the latter.
+
+The `VectorSearch` allows us to perform one or more `VectorQuery` s.
+
+The `VectorQuery` itself takes the name of the document field that contains embedded vectors ("vector_field" here), plus actual vector query in the form of a `float[]`.
+
+(Note that Couchbase itself is not involved in generating the vectors, and these will come from an external source such as an embeddings API.)
+
+Finally we execute the `SearchRequest` against the FTS index "travel-sample-index", which has previously been setup to vector index the "vector_field" field.
+
+This happens to be a scoped index so we are using `scope.search()`.
+If it was a global index we would use `cluster.search()` instead - see <<Scoped vs Global Indexes>>.
+
+It returns the same `SearchResult` detailed earlier.
+
+==== Multiple vector queries
+You can run multiple vector queries together:
+
+[source,java]
+----
+SearchRequest request = SearchRequest
+        .create(VectorSearch.create(List.of(
+                        VectorQuery.create("vector_field", vectorQuery).numCandidates(2).boost(0.3),
+                        VectorQuery.create("vector_field", anotherVectorQuery).numCandidates(5).boost(0.7)));
+
+SearchResult result = scope.search("travel-sample-index", request);
+----
+
+How the results are combined (ANDed or ORed) can be controlled with `vectorSearchOptions().vectorQueryCombination()`.
+
+==== Combining FTS and vector queries
+You can combine a traditional FTS query with vector queries:
+
+[source,java]
+----
+SearchRequest request = SearchRequest.create(SearchQuery.matchAll())
+        .vectorSearch(VectorSearch.create(VectorQuery.create("vector_field", vectorQuery)));
+
+SearchResult result = scope.search("travel-sample-index", request);
+----
+
+How the results are combined (ANDed or ORed) can be controlled with `vectorSearchOptions().vectorQueryCombination()`.
+
+==== FTS queries
+And note that traditional FTS queries, without vector search, are also supported with the new `cluster.search()` / `scope.search()` APIs:
+
+[source,java]
+----
+SearchRequest request = SearchRequest
+        .create(VectorSearch.create(VectorQuery.create("vector_field", vectorQuery)));
+
+SearchResult result = scope.search("travel-sample-index", request);
+----
+
+The `SearchQuery` is created in the same way as detailed earlier.
 
 
 == Consistency
