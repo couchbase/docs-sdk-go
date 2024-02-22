@@ -317,13 +317,11 @@ This profile changes the default timeouts.
 
 
 == Cloud Native Gateway
-////
-Using the xref:howtos:managing-connections.adoc#cloud-native-gateway[Cloud Native Gateway] protocol (to connect to Couchbase Server running on xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6.1 or newer) should not need any changes to config.
-////
-Cloud Native Gateway should not need any changes to config.
+
+Using the xref:howtos:managing-connections.adoc#cloud-native-gateway[Cloud Native Gateway] protocol (to connect to Couchbase Server running on xref:operator::concept-cloud-native-gateway.adoc[Couchbase Autonomous Operator] 2.6.1 or newer) should not need any changes to config.
+
 Some settings will be ignored -- 
 currently, these include:
 
 * Compression
 * `numKvConnections`
-
