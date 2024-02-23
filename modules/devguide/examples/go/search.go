@@ -3,6 +3,7 @@ package main
 // #tag::connect[]
 import (
 	"fmt"
+	"github.com/couchbase/gocb/v2/vector"
 	"time"
 
 	gocb "github.com/couchbase/gocb/v2"
@@ -205,5 +206,129 @@ func main() {
 	err = consistentWithResult.Err()
 	if err != nil {
 		panic(err)
+	}
+
+	vectorQuery := []float32{1.1, 1.2}
+	anotherVectorQuery := []float32{0.9, 0.2}
+	scope := bucket.DefaultScope()
+
+	{
+		// #tag::single_vector_query[]
+		request := gocb.SearchRequest{
+			VectorSearch: vector.NewSearch(
+				[]*vector.Query{
+					vector.NewQuery("vector_field", vectorQuery),
+				}, nil,
+			),
+		}
+		vectorResult, err := scope.Search("vector-index", request, nil)
+		if err != nil {
+			panic(err)
+		}
+		// #end::single_vector_query[]
+
+		for vectorResult.Next() {
+			row := vectorResult.Row()
+			docID := row.ID
+			score := row.Score
+
+			fmt.Printf("Document ID: %s, search score: %f\n", docID, score)
+		}
+
+		// always check for errors after iterating
+		err = vectorResult.Err()
+		if err != nil {
+			panic(err)
+		}
+	}
+	{
+		// #tag::multiple_vector_queries[]
+		request := gocb.SearchRequest{
+			VectorSearch: vector.NewSearch(
+				[]*vector.Query{
+					vector.NewQuery("vector_field", vectorQuery).NumCandidates(2).Boost(0.3),
+					vector.NewQuery("vector_field", anotherVectorQuery).NumCandidates(5).Boost(0.7),
+				},
+				&vector.SearchOptions{
+					VectorQueryCombination: vector.VectorQueryCombinationAnd,
+				},
+			),
+		}
+		vectorResult, err := scope.Search("vector-index", request, nil)
+		if err != nil {
+			panic(err)
+		}
+		// #end::multiple_vector_queries[]
+
+		for vectorResult.Next() {
+			row := vectorResult.Row()
+			docID := row.ID
+			score := row.Score
+
+			fmt.Printf("Document ID: %s, search score: %f\n", docID, score)
+		}
+
+		// always check for errors after iterating
+		err = vectorResult.Err()
+		if err != nil {
+			panic(err)
+		}
+	}
+	{
+		// #tag::vector_fts_query_combination[]
+		request := gocb.SearchRequest{
+			VectorSearch: vector.NewSearch(
+				[]*vector.Query{
+					vector.NewQuery("vector_field", vectorQuery).NumCandidates(2).Boost(0.3),
+					vector.NewQuery("vector_field", anotherVectorQuery).NumCandidates(5).Boost(0.7),
+				}, nil,
+			),
+			SearchQuery: search.NewMatchAllQuery(),
+		}
+		vectorResult, err := scope.Search("vector-and-fts-index", request, nil)
+		if err != nil {
+			panic(err)
+		}
+		// #end::vector_fts_query_combination[]
+
+		for vectorResult.Next() {
+			row := vectorResult.Row()
+			docID := row.ID
+			score := row.Score
+
+			fmt.Printf("Document ID: %s, search score: %f\n", docID, score)
+		}
+
+		// always check for errors after iterating
+		err = vectorResult.Err()
+		if err != nil {
+			panic(err)
+		}
+	}
+	{
+		// #tag::fts_search_request[]
+		request := gocb.SearchRequest{
+			SearchQuery: search.NewMatchQuery("swanky"),
+		}
+
+		result, err := scope.Search("travel-sample-index", request, nil)
+		if err != nil {
+			panic(err)
+		}
+		// #end::fts_search_request[]
+
+		for result.Next() {
+			row := result.Row()
+			docID := row.ID
+			score := row.Score
+
+			fmt.Printf("Document ID: %s, search score: %f\n", docID, score)
+		}
+
+		// always check for errors after iterating
+		err = result.Err()
+		if err != nil {
+			panic(err)
+		}
 	}
 }
