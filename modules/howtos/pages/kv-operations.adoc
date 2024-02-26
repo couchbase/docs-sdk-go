@@ -29,7 +29,7 @@ Make sure you're familiar with the basics of authorization and connecting to a C
 We're going to expand on the short _Upsert_ example we used there, adding options as we move through the various CRUD operations.
 Here is the _Insert_ operation at its simplest:
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-crud.go[tag=insert]
 ----
@@ -38,7 +38,7 @@ Options like timeout may also be added to operations.
 _Timeout_ in the Go SDK has a type value of `time.Duration`.
 Timeout sets the timeout value for the underlying network connection.
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-crud.go[tag=insertoptions]
 ----
@@ -50,7 +50,7 @@ Here we just note that the CAS is a value representing the current state of an i
 The CAS value is returned as part of a document’s metadata whenever a document is accessed.
 Without explicitly setting it, a newly-created document would have a CAS value of _0_.
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-crud.go[tag=replacecas]
 ----
@@ -58,7 +58,7 @@ include::devguide:example$go/kv-crud.go[tag=replacecas]
 Typically we would want to use CAS for something more meaningful like performing a Get, modifying the result and updating the document.
 By using the CAS value we know that if anyone else modified this document and updated it before our update then ours will error.
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-crud.go[tag=update]
 ----
@@ -67,7 +67,7 @@ Expiry sets an explicit time to live (TTL) for a document in seconds.
 For a discussion of item (Document) _vs_ Bucket expiration, see the 
 xref:7.1@server:learn:buckets-memory-and-storage/expiration.adoc#expiration-bucket-versus-item[Expiration Overview page].
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-expiry.go[tag=expiry]
 ----
@@ -103,7 +103,7 @@ These trade offs, as well as which settings may be tuned, are discussed in the x
 
 Below we can see how to set this on an operation:
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-durability-enhanced.go[tag=durability]
 ----
@@ -112,7 +112,7 @@ If a version of Couchbase Server lower than 6.5 is being used then the applicati
 The older type of durability, also known as _observe based durability_, works by monitoring the server to ensure that the change has been replicated or persisted to the required number of nodes within the timeout specified on the operation. 
 Here we can see how that is set:
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-durability-observe.go[tag=observebased]
 ----
@@ -132,14 +132,14 @@ Where the number of operations or other circumstances make bandwidth a significa
 
 Using the `Get()` method with the document key can be done in a similar fashion to the other operations:
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-crud.go[tag=get]
 ----
 
 Timeout can also be set, as in the earlier `Insert` example:
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-crud.go[tag=gettimeout]
 ----
@@ -148,7 +148,7 @@ include::devguide:example$go/kv-crud.go[tag=gettimeout]
 
 When removing a document, you will have the same concern for durability as with any additive modification to the Bucket:
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-crud.go[tag=remove]
 ----
@@ -161,14 +161,14 @@ By default, Couchbase documents do not expire, but transient or temporary data m
 You can use expiration values on documents to handle transient data.
 To prevent a document that already has expiry from expiring you can use `Touch` operations which will extend the expiry by the time specified.
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-expiry.go[tag=touch]
 ----
 
 If you want to get the document at the same time as extending expiry then you can use `GetAndTouch`.
 
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-expiry.go[tag=getandtouch]
 ----
@@ -183,13 +183,13 @@ The value of a document can be increased or decreased atomically using `Binary()
 NOTE: Increment & Decrement are considered part of the 'binary' API and as such may still be subject to change.
 
 .Increment
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-counter.go[tag=increment]
 ----
 
 .Decrement
-[source,golang,indent=0]
+[source,go,indent=0]
 ----
 include::devguide:example$go/kv-counter.go[tag=decrement]
 ----
@@ -202,6 +202,69 @@ TIP: Setting the document expiry time only works when a document is created, and
 
 include::{version-common}@sdk:shared:partial$atomic.adoc[tag=xdcr]
 
+== KV Range Scan
+
+A range scan gives you documents from a collection, even if you don't know the document IDs.
+This feature requires Couchbase Server 7.6 or newer.
+
+TIP: KV range scan is suitable for use cases that require relatively low concurrency and tolerate relatively high latency.
+If your application does many scans at once, or requires low latency results, we recommend using {sqlpp} (with a primary index on the collection) instead of KV range scan.
+
+[#kv-range-scan-range]
+=== Range scan
+
+Here's an example of a KV range scan that gets all documents in a collection:
+
+.KV Range Scan for all documents in a collection
+[source,go,indent=0]
+----
+include::devguide:example$go/kv-range-scan.go[tag=range_scan_all_documents]
+----
+
+<1> The `RangeScan` struct has two optional fields: `From` and `To`.
+If you omit them like in this example, you'll get all documents in the collection.
+These parameters are for advanced use cases; you probably won't need to specify them.
+Instead, it's more common to use the "prefix" scan type shown in the next example.
+
+
+[#kv-range-scan-prefix]
+=== Prefix scan
+
+KV range scan can also give you all documents whose IDs start with the same prefix.
+Imagine you have a collection where documents are named like this: `<username>::<uuid>`.
+In other words, the document ID starts with the name of the user associated with the document, followed by a delimiter, and then a UUID.
+If you use this document naming scheme, you can use a prefix range scan to get all documents associated with a user.
+For example, to get all documents associated with user "alice", you would write:
+
+.KV Range Scan for all documents in a collection whose IDs start with `alice::`
+[source,go,indent=0]
+----
+include::devguide:example$go/kv-range-scan.go[tag=range_scan_prefix]
+----
+
+<1> Note the use of the `NewRangeScanForPrefix` helper function which gives a `RangeScan` scan type configured to return all documents with the given prefix.
+
+[#kv-range-scan-sample]
+=== Sample scan
+
+If you want to get random documents from a collection, use a sample scan.
+
+.KV Range Scan for 100 random documents
+[source,go,indent=0]
+----
+include::devguide:example$go/kv-range-scan.go[tag=range_scan_sample]
+----
+
+[#kv-range-scan-only-ids]
+=== Get IDs instead of full documents
+
+If you only want the document IDs, set the `IDsOnly` field of `ScanOptions` to `true`, like this:
+
+.KV Range Scan for all document IDs in a collection
+[source,go,indent=0]
+----
+include::devguide:example$go/kv-range-scan.go[tag=range_scan_all_document_ids]
+----
 
 == Scoped KV Operations
 
@@ -210,7 +273,7 @@ See the https://pkg.go.dev/github.com/couchbase/gocb/v2#Collection[API docs] for
 
 Here is an example showing an upsert in the `users` collection, which lives in the `travel-sample.tenant_agent_00` keyspace:
 
-[source,golang]
+[source,go]
 ----
 include::devguide:example$go/kv-collection-scope.go[tag=namedcollectionupsert, indent=0]
 ----
