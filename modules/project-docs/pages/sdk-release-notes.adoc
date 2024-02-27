@@ -99,6 +99,7 @@ Fixed issue where the partition counts in `SearchMetrics` were not populated.
 * https://issues.couchbase.com/browse/GOCBC-1588[GOCBC-1588]:
 Fixed issue with the `couchbase2` mode where Conjunction, Disjunction, and Boolean search queries always failed with an 'invalid query' error.
 
+
 === Version 2.7.0 (21 November 2023)
 
 Version 2.7.0 is the first release in the Go SDK 2.7 series.
@@ -156,7 +157,10 @@ Fixed issue where `Append` and `Prepend` could directly return a `gocbcore.ErrNo
 * https://issues.couchbase.com/browse/GOCBC-1545[GOCBC-1545]:
 Fixed issue where `Projections` as a part of a `Get` operation would return any path level errors, these are now silently ignored.
 
+
+
 == Go SDK 2.6 Releases
+
 
 === Version 2.6.6 (26 February 2024)
 
@@ -175,6 +179,7 @@ Exposed non-idempotent requests that fail because of the socket closing while th
 Fixed issue where the partition counts in `SearchMetrics` were not populated.
 * https://issues.couchbase.com/browse/GOCBC-1586[GOCBC-1586]:
 Fixed issue where the server response for `GetAllScopes` could not be parsed if any collection had a negative `MaxExpiry` value.
+
 
 === Version 2.6.5 (18 October 2023)
 
@@ -306,6 +311,7 @@ Fixed issue where a race on creating a client record could lead to a panic.
 
 == Go SDK 2.5 Releases
 
+
 === Version 2.5.4 (27 October 2022)
 
 Version 2.5.4 is a maintenance release for the Go SDK 2.5.
@@ -319,6 +325,7 @@ Fixed issue where a nil agent value could cause logging `TransactionATRLocation`
 
 * https://issues.couchbase.com/browse/GOCBC-1348[GOCBC-1348]:
 Fixed issue where a race on creating a client record could lead to a panic.
+
 
 === Version 2.5.3 (21 September 2022)
 
@@ -337,6 +344,7 @@ Fixed issue where `lazyCircuitBreaker` was not using 64-bit aligned values.
 Known issue where a nil agent value could cause logging `TransactionATRLocation` to log a panic.
 * https://issues.couchbase.com/browse/GOCBC-1348[GOCBC-1348]:
 Known issue where a race on creating a client record can lead to a panic.
+
 
 === Version 2.5.2 (20 July 2022)
 
@@ -452,6 +460,7 @@ Fixed issue where `SearchOptions` `ConsistentWith` was using an incorrect key wi
 Fixed issue where config polling could fallback to using the http poller, when no http addresses are registered for use.
 * https://issues.couchbase.com/browse/GOCBC-1258[GOCBC-1258]:
 Fixed issue where log redaction tags were not closed correctly.
+
 
 === Version 2.4.0 (16 February 2022)
 
