@@ -158,6 +158,24 @@ Fixed issue where `Projections` as a part of a `Get` operation would return any 
 
 == Go SDK 2.6 Releases
 
+=== Version 2.6.6 (26 February 2024)
+
+Version 2.6.6 is a maintenance release for the Go SDK 2.6.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.6.6?tab=doc[API Documentation]
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1585[GOCBC-1585]:
+Exposed non-idempotent requests that fail because of the socket closing while they are in-flight to the retry orchestrator (`SocketCloseInFlightRetryReason` retry reason).
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1581[GOCBC-1581]:
+Fixed issue where the partition counts in `SearchMetrics` were not populated.
+* https://issues.couchbase.com/browse/GOCBC-1586[GOCBC-1586]:
+Fixed issue where the server response for `GetAllScopes` could not be parsed if any collection had a negative `MaxExpiry` value.
+
 === Version 2.6.5 (18 October 2023)
 
 Version 2.6.5 is a maintenance release for the Go SDK 2.6.
