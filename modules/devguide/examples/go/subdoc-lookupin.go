@@ -47,61 +47,118 @@ func main() {
 	}
 
 	// Get
-	// #tag::lookupInGet[]
-	ops := []gocb.LookupInSpec{
-		gocb.GetSpec("addresses.delivery.country", &gocb.GetSpecOptions{}),
-	}
-	getResult, err := collection.LookupIn("customer123", ops, &gocb.LookupInOptions{})
-	if err != nil {
-		panic(err)
-	}
+	{
+		// #tag::lookupInGet[]
+		ops := []gocb.LookupInSpec{
+			gocb.GetSpec("addresses.delivery.country", &gocb.GetSpecOptions{}),
+		}
+		res, err := collection.LookupIn("customer123", ops, &gocb.LookupInOptions{})
+		if err != nil {
+			panic(err)
+		}
 
-	var country string
-	err = getResult.ContentAt(0, &country)
-	if err != nil {
-		panic(err)
+		var country string
+		err = res.ContentAt(0, &country)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(country) // United Kingdom
+		// #end::lookupInGet[]
 	}
-	fmt.Println(country) // United Kingdom
-	// #end::lookupInGet[]
 
 	// Exists
-	// #tag::lookupInExists[]
-	ops = []gocb.LookupInSpec{
-		gocb.ExistsSpec("purchases.pending[-1]", &gocb.ExistsSpecOptions{}),
-	}
-	existsResult, err := collection.LookupIn("customer123", ops, &gocb.LookupInOptions{})
-	if err != nil {
-		panic(err)
-	}
+	{
+		// #tag::lookupInExists[]
+		ops := []gocb.LookupInSpec{
+			gocb.ExistsSpec("purchases.pending[-1]", &gocb.ExistsSpecOptions{}),
+		}
+		res, err := collection.LookupIn("customer123", ops, &gocb.LookupInOptions{})
+		if err != nil {
+			panic(err)
+		}
 
-	exists := existsResult.Exists(0)
+		exists := res.Exists(0)
 
-	fmt.Printf("Path exists? %t\n", exists) // Path exists? false
-	// #end::lookupInExists[]
+		fmt.Printf("Path exists? %t\n", exists) // Path exists? false
+		// #end::lookupInExists[]
+	}
 
 	// Multiple specs
-	// #tag::lookupInMulti[]
-	ops = []gocb.LookupInSpec{
-		gocb.GetSpec("addresses.delivery.country", nil),
-		gocb.ExistsSpec("purchases.pending[-1]", nil),
-	}
-	multiLookupResult, err := collection.LookupIn("customer123", ops, &gocb.LookupInOptions{
-		Timeout: 50 * time.Millisecond,
-	})
-	if err != nil {
-		panic(err)
+	{
+		// #tag::lookupInMulti[]
+		ops := []gocb.LookupInSpec{
+			gocb.GetSpec("addresses.delivery.country", nil),
+			gocb.ExistsSpec("purchases.pending[-1]", nil),
+		}
+		res, err := collection.LookupIn("customer123", ops, &gocb.LookupInOptions{
+			Timeout: 50 * time.Millisecond,
+		})
+		if err != nil {
+			panic(err)
+		}
+
+		var country string
+		err = res.ContentAt(0, &country)
+		if err != nil {
+			panic(err)
+		}
+		exists := res.Exists(1)
+
+		fmt.Println(country)                    // United Kingdom
+		fmt.Printf("Path exists? %t\n", exists) // Path exists? false
+		// #end::lookupInMulti[]
 	}
 
-	var multiCountry string
-	err = multiLookupResult.ContentAt(0, &multiCountry)
-	if err != nil {
-		panic(err)
-	}
-	multiExists := multiLookupResult.Exists(1)
+	// From any replica
+	{
+		// #tag::lookupInAnyReplica[]
+		ops := []gocb.LookupInSpec{
+			gocb.GetSpec("addresses.delivery.country", &gocb.GetSpecOptions{}),
+		}
+		res, err := collection.LookupInAnyReplica("customer123", ops, nil)
+		if err != nil {
+			panic(err)
+		}
 
-	fmt.Println(multiCountry)                    // United Kingdom
-	fmt.Printf("Path exists? %t\n", multiExists) // Path exists? false
-	// #end::lookupInMulti[]
+		var country string
+		err = res.ContentAt(0, &country)
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println(country) // United Kingdom
+		fmt.Printf("Is replica? %t\n", res.IsReplica())
+		// #end::lookupInAnyReplica[]
+	}
+
+	// From all replicas
+	{
+		// #tag::lookupInAllReplicas[]
+		ops := []gocb.LookupInSpec{
+			gocb.GetSpec("addresses.delivery.country", &gocb.GetSpecOptions{}),
+		}
+		stream, err := collection.LookupInAllReplicas("customer123", ops, nil)
+		if err != nil {
+			panic(err)
+		}
+
+		for {
+			replicaRes := stream.Next()
+			if replicaRes == nil {
+				break
+			}
+
+			var country string
+			err = replicaRes.ContentAt(0, &country)
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println(country) // United Kingdom
+			fmt.Printf("Is replica? %t\n", replicaRes.IsReplica())
+		}
+		// #end::lookupInAllReplicas[]
+	}
 
 	if err := cluster.Close(nil); err != nil {
 		panic(err)

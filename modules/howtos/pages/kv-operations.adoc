@@ -216,9 +216,9 @@ If your application does many scans at once, or requires low latency results, we
 Here's an example of a KV range scan that gets all documents in a collection:
 
 .KV Range Scan for all documents in a collection
-[source,go,indent=0]
+[source,go]
 ----
-include::devguide:example$go/kv-range-scan.go[tag=range_scan_all_documents]
+include::devguide:example$go/kv-range-scan.go[tag=range_scan_all_documents, indent=0]
 ----
 
 <1> The `RangeScan` struct has two optional fields: `From` and `To`.
@@ -237,9 +237,9 @@ If you use this document naming scheme, you can use a prefix range scan to get a
 For example, to get all documents associated with user "alice", you would write:
 
 .KV Range Scan for all documents in a collection whose IDs start with `alice::`
-[source,go,indent=0]
+[source,go]
 ----
-include::devguide:example$go/kv-range-scan.go[tag=range_scan_prefix]
+include::devguide:example$go/kv-range-scan.go[tag=range_scan_prefix, indent=0]
 ----
 
 <1> Note the use of the `NewRangeScanForPrefix` helper function which gives a `RangeScan` scan type configured to return all documents with the given prefix.
@@ -250,9 +250,9 @@ include::devguide:example$go/kv-range-scan.go[tag=range_scan_prefix]
 If you want to get random documents from a collection, use a sample scan.
 
 .KV Range Scan for 100 random documents
-[source,go,indent=0]
+[source,go]
 ----
-include::devguide:example$go/kv-range-scan.go[tag=range_scan_sample]
+include::devguide:example$go/kv-range-scan.go[tag=range_scan_sample, indent=0]
 ----
 
 [#kv-range-scan-only-ids]
@@ -261,9 +261,9 @@ include::devguide:example$go/kv-range-scan.go[tag=range_scan_sample]
 If you only want the document IDs, set the `IDsOnly` field of `ScanOptions` to `true`, like this:
 
 .KV Range Scan for all document IDs in a collection
-[source,go,indent=0]
+[source,go]
 ----
-include::devguide:example$go/kv-range-scan.go[tag=range_scan_all_document_ids]
+include::devguide:example$go/kv-range-scan.go[tag=range_scan_all_document_ids, indent=0]
 ----
 
 == Scoped KV Operations
