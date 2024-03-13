@@ -211,12 +211,9 @@ E.....@.@.............+....Z.'yZ..#........
 
 == Cloud Native Gateway
 
+Couchbase's next generation connection protocol, introduced in Go SDK 2.7 and xref:operator::concept-cloud-native-gateway.adoc[Couchbase Autonomous Operator 2.6.1], can be enabled simply by changing the connection string to `couchbase2://` but there are a few differences to be aware of, described <<#limitations,below>>.
 
-Couchbase's next generation connection protocol, introduced in Go SDK 2.7 and a future release of Couchbase Autonomous Operator, can be enabled simply by changing the connection string to `couchbase2://` but there are a few differences to be aware of, described <<#limitations,below>>.
-// Couchbase's next generation connection protocol, introduced in Go SDK 2.7 and Couchbase Autonomous Operator 2.6.1, can be enabled simply by changing the connection string to `couchbase2://` but there are a few differences to be aware of, described <<#limitations,below>>.
-
-The protocol implements a gRPC-style interface between the SDK and Couchbase Server (in this case, only available in the Server running on Kubernetes or OpenShift, with a forthcoming release of xref:operator::overview.adoc[Couchbase Autonomous Operator].
-
+The protocol implements a gRPC-style interface between the SDK and Couchbase Server (in this case, only available in the Server running on Kubernetes or OpenShift, with a recent version of xref:operator::overview.adoc[Couchbase Autonomous Operator]).
 
 
 === Limitations

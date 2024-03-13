@@ -5,8 +5,6 @@
 :page-pagination: next
 :page-topic-type: tutorial
 
-include::project-docs:partial$attributes.adoc[]
-
 [abstract]
 {description}
 

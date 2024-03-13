@@ -97,17 +97,17 @@ The `LookupInResult` contains two functions for inspecting the results:
 |===
 
 .Retrieve Sub-Document value
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-lookupin.go[tag=lookupInGet]
+include::devguide:example$go/subdoc-lookupin.go[tag=lookupInGet, indent=0]
 ----
 
 NOTE: The value pointer provided to the `ContentAt` function must match the type at the provided index.
 
 .Check existence of Sub-Document path
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-lookupin.go[tag=lookupInExists]
+include::devguide:example$go/subdoc-lookupin.go[tag=lookupInExists, indent=0]
 ----
 
 NOTE: Using `ExistsSpec` with `ContentAt` will return an error if the path does not exist.
@@ -115,9 +115,9 @@ NOTE: Using `ExistsSpec` with `ContentAt` will return an error if the path does 
 Multiple operations can be combined as well:
 
 .Combine multiple lookup operations
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-lookupin.go[tag=lookupInMulti]
+include::devguide:example$go/subdoc-lookupin.go[tag=lookupInMulti, indent=0]
 ----
 
 
@@ -127,26 +127,26 @@ Mutation operations modify one or more paths in the document.
 The simplest of these operations is _Upsert_, which, similar to the fulldoc-level _Upsert_, will either modify the value of an existing path or create it if it does not exist:
 
 .Upserting a new Sub-Document
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein.go[tag=mutateInUpsert]
+include::devguide:example$go/subdoc-mutatein.go[tag=mutateInUpsert, indent=0]
 ----
 
 Likewise, the _Insert_ operation will only add the new value to the path if it does not exist:
 
 .Inserting a Sub-Document
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein.go[tag=mutateInInsert]
+include::devguide:example$go/subdoc-mutatein.go[tag=mutateInInsert, indent=0]
 ----
 
 Dictionary values can also be replaced or removed, and you may combine any number of mutation operations within the same general _mutateIn_ API.
 Here's an example of one which replaces one path and removes another.
 
 .Combine multiple mutate operations
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein.go[tag=mutateInMulti]
+include::devguide:example$go/subdoc-mutatein.go[tag=mutateInMulti, indent=0]
 ----
 
 NOTE: `MutateIn` is an _atomic_ operation.
@@ -158,24 +158,24 @@ The _ArrayPrepend_ and _ArrayAppend_ operations are true array prepend and appen
 Unlike fulldoc _Append_/_Prepend_ operations (which simply concatenate bytes to the existing value), _ArrayAppend_ and _ArrayPrepend_ are JSON-aware:
 
 .Array appending a sub-document
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppend]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppend, indent=0]
 ----
 
 .Array prepending a sub-document
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayPrepend]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayPrepend, indent=0]
 ----
 
 If your document only needs to contain an array, you do not have to create a top-level object wrapper to contain it.
 Simply initialize the document with an empty array and then use the empty path for subsequent Sub-Document array operations:
 
 .Creating and populating an array document
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDoc]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDoc, indent=0]
 ----
 
 Note that in the above we carried over the CAS value from the Upsert operation to ensure that if someone else modified the document first then our change would error.
@@ -186,32 +186,32 @@ If you wish to add multiple values to an array, you may do so by passing multipl
 Be sure to know the difference between the use of the _HasMultiple_ option being false (in which case the collection is inserted as a single element in the array, as a sub-array) and it being true (in which case the elements are appended individually to the array):
 
 .Add multiple elements to an array
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDocMulti]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDocMulti, indent=0]
 ----
 
 .Add single array as element to existing array
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDocMultiSingle]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDocMultiSingle, indent=0]
 ----
 
 Note that using _HasMultiple_ with a single _ArrayAppend_ operation results in greater performance increase and bandwidth savings than simply specifying a single _ArrayAppend_ for each element.
 Below we set elements individually to achieve the same as the `HasMultiple` example above:
 
 .Adding multiple elements to array (slow)
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppendMulti]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppendMulti, indent=0]
 ----
 
 If you wish to create an array if it does not exist and also push elements to it within the same operation you may use the <<subdoc_create_path,_CreatePath_>> option:
 
 .Array appending a sub-document with create path
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppendCreatePath]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppendCreatePath, indent=0]
 ----
 
 == Arrays as Unique Sets
@@ -220,9 +220,9 @@ Limited support also exists for treating arrays like unique sets, using the _Arr
 This will do a check to determine if the given value exists or not before actually adding the item to the array:
 
 .Adding unique elements to arrays
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAddUnique]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAddUnique, indent=0]
 ----
 
 Note that currently the _ArrayAddUnique_ will fail with a _Path Mismatch_ error if the array contains JSON _floats_, _objects_, or _arrays_.
@@ -240,9 +240,9 @@ The position is indicated by the last path component, which should be an array i
 For example, to insert `"Cruel"` as the second element in the array `["Hello", "world"]`, the code would look like:
 
 .Inserting elements into arrays
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayInsert]
+include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayInsert, indent=0]
 ----
 
 // for your examples, above, CD: “I feel like somewhere in this we should also just a an example path like "my.path[1]" too, just to show how to use the index with a nested path. I don't think it's necessarily clear.”
@@ -256,18 +256,18 @@ Counter operations allow the manipulation of a _numeric_ value inside a document
 These operations are logically similar to the _counter_ operation on an entire document:
 
 .Incrementing a counter
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-counter.go[tag=mutateInIncrement]
+include::devguide:example$go/subdoc-counter.go[tag=mutateInIncrement, indent=0]
 ----
 
 The _Increment_ and _Decrement_ operations perform simple arithmetic against a numeric value.
 The updated value is returned.
 
 .Decrementing a counter
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-counter.go[tag=mutateInDecrement]
+include::devguide:example$go/subdoc-counter.go[tag=mutateInDecrement, indent=0]
 ----
 
 The existing value for _counter_ operations must be within range of a 64 bit signed integer.
@@ -332,10 +332,32 @@ Sometimes it is necessary to have the server create the hierarchy however.
 In this case, the _CreatePath_ option may be used.
 
 .Upsert with CreatePath
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-mutatein.go[tag=mutateInCreatePath]
+include::devguide:example$go/subdoc-mutatein.go[tag=mutateInCreatePath, indent=0]
 ----
+
+== Reading Sub-Documents From Replicas
+
+Couchbase Server 7.6 and later support Sub-Doc lookup from replicas.
+
+The `Collection.LookupInAnyReplica` method returns the first response -- from active or replica:
+
+.Sub-Document read from any replica
+[source,go]
+----
+include::devguide:example$go/subdoc-lookupin.go[tag=lookupInAnyReplica, indent=0]
+----
+
+The `Collection.LookupInAllReplicas` method fetches all available replicas (and the active copy), and returns all responses:
+
+.Sub-Document read from all replicas
+[source,go]
+----
+include::devguide:example$go/subdoc-lookupin.go[tag=lookupInAllReplicas, indent=0]
+----
+
+The results for both operations have type `LookupInReplicaResult` which exposes the same interface as `LookupInResult`, with the addition of an `IsReplica()` method that indicates whether the result originated from a replica or an active node.
 
 == Concurrent Modifications
 
@@ -343,9 +365,9 @@ Concurrent Sub-Document operations on different parts of a document will not con
 For example the following two blocks can execute concurrently without any risk of conflict:
 
 .Performing concurrent Sub Document mutations
-[source,golang,indent=0]
+[source,go]
 ----
-include::example$subdoc.go[tag=concurrent]
+include::example$subdoc.go[tag=concurrent, indent=0]
 ----
 
 Even when modifying the _same_ part of the document, operations will not necessarily conflict.
@@ -355,9 +377,9 @@ So in some cases the application will not need to supply a xref:concurrent-docum
 If CAS is required then it can be provided like this:
 
 .Performing concurrent Sub Document mutations with CAS
-[source,golang,indent=0]
+[source,go]
 ----
-include::example$subdoc.go[tag=cas]
+include::example$subdoc.go[tag=cas, indent=0]
 ----
 
 == Durability
@@ -366,18 +388,18 @@ Couchbase's xref:1.6@go-sdk::durability.adoc[traditional durability], using `Per
 xref:concept-docs:durability-replication-failure-considerations.adoc#older-server-versions[still available], particularly for talking to Couchbase Server 6.0 and earlier:
 
 .Performing Sub Document mutations with traditional durability
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-durability.go[tag=traddurability]
+include::devguide:example$go/subdoc-durability.go[tag=traddurability, indent=0]
 ----
 
 In Couchbase Server 6.5 and up, this is built upon with xref:concept-docs:durability-replication-failure-considerations.adoc#durable-writes[Durable Writes], 
 which uses the concept of xref:7.1@server:learn:data/durability.adoc#majority[majority] to indicate the number of configured Data Service nodes to which commitment is required:
 
 .Performing Sub Document mutations with Durable Writes
-[source,golang,indent=0]
+[source,go]
 ----
-include::devguide:example$go/subdoc-durability.go[tag=newdurability]
+include::devguide:example$go/subdoc-durability.go[tag=newdurability, indent=0]
 ----
 
 == Error handling
@@ -389,12 +411,12 @@ Some of the errors include:
 
 * *Path does not exist*: When retrieving a path, this means the path does not exist in the document.
 When inserting or upserting a path, this means the _immediate parent_ does not exist.
-This can be detected with `gocb.IsPathNotFoundError(err)`.
+This can be detected with `errors.Is(err, gocb.ErrPathNotFound)`.
 * *Path already exists*: In the context of an _Insert_, it means the given path already exists.
 In the context of _ArrayAddUnique_, it means the given value already exists.
-This can be detected with `gocb.IsPathExistsError(err)`.
+This can be detected with `errors.Is(err, gocb.ErrPathExists)`.
 * *Path mismatch*: This means the path may exist in the document, but that there is a type conflict between the path in the document and the path in the command.
-This can be detected with `gocb.IsPathMismatchError(err)`.
+This can be detected with `errors.Is(err, gocb.ErrPathMismatch)`.
 
 Consider the document:
 

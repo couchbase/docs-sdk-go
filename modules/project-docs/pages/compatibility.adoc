@@ -1,25 +1,99 @@
 = Compatibility
-:description: Features available in different SDK versions, and compatibility between Server and SDK. \
+:description: Platform compatibility, and features available in different SDK versions, and compatibility between Server and SDK. \
 Plus notes on Cloud, networks, and AWS Lambda.
-:navtitle: Compatibility
-:page-a:page-toclevels: 2
-liases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
-:page-toclevels: 2
-
-include::project-docs:partial$attributes.adoc[]
+:page-aliases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
+:page-toclevels: 3
+:table-caption!:
 
 [abstract]
 {description}
 
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-At time of writing (October 2023), this is 1.20 and 1.21.
+At time of writing (March 2024), this is 1.21 and 1.22.
 Older versions may remain compatible, but are not supported.
 
 
-== Couchbase Version/SDK Version Matrix
+== Platform Compatibility
+
+=== OS Compatibility
+
+The {name-sdk} is tested and supported on the following OSs and platforms:
+
+****
+[discrete]
+=== GNU/Linux
+
+* Amazon Linux 2 & AL2023.
+* Red Hat Enterprise Linux 8 & 9;
+* Oracle Linux 8 & 9.
+* Ubuntu (LTS) 20.04 (_Focal_) & 22.04 (_Jammy_).
+* Debian 10 (_Buster_), 11 (_Bullseye_), and Debian 12 (_Bookworm_).
+* SUSE Enterprise Linux 12 & 15
+* Alpine Linux 3.18 (_Oracle JDK only_).
+// -- but see <<alpine-linux-compatibility, workaround note below>>.
+
+[discrete]
+=== Microsoft Windows
+
+* Microsoft Windows 10 & 11;
+* Windows Server 2019 & 2022.
+
+[discrete]
+=== Mac OS X
+
+The current and previous two releases of OS X.
+At time of writing (March 2024): 14 (Sonoma), 13 (Ventura), and 12 (Monterey).
+M1 ARM  architecture is fully supported in the Scala SDK.
+
+[discrete]
+=== ARM Processor Support
+
+AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04+ (from SDK 1.4).
+****
+
+The Go SDK should also be expected to run on other commonly-available GNU/Linux distributions which support the Go platform, but not all combinations can be tested.
+//-- notable exceptions are listed below.
+
+////
+==== Alpine Linux Compatibility
+
+The https://netty.io[Netty] I/O library used by our JVM SDKs supports native optimizations to achieve higher throughput and lower latency 
+-- which the SDK enables by default. 
+Those modules are compiled against `glibc` and Alpine Linux uses `musl` instead --
+so the {name-sdk} is unable to complete bootstrapping on this platform.
+
+Because Alpine Linux does not have the `glibc` support needed,
+we highly recommend that you seek an alternative distribution where possible. 
+If that is not a option, then a possible workaround that can be applied is as follows:
+
+* Disable the native IO:
++
+[source,toml]
+====
+ClusterEnvironment env = ClusterEnvironment.builder().ioEnvironment(IoEnvironment.enableNativeIo(false)).build();
+====
+
+* Disable it in Netty itself via the following system property:
+`-Dcom.couchbase.client.core.deps.io.netty.transport.noNative=true`
+
+The downside of these workarounds is potentially reduced performance, which can be determined through benchmarking and profiling.
+////
+
+
+
+// Network Requirements
+include::{version-common}@sdk:shared:partial$network-requirements.adoc[]
+
+
+
+== Couchbase Server Compatibility
+
 
 Couchbase SDKs are tested against a variety of different environments to ensure both backward and forward compatibility with different versions of Couchbase Server.
-The matrix below denotes the version of Couchbase Server, the version of the Go SDK and whether the SDK is:
+
+=== Couchbase Version/SDK Version Matrix
+
+The matrix below denotes the version of Couchbase Server, the version of the Scala SDK and whether the SDK is:
 
 * ✖ *Unsupported*: This combination is not tested, and is not within the scope of technical support if you have purchased a support agreement.
 * ◎ *Compatible*: This combination has been tested previously, and should be compatible.
@@ -27,17 +101,18 @@ This combination is not recommended by our technical support organization.
 It is best to upgrade either the SDK or the Couchbase version you are using.
 * ✔ *Supported*: This combination is subject to ongoing quality assurance, and is fully supported by our technical support organization.
 
+
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
 [cols="40,20,25"]
 |===
-| | SDK 2.0 - 2.2 | 2.3 - 2.7
-
-| *Server 6.6*
-| *✔*
-| *✔*
+| | SDK 2.3 - 2.7 | 2.8
 
 | *Server 7.0-7.2*
+| *✔*
+| *✔*
+
+| *Server 7.6*
 | *◎*
 | *✔*
 |===
@@ -54,48 +129,13 @@ include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
 
 
 
-== Platform Compatibility
-
-The Couchbase Go SDK is tested and supported on the following platforms:
-
-****
-[discrete]
-=== GNU/Linux
-
-* Amazon Linux 2 & AL2023.
-* Red Hat Enterprise Linux 8 & 9;
-// * Alma Linux 9, Rocky Linux 9.
-* Ubuntu (LTS) 20.04 (_Focal_) & 22.04 (_Jammy_).
-* Debian 10 (_Buster_) & 11 (_Bullseye_).
-* Alpine Linux.
-
-[discrete]
-=== Microsoft Windows
-
-Microsoft Windows 10 / All LTS releases from Windows Server 2019.
-
-[discrete]
-=== Mac OS X
-
-The current and previous two releases of OS X.
-At time of writing (October 2023): 14 (Sonoma), 13 (Ventura), and 12 (Monterey).
-M1 ARM  architecture is fully supported in the {sdk_dot_minor} Go SDK.
-****
-
-Although installable or compilable on many other platforms, we cannot provide support for untested combinations.
-
-=== ARM Processor Support
-
-AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04+ (from SDK 2.6).
-
-
-== Couchbase New Feature Availability Matrix
+=== Couchbase New Feature Availability Matrix
 
 .Couchbase Server and SDK Supported Version Matrix
 [.table-merge-cells]
-[cols="7,5,6,7"]
+[cols="7,6,6,6"]
 |===
-| | Server 6.6 | Server 7.0-7.1 | Server 7.2
+| | Server 7.0 & 7.1 | Server 7.2 | Server 7.6
 
 | Enhanced Durability
 3+| All SDK versions
@@ -107,40 +147,39 @@ AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu 20.04+ (from 
 3+| Since 1.5
 
 | Collections
-| Developer Preview in 6.6, SDK 2.0
-2+| Since 2.1.8
+3+| Since 2.1.8
 
-| Scope-Level {sqlpp} Queries & all Collections features
-| Not Supported
-2+| Since SDK 2.3.0
-
-| Field Level Encryption v2
-3+| Since SDK 2.3.0footnote:[Field Level Encryption distributed as separate library.]
+| Scope-Level {sqlpp} (formerly N1QL) Queries & all Collections features
+3+| Since SDK 2.3.0
 
 | Request Tracing
-3+| Since SDK 2.0.3 (stable interface from 2.3.0)
-
-| Distributed ACID Transactions
-| Not Supported
-2+| Since SDK 2.4.0
+3+| Since SDK 2.3.0
 
 | Cloud Native Gateway
-2+| Not Supported
-| From SDK 2.7.0 (with xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6.1+)
+| Not Supported
+2+| From SDK 2.7.0 (with xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6.1+)
+
+| Vector Search
+2+| N/A
+| From SDK 2.8.0
 |===
 
-== Couchbase Go SDK
 
-The Couchbase Go SDK is installed and managed using `gopkg`, in accordance with established best practices within the Go Community.
-As a result, specific versions are installed within a specific developer environment.
-The SDK follows http://semver.org/[Semantic Versioning^] and typically release an update of the SDK the third Tuesday of each month.
-In order to update your specific developer environment to this new version, you will have to instruct Go to `go get` that specific version.
-For further information, please reference the section on xref:sdk-full-installation.adoc[installation].
+=== API Version
 
-include::{version-common}@sdk:shared:partial$network-requirements.adoc[]
+include::{version-common}@sdk:shared:partial$api-version.adoc[tag=api-version]
+
+
+
+
+== SDK API Stability
+
+
+=== Interface Stability
 
 include::{version-common}@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
 
-include::{version-common}@sdk:shared:partial$api-version.adoc[tag=api-version]
+
+=== Older SDK Versions
 
 include::{version-common}@sdk:shared:partial$archive.adoc[tag=link]
