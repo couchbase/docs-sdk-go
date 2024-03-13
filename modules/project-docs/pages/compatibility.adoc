@@ -9,7 +9,7 @@ Plus notes on Cloud, networks, and AWS Lambda.
 {description}
 
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-At time of writing (October 2023), this is 1.21 and 1.22.
+At time of writing (March 2024), this is 1.21 and 1.22.
 Older versions may remain compatible, but are not supported.
 
 
