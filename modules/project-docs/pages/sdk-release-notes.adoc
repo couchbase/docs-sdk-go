@@ -34,6 +34,7 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
 === Version 2.8.0 (12 March 2024)
 
 Version 2.8.0 is the first release in the Go SDK 2.8 series.
@@ -43,6 +44,7 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.8.0?tab=doc[API Documentation
 Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
 
 ==== New Features and Behavioral Changes
+
 * https://issues.couchbase.com/browse/GOCBC-1577[GOCBC-1577]:
 Added support for vector search.
 * https://issues.couchbase.com/browse/GOCBC-1578[GOCBC-1578]:
@@ -51,26 +53,31 @@ Updated connection parsing to default to port 18098 if not specified when `couch
 Return `ErrFeatureNotAvailable` if requested search capabilities aren't available.
 * https://issues.couchbase.com/browse/GOCBC-1614[GOCBC-1614]:
 Updated SDK API volatility levels:
-Moved Collection range scan to committed,
-Moved Query read from replica to committed,
-Moved LookupIn read from replica to committed,
-Move Bucket History Retention Settings to committed,
-Moved UserManager Change Password to committed,
-Moved Scope level Search and SearchIndexes to committed,
-Moved Vector Search to uncommitted.
+** Moved Collection range scan to committed,
+** Moved Query read from replica to committed,
+** Moved LookupIn read from replica to committed,
+** Move Bucket History Retention Settings to committed,
+** Moved UserManager Change Password to committed,
+** Moved Scope level Search and SearchIndexes to committed,
+** Moved Vector Search to uncommitted.
 
 ==== Fixed Issues
+
 * https://issues.couchbase.com/browse/GOCBC-1582[GOCBC-1582]:
 Fixed issue where `math.MaxUint32` was causing an error when used with `fmt.Errorf`.
 
 
 ==== Breaking Fixes
+
 * https://issues.couchbase.com/browse/GOCBC-1482[GOCBC-1482]:
 Fixed issue where there was inconsistency in whether Couchbase error types were returned as pointers across services, now all Couchbase errors are returned as pointers.
 Improved the string output for `TimeoutError`.
 We expect this to have a minimal impact but may impact some users who are using `errors.As` or directly type asserting errors.
 * https://issues.couchbase.com/browse/GOCBC-1575[GOCBC-1575]:
 Improved the interface for `BucketSetting` `HistoryRetentionCollectionDefault` field to use a constant value rather than a bool pointer.
+
+
+== Go SDK 2.7 Releases
 
 === Version 2.7.2 (20 February 2024)
 
