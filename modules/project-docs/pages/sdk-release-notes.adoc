@@ -16,7 +16,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.7.0
+$ go get github.com/couchbase/gocb/v2@v2.8.0
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -27,14 +27,123 @@ Older versions may work, but are not supported.
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
 
-
-
 [#latest-release]
-== Go SDK 2.7 Releases
+== Go SDK 2.8 Releases
 
 We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
+
+
+=== Version 2.8.0 (12 March 2024)
+
+Version 2.8.0 is the first release in the Go SDK 2.8 series.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.8.0?tab=doc[API Documentation]
+
+Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1577[GOCBC-1577]:
+Added support for vector search.
+* https://issues.couchbase.com/browse/GOCBC-1578[GOCBC-1578]:
+Updated connection parsing to default to port 18098 if not specified when `couchbase2` scheme is used.
+* https://issues.couchbase.com/browse/GOCBC-1608[GOCBC-1608]:
+Return `ErrFeatureNotAvailable` if requested search capabilities aren't available.
+* https://issues.couchbase.com/browse/GOCBC-1614[GOCBC-1614]:
+Updated SDK API volatility levels:
+** Moved Collection range scan to committed,
+** Moved Query read from replica to committed,
+** Moved LookupIn read from replica to committed,
+** Move Bucket History Retention Settings to committed,
+** Moved UserManager Change Password to committed,
+** Moved Scope level Search and SearchIndexes to committed,
+** Moved Vector Search to uncommitted.
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1582[GOCBC-1582]:
+Fixed issue where `math.MaxUint32` was causing an error when used with `fmt.Errorf`.
+
+
+==== Breaking Fixes
+
+* https://issues.couchbase.com/browse/GOCBC-1482[GOCBC-1482]:
+Fixed issue where there was inconsistency in whether Couchbase error types were returned as pointers across services, now all Couchbase errors are returned as pointers.
+Improved the string output for `TimeoutError`.
+We expect this to have a minimal impact but may impact some users who are using `errors.As` or directly type asserting errors.
+* https://issues.couchbase.com/browse/GOCBC-1575[GOCBC-1575]:
+Improved the interface for `BucketSetting` `HistoryRetentionCollectionDefault` field to use a constant value rather than a bool pointer.
+
+
+== Go SDK 2.7 Releases
+
+=== Version 2.7.2 (20 February 2024)
+
+Version 2.7.2 is a maintenance release for the Go SDK 2.7.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.7.2?tab=doc[API Documentation]
+
+Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1470[GOCBC-1470]:
+Added a V2 Collection management API, accessed via `Bucket.CollectionsV2()`, which has improved method signatures for `CreateCollection`, `UpdateCollection`, and `DropCollection`.
+* https://issues.couchbase.com/browse/GOCBC-1580[GOCBC-1580]:
+Exposed constants for the `unit` setting of `SearchSortGeoDistance`.
+* https://issues.couchbase.com/browse/GOCBC-1584[GOCBC-1584]:
+Added support for compressing data between the SDK and server in `couchbase2` mode.
+* https://issues.couchbase.com/browse/GOCBC-1585[GOCBC-1585]:
+Exposed non-idempotent requests that fail because of the socket closing while they are in-flight to the retry orchestrator (`SocketCloseInFlightRetryReason` retry reason).
+* https://issues.couchbase.com/browse/GOCBC-1590[GOCBC-1590]:
+Added support for `FlushBucket` in `couchbase2` mode.
+* https://issues.couchbase.com/browse/GOCBC-1591[GOCBC-1591]:
+Added support for `Scope.Search()` and `Scope.SearchIndexes()` for querying and managing scoped search indexes.
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1367[GOCBC-1367]:
+Fixed issue where `ExpiryTime` in `GetResult` had the epoch value instead of zero time (`time.Time{}`) when the document has no expiry.
+* https://issues.couchbase.com/browse/GOCBC-1599[GOCBC-1599]:
+Fixed issue where the `DropIndex` search management operation was not converting server errors to any of the known error values (e.g. `ErrIndexNotFound`) where applicable.
+
+
+=== Version 2.7.1 (17 January 2024)
+
+Version 2.7.1 is a maintenance release for the Go SDK 2.7.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.7.1?tab=doc[API Documentation]
+
+Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
+
+==== New Features and Behavioral Changes
+
+* https://issues.couchbase.com/browse/GOCBC-1494[GOCBC-1494]:
+Improvements to Query error handling. 
+Added handling for some additional Query error codes.
+* https://issues.couchbase.com/browse/GOCBC-1549[GOCBC-1549]:
+Added the ability to specify both positional and named parameters in queries.
+* https://issues.couchbase.com/browse/GOCBC-1558[GOCBC-1558]:
+Added the `ErrDocumentNotLocked` error which is returned when KV responds with a `NOT_LOCKED` status.
+* https://issues.couchbase.com/browse/GOCBC-1561[GOCBC-1561]:
+The SDK now displays the error description from the KV error map when an unknown KV status is received.
+* https://issues.couchbase.com/browse/GOCBC-1579[GOCBC-1579]:
+Added support for `MaxExpiry` value of -1 ('No Expiry') in collection management operations.
+* https://issues.couchbase.com/browse/GOCBC-1560[GOCBC-1560]:
+Added support in the `couchbase2` mode for history retention settings in the bucket management API.
+* https://issues.couchbase.com/browse/GOCBC-1562[GOCBC-1562]:
+Added support for `UpdateCollection` in the `couchbase2` mode.
+
+==== Fixed Issues
+
+* https://issues.couchbase.com/browse/GOCBC-1573[GOCBC-1573]:
+Fixed issue where the SDK's prepared query cache was not differentiating between queries which have the same statement but are in a different query context.
+* https://issues.couchbase.com/browse/GOCBC-1581[GOCBC-1581]:
+Fixed issue where the partition counts in `SearchMetrics` were not populated.
+* https://issues.couchbase.com/browse/GOCBC-1588[GOCBC-1588]:
+Fixed issue with the `couchbase2` mode where Conjunction, Disjunction, and Boolean search queries always failed with an 'invalid query' error.
 
 === Version 2.7.0 (21 November 2023)
 
