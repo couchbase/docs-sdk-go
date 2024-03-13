@@ -106,7 +106,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 [#table_sdk_versions]
 [cols="40,20,25"]
 |===
-| | SDK 2.3 - 2.7 | 2.3 - 2.7
+| | SDK 2.3 - 2.7 | 2.8
 
 | *Server 7.0-7.2*
 | *✔*
@@ -156,8 +156,8 @@ include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
 3+| Since SDK 2.3.0
 
 | Cloud Native Gateway
-3+| Not Supported
-// 2+| From SDK 2.7.0 (with xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6.1+)
+| Not Supported
+2+| From SDK 2.7.0 (with xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6.1+)
 
 | Vector Search
 2+| N/A
