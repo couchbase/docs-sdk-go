@@ -47,8 +47,6 @@ Tracing and metrics with the `couchbase2` scheme should be considered stability 
 
 * https://issues.couchbase.com/browse/GOCBC-1577[GOCBC-1577]:
 Added support for vector search.
-* https://issues.couchbase.com/browse/GOCBC-1578[GOCBC-1578]:
-Updated connection parsing to default to port 18098 if not specified when `couchbase2` scheme is used.
 * https://issues.couchbase.com/browse/GOCBC-1608[GOCBC-1608]:
 Return `ErrFeatureNotAvailable` if requested search capabilities aren't available.
 * https://issues.couchbase.com/browse/GOCBC-1614[GOCBC-1614]:
