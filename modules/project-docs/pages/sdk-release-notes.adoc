@@ -62,16 +62,6 @@ Fixed issue where service not available errors were not always retried in `couch
 Fixed issue where the degraded cluster target state for `WaitUntilReady` would check all services by default, rather than only those available on the cluster.
 
 
-==== Breaking Fixes
-
-* https://issues.couchbase.com/browse/GOCBC-1482[GOCBC-1482]:
-Fixed issue where there was inconsistency in whether Couchbase error types were returned as pointers across services, now all Couchbase errors are returned as pointers.
-Improved the string output for `TimeoutError`.
-We expect this to have a minimal impact but may impact some users who are using `errors.As` or directly type asserting errors.
-* https://issues.couchbase.com/browse/GOCBC-1575[GOCBC-1575]:
-Improved the interface for `BucketSetting` `HistoryRetentionCollectionDefault` field to use a constant value rather than a bool pointer.
-
-
 === Version 2.8.0 (12 March 2024)
 
 Version 2.8.0 is the first release in the Go SDK 2.8 series.
