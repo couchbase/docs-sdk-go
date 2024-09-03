@@ -209,7 +209,7 @@ include::example$query-index-manager.go[tag=defer-indexes,indent=0]
 ----
 
 To delete a query index you can use the `DropIndex()` or `DropPrimaryIndex()` functions. 
-Which one you use depends on the type of query index you wish to drop from the database.
+Which one you use depends on the type of query index you wish to drop from the cluster.
 
 .Deleting an index
 
