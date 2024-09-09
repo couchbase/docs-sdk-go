@@ -49,7 +49,7 @@ or the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#instal
 --
 ====
 
-The Couchbase Capella free trial version comes with the Travel Sample Bucket, and its Query indexes, loaded and ready.
+The Couchbase Capella free tier version comes with the Travel Sample Bucket, and its Query indexes, loaded and ready.
 
 == Prerequisites
 
@@ -65,7 +65,7 @@ Couchbase Capella::
 * You have signed up to https://cloud.couchbase.com/sign-up[Couchbase Capella].
 
 * You have created your own bucket, or loaded the Travel Sample dataset.
-Note, the Travel Sample dataset is installed automatically by the Capella free trial.
+Note, the Travel Sample dataset is installed automatically when deploying a Capella free tier cluster.
 
 * A user is created with permissions to access the cluster (at least Application Access permissions).
 See the xref:cloud:get-started:cluster-and-data.adoc#credentials[Capella connection page] for more details.
