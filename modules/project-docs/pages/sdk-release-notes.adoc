@@ -57,13 +57,6 @@ to aid debugging issues where `NotMyVbucket` is received.
 * https://jira.issues.couchbase.com/browse/GOCBC-1680[GOCBC-1680]:
 Improved retry handling for http operations.
 
-==== Fixed Issues
-
-* https://jira.issues.couchbase.com/browse/GOCBC-1660[GOCBC-1660]:
-Fixed potential data race that was occurring because the value of a lock was being logged in `kvMux`.
-
-
-
 === Version 2.9.2 (25 September 2024)
 
 Version 2.9.2 is a maintenance release for the Go SDK 2.9.
@@ -84,7 +77,7 @@ Updated tracing when using the `couchbase2` scheme, to send traces to the server
 * https://jira.issues.couchbase.com/browse/GOCBC-1655[GOCBC-1655]:
 Fixed the error messages for some connection string parameter parsing errors, where the message was not referring to the correct parameter.
 * https://jira.issues.couchbase.com/browse/GOCBC-1660[GOCBC-1660]:
-Fixed a possible data race that occured because the value of a lock was being logged at debug-level.
+Fixed a possible data race that occurred because the value of a lock was being logged at debug-level.
 
 === Version 2.9.1 (18 July 2024)
 
