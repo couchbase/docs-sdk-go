@@ -243,7 +243,7 @@ The `server_wait_backoff` is used across a cluster as the period of time waited 
 key/value reconnect attempts to a node after a connection failure occurs.
 +
 Note, this can only be specified through the connection string.
-+
+
 
 == IO Options
 
@@ -260,6 +260,14 @@ Default:  `false`
 +
 This is an advanced option which will disable the inclusion of server processing times in
 operation responses from the server.  This should generally not be set.
+
+Name: *max_perhost_http_connections*::
++
+Default: `0` (unlimited)
++
+This setting sets a maximum on the number of HTTP connections per-host. There is no limit by default.
++
+Note, this can only be specified through the connection string.
 
 // section on wide area network support
 
