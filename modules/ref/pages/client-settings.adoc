@@ -267,7 +267,7 @@ Default: `0` (unlimited)
 +
 This setting sets a maximum on the number of HTTP connections per-host. There is no limit by default.
 +
-Note, this can only be specified through the connection string.
+Note, this can only be specified through the connection string (and only from Go SDK 2.9.3 onwards).
 
 // section on wide area network support
 
