@@ -119,3 +119,8 @@ Note that it will not always be necessary to assert the output of your code samp
 When submitting a PR, the code sample tests will run against your changes in the same manner as your local machine using Github Actions.
 
 You can see the workflow definitions in the `.github` folder.
+
+
+== Docs License
+
+©2025 Couchbase, Inc. This work is licensed under CC BY-NC-SA 4.0.
