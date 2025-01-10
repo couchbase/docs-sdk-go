@@ -291,35 +291,8 @@ A `ClusterConfigProfileWanDevelopment` configuration profile can be used to modi
 This profile changes the default timeouts.
 
 
-.Profile Settings
-[cols="1,1"]
-|===
-| Setting | Value
-
-| `ConnectTimeout`
-| 20s
-
-| `KVTimeout`
-| 20s
-
-| `KVDurableTimeout`
-| 20s
-
-| `ViewTimeout`
-| 120s
-
-| `queryTimeout`
-| 120s
-
-| `AnalyticsTimeout`
-| 120s
-
-| `SearchTimeout`
-| 120s
-
-| `ManagementTimeout`
-| 120s
-|===
+// table - WAN profile timeouts
+include::{version-common}@sdk:shared:partial$client-settings-wan-profile.adoc[tag=profile-values]
 
 
 == Cloud Native Gateway
