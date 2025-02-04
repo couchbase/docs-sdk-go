@@ -28,7 +28,7 @@ Both are also available at the Scope level.
 The former API supports FTS queries (`SearchQuery`), while the latter additionally supports the `VectorSearch` added in 7.6.
 Most of this documentation will focus on the former API, as the latter is in @Stability.Volatile status.
 
-We will perform an FTS query here - see the <<vector search>> section for examples of that.
+We will perform an FTS query here - see the <<vector-search>> section for examples of that.
 Here is a simple MatchQuery that looks for the text “swanky” using a defined index:
 
 [source,go,indent=0]
