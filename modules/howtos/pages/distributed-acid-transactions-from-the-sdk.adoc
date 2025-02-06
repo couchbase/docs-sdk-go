@@ -1,5 +1,5 @@
 = Using Couchbase Transactions
-:reftext: Transactions from the Go SDK
+:reftext: Distributed ACID Transactions from the Go SDK
 :description: A practical guide to using Couchbase’s distributed ACID transactions, via the Go SDK.
 :page-partial:
 :page-aliases: acid-transactions
