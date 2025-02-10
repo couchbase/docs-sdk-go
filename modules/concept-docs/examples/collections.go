@@ -29,14 +29,10 @@ func main() {
 		panic(err)
 	}
 
-	collectionMgr := bucket.Collections()
+	collectionMgr := bucket.CollectionsV2()
 
 	// create collection in default scope
-	spec := gocb.CollectionSpec{
-		Name:      "bookings",
-		ScopeName: "_default",
-	}
-	err = collectionMgr.CreateCollection(spec, &gocb.CreateCollectionOptions{})
+	err = collectionMgr.CreateCollection("_default", "bookings", &gocb.CreateCollectionSettings{}, &gocb.CreateCollectionOptions{})
 	if err != nil {
 		panic(err)
 	}
