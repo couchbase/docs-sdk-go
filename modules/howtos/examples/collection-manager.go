@@ -74,7 +74,7 @@ func main() {
 		}
 
 		bucket := cluster.Bucket("travel-sample")
-		collections := bucket.Collections()
+		collections := bucket.CollectionsV2()
 		// end::create-collection-manager[]
 
 		{
@@ -94,12 +94,7 @@ func main() {
 		{
 			fmt.Println("create-collection")
 			// tag::create-collection[]
-			collection := gocb.CollectionSpec{
-				Name:      "example-collection",
-				ScopeName: "example-scope",
-			}
-
-			err = collections.CreateCollection(collection, nil)
+			err = collections.CreateCollection("example-scope", "example-collection", nil, nil)
 			if err != nil {
 				if errors.Is(err, gocb.ErrCollectionExists) {
 					fmt.Println("Collection already exists")
@@ -111,7 +106,7 @@ func main() {
 
 			fmt.Println("drop-collection")
 			// tag::drop-collection[]
-			err = collections.DropCollection(collection, nil)
+			err = collections.DropCollection("example-scope", "example-collection", nil)
 			if err != nil {
 				panic(err)
 			}
