@@ -45,7 +45,8 @@ Tracing and metrics with the `couchbase2` scheme should be considered stability 
 ==== Fixed Issues
 
 * https://jira.issues.couchbase.com/browse/GOCBC-1696[GOCBC-1696]:
-Fixed an issue where scope-level SQL++ queries would fail if the scope or bucket names contained a period character (`.`).
+Fixed an issue where scope-level {sqlpp} queries would fail if the scope or bucket names contained a period character (`.`).
+
 
 === Version 2.9.3 (26 November 2024)
 
@@ -69,6 +70,7 @@ to aid debugging issues where `NotMyVbucket` is received.
 * https://jira.issues.couchbase.com/browse/GOCBC-1680[GOCBC-1680]:
 Improved retry handling for http operations.
 
+
 === Version 2.9.2 (25 September 2024)
 
 Version 2.9.2 is a maintenance release for the Go SDK 2.9.
@@ -91,6 +93,7 @@ Fixed the error messages for some connection string parameter parsing errors, wh
 * https://jira.issues.couchbase.com/browse/GOCBC-1660[GOCBC-1660]:
 Fixed a possible data race that occurred because the value of a lock was being logged at debug-level.
 
+
 === Version 2.9.1 (18 July 2024)
 
 Version 2.9.1  is a maintenance release for the Go SDK 2.9.
@@ -110,6 +113,7 @@ Adjusted logging levels when logging about receiving cluster configs older than 
 Fixed issue where a data race could occur when requests were retried concurrently with being cancelled.
 * https://issues.couchbase.com/browse/GOCBC-1643[GOCBC-1643]:
 Fixed issue where couchbase2 mode did not wait for operations to complete on close.
+
 
 === Version 2.9.0 (18 June 2024)
 
@@ -138,6 +142,8 @@ Moved vector search API support level to committed.
 Fixed issue where SDK could not receive large (> 4MB) documents in `couchbase2` mode.
 * https://issues.couchbase.com/browse/GOCBC-1636[GOCBC-1636]:
 Fixed issue where a race accessing config watchers could occur on agent close.
+
+
 
 == Go SDK 2.8 Releases
 
