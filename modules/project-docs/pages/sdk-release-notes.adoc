@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.9.2
+$ go get github.com/couchbase/gocb/v2@v2.9.4
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -33,6 +33,19 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
+=== Version 2.9.4 (21 February 2025)
+
+Version 2.9.4 is a maintenance release for the Go SDK 2.9.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.9.4?tab=doc[API Documentation]
+
+Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
+
+==== Fixed Issues
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1696[GOCBC-1696]:
+Fixed an issue where scope-level {sqlpp} queries would fail if the scope or bucket names contained a period character (`.`).
 
 
 === Version 2.9.3 (26 November 2024)
@@ -57,6 +70,7 @@ to aid debugging issues where `NotMyVbucket` is received.
 * https://jira.issues.couchbase.com/browse/GOCBC-1680[GOCBC-1680]:
 Improved retry handling for http operations.
 
+
 === Version 2.9.2 (25 September 2024)
 
 Version 2.9.2 is a maintenance release for the Go SDK 2.9.
@@ -79,6 +93,7 @@ Fixed the error messages for some connection string parameter parsing errors, wh
 * https://jira.issues.couchbase.com/browse/GOCBC-1660[GOCBC-1660]:
 Fixed a possible data race that occurred because the value of a lock was being logged at debug-level.
 
+
 === Version 2.9.1 (18 July 2024)
 
 Version 2.9.1  is a maintenance release for the Go SDK 2.9.
@@ -98,6 +113,7 @@ Adjusted logging levels when logging about receiving cluster configs older than 
 Fixed issue where a data race could occur when requests were retried concurrently with being cancelled.
 * https://issues.couchbase.com/browse/GOCBC-1643[GOCBC-1643]:
 Fixed issue where couchbase2 mode did not wait for operations to complete on close.
+
 
 === Version 2.9.0 (18 June 2024)
 
@@ -126,6 +142,8 @@ Moved vector search API support level to committed.
 Fixed issue where SDK could not receive large (> 4MB) documents in `couchbase2` mode.
 * https://issues.couchbase.com/browse/GOCBC-1636[GOCBC-1636]:
 Fixed issue where a race accessing config watchers could occur on agent close.
+
+
 
 == Go SDK 2.8 Releases
 
