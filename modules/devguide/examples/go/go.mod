@@ -3,7 +3,7 @@ module examples
 go 1.19
 
 require (
-	github.com/couchbase/gocb/v2 v2.9.3
+	github.com/couchbase/gocb/v2 v2.9.4
 	github.com/couchbase/gocbencryption/v2 v2.0.0
 	github.com/pquerna/ffjson v0.0.0-20190930134022-aa0246cd15f7
 	github.com/sirupsen/logrus v1.9.3
@@ -11,7 +11,7 @@ require (
 )
 
 require (
-	github.com/couchbase/gocbcore/v10 v10.5.3 // indirect
+	github.com/couchbase/gocbcore/v10 v10.5.4 // indirect
 	github.com/couchbase/gocbcoreps v0.1.3 // indirect
 	github.com/couchbase/goprotostellar v1.0.2 // indirect
 	github.com/couchbaselabs/gocbconnstr/v2 v2.0.0-20240607131231-fb385523de28 // indirect

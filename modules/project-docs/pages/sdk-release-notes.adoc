@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.9.2
+$ go get github.com/couchbase/gocb/v2@v2.9.4
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -34,6 +34,18 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
+=== Version 2.9.4 (21 February 2025)
+
+Version 2.9.4 is a maintenance release for the Go SDK 2.9.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.9.4?tab=doc[API Documentation]
+
+Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
+
+==== Fixed Issues
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1696[GOCBC-1696]:
+Fixed an issue where scope-level SQL++ queries would fail if the scope or bucket names contained a period character (`.`).
 
 === Version 2.9.3 (26 November 2024)
 
