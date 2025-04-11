@@ -126,6 +126,46 @@ All of these operations involve fetching the complete document from the Cluster.
 Where the number of operations or other circumstances make bandwidth a significant issue, the SDK can work on just a specific _path_ of the document with xref:subdocument-operations.adoc[Sub-Document Operations].
 ====
 
+
+
+=== Preferred Server Group Replica Reads
+
+IMPORTANT: Preferred Server Group Replica Reads are only accessible with the {name-sdk} working with Couchbase Server 7.6.2 or newer (Capella or self-managed), from SDK version 2.9.3.
+
+xref:server:learn:clusters-and-availability/groups.adoc#understanding-server-group-awareness[Server Groups]
+can be used to define subsets of nodes within a Couchbase cluster, which contain a complete set of vbuckets (active or replica).
+As well as high availability use cases, Servre Groups can also be used to keep much traffic within the same cloud Availability Zone.
+
+For Capella users with high data volumes, egress charges for reads from other Availability Zones (AZ) in AWS can be a significant cost.
+The {name-sdk}, when making read replica requests, can make a request to a preferred Server Group --
+in this case the local AZ --
+and set to always read from a copy of the document in this local zone.
+This is done by putting cluster nodes in the same AZ into the same 
+xref:server:learn:clusters-and-availability/groups.adoc#server-groups-and-vbuckets[Server Group], too.
+
+This may mean the application has to be tolerant of slight inconsistencies,
+until the local replica catches up.
+Alternatively, it may demand a stronger level of durability, to ensure that all copies of a document are consistent before they are accessible --
+provided that this is `persistToMajority` with xref:server:learn:data/durability.adoc#majority[no more than one replica].
+
+Couchbase does not recommend this feature where read consistency is critical,
+but with the appropriate durability settings consistency can be favored ahead of availability.
+
+[CAUTION]
+.Replicas, Nodes, and Server Groups
+====
+Implicit in the rules for durability, and the process of setting up Server Groups, is the following information -- which we mention here explicitly to ensure it is all noted:
+
+* Moving servers between Server Groups updates the `clustermap` immediately, but to move the data, an administrator *must* perform rebalance. Until the rebalance is complete, the SDK will see and be able to 'use' the new server groups, but the `vBucketMap` may still refer to data in the previous locations.
+
+* The cluster should have enough nodes and group to make sure that copies of the same document are not stored on the same node, and each group has nodes that cover all 1024 vbuckets (in other words, the number of the groups does not exceeds number of the copies: `active+num_replicas`). The Admin UI should emit small yellow warning if the configuration is considered unbalanced.
+
+* Setting *three* replicas for the bucket xref:server:learn:data/durability.adoc#majority[disables durability for sync writes], also precluding the use of
+xref:concept-docs:transactions.adoc[multi-document ACID transactions].
+====
+
+
+
 == Retrieving full documents
 
 Using the `Get()` method with the document key can be done in a similar fashion to the other operations:
