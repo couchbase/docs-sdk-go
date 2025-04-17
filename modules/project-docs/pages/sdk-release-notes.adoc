@@ -62,7 +62,7 @@ Added transactions support for specifying `NumVBuckets` in `BucketSettings`.
 * https://jira.issues.couchbase.com/browse/GOCBC-1706[GOCBC-1706]:
 Added support to the core for Columnar via a new Columnar Agent.
 * https://jira.issues.couchbase.com/browse/GOCBC-1707[GOCBC-1707]:
-Updated minimum supported Go version to 1.21.
+Updated minimum compatible Go version to 1.21.
 * https://jira.issues.couchbase.com/browse/GOCBC-1713[GOCBC-1713]:
 Updated bucket management operations to convert HTTP status code 400 into `ErrInvalidArgument`.
 
