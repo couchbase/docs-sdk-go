@@ -54,7 +54,7 @@ Added support for application telemetry.
 * https://jira.issues.couchbase.com/browse/GOCBC-1687[GOCBC-1687]:
 Replaced usages of deprecated http transport dial functions.
 * https://jira.issues.couchbase.com/browse/GOCBC-1688[GOCBC-1688]:
-Replaced usages of deprecated ioutil functions.
+Replaced usages of deprecated `ioutil` functions.
 * https://jira.issues.couchbase.com/browse/GOCBC-1701[GOCBC-1701]:
 Added transactions support for `ExtGetMulti`.
 * https://jira.issues.couchbase.com/browse/GOCBC-1704[GOCBC-1704]:
@@ -75,6 +75,10 @@ Fixed issue where `highlight.fields` would be sent in a search request payload e
 Fixed issue where `Append` and `Prepend` would return `ErrDocExists` rather than `ErrCasMismatch`.
 * https://jira.issues.couchbase.com/browse/GOCBC-1715[GOCBC-1715]:
 Fixed issue where `LoggingMeter` logged `emit_interval_s` as nanoseconds rather than seconds.
+
+
+
+== Go SDK 2.9 Releases
 
 === Version 2.9.4 (21 February 2025)
 
