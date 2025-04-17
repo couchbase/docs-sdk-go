@@ -104,7 +104,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
-[cols="40,20,25"]
+[cols="40,20,25, 23"]
 |===
 | | SDK 2.6 - 2.7 | 2.8 - 2.9 | 2.10
 
