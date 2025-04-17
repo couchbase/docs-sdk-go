@@ -15,7 +15,7 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 [source,console]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.9.4
+$ go get github.com/couchbase/gocb/v2@v2.10.0
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -27,12 +27,54 @@ The most current and up to date API Documentation is always available through th
 
 
 [#latest-release]
-== Go SDK 2.9 Releases
+== Go SDK 2.10 Releases
 
 We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+=== Version 2.10.0 (17 April 2025)
+
+Version 2.10.0 is the first release in the Go SDK 2.10 series.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.10.0?tab=doc[API Documentation]
+
+Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
+
+==== New Features and Behavioral Changes
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1278[GOCBC-1278]:
+Added transactions support for `ExtReplaceBodyWithXattr`.
+* https://jira.issues.couchbase.com/browse/GOCBC-1311[GOCBC-1311]:
+Added transactions support for `ExtThreadSafety`.
+* https://jira.issues.couchbase.com/browse/GOCBC-1430[GOCBC-1430]:
+Updated path to `/whoami` rather than `/` for pinging the management service.
+* https://jira.issues.couchbase.com/browse/GOCBC-1676[GOCBC-1676]:
+Added support for application telemetry.
+* https://jira.issues.couchbase.com/browse/GOCBC-1687[GOCBC-1687]:
+Replaced usages of deprecated http transport dial functions.
+* https://jira.issues.couchbase.com/browse/GOCBC-1688[GOCBC-1688]:
+Replaced usages of deprecated ioutil functions.
+* https://jira.issues.couchbase.com/browse/GOCBC-1701[GOCBC-1701]:
+Added transactions support for `ExtGetMulti`.
+* https://jira.issues.couchbase.com/browse/GOCBC-1704[GOCBC-1704]:
+Added transactions support for specifying `NumVBuckets` in `BucketSettings`.
+* https://jira.issues.couchbase.com/browse/GOCBC-1706[GOCBC-1706]:
+Added support to the core for Columnar via a new Columnar Agent.
+* https://jira.issues.couchbase.com/browse/GOCBC-1707[GOCBC-1707]:
+Updated minimum supported Go version to 1.21.
+* https://jira.issues.couchbase.com/browse/GOCBC-1713[GOCBC-1713]:
+Updated bucket management operations to convert HTTP status code 400 into `ErrInvalidArgument`.
+
+
+==== Fixed Issues
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1648[GOCBC-1648]:
+Fixed issue where `highlight.fields` would be sent in a search request payload even when the option wasn't specified.
+* https://jira.issues.couchbase.com/browse/GOCBC-1712[GOCBC-1712]:
+Fixed issue where `Append` and `Prepend` would return `ErrDocExists` rather than `ErrCasMismatch`.
+* https://jira.issues.couchbase.com/browse/GOCBC-1715[GOCBC-1715]:
+Fixed issue where `LoggingMeter` logged `emit_interval_s` as nanoseconds rather than seconds.
 
 === Version 2.9.4 (21 February 2025)
 
