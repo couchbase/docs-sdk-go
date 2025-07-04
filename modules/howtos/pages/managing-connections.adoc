@@ -58,9 +58,25 @@ nodeA.example.com,nodeB.example.com
 
 The full list of recognized parameters is documented in the client settings reference.
 
-A connection string may optionally be prefixed by either `"couchbase://"` or `"couchbases://"`.  This can be used to control whether the SDK connects
+A connection string may optionally be prefixed by either `"couchbase://"` or `"couchbases://"`.  
+This can be used to control whether the SDK connects
 using encrypted connections or unencrypted connections.
 
+NOTE: For reliable operation, all the nodes listed in the xref:bootstrap-server[`bootstrap.server`] connection string must be data (KV) nodes.
+
+Use multiple Data nodes in your connection string to to improve bootstrap resilience. 
+
+[source,go]
+----
+opts := gocb.ClusterOptions{
+    Username: "Administrator", 
+    Password: "password",
+}
+// Use multiple Data nodes for bootstrap resilience
+cluster, err := gocb.Connect("data-node1.example.com,data-node2.example.com,data-node3.example.com", opts)
+----
+
+NOTE: This requirement applies to all Couchbase SDKs and products that use connection strings, including Sync Gateway.
 
 == Waiting for Bootstrap Completion
 Depending on the environment and network latency, bootstrapping the SDK fully might take a little longer than the default key-value timeout of 2.5 seconds.
