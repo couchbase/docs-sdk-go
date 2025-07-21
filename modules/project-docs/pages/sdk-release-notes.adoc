@@ -33,7 +33,10 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
 === Version 2.10.1 (21 July 2025)
+
+Version 2.10.1 is a maintenance release for the Go SDK 2.10.
 
 ==== Fixed Issues
 
@@ -44,11 +47,12 @@ Fixed issue where Eventing function `QueryConsistency` was sent as the incorrect
 * https://jira.issues.couchbase.com/browse/GOCBC-1737[GOCBC-1737]:
 Fixed issue where reading search results could panic in `couchbase2` mode.
 * https://jira.issues.couchbase.com/browse/GOCBC-1743[GOCBC-1743]:
-Fixed issue where GetMulti read skew resolution could nil pointer.
+Fixed issue where `GetMulti` read skew resolution could nil pointer.
 * https://jira.issues.couchbase.com/browse/GOCBC-1745[GOCBC-1745]:
 Fixed issue where SRV record refresh would never match existing addresses being used.
 * https://jira.issues.couchbase.com/browse/GOCBC-1745[GOCBC-1747]:
 Fixed issue where SRV record refresh would fail when cluster config pushes were active.
+
 
 === Version 2.10.0 (17 April 2025)
 
