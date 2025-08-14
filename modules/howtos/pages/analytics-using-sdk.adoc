@@ -6,10 +6,8 @@
 {description}
 
 
-This page covers Couchbase's traditional Analytics Service, for long-running queries.
-A separate, as-a-service offering -- xref:columnar:intro:intro.adoc[Capella columnar] -- offers real-time analytics.
-
 include::{version-common}@sdk:shared:partial$columnar-available.adoc[tag=initial-availability]
+
 
 For complex and long-running queries, involving large ad hoc join, set, aggregation, and grouping operations, Couchbase Data Platform offers the xref:{version-server}@server:analytics:introduction.adoc[Couchbase Analytics Service (CBAS)].
 This is the analytic counterpart to our xref:n1ql-queries-with-sdk.adoc[operational data focussed Query Service].
