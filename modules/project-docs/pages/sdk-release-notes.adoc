@@ -13,9 +13,9 @@ For release notes, download links, and installation methods for 1.6 and earlier 
 
 == SDK Installation
 
-[source,console]
+[source,console,subs="+attributes"]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.10.1
+$ go get github.com/couchbase/gocb/v2@v{sdk_current_version}
 ----
 
 NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
@@ -27,12 +27,30 @@ The most current and up to date API Documentation is always available through th
 
 
 [#latest-release]
-== Go SDK 2.10 Releases
+== Go SDK 2.11 Releases
 
 We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
+
+
+=== Version 2.11.0 (??? August 2025)
+
+Version 2.11.0 is the first release in the Go SDK 2.11 series.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.11.0?tab=doc[API Documentation]
+
+// Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
+
+==== New Features and Behavioral Changes
+
+
+
+
+
+== Go SDK 2.10 Releases
 
 === Version 2.10.1 (21 July 2025)
 
