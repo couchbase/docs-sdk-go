@@ -134,7 +134,7 @@ IMPORTANT: Preferred Server Group Replica Reads are only accessible with the {na
 
 xref:server:learn:clusters-and-availability/groups.adoc#understanding-server-group-awareness[Server Groups]
 can be used to define subsets of nodes within a Couchbase cluster, which contain a complete set of vbuckets (active or replica).
-As well as high availability use cases, Servre Groups can also be used to keep much traffic within the same cloud Availability Zone.
+As well as high availability use cases, Server Groups can also be used to keep much traffic within the same cloud Availability Zone.
 
 For Capella users with high data volumes, egress charges for reads from other Availability Zones (AZ) in AWS can be a significant cost.
 The {name-sdk}, when making read replica requests, can make a request to a preferred Server Group --
