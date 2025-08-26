@@ -36,19 +36,49 @@ any changes to expected behavior are noted in the release notes that follow.
 
 
 
-=== Version 2.11.0 (??? August 2025)
+=== Version 2.11.0 (26 August 2025)
 
 Version 2.11.0 is the first release in the Go SDK 2.11 series.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.11.0?tab=doc[API Documentation]
 
-// Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
+Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
 
 ==== New Features and Behavioral Changes
 
+* https://jira.issues.couchbase.com/browse/GOCBC-1633[GOCBC-1633]:
+* https://jira.issues.couchbase.com/browse/GOCBC-1739[GOCBC-1739]:
+Added support for binary objects in transactions.
+* https://jira.issues.couchbase.com/browse/GOCBC-1692[GOCBC-1692]:
+Added missing fields to orphan reporter output.
+* https://jira.issues.couchbase.com/browse/GOCBC-1693[GOCBC-1693]:
+Updated app telemetry to contain latency for orphaned responses.
+* https://jira.issues.couchbase.com/browse/GOCBC-1703[GOCBC-1703]:
+Updated replica reads in transactions.
+* https://jira.issues.couchbase.com/browse/GOCBC-1716[GOCBC-1716]:
+Added support for FTS like pre-filters while doing vector search.
+* https://jira.issues.couchbase.com/browse/GOCBC-1759[GOCBC-1759]:
+Updated FTS `BooleanQuery` to accept a variadic parameter to allow a list of queries to be specified.
+
+==== Fixed Issues
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1669[GOCBC-1669]:
+Fixed issue where management operations had the incorrect metrics/span value for the `db.couchbase.service` attribute.
+* https://jira.issues.couchbase.com/browse/GOCBC-1723[GOCBC-1723]:
+Fixed issue where the incorrect error was returned for not locked in couchbase2 mode.
+* https://jira.issues.couchbase.com/browse/GOCBC-1730[GOCBC-1730]:
+Fixed issue where alt_node was always reported for KV app telemetry.
+* https://jira.issues.couchbase.com/browse/GOCBC-1742[GOCBC-1742]:
+Fixed issue where `ErrDocumentExists` was wrapped in a `TransactionOperationFailedError` when it should not have been.
+* https://jira.issues.couchbase.com/browse/GOCBC-1746[GOCBC-1746]:
+Fixed issue where SRV record refresh would not correctly reset internal SDK state.
 
 
+==== API breaking fixed Issues
 
+* https://jira.issues.couchbase.com/browse/GOCBC-1758[GOCBC-1758]:
+Fixed issue where FTS `TermRangeQuery` was requiring (and sending in the payload) a `term` attribute.
+This led to the query always been executed as a `TermQuery` and a `TermRangeQuery` never being executed.
 
 == Go SDK 2.10 Releases
 
@@ -68,7 +98,7 @@ Fixed issue where reading search results could panic in `couchbase2` mode.
 Fixed issue where `GetMulti` read skew resolution could nil pointer.
 * https://jira.issues.couchbase.com/browse/GOCBC-1745[GOCBC-1745]:
 Fixed issue where SRV record refresh would never match existing addresses being used.
-* https://jira.issues.couchbase.com/browse/GOCBC-1745[GOCBC-1747]:
+* https://jira.issues.couchbase.com/browse/GOCBC-1747[GOCBC-1747]:
 Fixed issue where SRV record refresh would fail when cluster config pushes were active.
 
 
