@@ -46,8 +46,8 @@ Tracing and metrics with the `couchbase2` scheme should be considered stability 
 
 ==== New Features and Behavioral Changes
 
-* https://jira.issues.couchbase.com/browse/GOCBC-1633[GOCBC-1633]:
-* https://jira.issues.couchbase.com/browse/GOCBC-1739[GOCBC-1739]:
+* https://jira.issues.couchbase.com/browse/GOCBC-1633[GOCBC-1633], 
+https://jira.issues.couchbase.com/browse/GOCBC-1739[GOCBC-1739]:
 Added support for binary objects in transactions.
 * https://jira.issues.couchbase.com/browse/GOCBC-1692[GOCBC-1692]:
 Added missing fields to orphan reporter output.
@@ -65,9 +65,9 @@ Updated FTS `BooleanQuery` to accept a variadic parameter to allow a list of que
 * https://jira.issues.couchbase.com/browse/GOCBC-1669[GOCBC-1669]:
 Fixed issue where management operations had the incorrect metrics/span value for the `db.couchbase.service` attribute.
 * https://jira.issues.couchbase.com/browse/GOCBC-1723[GOCBC-1723]:
-Fixed issue where the incorrect error was returned for not locked in couchbase2 mode.
+Fixed issue where the incorrect error was returned for not locked in `couchbase2` mode.
 * https://jira.issues.couchbase.com/browse/GOCBC-1730[GOCBC-1730]:
-Fixed issue where alt_node was always reported for KV app telemetry.
+Fixed issue where `alt_node` was always reported for KV app telemetry.
 * https://jira.issues.couchbase.com/browse/GOCBC-1742[GOCBC-1742]:
 Fixed issue where `ErrDocumentExists` was wrapped in a `TransactionOperationFailedError` when it should not have been.
 * https://jira.issues.couchbase.com/browse/GOCBC-1746[GOCBC-1746]:
@@ -78,7 +78,9 @@ Fixed issue where SRV record refresh would not correctly reset internal SDK stat
 
 * https://jira.issues.couchbase.com/browse/GOCBC-1758[GOCBC-1758]:
 Fixed issue where FTS `TermRangeQuery` was requiring (and sending in the payload) a `term` attribute.
-This led to the query always been executed as a `TermQuery` and a `TermRangeQuery` never being executed.
+This led to the query always being executed as a `TermQuery`, and a `TermRangeQuery` never being executed.
+
+
 
 == Go SDK 2.10 Releases
 
