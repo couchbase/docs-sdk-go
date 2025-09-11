@@ -110,43 +110,10 @@ The output is now:
 [#migration-from-sdk1]
 == Migrating from SDK 1
 
-WARNING: SDK 1 cannot read fields encrypted by SDK 2.
-
-It's inadvisable to have both the old and new versions of your application active at the same time.
-The simplest way to migrate is to do an offline upgrade during a scheduled maintenance window.
-For an online upgrade without downtime, consider a https://en.wikipedia.org/wiki/Blue-green_deployment[blue-green deployment^].
-
-SDK 2 requires additional configuration to read fields encrypted by SDK 1.
-The rest of this section describes how to configure Field-Level Encryption in SDK 2 for backwards compatibility with SDK 1.
-
-[#configure-field-name-prefix]
-=== Changing the field name prefix
-
-In SDK 1, the default prefix for encrypted field names was `\__crypt_`.
-This caused problems for Couchbase Sync Gateway, which does not like field names to begin with an underscore.
-In SDK 2, the default prefix is `encrypted$`.
-
-For compatibility with SDK 1, you can configure the `CryptoManager` to use the old `\__crypt_` prefix:
-
-[source,golang,indent=0]
-----
-include::devguide:example$go/fle.go[tag=oldannotation]
-----
-
-Alternatively, you can https://forums.couchbase.com/t/replacing-field-name-prefix/28786[rename the existing fields using a {sqlpp} statement].
-
-WARNING: In SDK 1, only top-level fields could be encrypted.
-SDK 2 allows encrypting fields at any depth.
-If you decide to rename the existing fields, make sure to do so _before_ writing any encrypted fields below the top level, otherwise it may be difficult to rename the nested fields using a generic {sqlpp} statement.
+SDK 1.x reached end-of-life long ago,
+but should you have fields encrypted by SDK 1.x, and the need to read them from SDK 2.x, 
+then follow the steps in the https://docs-archive.couchbase.com/go-sdk/2.6/howtos/encrypting-using-sdk.html#migration-from-sdk1[archived documents].
 
 
-[#configure-legacy-decrypters]
-=== Enabling decrypters for legacy algorithms
-
-The encryption algorithms used by SDK 1 are deprecated, and are no longer used for encrypting new data.
-To enable decrypting fields written by SDK 1, register the legacy decrypters with the `CryptoManager`:
-
-[source,golang,indent=0]
-----
-include::devguide:example$go/fle.go[tag=legacy]
-----
+IMPORTANT: The encryption algorithms used by SDK 1 are deprecated, and are no longer used for encrypting new data.
+Do not rely on the security of outdated encryption algorithms.
