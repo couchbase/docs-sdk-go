@@ -1,0 +1,6 @@
+sources:
+  docs-sdk-common:
+    branches: [release/8.0]
+
+  docs-sdk-go:
+    branches: [DOC-13585-template-not-filled-in-on-Query-page]
