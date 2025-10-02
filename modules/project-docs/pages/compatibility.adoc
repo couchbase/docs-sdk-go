@@ -125,7 +125,7 @@ See the notes there for Support details.
 === Capella Compatibility
 
 At time of release, the Couchbase {sdk_current_version} Go SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service. 
-To make development easier, the sdk_current_version} SDK includes the Capella client certificate ready installed.
+To make development easier, the {sdk_current_version} SDK includes the Capella client certificate already installed.
 
 include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
 
