@@ -119,7 +119,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 | *✔*
 |===
 
-Note the https://www.couchbase.com/support-policy[End of Life dates^] for Couchbase Server and SDK versions.
+Note the https://www.couchbase.com/support-policy/EOL/[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
 
 === Capella Compatibility
