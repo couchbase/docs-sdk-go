@@ -9,6 +9,10 @@ Even the most reliable software and hardware might fail at some point, and along
 Couchbase’s durability features include Synchronous Replication, and the possibility to use distributed, multi-document ACID transactions.
 It is the responsibility of the development team and the software architect to evaluate the best choice for each use case.
 
+
+// TIP: From Couchbase Server version 8.0 (including in Capella Operational), statistics from the SDK are collected automatically by the Cluster.
+
+
 include::{version-common}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=intro]
 
 include::{version-common}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep]

@@ -9,7 +9,7 @@
 {description}
 Here we cover CRUD operations, document expiration, and optimistic locking with CAS.
 
-The complete code sample used on this page can be downloaded from https://github.com/couchbase/docs-sdk-go/blob/temp/2.9/modules/devguide/examples/go/kv-crud.go[here]
+The complete code sample used on this page can be downloaded from https://github.com/couchbase/docs-sdk-go/blob/temp/{sdk_dot_minor}/modules/devguide/examples/go/kv-crud.go[here]
 -- from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Collection operations.
 
 == Documents
