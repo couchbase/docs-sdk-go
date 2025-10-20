@@ -128,4 +128,3 @@ then follow the steps in the https://docs-archive.couchbase.com/go-sdk/2.6/howto
 
 IMPORTANT: The encryption algorithms used by SDK 1 are deprecated, and are no longer used for encrypting new data.
 Do not rely on the security of outdated encryption algorithms.
-
