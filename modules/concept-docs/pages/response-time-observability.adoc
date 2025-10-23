@@ -6,4 +6,14 @@
 [abstract]
 {description}
 
+
+////
+[TIP] 
+====
+In addition to Tracing and other metrics, and client logging, SDK is telemetry is also sent to the Server -- available from 8.0, and in new Capella Operational clusters -- for ingestion with other Prometheus metrics.
+Capella Operatioal exposes these metrics through the UI.
+====
+////
+
+
 include::{version-common}@sdk:shared:partial$rto.adoc[tag=rto]

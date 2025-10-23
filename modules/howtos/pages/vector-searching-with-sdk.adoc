@@ -1,0 +1,199 @@
+= Vector Search
+:page-toclevels: 3
+:description: Vector Search from the SDK, to enable AI integration, semantic search, and use of RAG frameworks.
+
+
+// Note to editors
+// 
+// This page pulls in content from -sdk-common-??
+// and code samples https://github.com/couchbase/docs-sdk-python/tree/release/4.5/modules/devguide/examples/ ??
+// 
+// It can be seen built at https://docs.couchbase.com/python-sdk/4.5/howtos/vector-searching-with-sdk.html
+
+
+[abstract]
+{description}
+
+
+
+Vector Search has been available in Couchbase Capella Operational and self-managed Server since version 7.6, using the Couchbase Search Service.
+Version 8.0 introduces vector query using Global Secondary Indexes (GSI), the Query Service index --
+using either a fast Hyperscale index, or a composite index to combine scalar queries with semantic search.
+
+For fast and scalable vector queries, use one of the above two GSI choices -- detailed in the next section.
+If you don't require the speed and scale of vector query with GSI, or need to combine vector, geo-spatial search, range search, and traditional fuzzy text searches, then consider <<#vector-search-with-the-search-service>>.
+
+
+== Vector Search With the Query Service and GSI
+
+From the SDK, a vector query using GSI is the same as any other query.
+However, you will need to build one or more indexes.
+
+=== Prerequisites
+
+* Couchbase Server 8.0.0 or newer -- or a recent Capella instance.
+
+* Your chosen xref:server:vector-index:use-vector-indexes.adoc[vector index] -- 
+hyperscale or composite.
+
+
+You will need to refer to the xref:server:vector-index:vectors-and-indexes-overview.adoc[] pages for a full discussion of using Vector Indexes with Vector Queries.
+In particular, you will need to xref:server:vector-index:hyperscale-filter.adoc#creating-a-hyperscale-vector-index-with-included-scalar-values[create a Vector Index].
+
+
+
+=== Examples
+
+The xref:server:vector-index:vectors-and-indexes-overview.adoc[] pages contain examples using both hyperscale and compound indexes.
+
+Here is the xref:server:vector-index:hyperscale-vector-index.adoc#query-example[Hyperscale Index] example,
+wrapped inside the {name-sdk} Query API.
+
+.Hyperscale Index Example
+[source,go,indent=0]
+----
+include::devguide:example$go/n1ql-query-vector.go[tag=vector-hyperscale-index]
+----
+
+Parameterizing the query, as with xref:sqlpp-queries-with-sdk.adoc#parameterized-queries[regular queries], will allow the reuse of the xref:server:n1ql:n1ql-intro/queriesandresults.adoc#prepare-stmts[Query Plan].
+This can be more efficient, unless you are doing a lot of optimization to your query.
+
+.Parameterized Vector Query
+[source,go,indent=0]
+----
+include::devguide:example$go/n1ql-query-vector.go[tag=vector-hyperscale-index-parameterized]
+----
+
+
+== Vector Search With the Search Service
+
+Vector search is also implemented using xref:full-text-searching-with-sdk.adoc[Search Indexes], and can be combined with traditional full text search queries.
+Vector embeddings can be an array of floats or a xref:server:vector-search:run-vector-search-ui.adoc#base64[base64 encoded string].
+
+=== Prerequisites
+
+Couchbase Server 7.6.0
+(7.6.2 for base64-encoded vectors) -- or a Capella Operational cluster.
+
+
+=== Examples
+
+==== Single vector query
+
+In this first example we are performing a single vector query:
+
+[source,go,indent=0]
+----
+include::devguide:example$go/search.go[tag=single_vector_query]
+----
+
+Let's break this down.
+We create a `SearchRequest`, which can contain a traditional FTS query `SearchQuery` and/or the new `VectorSearch`.
+Here we are just using the latter.
+
+The `VectorSearch` allows us to perform one or more `VectorQuery` s.
+
+The `VectorQuery` itself takes the name of the document field that contains embedded vectors ("vector_field" here), plus actual vector query in the form of a `[]float32`.
+
+(Note that Couchbase itself is not involved in generating the vectors, and these will come from an external source such as an embeddings API.)
+
+Finally we execute the `SearchRequest` against the FTS index "travel-sample-index", which has previously been setup to vector index the "vector_field" field.
+
+This happens to be a scoped index so we are using `scope.Search()`.
+If it was a global index we would use `cluster.Search()` instead - see <<Scoped vs Global Indexes>>.
+
+It returns the same `SearchResult` detailed earlier.
+
+
+
+
+==== Pre-Filters
+
+From Couchbase Server 7.6.4 -- and in Capella Operational clusters -- 
+xref:server:vector-search:pre-filtering-vector-search.adoc#about-pre-filtering[pre-filtering with similarity search] is available.
+This is a non-vector query that the server executes first to get an intermediate result.
+Then it executes the vector query on the intermediate result to get the final result.
+
+[source,go]
+----
+func (q *Query) Prefilter(query search.Query) *Query
+----
+
+If no prefilter is specified, the server executes the vector query on all indexed documents.
+
+.Simple Match
+[source,go]
+----
+vector.NewQuery("vector_field", vectorQuery).
+	Prefilter(search.NewMatchQuery("primary").
+		Field("color_wheel_pos")).
+	NumCandidates(10)
+----
+
+The prefilter can be any Search Query --
+from a simple match, as above, to a string query:
+
+.String Query
+[source,go]
+----
+vector.NewQuery("vector_field", vectorQuery).
+	Prefilter(search.NewQueryStringQuery("+description:sea -color_hex:fff5ee"))
+----
+
+See the https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.11.0/vector#Query.Prefilter[API reference].
+
+
+
+
+
+
+
+==== Multiple vector queries
+
+You can run multiple vector queries together:
+
+[source,go,indent=0]
+----
+include::devguide:example$go/search.go[tag=multiple_vector_queries]
+----
+
+
+How the results are combined (ANDed or ORed) can be controlled with `vector.SearchOptions.VectorQueryCombination`.
+
+==== Combining FTS and vector queries
+You can combine a traditional FTS query with vector queries:
+
+[source,go,indent=0]
+----
+include::devguide:example$go/search.go[tag=vector_fts_query_combination]
+----
+
+How the results are combined (ANDed or ORed) can be controlled with `vector.SearchOptions.VectorQueryCombination`.
+
+
+
+// integrations??
+
+
+
+
+
+== Further Reading
+
+
+=== Vector Query
+
+* xref:server:vector-index:vectors-and-indexes-overview.adoc[Vector Query for AI Apps docs (self-managed Couchbase Server)].
+* xref:cloud::vector-index/vectors-and-indexes-overview.adoc[Vector Query for AI Apps docs (Capella DBaaS)]
+// * Vector GSI Query is just like any other query from the SDK to the Query service: https://docs.couchbase.com/sdk-api/couchbase-net-client/api/Couchbase.Search.Queries.Vector.VectorQuery.html[Go SDK API Reference].
+
+=== Vector Search
+
+* xref:server:vector-search:vector-search.adoc[Vector Search for AI Apps docs (self-managed Couchbase Server)]
+* xref:cloud::vector-search:vector-search.adoc[Vector Search for AI Apps docs (Capella DBaaS)]
+* Vector Search in the https://pkg.go.dev/github.com/couchbase/gocb/v2#SearchRequest.VectorSearch[Go API reference].
+// * https://developer.couchbase.com/tutorial-python-langchain-pdf-chat
+
+
+
+

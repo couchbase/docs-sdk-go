@@ -8,6 +8,17 @@
 
 For a high-level overview of this feature, see xref:concept-docs:encryption.adoc[].
 
+
+[TIP]
+.Native Encryption at Rest
+====
+Server 8.x (and new Capella Operational clusters) offer xref:server:learn:security/native-encryption-at-rest-overview.adoc[encryption at rest].
+It's a comprehensive way of encrypting all data in a non-ephemeral bucket,
+as well as logs, configuration data, and audit data.
+However, you may prefer the relative simplicity of key management in Field Level Encryption for use cases where there are a limited number of data to be encrypted.
+====
+
+
 [#package]
 == Packaging
 The Go SDK works together with the https://github.com/couchbase/gocbencryption[Go Couchbase Encryption^] library to provide support for encryption and decryption of JSON fields.
