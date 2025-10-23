@@ -97,7 +97,7 @@ Now all of the gocb logging output will go through our logger and be outputted t
 == SDK Telemetry from the Server
 
 In addition to Tracing and other metrics, and client logging, SDK telemetry is also sent to the Server -- available from 8.0, and in new Capella Operational clusters -- for ingestion with other Prometheus metrics.
-Capella Operatioal exposes these metrics through the UI.
+Capella Operational exposes these metrics through the UI.
 
 For self-managed Server, collection can be disabled and enabled through the REST API:
 
