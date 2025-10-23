@@ -50,40 +50,18 @@ Here is the xref:server:vector-index:hyperscale-vector-index.adoc#query-example[
 wrapped inside the {name-sdk} Query API.
 
 .Hyperscale Index Example
-[source,python]
+[source,go,indent=0]
 ----
-  result = cluster.query(
-  "SELECT d.id, d.question, d.wanted_similar_color_from_search, " +
-  "  ARRAY_CONCAT( " +
-    "d.couchbase_search_query.knn[0].vector[0:4], " +
-    "['...'] " +
-  ") AS vector " +
-  "FROM `vector-sample`.`color`.`rgb-questions` AS d " +
-  "WHERE d.id = '#87CEEB';",
-  QueryOptions(metrics=True)
-
-    for row in result.rows():
-        print(f"Found match: {row}")
+include::devguide:example$go/n1ql-query-vector.go[tag=vector-hyperscale-index]
 ----
 
 Parameterizing the query, as with xref:sqlpp-queries-with-sdk.adoc#parameterized-queries[regular queries], will allow the reuse of the xref:server:n1ql:n1ql-intro/queriesandresults.adoc#prepare-stmts[Query Plan].
 This can be more efficient, unless you are doing a lot of optimization to your query.
 
 .Parameterized Vector Query
-[source,python]
+[source,go,indent=0]
 ----
-  result = cluster.query(
-         "SELECT d.id, d.question, d.wanted_similar_color_from_search, " +
-         "  ARRAY_CONCAT( " +
-           "d.couchbase_search_query.knn[0].vector[0:4], " +
-           "['...'] " +
-         ") AS vector " +
-      "FROM `vector-sample`.`color`.`rgb-questions` AS d " +
-  	"WHERE d.id = $id;",
-  QueryOptions(named_parameters={'id': '#87CEEB'})
-
-    for row in result.rows():
-        print(f"Found match: {row}")
+include::devguide:example$go/n1ql-query-vector.go[tag=vector-hyperscale-index-parameterized]
 ----
 
 
@@ -136,38 +114,30 @@ xref:server:vector-search:pre-filtering-vector-search.adoc#about-pre-filtering[p
 This is a non-vector query that the server executes first to get an intermediate result.
 Then it executes the vector query on the intermediate result to get the final result.
 
-[source,javascript]
-----  let prefilter = couchbase.SearchQuery.match('primary').field('color-wheel-pos')
-  request = couchbase.SearchRequest.create(
-    couchbase.VectorSearch.fromVectorQuery(
-      couchbase.VectorQuery.create('vector-field', queryVector)
-        .prefilter(prefilter)
-    )
-  )
-  result = await scope.search('vector-index', request)
+[source,go]
+----
+func (q *Query) Prefilter(query search.Query) *Query
 ----
 
 If no prefilter is specified, the server executes the vector query on all indexed documents.
 
 .Simple Match
-[source,python]
+[source,go]
 ----
-VectorQuery.create(field_name, vector, num_candidates=num_candidates, prefilter=MatchQuery('primary', field='color_wheel_pos'))
+vector.NewQuery("vector_field", vectorQuery).
+	Prefilter(search.NewMatchQuery("primary").
+		Field("color_wheel_pos")).
+	NumCandidates(10)
 ----
 
 The prefilter can be any Search Query --
 from a simple match, as above, to a string query:
 
 .String Query
-[source,javascript]
-----  prefilter = couchbase.SearchQuery.queryString('+description:sea -color_hex:fff5ee')
-  request = couchbase.SearchRequest.create(
-    couchbase.VectorSearch.fromVectorQuery(
-      couchbase.VectorQuery.create('vector-field', queryVector)
-        .prefilter(prefilter)
-    )
-  )
-  result = await scope.search('vector-index', request)
+[source,go]
+----
+vector.NewQuery("vector_field", vectorQuery).
+	Prefilter(search.NewQueryStringQuery("+description:sea -color_hex:fff5ee"))
 ----
 
 See the https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.11.0/vector#Query.Prefilter[API reference].
