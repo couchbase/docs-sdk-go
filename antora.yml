@@ -11,7 +11,7 @@ asciidoc:
     sdk_current_version: '2.11.1'
     sdk_dot_minor: '2.11'
     sdk_dot_major: 2.x'
-    version-server: '7.6'
+    version-server: '8.0'
     version-common: '8.0'
     name_platform: 'Go'
     name-sdk: 'Go SDK'
