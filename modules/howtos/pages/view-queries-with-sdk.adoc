@@ -1,13 +1,14 @@
 = MapReduce Views
 :description: Our legacy MapReduce Views Service is best replaced by the scalable Query Service.
 :navtitle: MapReduce Views
+:page-edition: Deprecated
 :page-aliases: ROOT:view-queries-with-sdk,ROOT:geo-spatial-views
 
 
 [abstract]
 {description}
 
-// include::{version-common}@sdk:shared:partial$views.adoc[tag=deprecate]
+// include::8.0@sdk:shared:partial$views.adoc[tag=deprecate2]
 
 
 // option 1 - C++ - redirect to migration page, and add note at end.
