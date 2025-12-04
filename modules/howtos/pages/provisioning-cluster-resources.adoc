@@ -26,6 +26,9 @@ include::{version-common}@sdk:shared:partial$flush-info-pars.adoc[tag=management
 
 The Go SDK also comes with some convenience functionality for common Couchbase management requests.
 
+include::{version-common}@sdk:shared:partial$provisioning-clusters.adoc[tag=not-capella]
+
+
 Management operations in the SDK may be performed through several interfaces depending on the object:
 
 * {bucket-api-reference}
