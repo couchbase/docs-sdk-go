@@ -35,7 +35,7 @@ include::devguide:example$go/cloud.go[tags=**]
 Local Couchbase Server::
 + 
 -- 
-[source.try-it,go]
+[source,go]
 ----
 include::example$startusing.go[tags=**]
 ----
