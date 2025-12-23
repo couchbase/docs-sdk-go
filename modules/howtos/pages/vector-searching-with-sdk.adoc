@@ -130,6 +130,10 @@ vector.NewQuery("vector_field", vectorQuery).
 	NumCandidates(10)
 ----
 
+Note that `NumCandidates` sets how many similar vectors are returned. 
+If it is not set, then the Cluster's default of `3` will be used --
+this corresponds with `k` on the Server side, for K-Nearest Neighbors.
+
 The prefilter can be any Search Query --
 from a simple match, as above, to a string query:
 
@@ -169,6 +173,19 @@ include::devguide:example$go/search.go[tag=vector_fts_query_combination]
 ----
 
 How the results are combined (ANDed or ORed) can be controlled with `vector.SearchOptions.VectorQueryCombination`.
+
+.Scoring for these hybrid search queries combines the boost multipliers to get to the final score.
+----
+hit_score = (query_1_boost * query_1_hit_score) + (query_2_boost * query_2_hit_score)
+----
+
+
+=== Query Methods
+
+As part of the Search service, you can use the same xref:full-text-searching-with-sdk.adoc#search-queries[Search query methods] as regular Searches.
+See a fuller list, with Vector properties, in the xref:cloud:search:search-request-params.adoc[Capella docs].
+
+
 
 
 
