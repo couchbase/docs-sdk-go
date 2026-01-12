@@ -1,5 +1,5 @@
 = SDK Release Notes
-:description: Release notes, installation instructions, and download archive for the Couchbase Go Client.
+:description: Release notes, brief installation instructions, and download archive for the Couchbase Go Client.
 :page-toclevels: 2
 :page-aliases: relnotes-go-sdk,ROOT:relnotes-go-sdk,ROOT:sdk-release-notes,ROOT:release-notes
 
@@ -9,6 +9,10 @@
 
 These pages cover the 2.x versions of the Couchbase Go SDK (3.x SDK API).
 For release notes, download links, and installation methods for 1.6 and earlier releases of the Couchbase Go Client, please see the https://docs-archive.couchbase.com/go-sdk/1.6/relnotes-go-sdk.html[1.x Go Release Notes & Download Archive].
+
+
+Version {sdk_dot_minor} of the Go SDK implements the {sdk_api} xref:compatibility.adoc#api-version[SDK API].
+See the xref:compatibility.adoc#couchbase-feature-availability-matrix[compatibility pages] for more information on feature compatibility with different versions of Couchbase Server.
 
 
 == SDK Installation
@@ -26,12 +30,28 @@ Older versions may work, but are not supported.
 The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
 
 
+
 [#latest-release]
-== Go SDK 2.11 Releases
+== Go SDK 2.12 Releases
 
 We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
+
+
+=== Version 2.12.0 (?? February 2025)
+
+Version 2.12.0 is the first release in the Go SDK 2.12 series.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.12.0?tab=doc[API Documentation]
+
+Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
+
+==== New Features and Behavioral Changes
+
+
+
+== Go SDK 2.11 Releases
 
 === Version 2.11.1 (18 September 2025)
 

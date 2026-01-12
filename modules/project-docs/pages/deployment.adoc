@@ -1,0 +1,77 @@
+= Deployment
+:page-toclevels: 2
+:description: Transition from dev environment to prod, and keep up with the latest fixes.
+
+
+// Note to editors
+// 
+// This page pulls in content from -sdk-common-
+// and code samples from -example-dir-
+// 
+// It can be seen built at wwww.
+
+[abstract]
+{description}
+
+
+
+
+
+
+
+One of Couchbase's strengths is speedy response, so deployment of apps should be in the same region as the Server -- whether Capella, or your own self-managed cluster.
+
+We always recommend the xref::sdk-release-notes.adoc#latest-release[latest version] of the SDK. 
+This not only contains the latest security updates and bug fixes, but will be compatible with the latest Couchbase Server release
+(note, Capella always runs a recent version of Couchbase Server).
+
+Before deploying, take note of any xref:compatibility.adoc[compatibility] issues for the language platform and underlying OS.
+The xref:sdk-full-installation.adoc[full installation guide] should cover any special cases for all supported environments.
+
+
+== Development & Testing Environments
+
+During development, some shortcuts are taken to get up and running which would not be acceptable during deployment.
+These include use of administrator permissions, connecting from your laptop instead of a secure app server, and even disabling certificate verification for TLS.
+Testing environments may also differ from deployment.
+
+The {name-sdk} docs note whenever a shortcut is being taken, but here is a non-exhaustive list of those development practices which should not be carried over to production deployments:
+
+* Over-priveleged access
+* Geographical separation of app server and database
+* Skipping certificate verification
+// * more
+
+The best way to accommodate developing an application that is to be deployed to production is to use the platform's default approach for configuration files.
+
+For the Scala SDK, that is to keep a separate properties file for your development and production environments.
+
+
+
+
+// == Migration
+// 
+// This section also contains information on xref:migrating-sdk-code-to-3.n.adoc[migrating from the previous version of the SDK API].
+// 
+// :migration-link: for 4.x pages??
+
+
+== Further Reading
+
+* Integrate Couchbase with your data ecosystem:
+** xref:project-docs:third-party-integrations.adoc[SDK Integrations]
+** xref:server:develop:integrations.adoc[Integrations across Couchbase]
+* xref:project-docs:get-involved.adoc[Contribute to the SDK] 
+
+=== Deploying Couchbase Server
+
+* xref:cloud::index.adoc[Capella] -- Database as a Service
+* xref:{version-server}@server:install:get-started.adoc[Self-managed Couchbase Server]:
+** xref:{version-server}@server:install:getting-started-docker.adoc[Docker Install]
+** xref:operator::overview.adoc[Couchbase Autonomous Operator]
+*** xref:operator::install-kubernetes.adoc[Kubernetes]
+*** xref:operator::install-openshift.adoc[Openshift]
+** xref:{version-server}server:cloud:couchbase-cloud-deployment.adoc[Cloud Marketplace]:
+*** xref:{version-server}@server:cloud:couchbase-aws-marketplace.adoc[AWS Marketplace]
+*** xref:{version-server}@server:cloud:couchbase-azure-marketplace.adoc[Azure Marketplace]
+*** xref:{version-server}@server:cloud:couchbase-gcp-cloud-launcher.adoc[GCP Marketplace]

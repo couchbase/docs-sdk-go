@@ -1,0 +1,237 @@
+= Best Practices
+:description: Speed up your application development, with some best practices for using Couchbase SDKs.
+:page-toclevels: 2
+:page-aliases: concept-docs:errors.adoc,concept-docs:rbac.adoc
+
+
+
+// Note to editors
+// 
+// This page pulls in content from -sdk-common-
+// and code samples from -example-dir-
+// 
+// It can be seen built at wwww.
+
+
+[abstract]
+{description}
+
+
+// see .NET doc on this
+
+
+From batching and reactive APIs, to unit tests and handling errors.
+There's plenty that can be done to remove bottlenecks in development and in performance, and this page can be your checklist of areas not to neglect as you develop your app.
+
+
+
+== Security
+
+But before worrying about bottlenecks, let's put security concerns first.
+
+Security is a process, and not just a set of checkboxes -- but there are key areas you must check off as you move from development, through testing, to deploying in production.
+
+
+=== Roles and RBAC
+
+Self-managed Couchbase Server uses Role-Based Access Control (RBAC), which is reflected in our managed service as a nuanced set of Roles.
+Data security depends in part on only giving access to 
+// 
+
+
+
+// concept snippet
+
+// include::{version-common}@sdk:pages:partial$rbac.adoc[]
+
+RBAC restrict resources on a Couchbase cluster to an identified user, allocated by role.
+
+// *TODO* update and add Capella here
+
+
+==== Users, Resources, Roles, and Privileges
+
+Couchbase Server Enterprise Edition uses _Role-Based Access Control_ for applications to restrict _resources_ on a Couchbase cluster to an identified _user_.
+
+Each user who attempts resource-access is identified by means of the _credentials_ they pass to Couchbase Server, for purposes of _authentication_: these consist of a _username_ and (typically) a _password_.
+Once the user is authenticated, an _authorization_ process checks the _roles_ with which the user is associated.
+If one or more of these roles correspond to _privileges_ that permit the user-requested level of resource-access, access is duly granted; otherwise, it is denied.
+
+Users who have been assigned the *Admin* role for the cluster are able to create, edit, and remove users.
+The SDK provides APIs to support these activities.
+
+NOTE: Introductory examples in the SDK documentation use the _Administrator_ user to ensure that developers can quickly get up and running; this _should not be used in production_.
+Elsewhere we use a general "user" which represents whichever permission levels are appropriate to your application.
+
+
+== Performance
+
+Couchbase's Data Service uses a fast binary protocol, which will always outperform JSON streamed over HTTP from {sqlpp} queries.
+If you know the key (ID) of a document, then use the xref:howtos:kv-operations.adoc[Data Service].
+
+If you need pessimistic logging, in particular if you need to lock documents for multi-document ACID transactions, then anything you can do at the schema level to reduce the number of documents locked simultaneously wil remvoe a bottleneck to updating the affected documents.  
+
+
+
+=== Dealing with Timeout Errors
+
+
+// see also
+// https://couchbasecloud.atlassian.net/wiki/spaces/CST/pages/1993769712/Java+-+Debugging+KV+Timeouts
+// in Support wiki
+
+
+* `waitUntilReady` should be the default setting for `Cluster.connect` and `Cluster.bucket` in most cases, so that resources are fully loaded before the client proceeds with CRUD calls to the cluster.
+* LAN-type connection of client and server is recommended in production, but WAN development is a reality pre-production.
+Ensure that you're familiar with the 
+xref:ref:client-settings.adoc#constrained-network-environments[best timeout options for WAN environments],
+or at least set a xref:ref:client-settings.adoc#wan-development[WAN development Configuration Profile].
+
+
+// write after more LZA added
+////
+=== Read From Replica
+
+Advanced zone aware....
+////
+
+
+=== Concurrency and Async APIs
+
+// ....this paragraph different for each SDK.
+
+Choosing between the blocking, asynchronous, and reactive APIs for the Scala SDK is partly bound up with how (and where) you want to handle exceptions.
+
+* Synchronous operations are blocking, and return a Scala `Try` object.
+This contains either the result or a _Throwable_ exception,
+which can be pattern matched over (using `flatMap` in more complex cases).
+* The asynchronous API returns Scala `Future`, representing the execution of an asynchronous task and the promise of a future result.
+An `ExecutionContext` must be provided, to give a thread pool for handling whatever is returned.
+* The reactive API is a more natural fit for network-aware, fault tolerant programs, 
+and will provide full back pressure for streaming results from large {sqlpp} or Search queries.
+
+See the xref:howtos:concurrent-async-apis.adoc[Async & Reactive APIs page] for further discussion and practical examples.
+
+
+
+== Error Handling
+
+Best practices for error handling in Scala depend somewhat upon your choice of API: 
+blocking, asynchronous, or reactive, as covered in the xref:concurrent-async-apis.adoc[async and reactive API guide].
+That guide also covers how errors are actually returned (e.g. via `Try`, `Future`, or `Mono`) and handled.
+See also the xref:howtos:error-handling.adoc[error handling guide],
+which covers specific errors, along with a broader look at error handling strategies.
+
+
+== Testing
+
+Integrate developing with the {name-sdk} into your accustomed test framework.
+
+
+
+
+////
+== General Approach to Scala Exceptions
+
+ When the unexpected happens, take a step-by-step approach.
+
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=exception]
+
+// include::{version-common}@sdk:shared:partial$errors.adoc[tag=ref]
+
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=durability]
+
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=diag]
+////
+
+
+
+
+// Slow Operations Logging
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=observability]
+
+// until opentelemetry release for link below, could add note on API to expose own tracing features?
+// include::{version-common}@sdk:shared:partial$errors.adoc[tag=rto]
+
+
+
+
+
+// Missing APIs
+// For anything that is not covered by the SDK, 
+// for example
+// a raw FTS query from the SDK...
+// use the HTTP client: 
+
+////
+public class CouchbaseHttpClient
+extends Object
+A specialized HTTP client for making requests to Couchbase Server.
+Get an instance by calling Cluster.httpClient().
+
+Example usage:
+
+ public static String getAutoFailoverSettings(Cluster cluster) {
+   HttpResponse response = cluster.httpClient().get(
+       HttpTarget.manager(),
+       HttpPath.of("/settings/autoFailover"));
+
+   if (!response.success()) {
+     throw new RuntimeException(
+         "Failed to get auto-failover settings. HTTP status code " +
+             response.statusCode() + "; " + response.contentAsString());
+   }
+
+   return response.contentAsString();
+ }
+
+ public static void disableAutoFailover(Cluster cluster) {
+   HttpResponse response = cluster.httpClient().post(
+       HttpTarget.manager(),
+       HttpPath.of("/settings/autoFailover"),
+       HttpPostOptions.httpPostOptions()
+           .body(HttpBody.form(Map.of("enabled", "false"))));
+
+   if (!response.success()) {
+     throw new RuntimeException(
+         "Failed to disable auto-failover. HTTP status code " +
+             response.statusCode() + "; " + response.contentAsString());
+   }
+ }
+ 
+////
+// https://docs.couchbase.com/sdk-api/couchbase-java-client/com/couchbase/client/java/http/CouchbaseHttpClient.html
+
+
+
+
+== Additional Information
+
+SDKs are client to Couchbase Server -- whether Capella Database-As-A-Service, or self-managed -- and in some areas it would be wise to take a fully rounded approach.
+Read up on security and performance considerations relevant to your use case.
+
+=== Couchbase Security Best Practices
+
+* xref:cloud:security:security.adoc[Security Best Practices in Capella]
+* xref:server:learn:security/security-overview.adoc[Security for self-managed Couchbase Server]
+
+=== Role-Based Access Control
+
+// *TODO* add Capella info
+
+All aspects of the Couchbase RBAC system are covered in the section xref:{version-server}@server:learn:security/authorization-overview.adoc[Authorization].
+Specifically, for information on:
+
+* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:{version-server}@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users and Roles].
+* _Roles_ required for resource-access, and the privileges they entail, see xref:{version-server}@server:learn:security/roles.adoc[Roles].
+* _Resources_ controlled by Couchbase RBAC, see xref:{version-server}@server:learn:security/resources-under-access-control.adoc[Resources Under Access Control].
+
+
+
+
+// other SDK's docs
+//
+// add in Python
+// https://docs.couchbase.com/sdk-api/couchbase-python-client/couchbase_api/parallelism.html
+//
+// 

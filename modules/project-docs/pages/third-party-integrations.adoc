@@ -1,0 +1,47 @@
+= Integrations & Ecosystem
+:description: The Couchbase Scala SDK is often used with unofficial and third party tools and applications to integrate into broader language and platform ecosystems, and across data lakes in heterogeneous environments.
+:navtitle: Integrations
+:page-toclevels: 2
+
+
+
+[abstract]
+{description}
+
+include::{version-common}@sdk:shared:partial$integrations.adoc[tag=intro]
+
+
+include::{version-common}@sdk:shared:partial$integrations.adoc[tag=official]
+
+The Couchbase Scala SDK is a first class citizen in the https://spring.io/projects/spring-data-couchbase[Spring Data^] world, and the Scala SDK can leverage that through the JVM.
+
+Couchbase also supports integrating with xref:spark-connector:ROOT:getting-started.adoc.adoc[Spark].
+
+
+=== IDE Integrations
+
+To make development easier, xref:server:develop:integrations.adoc#ide-integrations[Couchbase plugins] are available for 
+https://marketplace.visualstudio.com/items?itemName=Couchbase.vscode-couchbase[VSCode] and the 
+https://plugins.jetbrains.com/plugin/22131-couchbase[IntelliJ] family of IDEs and editors.
+
+
+
+
+
+include::{version-common}@sdk:shared:partial$integrations.adoc[tag=important]
+
+Why not take advantage of compatible Java tools? 
+Many dataflow tools integrate with Couchbase, including https://github.com/apache/nifi/tree/main/nifi-nar-bundles/nifi-couchbase-bundle[Apache NiFi^], 
+https://wildfly-extras.github.io/wildfly-camel/#_camel_couchbase[Apache Camel^],
+and https://github.com/couchbaselabs/flink-connector-couchbase[Apache Flink^].
+
+
+include::{version-common}@sdk:shared:partial$integrations.adoc[tag=other]
+
+https://docs.databricks.com/data/data-sources/couchbase.html[Databricks^] provides integration with the Couchbase Scala SDK and Spark.
+
+
+== See Also
+
+Couchbase Server (Capella or self-managed) offers many partner and community integrations --
+the xref:cloud:third-party:integrations.adoc[] page contains a full listing.

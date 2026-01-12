@@ -1,126 +1,135 @@
-image:https://github.com/couchbase/docs-sdk-go/actions/workflows/build.yml/badge.svg?branch=release%2F2.6[link="https://github.com/couchbase/docs-sdk-go/actions/workflows/build.yml"] 
-image:https://github.com/couchbase/docs-sdk-go/actions/workflows/test-ga.yml/badge.svg?branch=release%2F2.6[link="https://github.com/couchbase/docs-sdk-go/actions/workflows/test-ga.yml"]
-
 = Couchbase Go SDK Documentation
-// Settings:
-ifdef::env-github[]
-:warning-caption: :warning:
-endif::[]
-// URLs:
-:url-org: https://github.com/couchbase
-:url-contribute: https://docs.couchbase.com/home/contribute/index.html
-:url-ui: {url-org}/docs-ui
-:url-playbook: {url-org}/docs-site
 
-This repository hosts the documentation source for the Couchbase Go SDK.
+This repository hosts the documentation source for the https://docs.couchbase.com/go-sdk/2.12/hello-world/overview.html[Couchbase Go SDK].
+
+This branch documents the 2.12 release of the SDK.
+It follows the https://docs.couchbase.com/go-sdk/3.10/project-docs/compatibility.html#api-version[SDK 3.9 API].
+
+This branch reflects the new Information Architecture for the SDK docs.
+
 
 == Contributing
 
-Check out our {url-contribute}[contributing guide] to learn how to:
+Contributions are welcome!
+Please test them locally, and then submit a pull request.
+A guide to using asciidoc, building Antora locally, and working with our repos can be found at https://docs.couchbase.com/home/contribute/index.html[https://docs.couchbase.com/home/contribute/index.html] (this may still be in the middle of being updated).
 
-* submit a bug or feedback issue
-* set up your documentation workspace
-* build the documentation
-* submit a pull request
+At a minimum, to build the docs locally, you will need this repo,
+https://github.com/couchbase/docs-sdk-common[docs-sdk-common],
+and the https://github.com/couchbase/docs-server[Server Docs repo]
+in your Antora playbook.
 
-Thank you for helping to make the documentation better.
+If you are not sure the best way to update the docs, please raise a JIRA ticket with your suggestion, putting in as much information as possible.
 
-== Docs Component Configuration
 
-This repository contains an Antora docs component.
-Keep in mind these key repository features:
+== Notes for Docs Maintainers
 
-* Component name, version, and start page are configured in each branch's _antora.yml_ file.
-* The navigation for all of the modules is stored in the ROOT module's _nav.adoc_ file.
-* Production branches use the *release/X.Y* naming pattern (e.g., release/5.5, release/6.0).
- ** The {url-playbook}[docs site playbook] instructs Antora to automatically aggregate any branch names that start with *release/*.
+The philosophy behind the Information Architecture can be found in the https://docs.couchbase.com/go-sdk/2.12/project-docs/metadoc-about-these-sdk-docs.html[meta doc].
 
-== Documentation Site Toolchain
+=== Directory Structure
 
-The documentation source files are marked up with AsciiDoc.
-Once merged into a version branch, the source files and their assets are aggregated, converted to HTML, and published by Antora to our staging and production sites.
-The docs components and {url-ui}[site UI] are orchestrated by the {url-playbook}[docs site playbook].
-See the contributing guide to learn more.
+Antora modules used are as follows:
 
-== Documentation Code Sample Testing
+* concept-docs -- discussion docs explaining SDK-relevant aspects of Couchbase; in the published docs these are now interleaved with the howtos, rather than in a separate section.
+This module also contains the mini landing pages which introduce each section.
+* devguide/examples -- the home of all code examples.
+* hello-world -- overview (landing page) and the introductory tutorials.
+* howtos -- practical explanations, with plenty of code snippets.
+These are the docs used by the majority of developers.
+* project-docs -- deployment section.
+Docs that you need to use the software (compatibility tables, release notes, etc.), but which are not about the software API.
+* ref -- reference material, such as error codes and client settings.
+* ROOT -- contains `nav.adoc`, the navigation file for this component.
 
-To ensure that the code samples included in the documentation are correct and produce the results we expect, we have setup scripts that build and test each example file.
+Within each module, docs content is mostly found in the `pages` directories, as `.adoc` files.
+Occasionally, a partial fragment in a `partials` directory contains content reused over more than one page.
+Most re-use is from single-sourced content in the https://github.com/couchbase/docs-sdk-common[sdk-common] repo.
 
-For testing we use the https://github.com/bats-core/bats-core[bats-core] automation framework to run the code and https://github.com/ztombol/bats-assert[bats-assert] assertion library to make assertions on the output where necessary.
+=== Single-sourced Content
 
-The tests run against the latest Couchbase Server docker image with the relevant SDK (Go in this case) provided alongside it.
+To make maintenance easier for docs of around a dozen SDKs, content that is common across SDK docsets is -- wherever possible -- single-sourced from the https://github.com/couchbase/docs-sdk-common[sdk-common] repo.
 
-To facilitate running the tests there is a `Makefile` in the `/modules` directory of the project.
+We recognise that this adds a slight cognitive burden for the new maintainer, but one layer of abstraction seems a reasonable compromise for maintainability.
+To make content re-use workable, certain replaceable attributes are used.
+These are found in the antora.yml file.
 
-There you will find all the relevant commands needed to execute the docker container and the test/build scripts.
+.Attributes for Single-sourced Content
+|===
+| Attribute | Use
 
-=== Running a test
-Before you can run the tests you will need to ensure you have Docker and npm available on your machine.
+| `server_version:`
+| SDK dotminor releases contain new APIs to match new Server releases.
+This is the release version of Couchbase Server that this SDK release accompanied.
+Not often needed within the SDK documentation -- the server version in `xref` links is set with  `version-server:` (see below).
 
-To run the example tests you will need to build the testing Docker image, run the container and execute your tests.
+| `sdk_current_version:` | Sets the current patch version.
 
-TIP: After your first build of the docker image you won't need to build it every time you want to run the tests.
+| `sdk_dot_minor:` | The current dotminor.
 
-Here are the steps required to achieve this:
+| `sdk_dot_major:` | The current major release -- not often needed within the documentation.
 
-- `cd` into the `/modules` directory and run `make cb-build` to build a local image of Couchbase Server + Go SDK.
+| `version-server:` | This is substituted into `xref` links to the Server, to ensure they land on the correct release version.
 
-- Once that has completed succesfully you can run `make cb-start` to run the docker container.
+| `version-common:`
+| The version (branch) of the single-sourced `sdk-common` repo.
+This is substituted into Antora `include::` directives, to pull in content from the correct branch.
 
-Note that this can take some time as it will configure couchbase server with all the required test data (e.g. travel-sample bucket) for the examples to run successfully.
+| `name_platform:` | Allows us to name the SDK within shared content (*Go*).
 
-- If you run `docker ps` in a separate shell you should see a container called `cb-test` running.
-```
-CONTAINER ID   IMAGE                        COMMAND                  CREATED          STATUS          PORTS                                                                           NAMES
-ed861cf827ec   couchbase:cb7-sdk3-go-ub20   "/entrypoint.sh couc…"   51 minutes ago   Up 51 minutes   11207/tcp, 11210-11211/tcp, 0.0.0.0:8091-8096->8091-8096/tcp, 18091-18096/tcp   cb-test
-```
+| `name-sdk:` | Allows us to name the SDK within shared content (*Go SDK*).
 
-- Once the container is up you can run `make TEST_NAME="startusing.go" single-test` to run an individual test.
+| `sdk_api:` | The API version of this release.
 
-- You should expect to see the following output in your shell:
-```
- ✓ [hello-world] - startusing.go [539]
+| `sdk-api-link:` | Link to the latest API Reference for the SDK.
 
-1 test, 0 failures in 1 seconds
-```
+| `sdk-gh-link:` | Link to the source code of the SDK.
 
-- If you want to run all the code sample tests you can also execute `make tests`.
+|===
 
-- To stop the docker container you can simply run `make cb-stop`, this will stop and remove the docker container, but will keep the local image should you need to start it up again.
 
-TIP: Because we mount the `/modules` directory in the `cb-test` container, you will see your local code changes reflected in the container instantly, so there is no need to stop and start the container when debugging your code.
+An additional attribute, `page-nav-header-levels: 1`, ensures that the left-hand navigation of the site opens with each topic unfurled by one level.
 
-=== Creating a new test
-If you look at the `/modules/test` directory you will find files with the *.bats* extension, which are essentially our test files.
+=== Page Headers
 
-Depending on where your code sample is going to be located (e.g. `/modules/devguide`), you will see a corresponding test file in the test directory. 
-This is mainly to keep the tests organised and easy to find.
+Each `.adoc` page contains information in the headers:
 
-Here is an example test case:
-```
-@test "[devguide] - your-example-file.go" {
-    runExample <your-example-file-name.go>
-    assert_success
-    assert_output --partial "some assertion substring"
-} 
-```
+[source,asciidoc]
+----
+= Compatibility
+:description: Platform compatibility, and features available in different SDK versions, and compatibility between Server and SDK. \
+Plus notes on Cloud, networks, and AWS Lambda.
+:page-aliases: ROOT:overview,ROOT:compatibility-versions-features,compatibility-versions-features
+:page-toclevels: 3
+:table-caption!:
+----
 
-*runExample* is simply a helper function provided in `test_helper.bash`, which takes care of invoking your `go run` command. The idea is that any generic test functions can be placed there to be used across any test.
+The `:page-aliases:` directive enables Antora to build 502 redirects -- meaning that inbound links from, for example, old blog posts will still work with the current docset.
 
-*assert_success* is a helper function provied by the `bats-assert` library and checks whether your command has successfully exited with a status of 0. 
-If not, it will fail the test.
+`:page-toclevels:` should be set to `2` to include h3 headers along with h2s in the in-page navigation (right-hand nav).
+Leaving out this directive means that the page will default to `1`, showing only h2 headers in the in-page nav.
+A value of `3` should not be used, save in exceptionally complicated pages like that shown (the https://docs.couchbase.com/go-sdk/2.12/project-docs/compatibility.html[compatibility page]).
 
-*assert_output --partial* is another bats-assert helper that checks if the output of your code sample contains the substring provided. 
-The assertion will fail if the string is not found.
+=== Patch Releases
 
-Note that it will not always be necessary to assert the output of your code sample, in those cases just using `assert_success` will be enough.
+Update the following files:
 
-=== CI - Github Actions
-When submitting a PR, the code sample tests will run against your changes in the same manner as your local machine using Github Actions.
+* antora.yml
+* modules/devguide/examples/go/go.mod
+* modules/devguide/examples/go/sum
+* modules/project-docs/pages/sdk-release-notes.adoc
 
-You can see the workflow definitions in the `.github` folder.
+=== New Branches
+
+Production branches use the *release/x.y* naming pattern (e.g. `release/3.10`, `release/3.9`).
+Antora uses the branch names in the playbook, but also uses the `version` given in the antor.yml file, to create the version navigation -- so this version number must be unique within the repo for any branches included in the playbook.
+When creating a new branch for a new release, remember to update the antora.yml file before trying to build.
+
+=== Code Sample Testing
+
+This is in the process of being changed -- documentation will appear here once this is completed.
 
 
 == Docs License
 
-©2025 Couchbase, Inc. This work is licensed under CC BY-NC-SA 4.0.
+©2026 Couchbase, Inc.
+This work is licensed under https://creativecommons.org/licenses/by-nc-sa/4.0/[CC BY-NC-SA 4.0].

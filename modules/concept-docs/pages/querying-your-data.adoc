@@ -1,0 +1,378 @@
+= Querying Your Data 
+:page-toclevels: 2
+:page-aliases: data-services.adoc,choosing-the-right-service.adoc,http-services.adoc,howtos:view-queries-with-sdk.adoc
+:description: Choosing the right service to query your data.
+
+
+// Note to editors
+// 
+// This page pulls in content from -sdk-common-
+// and code samples from -example-dir-
+// 
+// It can be seen built at wwww.
+
+[abstract]
+{description}
+{sqlpp} is a declarative query language for JSON data.
+Couchbase also offers fuzzy search, including Vector Search.
+
+
+// remember - inventory scope ;)
+
+The data service stores your documents, but is the best route to retrieving them?
+
+{sqlpp} is a SQL-family language, and an easy way for anyone familiar with Relational Databases (RDBMS) to work with documents stored in Couchbase --
+if you're sure that's the service that you want, jump to our xref:howtos:sqlpp-queries-with-sdk.adoc[Query Howto doc].
+
+
+Couchbase also has a powerful Search Service, supporting similarity and hybrid search, combining text, vector, range, and geospatial search.
+xref:{version-server}@server:n1ql:n1ql-language-reference/searchfun.adoc[Search functions] enable you to use Search queries directly within a {sqlpp} query.
+
+
+
+
+
+.{sqlpp} or CRUD API?
+[TIP]
+====
+Maybe you'd prefer to retrieve whole documents and work on them as objects in {name_platform}, or do this after running just a few queries, reducing the number of Query and Index Service nodes you need on your Capella (or self-managed) cluster.
+Whether you go through the Data Service, or Query, you'll find that both follow the typical DML (Data Manipulation Language) patterns that you encounter in the relational database world.
+See the xref:data-durability-acid-transactions.adoc[Data Service section] for information on CRUD with the Data Service, with its fast binary protocol.
+====
+
+== Your Use Case
+
+How you combine the Data Service and {sqlpp} should depend on your use case, but you should also examine the other options of longer running (or real time) analytical queries, fuzzy searches (such as full-text search and Geo search), and vector search.
+
+
+=== Analytics Queries
+
+
+Couchbase offers a choice of:
+
+* xref:columnar:intro:intro.adoc[Capella Columnar] for real-time analytics, with data stored elsewhere in your data lake.
+* xref:howtos:analytics-using-sdk.adoc[Couchbase Analytics Service (CBAS)] for traditional data analytics against your operational cluster.
+
+Both use versions of the {sqlpp} query language.
+
+include::{version-common}@sdk:shared:partial$columnar-available.adoc[tag=initial-availability]
+
+
+=== Search 
+
+Fuzzy search with text or a variety of other data:
+
+* <<vector-search,Vectors>> 
+* Structured or unstructured text
+* Dates
+* Numbers
+* CIDR notation
+* Geospatial data 
+
+Searches use indexes created against data at the Scope or the bucket level.
+
+
+=== Vector Search
+
+Couchbase Server 7.6 introduces Vector Search to enable AI integration, semantic search, and the RAG framework.
+A developer-friendly vector indexing engine exposes a vector database and search functionality.
+With Couchbase Vector Search, you can enable fast and highly accurate semantic search, ground LLM responses in relevant data to reduce hallucinations, and enhance or enable use cases like personalized searches in e-commerce and media & entertainment, product recommendations, fraud detection, and reverse image search.
+You can also enable full access to an AI ecosystem with a Langchain integration, the most popular open-source framework for LLM-driven applications.
+
+// From 7.6.2, you can 
+
+Read more in our xref:{version-server}@server:vector-search:vector-search.adoc[Vector Search documentation],
+or dive in and try xref:howtos:vector-searching-with-sdk.adoc[Vector Search with the {name-sdk}].
+
+
+
+////
+You may want to do many multi-object operations:
+
+* To process order checkout
+* For analyzing customer growth
+* Merging customer lists;
+* Or simply for loading new inventory data
+
+Most tasks can be accomplished with more than one service.
+You may choose, simply because you have RDBMS expertise, to use SQL++ and the Couchbase Query Service.
+Conversely, your team may prefer to retrieve whole documents, and manipulate them using their preferred high-level SDK language.
+In all cases, it is useful to be aware of the choice you are making, so that you can revisit later, if you need to optimise for performance improvements somewhere in the application.
+
+
+
+• Process Order Checkout.
+• Search stores data for the shoe customer is looking for.
+• How many new customers did we get last month?
+• Generate the outstanding list of shipments due for today.
+• Retrieve the customer order using case insensitive customer name.
+• Load the new inventory data.
+• Merge customer lists.
+30
+For doing each of these tasks, you need to search your database efficiently. Do the select-joingroup-project-aggregate-order processing of the data to produce a report. Similarly, y
+////
+
+// schema validation - Ottoman?
+// schema inference - INFER command, and view in query workbench
+
+
+== Data Service
+
+
+////
+Best practice, if one know keys  and not doing aggregates, joins, order by , any further processing, small set of keys  then use direct KV access
+////
+
+
+When you already know the Key (ID) of the document, then xref:howtos:kv-operations.adoc[Data Operations] (using the KV -- or _Key - Value_ Service) are by far the simplest way to retrieve or mutate it. 
+The binary protocol used is far quicker than streaming JSON with the Query Service.
+
+If you know the path to the piece of information that you need within a JSON document, then xref:howtos:subdocument-operations.adoc[Sub-Document operations] will not only retrieve the information more quickly, but will reduce the amount of data that needs to be sent over the network.
+
+
+=== Range Scan
+
+From version 7.6 of self-managed Couchbase Server
+ -- and the current Capella --
+xref:howtos:kv-operations.adoc#kv-range-scan[KV Range Scan] offers the opportunity to group operations by ranges of alphanumerically adjacent keys.
+One common use case would be sequentially captured data given date/time-prefixed keys.
+
+// careful wording
+Use this API for low concurrency batch queries where latency is not a critical as the system may have to scan a lot of documents to find the matching documents.
+For low latency range queries, it is recommended that you use SQL++ with the necessary indexes.
+
+=== Query without Index
+
+From Couchbase Server 7.6 onwards,
+CRUD operations (such as `CREATE`, `INSERT`, and `SELECT`) and `JOIN` can be performed against the Query Service without an index (primary or secondary).
+This uses a xref:server:learn:services-and-indexes/indexes/query-without-index.adoc#sequential-scans[sequential scan], relying on a KV range scan to deliver the keys.
+
+Sequential scans are best suited to small collections where key order is unimportant, or where the overhead of maintaining an index can't be justified.
+For larger collections and greater performance, define the appropriate indexes to speed up your queries.
+For ordered document key operations, a primary index provides the same functionality, and will outperform a sequential scan.
+
+// or just use
+// https://docs.couchbase.com/cloud/n1ql/n1ql-language-reference/hints.html#use-keys-clause 
+// `USE PRIMARY KEYS`
+
+Read on to learn more about the Query and Index services.
+
+
+== Query & Index
+
+// e N1QL (Non-First Normal Form Query Language)
+// and link book?
+
+If you are familiar with SQL, Couchbase's {sqlpp} dialect will hold few surprises.
+Combining semi-flexible schema with SQL works well in a lot of use cases, but do remember that our Data Service is even faster if you do already know the keys.
+
+
+=== Index
+
+====
+There are three things important in database systems: performance, performance, performance.
+====
+
+
+Creating the right index, with the right keys, right order, and right expression is critical to query performance in any database system.
+That's true for Couchbase as well.
+See the xref:concept-docs:n1ql-query.adoc[] page for an in depth look at indexes -- 
+but essentially a Primary Index on the document keys will give you better search performance than trying to <<#query-without-index,query without index>>, 
+but well-chosen secondary indexes will make all the difference to query performance.
+
+
+=== Query
+
+Our xref:howtos:sqlpp-queries-with-sdk.adoc[Querying with {sqlpp} guide] will get you started.
+See also the <<#furthre-reading,Further Reading>> section at the end of this page.
+
+
+
+// GSI & MOI GSI
+// B-Tree index - Still ForestDB on CE??
+
+
+
+
+// p79+ of N1QL book
+////
+e the various indices you can create.
+●	Primary Index
+●	Named primary index
+●	Secondary index
+●	Composite Secondary Index
+●	Functional index
+●	Array Index
+●	ALL array
+●	ALL DISTINCT array
+●	Partial Index
+●	Adaptive Index
+●	Duplicate Indices
+●	Covering Index
+////
+
+
+
+// support hash joins on query & analytics), optimized for better pagination, CBO...
+// normalisation
+// foreign keys
+
+
+
+
+// "Before CB 7.1 if a Index+QUERY node gets failed due to any infra issue, then it will not automatic failover."
+
+
+
+
+// query context?
+// https://docs.couchbase.com/server/current/n1ql/n1ql-intro/queriesandresults.html#keyspace-reference
+
+
+
+// query context? / search index changes
+
+
+
+// Eventing / Connectors
+////
+Are the same in-built functions Eventing exposes available in UDFs (log, N1qlQuery, etc.)?
+No, Javascript UDFs do not come with the full language (timers, bucket ops, N1qlQuery, AnalyticsQuery, cURL, log etc) as Eventing does.
+In JS-UDFs is vanilla Javascript + Full Query language support (including transactions which by the way is not supported in Eventing).
+////
+
+
+
+// An honourable mention of Map/Reduce Views
+
+
+
+
+
+== AI Help
+
+xref:cloud:get-started:capella-iq/get-started-with-iq.adoc[Capella iQ] is an AI copilot which offers help with generating {sqlpp} queries.
+It can also help to xref:cloud:get-started:capella-iq/get-started-with-iq.adoc#generate-sdk-code-preview[generate SDK code] as an aid to getting started on your application.
+
+
+
+
+
+
+
+////
+
+= Service Selection
+:page-topic-type: landing-page
+:page-aliases: choosing-the-right-service.adoc,http-services.adoc
+// ,data-services.adoc
+
+[abstract]
+Data in the Couchbase Data Platform can be accessed through Key Value (KV) Operations (including the Sub-Document API), the Analytics Service, the Query Service, Full Text Search, or even MapReduce Views:
+how do you pick the right service for your application?
+
+Couchbase Data Platform features several services to enable efficient information retrieval at a speed and scale to suit every use case.
+Although each service uses a different API, exposed on a different port, and often addressing different protocols,
+the Couchbase SDKs abstract away many of the differences -- offering consistency across different language SDKs where it is reasonable to do so.
+
+You can follow the links below for more information on the services with the Couchbase SDKs, or read on to see which use case matches which service.
+
+.Couchbase Data Services
+* xref:howtos:kv-operations.adoc[KV Operations]
+* xref:howtos:subdocument-operations.adoc[Sub-Document API]
+* xref:concept-docs:analytics-for-sdk-users.adoc[Couchbase Analytics Service (CBAS)]
+* xref:concept-docs:n1ql-query.adoc[Query Service]
+* xref:concept-docs:full-text-search-overview.adoc[Full Text Search]
+* xref:concept-docs:understanding-views.adoc[MapReduce Views]
+* xref:7.1@server:connectors:intro.adoc[Connectors]
+
+
+== Use Cases
+It's an understandable temptation to reach for the familiar, and Couchbase's SQL-like {sqlpp} (formerly N1QL) makes the Query service an easy starting point for many, but it's important to take time to match your use case to the best tool for the job.
+
+=== Known documents
+When you already know the _Key_ (ID) of the document, then _KV Operations_ is by far the simplest way to retrieve or mutate it.
+The binary protocol used is far quicker than streaming JSON.
+
+If you know the path to the piece of information that you need within a JSON document, then _Sub-Document_ operations will not only retrieve the information more quickly, but will reduce the amount of data that needs to be sent over the network.
+
+
+=== Long Running Queries & Big Data
+
+xref:7.1@server:learn:services-and-indexes/services/analytics-service.adoc[Couchbase Analytics Service (CBAS)] performs well on huge datasets, with complex aggregations, and uses {sqlpp} for Analytics, which gives a similar query experience to {sqlpp} for Query.
+CBAS supports workloads involving only SELECT (not INSERT or UPDATE), and uses local secondary indexes.
+Scalable performance comes from multi-node partitioned-parallel join, sort, aggregate, and grouped aggregate operators, and multiple storage devices (vbuckets over several nodes).
+
+Use the Analytics Service when you don't know every aspect of the query in advance -- 
+for example, if the data access patterns change frequently, or you want to avoid creating an index for each data access pattern,
+or you want to run ad hoc queries for data exploration or visualization.
+
+
+=== Mutations
+
+Use KV Operations - for better performance.
+Where your mutations are on just a path within the document, use the Sub-Document API.
+
+For the “update from a WHERE clause” with our Query Service,
+in which case you don't know which documents would be altered,
+read the section on CAS and Concurrent Document Mutation to be aware of all of the implications.
+
+
+=== Array Mutation
+
+Sub-Doc allows appending, prepending, and inserting into arrays.
+For more sophisticated array operations, use {sqlpp}'s `USEKEY`.
+
+
+=== Aggregation / Reduce
+
+MapReduce Views uses distributed Map-Reduce for very fast aggregation operations (fast, because the indexes are pre-computed results) --
+ideal for pre-grouped aggregations, such as grouping temporal data sets (by day, by month, etc.).
+Views' spatial support allows for fast searching over extensive geo-spatial data in Couchbase Data Platform 5.x -- however, Spatial Views are no longer supported in Couchbase Server 6.x, and so are not found in SDK 3.x.
+Continuing improvements to our Query Service makes the latter usually a better choice,
+particularly as Views does not scale as well as the other services, lacking a global Index node.
+
+For queries over a larger number of documents, CBAS would be the best tool here,
+otherwise, for high throughput, simple queries, pick our Query Service.
+
+
+=== Fuzzy searches
+
+Use the Full Text Search (FTS) service when you want to take advantage of natural-language querying.
+For phrase matching, over free-form text, or matching over word stems, FTS is a powerful solution.
+
+There are more concepts to learn, as FTS offers a very flexible service.
+In particular, care should be taken over building indexes, to stop them becoming unnecessarily large -- see our xref:7.1@server:fts:full-text-intro.adoc[FTS documentation].
+Once again, the SDK abstracts away much of the complexity from deeply nested queries, and the interface is similar to our Query Service.
+
+From Couchbase Server 6.5, xref:7.1@server:n1ql:n1ql-language-reference/searchfun.adoc[Search Functions] allow the use of FTS _within_ {sqlpp} queries.
+
+
+=== Querying
+
+For operational queries -- such as the front-end queries behind every page display or navigation -- the Query Service is a natural fit.
+
+The Query Service using {sqlpp} - SQL for JSON - is ideal for retrieving multiple documents that match specific queries.
+Data can be joined together, and Global Secondary Indexes can be used to speed up searches.
+It's a powerful and flexible way of querying, retrieving, and updating data, using a familiar language, but if you know the document's key, then regular KV (or Sub-Doc) operations will always be faster.
+
+
+
+// not used before:
+=== Repeating Expensive Searches
+Whether Query, Views, or FTS, expensive search results can easily be cached with (some?) SDKs.
+This is something we have link:https://blog.couchbase.com/caching-queries-couchbase-high-performance/[featured on our blog in the past].
+
+We could do with a new DA blog post to point to here, perhaps?
+(existing one is several years old)
+
+Could take something from Caching use tutorial?
+https://docs.couchbase.com/tutorials/session-storage/java.html
+
+////
+
+
+== Further Reading
+
+* xref:cloud:guides:index-advisor.adoc[Index Advisor] for recommendations to generate the best index(es) for your queries.
+

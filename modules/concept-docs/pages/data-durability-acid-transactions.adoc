@@ -1,0 +1,341 @@
+= Data Modelling, Durability, and Consistency
+// :page-aliases: 
+// :page-aliases: durability-replication-failure-considerations.adoc
+:description: Performance, availability, consistency -- balance your priorities, and model your data to achieve these goals.
+:page-toclevels: 2
+// :anyreplica-api: pass:q[https://docs.couchbase.com/sdk-api/couchbase-scala-client/com/couchbase/client/scala/Collection.html#getAnyReplica(id:String,options:com.couchbase.client.scala.kv.GetAnyReplicaOptions):scala.util.Try[com.couchbase.client.scala.kv.GetReplicaResult]
+:anyreplica-api: https://docs.couchbase.com/sdk-api/couchbase-scala-client/com/couchbase/client/scala/Collection.html
+
+
+// Note to editors
+// 
+// This page pulls in content from -sdk-common-
+// and code samples from -example-dir-
+// 
+// It can be seen built at http://docs.couchbase.com/scala-sdk/1.7/concept-docs/data-durability-acid-transactions.html
+
+
+[abstract]
+{description}
+
+
+You want to query your data, but does that always mean a {sqlpp} query to the Query Service?
+The CRUD API of the {sqlpp} Query service is mirrored by the Data Service's API, but without the need for indexes, and using a binary protocol gives faster access than streaming JSON from the Query Service.
+
+
+[source,scala]
+----
+collection.remove("document-key2", durability = Durability.Majority) match {
+  case Success(result) => println("Document removed successfully")
+  // The mutation is available in-memory on at least a majority of replicas
+  case Failure(err: DocumentNotFoundException) =>
+    println("The document does not exist")
+  case Failure(err) => println("Error: " + err)
+}
+----
+
+At its heart, a database is in the business of storing data and letting you query and retrieve it.
+Putting a database on the network -- in particular a remote network, or another company's cloud service -- and partitioning the data across multiple nodes, with several replicas, does not alter this.
+It does, however, mean that choices must be made to optimize for consistency or availability of data.
+
+.Skipping Ahead
+[TIP]
+====
+This page lays out some of the things you need to consider when designing an app.
+If you have already reached your decisions, and want to work with the Data API, then skip straight to our pages on 
+xref:howtos:kv-operations.adoc[], 
+xref:howtos:subdocument-operations.adoc[], or
+xref:howtos:concurrent-document-mutations.adoc[],
+and try some of the code snippets there.
+Or see some of the other links in the <<#further-reading,Further Reading>> section.
+====
+
+Whether you go through the Data Service, or Query,
+you'll find that both follow the typical DML (Data Manipulation Language) patterns that you encounter in the relational database world.
+See the xref:querying-your-data.adoc[SDK Query introduction] for choices of {sqlpp} queries for OLTP (transactional queries) and OLAP (analytics) -- 
+including real-time analytics -- as well as fuzzy searches and vector search.
+
+
+
+
+////
+// earier doc intro:
+Couchbase stores data in _documents_, and this is the atomic....
+
+////
+
+Designing an application to offer guarantees of durability or consistency in a networked environment is hard.
+The newcomer to the area has to wrestle with concepts like https://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed/[CAP Theorum] and the https://en.wikipedia.org/wiki/Isolation_(database_systems)[many possible interpretations] of ACID transactions. 
+Here we hope to keep it _relatively_ simple, with a look at which Couchbase features give you which guarantees,
+when you may prefer to use them, and -- perhaps equally important, though sometimes overlooked -- 
+what is the performance cost of these choices.
+
+
+
+////
+From 3.4 doc:
+
+Data durability refers to the fault tolerance and persistence of data in the face of software or hardware failure. Even the most reliable software and hardware might fail at some point, and along with the failures, introduce a chance of data loss. Couchbase's durability features include Synchronous Replication, and the possibility to use distributed, multi-document ACID transactions. It is the responsibility of the development team and the software architect to evaluate the best choice for each use case.
+Couchbase's distributed and scalable nature exposes any set-up to the risk of potential network and hardware problems. The key to durability is planning for resilience, by evaluating the options on offer for persistence and replication, and carefully considering the performance trade-offs involved.
+
+Durability
+Writes in Couchbase (from the SDK or elsewhere) are written to a single node. From there, Couchbase Server will take care of sending the mutation to any configured replicas, and to disk. By default all writes are asynchronous, but levels of durability can be set, to ensure replication and/or persistence to disks, before the write is committed.
+
+
+//// 
+
+
+
+
+== Data and Good Schema Design
+
+Each level of durability guarantee carries a price in time to persist to replicas or to disk.
+Transactional guarantees across multiple documents add another layer of performance cost -- something readily borne when the data is important enough, and justifiably discarded for many categories of transient and unimportant data.
+However, many data fall into an intermediate category, and here the atomic consistency decision is made by what's tolerable for read and write times.
+In this case, consider if a tweak to the schema, to bring items into the same document, can give you transactional guarantees without the performance penalty of multi-document transactions.
+
+Consider, too, that many operations are performed at the _collection_ level, and keeping documents in the same collection can make for speedier indexing and queries -- whether {sqlpp} or Search.
+
+The Server enforces no schema, enabing evolutionary changes to your data model that reflect changes in the real world.
+The schema-on-read approach allows the client software that you write with the SDK to work with changes to an implicit schema,
+and allows heterogeneous data.
+
+
+=== Objects, Relations, Tables
+
+In the Relational Database (RDBMS) world, a translation layer is often used between the objects of your data model in your application,
+and the tables that you store the data in.
+JSON storage allows you to store complex types, like nested records and arrays, without decomposing them to a second table
+(known in the SQL world as https://en.wikipedia.org/wiki/Database_normalization[database normalization^]).
+
+When the relational model was proposed, more than 50 years ago, limitations in available computer resources meant that removing data duplication in one-to-many and many-to-many relationships this way made a great deal of sense.
+There is still a case to be made for it for reducing inconsistencies -- the difference with a document database is that you get to choose when to do this.
+
+
+=== Collections and Scopes
+
+Couchbase's atomic units of data are documents, stored as key-value pairs.
+The value can be anything, but storing in JSON format enables indexing, searching, and many useful ways of working with the data from the SDK.
+
+Collections are arbitary groupings of the data documents.
+Ones that suit your object model.
+For example, one collection of students enrolled at the college
+and one collection of courses available for them to take.
+Notionally you may view them as equivalent to an RDBMS table -- but it's up to you.
+
+Within a bucket, you can organize your collections into scopes -- some methods are available at the bucket level,
+but Search and Query Services favour Scope-level indexing and querying for greater efficiency.
+
+
+
+
+
+
+// mention arrays where?
+// x.rowsAs(JsonArray.class) 
+
+// extra JSON choices - libs in Scala
+
+
+
+== Durability
+
+Writes in Couchbase (from the SDK or elsewhere) are written to a single node.
+From there, Couchbase Server will take care of sending the mutation to any configured replicas, and to disk.
+By default all writes are asynchronous, but levels of durability can be set, to ensure replication and/or _persistence_ to disks, before the write is _committed_.
+
+
+// === Durable Writes
+
+include::{version-common}@sdk:shared:partial$durability-replication-failure-considerations.adoc[tag=syncrep]
+
+Further discussion can be found in the xref:concept-docs:durability-replication-failure-considerations.adoc[Durability and Failure Considerations documentation].
+
+A practical look at this -- using the `durability` parameter with mutating operations -- can be found on the xref:howtos:kv-operations.adoc#durability[Data Service page].
+
+
+
+// *TODO* Durability section
+
+// Worth putting in?
+// Note, if you are working with an older, no longer supported version of Couchbase Server, you may want to look at 3.3@java-sdk:concept-docs:durability-replication-failure-considerations.adoc#older-server-versions in the earlier SDK docs.
+// https://docs.couchbase.com/java-sdk/current/concept-docs/durability-replication-failure-considerations.html#older-server-versions
+// Change link once 3.3 is archived?
+
+
+
+
+
+== Reading from Replicas
+
+By default, read requests from the SDK are directed to the node with the active vbucket.
+This bucket will usually be updated before any replicas (see <<durability,Durability>> above),
+and is best for consistency.
+
+Some use cases benefit -- for consistency or availability -- from accessing both the active copy of the document, and/or one or all replicas.
+This can be direct from the {anyreplica-api}[data service],
+or a xref:howtos:subdocument-operations.adoc#reading-sub-documents-from-replicas[SubDoc Read from Replica].
+The method can either be one to return the first result returned -- active or replica --
+which is useful if a node is timing out;
+or to return _all_ of the results, for client code to handle any inconsistency, or to build a consensus answer.
+
+NOTE: Reading from replicas is not supported in the Scala 3 version of the SDK.    Please see xref:project-docs:migrating-to-scala-3.adoc[Migrating to Scala 3] for guidance on these and other changes.
+
+=== Preferred Server Group Replica Reads
+
+IMPORTANT: Preferred Server Group Replica Reads are only accessible with the {name-sdk} working with Couchbase Server 7.6.2 or newer (Capella or self-managed), and from SDK 1.8.0.
+
+xref:server:learn:clusters-and-availability/groups.adoc#understanding-server-group-awareness[Server Groups]
+can be used to define subsets of nodes within a Couchbase cluster, which contain a complete set of vbuckets (active or replica).
+As well as high availability use cases, Server Groups can also be used to keep much traffic within the same cloud Availability Zone.
+
+For Capella users with high data volumes, egress charges for reads from other Availability Zones (AZ) in AWS can be a significant cost.
+The {name-sdk}, when making read replica requests, can make a request to a preferred Server Group --
+in this case the local AZ --
+and set to always read from a copy of the document in this local zone.
+This is done by putting cluster nodes in the same AZ into the same 
+xref:server:learn:clusters-and-availability/groups.adoc#server-groups-and-vbuckets[Server Group], too.
+
+This may mean the application has to be tolerant of slight inconsistencies,
+until the local replica catches up.
+Alternatively, it may demand a stronger level of durability, to ensure that all copies of a document are consistent before they are accessible --
+provided that this is `persistToMajority` with xref:server:learn:data/durability.adoc#majority[no more than one replica].
+
+Couchbase does not recommend this feature where read consistency is critical,
+but with the appropriate durability settings consistency can be favored ahead of availability.
+
+[CAUTION]
+.Replicas, Nodes, and Server Groups
+====
+Implicit in the rules for durability, and the process of setting up Server Groups, is the following information -- which we mention here explicitly to ensure it is all noted:
+
+* Moving servers between Server Groups updates the `clustermap` immediately, but to move the data, an administrator *must* perform rebalance. Until the rebalance is complete, the SDK will see and be able to 'use' the new server groups, but the `vBucketMap` may still refer to data in the previous locations.
+
+* The cluster should have enough nodes and group to make sure that copies of the same document are not stored on the same node, and each group has nodes that cover all 1024 vbuckets (in other words, the number of the groups does not exceeds number of the copies: `active+num_replicas`). The Admin UI should emit small yellow warning if the configuration is considered unbalanced.
+
+* Setting *three* replicas for the bucket xref:server:learn:data/durability.adoc#majority[disables durability for sync writes], also precluding the use of
+xref:concept-docs:transactions.adoc[multi-document ACID transactions].
+====
+
+
+== Concurrent Document Mutations
+
+You can use the CAS value to control how concurrent document modifications are handled.
+It helps avoid and control potential race conditions in which some mutations may be inadvertently lost or overridden by mutations made by other clients.
+
+=== Performance considerations
+
+CAS operations incur no additional overhead.
+CAS values are always returned from the server for each operation. 
+Comparing CAS at the server involves a simple integer comparison which incurs no overhead.
+
+=== CAS value format
+
+The CAS value should be treated as an opaque object at the application level. 
+No assumptions should be made with respect to how the value is changed (for example, it is wrong to assume that it is a simple counter value). 
+In the SDK, the CAS is represented as a 64 bit integer for efficient copying but should otherwise be treated as an opaque 8 byte buffer.
+
+
+
+== Pessimistic locking
+
+Pessimistic locking is the default approach for many RDBMS.
+With Couchbase, optimistic locking with CAS is the recommended way to perform locking and concurrency control.
+
+Should you need the guarantees of explicit locking, documents can be locked using the _get-and-lock_ operation
+and unlocked either explicitly using the _unlock_ operation
+or implicitly by mutating the document with a valid CAS.
+While a document is locked, it may be retrieved but not modified without using the correct CAS value.
+When a locked document is retrieved, the server will return an invalid CAS value, preventing mutations of that document.
+
+More information, including a table of behaviors while an item is locked, can be found in the
+xref:howtos:concurrent-document-mutations.adoc#pessimistic-locking[Pessimistic Locking section of the Concurrent Document Mutations page].
+
+
+
+////
+== Expiration
+
+*TODO* MaxTTL
+////
+
+
+
+
+
+
+////
+TTL
+
+DOC-11679
+ 
+Re: Information on maxTTL for collections is not accurate
+The summary of "Document do not expire" is actually incorrect. After I did some testing, it turns out that documents *can* expire within collections and buckets that have maxTTL=0 if you set the document's expiration to a positive value.
+
+Instead of talking about maxTTL in terms of documents expiring or not expiring, I believe we should discuss maxTTL's effect on a document's expiration setting: a non-zero value as sets a default expiration value for all documents contained in the bucket/collection (actually, I believe this is all newly-created documents . Setting maxTTL on a bucket or collection does not automatically change the expiration of existing documents, from what I have seen). It also sets the upper bound on a the expiration value you can set in a document directly. The actual expiration time is set by the document's expiration setting.  
+////
+
+
+
+== Multi-Document ACID Transactions
+
+include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=intro]
+See the xref:transactions.adoc[{name-sdk} transactions documentation].
+
+
+== Additional Information
+
+
+=== Further Reading
+
+
+
+
+
+This section of the docs covers the Data Service -- Couchbase's key-value document store, the heart of the database -- from the client perspective.
+It addresses:
+
+* Schemas for semi-structured data.
+* The sub-document API for retrieving and modifying only a portion of a document (saving network bandwidth and transmission time).
+* Durability options.
+* Field-Level Encryption.
+* Storing non-JSON documents.
+* & Concurrent Document Mutations.
+
+
+
+
+
+
+
+Below, we link some of the pages in this section that take a deeper dive into data structures, durability guarantees, and avoiding race conditions during concurrent document modifications --
+but if you are in a hurry to just learn more about querying your data, please skip ahead to xref:concept-docs:querying-your-data.adoc[the next section].
+
+* A deeper dive into our xref:server:learn:data/scopes-and-collections.adoc[scopes and collections documentation].
+
+* xref:data-model.adoc#data-structures[Working with other data structures from the SDK].
+
+* Backups
+
+* Retry strategy
+
+
+
+For more on Durability, 
+see xref:durability-replication-failure-considerations.adoc[].
+
+
+
+
+
+=== Lowest Latency Streams
+
+Streaming in a distributed system is complex, and thus we do not make our internal streams and changes feed directly available.
+
+However, it is exposed through use of our xref:spark-connector::index.adoc[Spark] or xref:kafka-connector::index.adoc[Kafka] connectors, which give you a high level API to our low level primitives.
+
+
+The source connector streams documents from Couchbase Server using the high-performance Database Change Protocol (DCP) and publishes the latest version of each document to a Kafka topic in near real-time.
+
+The sink connector subscribes to Kafka topics and writes the messages to Couchbase Server.
+
