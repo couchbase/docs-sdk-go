@@ -9,7 +9,7 @@ Plus notes on Cloud, networks, and AWS Lambda.
 {description}
 
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-At time of writing (April 2025), this is 1.23 and 1.24.
+At time of writing (January 2026), this is 1.25 and 1.24.
 Older versions may remain compatible, but are not supported.
 
 
@@ -17,67 +17,32 @@ Older versions may remain compatible, but are not supported.
 
 === OS Compatibility
 
-The {name-sdk} is tested and supported on the following OSs and platforms:
+The {name-sdk} will run on, and is supported on, the following OSs and platforms (and tested on a representative subset):
 
 ****
 [discrete]
 === GNU/Linux
 
 * Amazon Linux 2 & AL2023.
-* Red Hat Enterprise Linux 8 & 9;
-* Oracle Linux 8 & 9.
+* Red Hat Enterprise Linux 8, 9, & 10;
+* Oracle Linux 8, 9, & 10.
 * Ubuntu (LTS) 22.04 (_Jammy_) & 24.04 (_Noble_).
-* Debian 11 (_Bullseye_) & Debian 12 (_Bookworm_).
+* Debian 11 (_Bullseye_), Debian 12 (_Bookworm_), & Debian 13 (_Trixie_).
 * SUSE Enterprise Linux 12 & 15
-* Alpine Linux 3.18 (_Oracle JDK only_).
-// -- but see <<alpine-linux-compatibility, workaround note below>>.
+* Alpine Linux 3.21 - 3.23.
 
 [discrete]
 === Microsoft Windows
 
 * Microsoft Windows 10 & 11;
-* Windows Server 2019 & 2022.
+* Windows Server 2019, 2022, & 2025.
 
 [discrete]
 === Mac OS X
 
 The current and previous two releases of OS X.
-At time of writing (April 2025): 15 (Sequoia), 14 (Sonoma), and 13 (Ventura).
-M1 ARM  architecture is fully supported in the Go SDK.
-
-[discrete]
-=== ARM Processor Support
-
-AWS Amazon Graviton2, Apple M1 ARM processors, and ARMv8 on Ubuntu.
+At time of writing (January 2026): 26 (Tahoe), 15 (Sequoia), and 14 (Sonoma).
 ****
-
-The Go SDK should also be expected to run on other commonly-available GNU/Linux distributions which support the Go platform, but not all combinations can be tested.
-//-- notable exceptions are listed below.
-
-////
-==== Alpine Linux Compatibility
-
-The https://netty.io[Netty] I/O library used by our JVM SDKs supports native optimizations to achieve higher throughput and lower latency 
--- which the SDK enables by default. 
-Those modules are compiled against `glibc` and Alpine Linux uses `musl` instead --
-so the {name-sdk} is unable to complete bootstrapping on this platform.
-
-Because Alpine Linux does not have the `glibc` support needed,
-we highly recommend that you seek an alternative distribution where possible. 
-If that is not a option, then a possible workaround that can be applied is as follows:
-
-* Disable the native IO:
-+
-[source,toml]
-====
-ClusterEnvironment env = ClusterEnvironment.builder().ioEnvironment(IoEnvironment.enableNativeIo(false)).build();
-====
-
-* Disable it in Netty itself via the following system property:
-`-Dcom.couchbase.client.core.deps.io.netty.transport.noNative=true`
-
-The downside of these workarounds is potentially reduced performance, which can be determined through benchmarking and profiling.
-////
 
 
 
@@ -93,24 +58,24 @@ Couchbase SDKs are tested against a variety of different environments to ensure 
 
 === Couchbase Version/SDK Version Matrix
 
-The matrix below denotes the version of Couchbase Server, the version of the Scala SDK and whether the SDK is:
+The matrix below denotes the version of Couchbase Server, the version of the {name-sdk} and whether the SDK is:
 
 * ✖ *Unsupported*: This combination is not tested, and is not within the scope of technical support if you have purchased a support agreement.
 * ◎ *Compatible*: This combination has been tested previously, and should be compatible.
-This combination is not recommended by our technical support organization.
+Nevertheless, this combination is not recommended by our technical support organization, as not all of the latest features are supported by it.
 It is best to upgrade either the SDK or the Couchbase version you are using.
 * ✔ *Supported*: This combination is subject to ongoing quality assurance, and is fully supported by our technical support organization.
 
 
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
-[cols="40,20,25, 23"]
+[cols="40,20,25,23,25"]
 |===
-| | SDK 2.6 - 2.7 | 2.8 - 2.9 | 2.10 | 2.11
+| | SDK 2.6 - 2.7 | 2.8 - 2.9 | 2.10 | 2.11 & 2.12
 
-| *Server 7.0-7.2*
-| *✔*
-| *✔*
+| *Server 8.0*
+| *◎*
+| *◎*
 | *✔*
 | *✔*
 
@@ -120,9 +85,9 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 | *✔*
 | *✔*
 
-| *Server 8.0*
-| *◎*
-| *◎*
+| *Server 7.2*
+| *✔*
+| *✔*
 | *✔*
 | *✔*
 |===
@@ -145,34 +110,37 @@ include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
 [.table-merge-cells]
 [cols="7,6,6,6"]
 |===
-| | Server 7.0 & 7.1 | Server 7.2 | Server 7.6.x
+| | Server 7.2 | Server 7.6.x  | Server 8.0
 
-| Enhanced Durability
-3+| All SDK versions
-
-| Durable Writes
-3+| Since 2.0
-
-| Analytics
-3+| Since 1.5
-
-| Collections
-3+| Since 2.1.8
-
-| Scope-Level {sqlpp} (formerly N1QL) Queries & all Collections features
-3+| Since SDK 2.3.0
-
-| Request Tracing
-3+| Since SDK 2.3.0
-
-| Cloud Native Gateway
-| Not Supported
-2+| From SDK 2.7.0 (with xref:operator::overview.adoc[Couchbase Autonomous Operator] 2.6.1+)
+| KV Range Scan
+| N/A
+2+| From SDK 2.8.0
 
 | Vector Search
+| N/A
+2+| From SDK 2.8.0 (base64 encoded vectors from 2.9.0)
+
+| Zone aware replica reads
+| N/A
+2+| From SDK 2.9.3
+
+| Vector Query using GSI
 2+| N/A
-| From SDK 2.8.0
+| From SDK 2.11.0 ①
 |===
+
+① As part of the standard SDK {sqlpp} API, it should be compatible with all earlier versions of the SDK -- but it has not been tested.
+
+
+
+////
+// Not for Go SDK yet
+| KV preferred server groups reads 
+| N/A
+2+| From SDK 2.10.0
+////
+
+
 
 
 === API Version
