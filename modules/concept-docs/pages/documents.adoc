@@ -3,6 +3,8 @@
 :nav-title: Documents & Doc Ops
 :page-topic-type: concept
 :page-aliases: ROOT:documents,ROOT:documents-basics,ROOT:documents-atomic
+:page-toclevels: 2
+
 
 include::project-docs:partial$attributes.adoc[]
 
