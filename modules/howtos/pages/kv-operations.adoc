@@ -211,7 +211,6 @@ If you want to get the document at the same time as extending expiry then you ca
 include::devguide:example$go/kv-expiry.go[tag=getandtouch]
 ----
 
-include::6.5@sdk:shared:partial$documents.adoc[tag=exp-note]
 
 
 == Atomic Counters
