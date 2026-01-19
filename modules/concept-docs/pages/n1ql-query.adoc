@@ -104,7 +104,7 @@ include::{version-common}@sdk:shared:partial$n1ql-queries.adoc[tag=index-consist
 
 The following options are available:
 
-include::7.1@server:learn:page$services-and-indexes/indexes/index-replication.adoc[tag=scan_consistency]
+include::{version-server}@server:learn:page$services-and-indexes/indexes/index-replication.adoc[tag=scan_consistency]
 ////
 * `not_bounded`: Executes the query immediately, without requiring any consistency for the query.
 If index-maintenance is running behind, out-of-date results may be returned.
