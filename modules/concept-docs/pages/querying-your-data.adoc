@@ -284,7 +284,7 @@ You can follow the links below for more information on the services with the Cou
 * xref:concept-docs:n1ql-query.adoc[Query Service]
 * xref:concept-docs:full-text-search-overview.adoc[Full Text Search]
 * xref:concept-docs:understanding-views.adoc[MapReduce Views]
-* xref:7.1@server:connectors:intro.adoc[Connectors]
+* xref:{version-server}@server:connectors:intro.adoc[Connectors]
 
 
 == Use Cases
@@ -299,7 +299,7 @@ If you know the path to the piece of information that you need within a JSON doc
 
 === Long Running Queries & Big Data
 
-xref:7.1@server:learn:services-and-indexes/services/analytics-service.adoc[Couchbase Analytics Service (CBAS)] performs well on huge datasets, with complex aggregations, and uses {sqlpp} for Analytics, which gives a similar query experience to {sqlpp} for Query.
+xref:{version-server}@server:learn:services-and-indexes/services/analytics-service.adoc[Couchbase Analytics Service (CBAS)] performs well on huge datasets, with complex aggregations, and uses {sqlpp} for Analytics, which gives a similar query experience to {sqlpp} for Query.
 CBAS supports workloads involving only SELECT (not INSERT or UPDATE), and uses local secondary indexes.
 Scalable performance comes from multi-node partitioned-parallel join, sort, aggregate, and grouped aggregate operators, and multiple storage devices (vbuckets over several nodes).
 
@@ -342,10 +342,10 @@ Use the Full Text Search (FTS) service when you want to take advantage of natura
 For phrase matching, over free-form text, or matching over word stems, FTS is a powerful solution.
 
 There are more concepts to learn, as FTS offers a very flexible service.
-In particular, care should be taken over building indexes, to stop them becoming unnecessarily large -- see our xref:7.1@server:fts:full-text-intro.adoc[FTS documentation].
+In particular, care should be taken over building indexes, to stop them becoming unnecessarily large -- see our xref:{version-server}@server:fts:full-text-intro.adoc[FTS documentation].
 Once again, the SDK abstracts away much of the complexity from deeply nested queries, and the interface is similar to our Query Service.
 
-From Couchbase Server 6.5, xref:7.1@server:n1ql:n1ql-language-reference/searchfun.adoc[Search Functions] allow the use of FTS _within_ {sqlpp} queries.
+From Couchbase Server 6.5, xref:{version-server}@server:n1ql:n1ql-language-reference/searchfun.adoc[Search Functions] allow the use of FTS _within_ {sqlpp} queries.
 
 
 === Querying
