@@ -17,18 +17,19 @@ Older versions may remain compatible, but are not supported.
 
 === OS Compatibility
 
-The {name-sdk} will run on, and is supported on, the following OSs and platforms (and tested on a representative subset):
+The {name-sdk} will run on, and is supported on, the following OSs and platforms.
+The SDK has been tested on a representative subset of the platforms listed below.
 
 ****
 [discrete]
 === GNU/Linux
 
 * Amazon Linux 2 & AL2023.
-* Red Hat Enterprise Linux 8, 9, & 10;
+* Red Hat Enterprise Linux 8, 9, & 10.
 * Oracle Linux 8, 9, & 10.
 * Ubuntu (LTS) 22.04 (_Jammy_) & 24.04 (_Noble_).
 * Debian 11 (_Bullseye_), Debian 12 (_Bookworm_), & Debian 13 (_Trixie_).
-* SUSE Enterprise Linux 12 & 15
+* SUSE Enterprise Linux 12 & 15.
 * Alpine Linux 3.21 - 3.23.
 
 [discrete]
@@ -69,7 +70,7 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
-[cols="40,20,25,23,25"]
+[cols="40,25,25,23,25"]
 |===
 | | SDK 2.6 - 2.7 | 2.8 - 2.9 | 2.10 | 2.11 & 2.12
 
