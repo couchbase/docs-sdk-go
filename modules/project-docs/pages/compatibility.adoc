@@ -45,6 +45,13 @@ At time of writing (January 2026): 26 (Tahoe), 15 (Sequoia), and 14 (Sonoma).
 ****
 
 
+
+// Platforms, Chipsets, and Virtual Environments.
+include::{version-common}@sdk:shared:partial$platform.adoc[tag=virtual]
+
+
+
+
 // Network Requirements
 include::{version-common}@sdk:shared:partial$network-requirements.adoc[]
 
