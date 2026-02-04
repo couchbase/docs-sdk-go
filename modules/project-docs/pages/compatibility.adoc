@@ -24,7 +24,8 @@ The SDK has been tested on a representative subset of the platforms listed below
 [discrete]
 === GNU/Linux
 
-* Amazon Linux 2 & AL2023.* Red Hat Enterprise Linux 8, 9, & 10.
+* Amazon Linux 2 & AL2023.
+* Red Hat Enterprise Linux 8, 9, & 10.
 * Oracle Linux 8, 9, & 10.
 * Ubuntu (LTS) 22.04 (_Jammy_) & 24.04 (_Noble_).
 * Debian 11 (_Bullseye_), Debian 12 (_Bookworm_), & Debian 13 (_Trixie_).
@@ -40,7 +41,7 @@ The SDK has been tested on a representative subset of the platforms listed below
 [discrete]
 === Mac OS X
 
-The current and previous two releases of OS X.
+* The current and previous two releases of OS X.
 At time of writing (January 2026): 26 (Tahoe), 15 (Sequoia), and 14 (Sonoma).
 ****
 
