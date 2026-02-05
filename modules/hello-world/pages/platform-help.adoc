@@ -1,0 +1,23 @@
+= Setting Up Couchbase Go SDK
+:description: Discover how to get up and running developing applications with the Couchbase Go SDK.
+// using a virtual python installation]
+:navtitle: Setting Up the Go SDK
+
+[abstract]
+{description}
+
+
+A simple Go orientation intro for _non-_Go folk who are evaluating the Couchbase Go SDK.
+
+[IMPORTANT]
+.Is This Page for You?
+====
+This page is to help evaluate the Couchbase Go SDK, if Go is not where you spend the majority of your working day. 
+It is aimed at Software Architects, QE folk, managers, and anyone else who needs to run through using the Go SDK without necessarily being comfortable with installing and developing with Go.
+If this is not you, head back to the xref:overview.adoc[rest of the Couchbase Go SDK documentation].
+====
+
+
+== Installing 
+
+GoMod
