@@ -77,7 +77,7 @@ libraryDependencies += "com.couchbase.client" %% "scala-client" % "{sdk_current_
 
 
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-At time of writing (February 2026), this is 1.25 and 1.24.
+At time of writing (February 2026), this is 1.25 and 1.26.
 Older versions may remain compatible, but are not supported.
 
 

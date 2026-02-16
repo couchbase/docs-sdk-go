@@ -9,7 +9,7 @@ Plus notes on Cloud, networks, and AWS Lambda.
 {description}
 
 In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
-At time of writing (January 2026), this is 1.25 and 1.24.
+At time of writing (February 2026), this is 1.25 and 1.26.
 Older versions may remain compatible, but are not supported.
 
 
@@ -42,7 +42,7 @@ The SDK has been tested on a representative subset of the platforms listed below
 === Mac OS X
 
 * The current and previous two releases of OS X.
-At time of writing (January 2026): 26 (Tahoe), 15 (Sequoia), and 14 (Sonoma).
+At time of writing (February 2026): 26 (Tahoe), 15 (Sequoia), and 14 (Sonoma).
 ****
 
 
