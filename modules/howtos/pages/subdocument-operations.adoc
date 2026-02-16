@@ -24,7 +24,7 @@ While full-document retrievals retrieve the entire document and full document up
 You should use sub-document operations when you are modifying only portions of a document, and full-document operations when the contents of a document is to change significantly.	
 
 
-IMPORTANT: The Sub-Document operations described on this page are for _Key-Value_ requests only: they are not related to Sub-Document {sqlpp_url}[{sqlpp} (formerly N1QL)] queries.
+IMPORTANT: The Sub-Document operations described on this page are for _Key-Value_ requests only: they are not related to Sub-Document xref:server:n1ql:n1ql-language-reference/subqueries.adoc#keyspace-identifier-versus-expression[{sqlpp}] queries.
 Sub-document {sqlpp} queries are explained in the xref:n1ql-queries-with-sdk.adoc[Query page].
 
 In order to use Sub-Document operations you need to specify a _path_ indicating the location of the Sub-Document.

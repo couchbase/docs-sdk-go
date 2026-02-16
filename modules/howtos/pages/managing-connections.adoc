@@ -1,5 +1,6 @@
 = Managing Connections
 :description: This section describes how to connect the Go SDK to a Couchbase cluster.
+:page-toclevels: 2
 :page-aliases: ROOT:managing-connections,howtos:multi-network,ROOT:connecting,ROOT:connection-advanced
 
 

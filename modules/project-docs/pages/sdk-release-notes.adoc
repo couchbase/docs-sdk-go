@@ -39,7 +39,7 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
-=== Version 2.12.0 (?? February 2025)
+=== Version 2.12.0 (?? February 2026)
 
 Version 2.12.0 is the first release in the Go SDK 2.12 series.
 

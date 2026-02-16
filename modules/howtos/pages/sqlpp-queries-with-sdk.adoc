@@ -1,5 +1,6 @@
 = Query
 :description: You can query for documents in Couchbase using the {sqlpp} query language, a language based on SQL, but designed for structured and flexible JSON documents.
+:page-toclevels: 2
 :page-aliases: n1ql-query.adoc,ROOT:querying.adoc,n1ql-queries-with-sdk.adoc
 :page-pagination: full
 
