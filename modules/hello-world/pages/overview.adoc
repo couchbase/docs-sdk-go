@@ -37,7 +37,7 @@ Data Ops (CRUD)::
 +
 --
 
-[source,scala]
+[source,golang]
 ----
 include::devguide:example$go/kv-durability-enhanced.go[indent=0,tag=durability]
 ----
@@ -47,7 +47,7 @@ include::devguide:example$go/kv-durability-enhanced.go[indent=0,tag=durability]
 +
 --
 
-[source,scala]
+[source,golang]
 ----
 include::devguide:example$go/n1ql-query-consistency.go[tag=consistency,indent=0]
 ----
@@ -57,9 +57,9 @@ Vector Search::
 +
 --
 
-[source,scala]
+[source,golang]
 ----
-include::devguide:example$go/search.go[tag=ector_fts_query_combination,indent=0]
+include::devguide:example$go/search.go[tag=vector_fts_query_combination,indent=0]
 ----
 --
 ====
@@ -69,10 +69,10 @@ Couchbase is a large platform -- covering many services -- and Couchbase SDKs ar
 and work with Couchbase in more natural ways for your platform.
 Install the SDK, and explore in the way that works best for you.
 
-.Installing the SDK via Scala Build Tool
-[source,sbt,subs="normal, attributes"]
+.Installing the SDK
+[source,console]
 ----
-libraryDependencies += "com.couchbase.client" %% "scala-client" % "{sdk_current_version}"
+$ go get github.com/couchbase/gocb/v2
 ----
 
 

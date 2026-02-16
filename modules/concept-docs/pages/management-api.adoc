@@ -1,4 +1,5 @@
 = Managing Couchbase Clusters from the SDK
+:page-toclevels: 2
 :page-aliases: buckets-and-clusters.adoc
 :description: Cluster management from the SDK.
 
@@ -13,7 +14,7 @@ This is not the only programmatic way to deploy Couchbase, and you may wish to l
 xref:cloud:terraform:index.adoc[Terraform] for Capella, or some of our command line tools.
 
 
-== buckets and clusters
+// == buckets and clusters
 ////
 = Buckets and Clusters
 :description: The Couchbase Go SDK provides an API for managing a Couchbase cluster programmatically.

@@ -12,7 +12,7 @@
 // This page pulls in content from -sdk-common-
 // and code samples from -example-dir-
 // 
-// It can be seen built at http://docs.couchbase.com/scala-sdk/1.7/concept-docs/data-durability-acid-transactions.html
+// It can be seen built at http://docs.couchbase.com/go-sdk/2.12/concept-docs/data-durability-acid-transactions.html
 
 
 [abstract]
@@ -23,15 +23,9 @@ You want to query your data, but does that always mean a {sqlpp} query to the Qu
 The CRUD API of the {sqlpp} Query service is mirrored by the Data Service's API, but without the need for indexes, and using a binary protocol gives faster access than streaming JSON from the Query Service.
 
 
-[source,scala]
+[source,golang]
 ----
-collection.remove("document-key2", durability = Durability.Majority) match {
-  case Success(result) => println("Document removed successfully")
-  // The mutation is available in-memory on at least a majority of replicas
-  case Failure(err: DocumentNotFoundException) =>
-    println("The document does not exist")
-  case Failure(err) => println("Error: " + err)
-}
+include::devguide:example$go/kv-durability-enhanced.go[tag=durability]
 ----
 
 At its heart, a database is in the business of storing data and letting you query and retrieve it.
@@ -179,7 +173,6 @@ The method can either be one to return the first result returned -- active or re
 which is useful if a node is timing out;
 or to return _all_ of the results, for client code to handle any inconsistency, or to build a consensus answer.
 
-NOTE: Reading from replicas is not supported in the Scala 3 version of the SDK.    Please see xref:project-docs:migrating-to-scala-3.adoc[Migrating to Scala 3] for guidance on these and other changes.
 
 === Preferred Server Group Replica Reads
 

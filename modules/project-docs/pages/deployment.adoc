@@ -44,7 +44,7 @@ The {name-sdk} docs note whenever a shortcut is being taken, but here is a non-e
 
 The best way to accommodate developing an application that is to be deployed to production is to use the platform's default approach for configuration files.
 
-For the Scala SDK, that is to keep a separate properties file for your development and production environments.
+// For the Scala SDK, that is to keep a separate properties file for your development and production environments.
 
 
 

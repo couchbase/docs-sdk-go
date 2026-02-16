@@ -1,6 +1,7 @@
 = Handling Errors
 :description: Errors are inevitable. The developer’s job is to be prepared for whatever is likely to come up
 :navtitle: Handling Errors
+:page-toclevels: 2
 :page-aliases: handling-error-conditions
 :source-language: go
 
