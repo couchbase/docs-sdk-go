@@ -33,6 +33,14 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+=== Version 2.11.3 (18 February 2026)
+
+Version 2.11.3 is a maintenance release for the Go SDK 2.11.
+
+==== Fixed Issues
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1788[GOCBC-1788]: Fixed issue where app telemetry could panic when multiple nodes share an address (e.g. a load balanced environment).
+
 === Version 2.11.2 (21 January 2026)
 
 Version 2.11.2 is a maintenance release for the Go SDK 2.11.
