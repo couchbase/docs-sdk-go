@@ -53,7 +53,7 @@ If you wish to only modify certain parts of a document, you can use xref:subdocu
 
 [source,golang,indent=0]
 ----
-include::example$documents.go[tag=mutate-in]
+include::devguide:example$go/documents.go[tag=mutate-in]
 ----
 
 or xref:{version-server}@server:n1ql:n1ql-language-reference/update.adoc[{sqlpp} UPDATE] to update documents based on specific query criteria:
@@ -82,7 +82,7 @@ You can also retrieve _parts_ of documents using xref:subdocument-operations.ado
 
 [source,golang,indent=0]
 ----
-include::example$documents.go[tag=lookup-in]
+include::devguide:example$go/documents.go[tag=lookup-in]
 ----
 
 // Counters
@@ -91,14 +91,14 @@ include::{version-common}@sdk:shared:partial$documents.adoc[tag=counters1]
 
 [source,go,indent=0]
 ----
-include::example$documents.go[tag=counters]
+include::devguide:example$go/documents.go[tag=counters]
 ----
 
 include::{version-common}@sdk:shared:partial$documents.adoc[tag=counters2]
 
 [source,golang,indent=0]
 ----
-include::example$documents.go[tag=counter-increment]
+include::devguide:example$go/documents.go[tag=counter-increment]
 ----
 
 include::{version-common}@sdk:shared:partial$documents.adoc[tag=counters3]

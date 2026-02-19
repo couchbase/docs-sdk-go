@@ -31,7 +31,7 @@ NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connec
 
 [source,golang,indent=0]
 ----
-include::example$analytics.go[tag=query]
+include::devguide:example$go/analytics.go[tag=query]
 ----
 
 
@@ -81,7 +81,7 @@ Here, we give the request priority over others, and set a custom, server-side ti
 
 [source,golang,indent=0]
 ----
-include::example$analytics.go[tag=options]
+include::devguide:example$go/analytics.go[tag=options]
 ----
 
 

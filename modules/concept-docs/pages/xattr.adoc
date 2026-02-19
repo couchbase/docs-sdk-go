@@ -15,7 +15,7 @@ include::{version-common}@sdk:shared:partial$sdk-xattr-overview.adoc[tag=virtual
 
 [source,golang,indent=0]
 ----
-include::example$xattr.go[tag=xattr]
+include::devguide:example$go/xattr.go[tag=xattr]
 ----
 
 // See the xref:howtos:sdk-xattr-example.adoc#virtual-extended-attributes-example[example page] for a complete code sample.

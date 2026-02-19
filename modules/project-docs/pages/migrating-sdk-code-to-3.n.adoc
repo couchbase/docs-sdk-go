@@ -21,14 +21,14 @@ As an example here is a KeyValue document fetch:
 
 [source,golang]
 ----
-include::example$migrating.go[tag=getresult,indent=0]
+include::devguide:example$go/migrating.go[tag=getresult,indent=0]
 ----
 
 Compare this to a {sqlpp_url}[{sqlpp} (formerly N1QL)] query:
 
 [source,golang]
 ----
-include::example$migrating.go[tag=queryresult,indent=0]
+include::devguide:example$go/migrating.go[tag=queryresult,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$migration.adoc[tag=terms2]
@@ -58,21 +58,21 @@ RBAC is supported. This is why you can set the username and password when direct
 
 [source,golang]
 ----
-include::example$migrating.go[tag=basicconnecting,indent=0]
+include::devguide:example$go/migrating.go[tag=basicconnecting,indent=0]
 ----
 
 This is just shorthand for:
 
 [source,golang]
 ----
-include::example$migrating.go[tag=passauthenticator,indent=0]
+include::devguide:example$go/migrating.go[tag=passauthenticator,indent=0]
 ----
 
 The reason why you can pass in a specific authenticator is that you can also use the same approach to configure certificate-based authentication:
 
 [source,golang]
 ----
-include::example$migrating.go[tag=certauthenticator,indent=0]
+include::devguide:example$go/migrating.go[tag=certauthenticator,indent=0]
 ----
 
 Please see the documentation on certificate-based authentication for detailed information on how to configure this properly.
@@ -109,9 +109,9 @@ Here is the SDK 2 equivalent:
 
 [source,golang]
 ----
-include::example$migrating.go[tag=getcollection,indent=0]
+include::devguide:example$go/migrating.go[tag=getcollection,indent=0]
 
-include::example$migrating.go[tag=getresult,indent=0]
+include::devguide:example$go/migrating.go[tag=getresult,indent=0]
 
 ----
 
@@ -167,7 +167,7 @@ In version 2.x of the SDK, you should instead now check using the `errors.Is` me
 
 [source,golang]
 ----
-include::example$migrating.go[tag=handleerror,indent=0]
+include::devguide:example$go/migrating.go[tag=handleerror,indent=0]
 ----
 
 In addition, 2.x of the SDK provides the ability to gather additional contextual information about
@@ -175,7 +175,7 @@ why your operation failed through the various error types:
 
 [source,golang]
 ----
-include::example$migrating.go[tag=handleerrorext,indent=0]
+include::devguide:example$go/migrating.go[tag=handleerrorext,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$archive.adoc[tag=migration]
