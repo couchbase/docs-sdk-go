@@ -39,7 +39,7 @@ All patch releases for each dot minor release should be API compatible, and safe
 any changes to expected behavior are noted in the release notes that follow.
 
 
-=== Version 2.12.0 (?? February 2026)
+=== Version 2.12.0 19 February 2026)
 
 Version 2.12.0 is the first release in the Go SDK 2.12 series.
 
@@ -56,11 +56,23 @@ Tracing and metrics with the `couchbase2` scheme should be considered stability 
 
 ==== Fixed Issues
 
-* https://jira.issues.couchbase.com/browse/GOCBC-1782[GOCBC-1782]: Fixed issue it was not possible to specify role scope when creating a group.
-* https://jira.issues.couchbase.com/browse/GOCBC-1788[GOCBC-1788]: Fixed issue where app telemetry could panic when multiple nodes share an address (e.g. a load balanced environment).
+* https://jira.issues.couchbase.com/browse/GOCBC-1782[GOCBC-1782]: Fixed issue where specified scope was ignored when creating group.
+it is now possible to specify role scope when creating a group.
+// * https://jira.issues.couchbase.com/browse/GOCBC-1788[GOCBC-1788]: Fixed issue where app telemetry could panic when multiple nodes share an address (e.g. a load balanced environment).
+
 
 
 == Go SDK 2.11 Releases
+
+
+=== Version 2.11.3 (18 February 2026)
+
+Version 2.11.3 is a maintenance release for the Go SDK 2.11.
+
+==== Fixed Issues
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1788[GOCBC-1788]: Fixed issue where app telemetry could panic when multiple nodes share an address (e.g. a load balanced environment).
+
 
 === Version 2.11.2 (21 January 2026)
 
