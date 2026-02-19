@@ -49,9 +49,30 @@ Tracing and metrics with the `couchbase2` scheme should be considered stability 
 
 ==== New Features and Behavioral Changes
 
+* https://jira.issues.couchbase.com/browse/GOCBC-1769[GOCBC-1769]: Added support for mTLS certificate refresh without restart.
+* https://jira.issues.couchbase.com/browse/GOCBC-1775[GOCBC-1775]: Deprecated support for MapReduce Views.
+* https://jira.issues.couchbase.com/browse/GOCBC-1776[GOCBC-1776]: Added support for OpenTelemetry semantic conventions.
+
+
+==== Fixed Issues
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1782[GOCBC-1782]: Fixed issue it was not possible to specify role scope when creating a group.
+* https://jira.issues.couchbase.com/browse/GOCBC-1788[GOCBC-1788]: Fixed issue where app telemetry could panic when multiple nodes share an address (e.g. a load balanced environment).
 
 
 == Go SDK 2.11 Releases
+
+=== Version 2.11.2 (21 January 2026)
+
+Version 2.11.2 is a maintenance release for the Go SDK 2.11.
+
+==== New Features and Behavioral Changes
+* https://jira.issues.couchbase.com/browse/GOCBC-1780[GOCBC-1780]: Updated dependencies.
+
+==== Fixed Issues
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1774[GOCBC-1774]: Fixed issue where get projections with > 16 would not correctly rebuild the projection.
+* https://jira.issues.couchbase.com/browse/GOCBC-1778[GOCBC-1778]: Fixed issue where it was not able to reset durability level to none using `UpdateBucket`.
 
 === Version 2.11.1 (18 September 2025)
 
