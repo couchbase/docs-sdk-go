@@ -1,4 +1,4 @@
-x= Couchbase {name-sdk} {sdk_dot_minor}
+= Couchbase {name-sdk} {sdk_dot_minor}
 :page-layout: landing-page-top-level-sdk
 :page-role: tiles
 :!sectids:
