@@ -16,7 +16,7 @@ To create or delete a bucket, call the bucket manager with the `Buckets()` call 
 
 [source,golang]
 ----
-include::example$buckets-and-clusters.go[tag=buckets_and_clusters_1,indent=0]
+include::devguide:example$go/buckets-and-clusters.go[tag=buckets_and_clusters_1,indent=0]
 ----
 
 This class is also used to expose information about an existing bucket (`manager.GetBucket(string, *gocb.GetBucketOptions)`) or to update an existing bucket (`manager.UpdateBucket(gocb.BucketSettings, *gocb.UpdateBucketOptions)`).

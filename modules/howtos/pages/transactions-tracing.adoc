@@ -24,12 +24,12 @@
 //This can be done using the SDK's `RequestTracer` abstraction as so:
 //[source,java]
 //----
-//include::example$TransactionsExample.java[tag=tracing,indent=0]
+//include::devguide:example$go/TransactionsExample.java[tag=tracing,indent=0]
 //----
 //
 //Or if you have an existing OpenTelemetry span you can easily convert it to a Couchbase `RequestSpan` and pass it to the SDK:
 //
 //[source,java]
 //----
-//include::example$TransactionsExample.java[tag=tracing-wrapped,indent=0]
+//include::devguide:example$go/TransactionsExample.java[tag=tracing-wrapped,indent=0]
 //----

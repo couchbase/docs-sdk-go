@@ -37,7 +37,7 @@ Local Couchbase Server::
 -- 
 [source,go]
 ----
-include::example$startusing.go[tags=**]
+include::devguide:example$go/startusing.go[tags=**]
 ----
 
 As well as the Go SDK (see below), and a running instance of Couchbase Server, you will need to load up the Travel Sample Bucket
@@ -143,7 +143,7 @@ Local Couchbase Server::
 
 [source,golang]
 ----
-include::example$startusing.go[tag=connect-info,indent=0]
+include::devguide:example$go/startusing.go[tag=connect-info,indent=0]
 ----
 --
 ====
@@ -178,7 +178,7 @@ Local Couchbase Server::
 --
 [source,golang]
 ----
-include::example$startusing.go[tag=connect,indent=0]
+include::devguide:example$go/startusing.go[tag=connect,indent=0]
 ----
 
 For developing locally on the same machine as Couchbase Server, your URI can be `couchbase://localhost` as shown here. 

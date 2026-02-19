@@ -115,30 +115,30 @@ for further details.
 
 [source,golang]
 ----
-include::example$collection-manager.go[tag=create-collection-manager,indent=0]
+include::devguide:example$go/collection-manager.go[tag=create-collection-manager,indent=0]
 ----
 
 You can create a scope:
 
 [source,golang,indent=0]
 ----
-include::example$collection-manager.go[tag=create-scope,indent=0]
+include::devguide:example$go/collection-manager.go[tag=create-scope,indent=0]
 ----
 
 You can then create a collection within that scope:
 
 [source,golang,indent=0]
 ----
-include::example$collection-manager.go[tag=create-collection,indent=0]
+include::devguide:example$go/collection-manager.go[tag=create-collection,indent=0]
 ----
 
 Finally, you can drop unneeded collections and scopes:
 
 [source,golang,indent=0]
 ----
-include::example$collection-manager.go[tag=drop-collection,indent=0]
+include::devguide:example$go/collection-manager.go[tag=drop-collection,indent=0]
 
-include::example$collection-manager.go[tag=drop-scope,indent=0]
+include::devguide:example$go/collection-manager.go[tag=drop-scope,indent=0]
 
 ----
 
@@ -150,7 +150,7 @@ xref:server:learn:security/roles.adoc#data-reader[Data Reader]
 You can create users with the appropriate RBAC programmatically:
 [source,golang,indent=0]
 ----
-include::example$collection-manager.go[tag=scopeAdmin, indent=0]
+include::devguide:example$go/collection-manager.go[tag=scopeAdmin, indent=0]
 
 ----
 
@@ -166,7 +166,7 @@ It can be instantiated through the `Cluster.QueryIndexes()` method.
 
 [source,golang]
 ----
-include::example$query-index-manager.go[tag=creating-index-mgr,indent=0]
+include::devguide:example$go/query-index-manager.go[tag=creating-index-mgr,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$flush-info-pars.adoc[tag=query-index-manager-intro]
@@ -178,7 +178,7 @@ Note that you cannot provide a named scope or collection separately, both must b
 
 [source,golang]
 ----
-include::example$query-index-manager.go[tag=primary,indent=0]
+include::devguide:example$go/query-index-manager.go[tag=primary,indent=0]
 ----
 
 When a primary index name is not specified, the SDK will create the index as `#primary` by default.
@@ -193,7 +193,7 @@ Creating a _secondary_ index follows a similar approach, with some minor differe
 
 [source,golang]
 ----
-include::example$query-index-manager.go[tag=secondary,indent=0]
+include::devguide:example$go/query-index-manager.go[tag=secondary,indent=0]
 ----
 
 The `CreateIndex()` function requires an index name to be provided, along with the fields to create the index on.
@@ -207,7 +207,7 @@ To achieve this we can use the `Deferred` boolean option, and set it to `true`.
 
 [source,golang]
 ----
-include::example$query-index-manager.go[tag=defer-indexes,indent=0]
+include::devguide:example$go/query-index-manager.go[tag=defer-indexes,indent=0]
 ----
 
 To delete a query index you can use the `DropIndex()` or `DropPrimaryIndex()` functions. 
@@ -217,7 +217,7 @@ Which one you use depends on the type of query index you wish to drop from the c
 
 [source,golang]
 ----
-include::example$query-index-manager.go[tag=drop-primary-or-secondary-index,indent=0]
+include::devguide:example$go/query-index-manager.go[tag=drop-primary-or-secondary-index,indent=0]
 ----
 
 // * Search - note & link to FTS page & API?

@@ -39,7 +39,7 @@ Here's a complete example of doing an query and handling the results:
 
 [source,golang,indent=0]
 ----
-include::example$query.go[tag=simple]
+include::devguide:example$go/query.go[tag=simple]
 ----
 
 NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connection using `cluster.Bucket(name)` before you can use {sqlpp}.
@@ -199,7 +199,7 @@ the assumption is that the `airline` collection exists within a scope `inventory
 
 [source,golang,indent=0]
 ----
-include::example$query.go[tag=simple-named-scope]
+include::devguide:example$go/query.go[tag=simple-named-scope]
 ----
 
 A complete list of `QueryOptions` can be found in the https://pkg.go.dev/github.com/couchbase/gocb/v2#Scope.Query[API docs].

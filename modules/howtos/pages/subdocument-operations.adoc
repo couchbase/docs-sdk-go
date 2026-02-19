@@ -365,7 +365,7 @@ For example the following two blocks can execute concurrently without any risk o
 .Performing concurrent Sub Document mutations
 [source,go]
 ----
-include::example$subdoc.go[tag=concurrent, indent=0]
+include::devguide:example$go/subdoc.go[tag=concurrent, indent=0]
 ----
 
 Even when modifying the _same_ part of the document, operations will not necessarily conflict.
@@ -377,7 +377,7 @@ If CAS is required then it can be provided like this:
 .Performing concurrent Sub Document mutations with CAS
 [source,go]
 ----
-include::example$subdoc.go[tag=cas, indent=0]
+include::devguide:example$go/subdoc.go[tag=cas, indent=0]
 ----
 
 == Durability

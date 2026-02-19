@@ -18,7 +18,7 @@ The 5000 limit to the client-side cache also does not apply.
 
 [source,golang,indent=0]
 ----
-include::example$n1ql-query.go[tag=prepared-statement]
+include::devguide:example$go/n1ql-query.go[tag=prepared-statement]
 ----
 
 
@@ -68,7 +68,7 @@ You can also create and define indexes in the SDK using:
 
 [source,golang,indent=0]
 ----
-include::example$n1ql-query.go[tag=create-index]
+include::devguide:example$go/n1ql-query.go[tag=create-index]
 ----
 
 
@@ -94,7 +94,7 @@ Building deferred indexes can also be done via the SDK:
 
 [source,golang,indent=0]
 ----
-include::example$n1ql-query.go[tag=deferred-index]
+include::devguide:example$go/n1ql-query.go[tag=deferred-index]
 ----
 
 
@@ -120,7 +120,7 @@ Consider the following snippet:
 
 [source,golang,indent=0]
 ----
-include::example$n1ql-query.go[tag=index-consistency]
+include::devguide:example$go/n1ql-query.go[tag=index-consistency]
 ----
 
 The above query may not return the newly inserted document because it has not yet been indexed.
@@ -130,7 +130,7 @@ If the above code is modified to use _RequestPlus_, query processing will wait u
 
 [source,golang,indent=0]
 ----
-include::example$n1ql-query.go[tag=index-consistency-request-plus]
+include::devguide:example$go/n1ql-query.go[tag=index-consistency-request-plus]
 ----
 
 This gives the application developer more control over the balance between performance (latency) and consistency,
