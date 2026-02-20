@@ -192,7 +192,7 @@ Useful resources to help support your development experience with Couchbase and 
 </div>
 ++++
 
-include::{version-common}@sdk:shared:partial$columnar-available.adoc[tag=initial-availability]
+include::{version-common}@sdk:shared:partial$columnar-available.adoc[tag=initial-availability-o]
 
 
 
