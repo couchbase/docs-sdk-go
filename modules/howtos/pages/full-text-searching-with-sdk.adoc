@@ -56,6 +56,18 @@ A conjunction query contains multiple child queries; its result documents must s
 include::devguide:example$go/search.go[tag=conjunctionquery]
 ----
 
+[TIP]
+.Search Results Limit
+====
+By default, the Search Service returns only the first 10 matches (`size: 10`, `from: 0`).
+To retrieve more results, you must explicitly define pagination settings such as `size` or `from` in your query.
+
+For information about formatting your Search query and specifying limits, see xref:server:search:search-request-params.adoc[].
+
+For information about pagination in Search responses, see xref:server:fts:fts-search-response.adoc#pagination[Pagination].
+====
+
+
 == Working with Results
 
 The result of a search query has three components: rows, facets, and metdata. 
