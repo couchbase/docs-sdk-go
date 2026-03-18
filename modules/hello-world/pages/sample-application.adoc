@@ -143,224 +143,545 @@ The application is now running and you can launch your browser and go to the Swa
 === Verifying the Application
 
 Once the application starts, you can see the details of the application on the logs.
-image::app-startup-spring-boot.png[]
+
+image::app_startup.png[Start-up Logs]
 
 The application will run on port 8080 of your local machine -- `http://localhost:8080`.
 You will find the interactive Swagger documentation of the API if you go to the URL in your browser.
 Swagger documentation is used in this demo to showcase the different API endpoints and how they can be invoked.
 More details on the Swagger documentation can be found in the <<#swagger-documentation>>.
 
-image::swagger-documentation-spring-boot.png[Swagger Documentation]
+image::swagger-documentation.png[Swagger Documentation]
+
+
+
+== Data Model
+
+For this quickstart, we use three collections, `airport`, `airline` and `routes` that contain sample airports, airlines and airline routes respectively. 
+The routes collection connects the airports and airlines as seen in the figure below. 
+We use these connections in the quickstart to generate airports that are directly connected and airlines connecting to a destination airport. 
+Note that these are just examples to highlight how you can use {sqlpp} queries to join the collections.
+
+image::travel_sample_data_model.png[travel-sample data model]
+
+
+
+== Reviewing the Code
+
+To begin this tutorial, clone the repo and open it up in the IDE of your choice. 
+Now you can learn about how to create, read, update, and delete documents in Couchbase Server.
+
+
+=== Code Layout
+
+----
+├── controllers
+│   ├── airline_controller.go
+│   ├── airport_controller.go
+│   └── route_controller.go
+├── db
+│   ├── db.go
+├── errors
+│   ├── errors.go
+├── models
+│   ├── collection_models.go
+├── routes
+│   ├── route.go
+├── service
+│   ├── airline.go
+│   ├── airport.go
+│   └── route.go
+├── go.mod
+├── main.go
+├── Dockerfile
+└── test
+    ├── airline_test.go
+    ├── airport_test.go
+    ├── main_test.go
+    └── route_test.go
+----
+
+We have separated out the code into separate files by the entity (collection) in the controllers and service folder. 
+The tests are similarly separated out by entity in the tests folder.
+
+In `main.go` a couchbase cluster is initialized using the `InitializeCluster` function from the `db` package.
+
+.main.go
+[source,golang]
+----
+// Initialize the cluster
+cluster := db.InitializeCluster()
+----
+
+The Couchbase connection is established in the `InitializeCluster` function defined in `db.go`. 
+There, we call the `Connect` method defined in the SDK to create the Database connection. 
+In our application, we have the same bucket (`travel-sample`) and scope that is used by all the APIs. 
+We initialise this scope and return it in the `GetScope` function. 
+The collection will change depending on the API route.
+
+.db.go
+[source,golang]
+----
+// Configure cluster options
+clusterOpts := gocb.ClusterOptions{
+  Authenticator: gocb.PasswordAuthenticator{
+    Username: username,
+    Password: password,
+  },
+}
+
+// Sets a pre-configured profile called "wan-development" to help avoid latency issues
+if err := clusterOpts.ApplyProfile(gocb.ClusterConfigProfileWanDevelopment); err != nil {
+  panic(err)
+}
+
+// Connect to the Couchbase cluster
+cluster, err := gocb.Connect(connectionString, clusterOpts)
+if err != nil {
+  panic(err)
+}
+----
+
+In `main.go` we then fetch the scope from the `GetScope` function defined in the `db.go` by passing the cluster initialised.
+
+We then initialise the service and controller for all the collections.
+
+The instances of the collections are then passed to the `SetupCollectionRoutes` function from the `routes` package. 
+This function sets up the HTTP routes and their corresponding handlers.
+
+
+[source,golang]
+----
+// Initialize the scope
+scope := db.GetScope(cluster)
+
+// Create service instances
+airlineService := services.NewAirlineService(scope)
+airportService := services.NewAirportService(scope)
+routeService := services.NewRouteService(scope)
+
+// Create controller instances
+airlineController := controllers.NewAirlineController(airlineService)
+airportController := controllers.NewAirportController(airportService)
+routeController := controllers.NewRouteController(routeService)
+
+// Pass to  Controllers struct to hold controller instances
+controllers := routes.Controllers{
+ AirlineController: airlineController,
+ AirportController: airportController,
+ RouteController:   routeController,
+}
+
+// Setup routes and pass the Controllers struct
+routes.SetupCollectionRoutes(router, controllers)
+----
+
+=== Airport Entity
+
+For this tutorial, we will focus on the airport entity. 
+The other entities are similar.
+
+We will be setting up a REST API to manage airport documents.
+
+* <<#post-airport,POST Airport>> -– Create a new airport.
+* <<#get-airport,GET Airport>> -– Read specified airport.
+* <<#put-airport,PUT Airport>> –- Update specified airport.
+* <<#delete-airport,DELETE Airport>> -– Delete airport.
+* <<#airport-list,Airport List>> -– Get all airports. Optionally filter the list by country.
+* <<#direct-connections,Direct Connections>> -- Get a list of airports directly connected to the specified airport.
+
+For CRUD operations, we will use the Key-Value operations that are built into the Couchbase SDK to create, read, update, and delete a document.
+Every document will need an ID (similar to a primary key in other databases) to save it to the database. 
+This ID is passed in the URL. 
+For other end points, we will use {sqlpp} to query for documents.
+
+=== Airport Document Structure
+
+Our profile document will have an airportname, city, country, faa code, icao code, timezone info, and the geographic coordinates. 
+For this demo, we will store all airport information in one document in the airport collection in the travel-sample bucket.
+
+[source,json]
+----
+{
+  "airportname": "Sample Airport",
+  "city": "Sample City",
+  "country": "United Kingdom",
+  "faa": "SAA",
+  "icao": "SAAA",
+  "tz": "Europe/Paris",
+  "geo": {
+    "lat": 48.864716,
+    "lon": 2.349014,
+    "alt": 92
+  }
+}
+----
+
+=== POST Airport
+
+To insert a new airport document, locate the `InsertDocumentForAirport` method within the `airport_controller` file found in the `controllers` package. 
+This expects a `POST` request with the airport ID (`id`) specified in the URL path and the airport data provided in the request body. 
+We extract this airport ID from the URL, parse the request data, and call the `CreateAirport` method from the AirportService.
+
+[source,golang]
+----
+// InsertDocumentForAirport method in controllers/airline_controller.go
+docKey := context.Param("id")
+data := models.Airport{}
+if err := context.ShouldBindJSON(&data); err != nil {
+  context.JSON(http.StatusBadRequest, cError.Errors{
+    Error: "Error, Invalid request data: " + err.Error(),
+  })
+  return
+}
+
+err := ac.AirportService.CreateAirport(docKey, &data)
+context.JSON(http.StatusCreated, data)
+----
+
+The `CreateAirport` method calls the `Insert` method for the collection defined in the Couchbase SDK. 
+The insert method takes the key (`id`) by which the document is referenced and the content to be inserted into the collection.
+
+[source,golang]
+----
+// CreateAirport in service/airport.go
+func (s *AirportService) CreateAirport(docKey string, data *models.Airport) error {
+	_, err := s.scope.Collection(s.collectionName).Insert(docKey, data, nil)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+----
+
+If the document id already exists in the database, we get an error, `ErrDocumentExists` from the SDK and return the status as `409`.
+
+=== GET Airport
+
+To fetch a airport document, locate the `GetDocumentForAirport` method within the `airport_controller` file found in the `controllers` package. 
+This expects a `GET` request with the airport document ID (`id`) specified in the URL path. 
+We extract this airport document ID from the URL and call the `GetAirport` method from the `AirportService`.
+
+
+[source,golang]
+----
+// GetDocumentForAirport in controllers/airport_controller.go
+docKey := context.Param("id")
+airportData, err := ac.AirportService.GetAirport(docKey)
+----
+
+The `GetAirport` method calls the `Get` method defined for collections in the Couchbase SDK. 
+We fetch the document based on the key by which it is stored. 
+If the document retrieval was successful, it decodes the content of the document into a `models.Airport` struct using the `Content` method.
+
+
+[source,golang]
+----
+// GetAirport in service/airport.go
+func (s *AirportService) GetAirport(docKey string) (*models.Airport, error) {
+	getResult, err := s.scope.Collection(s.collectionName).Get(docKey, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	var airportData models.Airport
+
+	if err := getResult.Content(&airportData); err != nil {
+		return nil, err
+	}
+
+	return &airportData, nil
+}
+----
+
+If the document is not found in the database, we get an error, `ErrDocumentNotFound` from the SDK and return the status as `404`.
+
+=== PUT Airport
+
+To update a airport document, locate the `UpdateDocumentForAirport` method within the `airport_controller` file found in the controllers package. 
+This expects a `PUT` request with the airport ID (`id`) specified in the URL path and the airport data to be updated provided in the request body. 
+We extract this airport ID (`id`) from the URL, parse the request data, and call the `UpdateAirport` method from the `AirportService`.
+
+
+[source,golang]
+----
+// UpdateDocumentForAirport in controllers/airport_controller.go
+docKey := context.Param("id")
+data := models.Airport{}
+if err := context.ShouldBindJSON(&data); err != nil {
+  context.JSON(http.StatusBadRequest, cError.Errors{
+    Error: "Error while getting the request: " + err.Error(),
+  })
+  return
+}
+err := ac.AirportService.UpdateAirport(docKey, &data)
+----
+
+The `UpdateAirport` method calls the `Upsert` method for the collection defined in the Couchbase SDK. 
+The upsert method takes the key (`id`) by which the document is referenced and the content to be updated into the collection.
+
+[source,golang]
+----
+// UpdateAirport in service/airport.go
+func (s *AirportService) UpdateAirport(docKey string, data *models.Airport) error {
+	_, err := s.scope.Collection(s.collectionName).Upsert(docKey, data, nil)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+----
+
+=== DELETE Airport
+
+To delete a airport document, locate the `DeleteDocumentForAirport` method within the `airport_controller` file found in the `controllers` package. 
+This expects a `DELETE` request with the airport document ID (`id`) specified in the URL path. 
+We extract this airport document ID from the URL and call the `DeleteAirport` method from the `AirportService`.
+
+[source,golang]
+----
+// DeleteDocumentForAirport in controllers/airport_controller.go
+docKey := context.Param("id")
+err := ac.AirportService.DeleteAirport(docKey)
+The DeleteAirport method calls the Remove method defined for collections in the Couchbase SDK. We delete the document based on the key by which it is stored.
+
+// DeleteAirport in service/airport.go
+func (s *AirportService) DeleteAirport(docKey string) error {
+	_, err := s.scope.Collection(s.collectionName).Remove(docKey, nil)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+----
+
+If the document is not found in the database, we get an error, `ErrDocumentNotFound` from the SDK and return the status as `404`.
+
+=== List Airport
+
+This endpoint retrieves the list of airports in the database. 
+The API has options to specify the page size for the results and country from which to fetch the airport documents.
+
+{sqlpp} is a powerful query language based on SQL, but designed for structured and flexible JSON documents. 
+We will use a {sqlpp} query to search for airports with `Limit`, `Offset`, and `Country` options.
+
+Navigate to the `GetAirports` method in the `airport_controller` file found in the controllers package. 
+This endpoint is different from the others we have seen before because it makes the {sqlpp} query rather than a key-value operation. 
+This usually means more overhead because the query engine is involved. 
+For this query, we are using the predefined indices in the travel-sample bucket. 
+We can create an additional index specific for this query to make it perform better.
+
+First, we need to get the values from the query string for `Limit`, `Offset`, and `Country` that we will use in our query. 
+These are pulled from the `context.DefaultQuery` method for `Limit`, `Offset`, and `Country` respectively.
+
+This end point has two queries depending on the value for the country parameter. 
+If a country name is specified, we retrieve the airport documents for that specific country. 
+If it is not specified, we retrieve the list of airports across all countries. 
+The queries are slightly different for these two scenarios.
+
+We build our {sqlpp} query using the named parameters specified by a `$` symbol for both these scenarios. 
+A named or positional parameter is a placeholder for a value in the `WHERE`, `LIMIT`, or `OFFSET` clause of a query. 
+The difference between the two queries is the presence of the country parameter in the query. 
+Normally for the queries with pagination, it is advised to order the results to maintain the order of results across multiple queries.
+
+
+[source,golang]
+----
+// GetAirports in controllers/airport_controller.go
+country := context.DefaultQuery("country", "")
+limit, err := strconv.Atoi(context.DefaultQuery("limit", "10"))
+if err != nil {
+  limit = 10
+}
+offset, err := strconv.Atoi(context.DefaultQuery("offset", "0"))
+if err != nil {
+  offset = 0
+}
+
+// Construct the query with named params
+		if country != "" {
+			query = `
+				SELECT airport.airportname,
+					airport.city,
+					airport.country,
+					airport.faa,
+					airport.geo,
+					airport.icao,
+					airport.tz
+				FROM airport AS airport
+				WHERE airport.country=$country
+				ORDER BY airport.airportname
+				LIMIT $limit
+				OFFSET $offset;
+			`
+			params = map[string]interface{}{
+				"country": country,
+				"limit":   limit,
+				"offset":  offset,
+			}
+		} else {
+			query = `
+				SELECT airport.airportname,
+					airport.city,
+					airport.country,
+					airport.faa,
+					airport.geo,
+					airport.icao,
+					airport.tz
+				FROM airport AS airport
+				ORDER BY airport.airportname
+				LIMIT $limit
+				OFFSET $offset;
+			`
+			params = map[string]interface{}{
+				"limit":  limit,
+				"offset": offset,
+			}
+		}
+// Use the method to execute the query and return the results
+queryResult, err := ac.AirportService.QueryAirport(query, params)
+----
+
+The `QueryAirport` method calls the `Query` method defined in the `Scope` by the Couchbase SDK. 
+If the query is executed successfully, it iterates over the result set using `queryResult.Next()` and deserializes the data. 
+The method returns a slice of `models.Airport` containing the result documents obtained from the query.
+
+
+[source,golang]
+----
+// QueryAirport in service/airport.go
+func (s *AirportService) QueryAirport(query string, params map[string]interface{}) ([]models.Airport, error) {
+	queryResult, err := s.scope.Query(query, &gocb.QueryOptions{NamedParameters: params})
+	if err != nil {
+		return nil, err
+	}
+	var document models.Airport
+	var documents []models.Airport
+
+	if queryResult == nil {
+		return nil, err
+	}
+
+	for queryResult.Next() {
+		err := queryResult.Row(&document)
+		if err != nil {
+			return nil, err
+		}
+		documents = append(documents, document)
+	}
+	return documents, nil
+}
+----
+
+=== Direct Connections
+
+This endpoint fetches the airports that can be reached directly from the specified source airport code. 
+This also uses a {sqlpp} query to fetch the results simlar to the List Airport endpoint. 
+The method returns a slice of `models.Destination` containing the result documents obtained from the query.
+
+Let us look at the query used here:
+
+[source,golang]
+----
+query := `
+SELECT DISTINCT route.destinationairport
+FROM airport AS airport
+JOIN route AS route ON route.sourceairport = airport.faa
+WHERE airport.faa = $airport AND route.stops = 0
+ORDER BY route.destinationairport
+LIMIT $limit
+OFFSET $offset
+`
+
+params := map[string]interface{}{
+  "airport": airport,
+  "limit":   limit,
+  "offset":  offset,
+}
+
+// Use the method to execute the query and return the results
+queryResult, err := ac.AirportService.QueryDirectConnectionAirport(query, params)
+----
+
+The `QueryDirectConnectionAirport` method returns a slice of `models.Destination` containing the result documents obtained from the query.
+
+We are fetching the direct connections by joining the airport collection with the route collection and filtering based on the source airport specified by the user and by routes with no stops.
 
 == Running Tests
 
-To test your application, you can use Maven (mvn) to run the test suite. Here are the steps to run the tests:
+We have defined integration tests using the standard go testing package for all the API end points. 
+The integration tests use the same database configuration as the application. 
+For the tests, we perform the operation using the API and confirm the results by checking the documents in the database. 
+For example, to check the creation of the document by the API, we would call the API to create the document and then read the same document from the database and compare them. 
+After the tests, the documents are cleaned up by calling the `DELETE` endpoint.
 
-=== Run All Tests:
-
+.Run standard tests for the project.
 [source,console]
-----
-$ mvn test
-----
-
-This command will execute all the test cases in your project.
-
-=== Run Individual Tests:
-
-Additionally, you can run individual test classes or methods using the following commands:
-
-To run the tests for the `AirlineIntegrationTest` class:
-
-[source,console]
-----
-$ mvn test -Dtest=org.couchbase.quickstart.springboot.controllers.AirlineIntegrationTest
+====
+cd test
+go test -v
 ----
 
-To run the tests for the `AirportIntegrationTest` class:
 
-[source,console]
-----
-$ mvn test -Dtest=org.couchbase.quickstart.springboot.controllers.AirportIntegrationTest
-----
 
-To run the tests for the `RouteIntegrationTest` class:
-
-[source,console]
-----
-$ mvn test -Dtest=org.couchbase.quickstart.springboot.controllers.RouteIntegrationTest
-----
 
 == Appendix
-
-=== Data Model
-
-For this quickstart, we use three collections, `airport`, `airline` and `routes` that contain sample airports, airlines and airline routes respectively. The routes collection connects the airports and airlines as seen in the figure below. We use these connections in the quickstart to generate airports that are directly connected and airlines connecting to a destination airport. Note that these are just examples to highlight how you can use SQL++ queries to join the collections.
-
-image::travel_sample_data_model.png[travel-sample data model]
 
 === Extending API by Adding New Entity
 
 If you would like to add another entity to the APIs, these are the steps to follow:
 
-- Create a new collection in the Couchbase scope. You can create new collections using the [SDK](https://docs.couchbase.com/java-sdk/current/howtos/provisioning-cluster-resources.html#collection-management) or via the [Couchbase Server interface](https://docs.couchbase.com/cloud/n1ql/n1ql-language-reference/createcollection.html).
-- Define the routes in a new class in the `controllers` package similar to the existing routes like `AirportController.java`.
-- Define the service in a new class in the `services` package similar to the existing services like `AirportService.java`.
-- Define the repository in a new class in the `repositories` package similar to the existing repositories like `AirportRepository.java`.
+* **Create a new collection in the Couchbase scope:**
+You can create new collections using the xref:go-sdk:howtos:provisioning-cluster-resources.adoc#collection-management[SDK] 
+or via the xref:cloud:n1ql:n1ql-language-reference/createcollection.adoc[Couchbase Server interface].
 
-=== Running Self-Managed Couchbase Cluster
+* **Define the New Route:**
+Navigate to the `route/routes.go` folder and create the new route.
 
-If you are running this quickstart with a self-managed Couchbase cluster, you need to [load](https://docs.couchbase.com/server/current/manage/manage-settings/install-sample-buckets.html) the travel-sample data bucket in your cluster and generate the credentials for the bucket.
+* **Controller Configuration:**
+Develop a new file in the controllers folder, mirroring the existing structures (e.g., `airport_controller.go`). 
+Craft the corresponding method within this file to manage the new entity.
 
-You need to update the connection string and the credentials in the `application.properties` file in the `src/main/resources` folder.
+* **Service Layer Implementation:**
+Generate a new file in the service folder, modeling it after the existing service files (e.g., `airport.go`). 
+Construct the service logic pertinent to the operations involving the new entity.
 
-Note: Couchbase Server version 7 or higher must be installed and running before running the Spring Boot Java app.
+* **Add Tests:**
+Add the tests for the new routes in a new file in the test folder similar to `airport_test.go`.
+
+Following these steps ensures a systematic and organized approach to expanding the API functionality with a new entity.
+
+
+=== Running Self Managed Couchbase Cluster
+
+
+If you are running this quickstart with a self-managed Couchbase cluster, you need to xref:server:manage:manage-settings/install-sample-buckets.adoc[load] the travel-sample data bucket in your cluster and generate the credentials for the bucket.
+
+* Follow xref:server:install:get-started.adoc[Couchbase Installation Options] for installing the latest Couchbase Database Server Instance.
+You need to update the connection string and the credentials in the `.env` file in the source folder.
+
+NOTE: Couchbase Server must be installed and running prior to running the app.
 
 === Swagger Documentation
 
 Swagger documentation provides a clear view of the API including endpoints, HTTP methods, request parameters, and response objects.
 
-Click on an individual endpoint to expand it and see detailed information. This includes the endpoint's description, possible response status codes, and the request parameters it accepts.
+Click on an individual endpoint to expand it and see detailed information. 
+This includes the endpoint's description, possible response status codes, and the request parameters it accepts.
 
 ==== Trying Out the API
 
 You can try out an API by clicking on the "Try it out" button next to the endpoints.
 
-- Parameters: If an endpoint requires parameters, Swagger UI provides input boxes for you to fill in. This could include path parameters, query strings, headers, or the body of a POST/PUT request.
+* **Parameters:** If an endpoint requires parameters, Swagger UI provides input boxes for you to fill in. 
+This could include path parameters, query strings, headers, or the body of a `POST`/`PUT` request.
 
-- Execution: Once you've inputted all the necessary parameters, you can click the "Execute" button to make a live API call. Swagger UI will send the request to the API and display the response directly in the documentation. This includes the response code, response headers, and response body.
+* **Execution:** Once you've inputted all the necessary parameters, you can click the "Execute" button to make a live API call. 
+Swagger UI will send the request to the API and display the response directly in the documentation. 
+This includes the response code, response headers, and response body.
 
 ==== Models
 
-Swagger documents the structure of request and response bodies using models. These models define the expected data structure using JSON schema and are extremely helpful in understanding what data to send and expect.
+Swagger documents the structure of request and response bodies using models.
+These models define the expected data structure using JSON schema and are extremely helpful in understanding what data to send and expect.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-////
-= Sample Application
-:description: Discover how to program interactions with Couchbase via the Data, Query, and Search services.
-:content-type: tutorial
-:page-topic-type: tutorial
-:page-aliases: ROOT:sample-application,ROOT:tutorial4,ROOT:sample-app-backend
-:page-pagination: full
-
-:travel-sample-git-project: try-cb-java
-
-include::project-docs:partial$attributes.adoc[]
-
-include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=abstract]
-
-include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=quick-start]
-
-include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=bring-your-own]
-
-include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=using]
-
-
-
-== Sample App Backend
-
-The backend code shows Couchbase Java SDK in action with Query and Search,
-but also how to plug together all of the elements and build an application with Couchbase Server and the Java SDK.
-Look at `TenantUser.java` to see some of the pieces necessary in most applications, such as the TenantUser `@Service`:
-
-[source,java]
-----
-@Service
-public class TenantUser {
-
-    private final TokenService jwtService;
-
-    @Autowired
-    public TenantUser(TokenService jwtService) {
-        this.jwtService = jwtService;
-    }
-
-    static final String USERS_COLLECTION_NAME = "users";
-    static final String BOOKINGS_COLLECTION_NAME = "bookings";
-----
-
-Creating a user shows the typical security concerns, with salted password hashes, as well as the mundane but essential business of using the KV interface to `insert` the username into the database:
-
-[source,java]
-----
-public Result<Map<String, Object>> createLogin(final Bucket bucket, final String tenant, final String username,
-        final String password, DurabilityLevel expiry) {
-    String passHash = BCrypt.hashpw(password, BCrypt.gensalt());
-    JsonObject doc = JsonObject.create()
-            .put("type", "user")
-            .put("name", username)
-            .put("password", passHash);
-    InsertOptions options = insertOptions();
-    if (expiry.ordinal() > 0) {
-        options.durability(expiry);
-    }
-
-    Scope scope = bucket.scope(tenant);
-    Collection collection = scope.collection(USERS_COLLECTION_NAME);
-    String queryType = String.format("KV insert - scoped to %s.users: document %s", scope.name(), username);
-    try {
-        collection.insert(username, doc, options);
-        Map<String, Object> data = JsonObject.create().put("token", jwtService.buildToken(username)).toMap();
-        return Result.of(data, queryType);
-    } catch (Exception e) {
-        e.printStackTrace();
-        throw new AuthenticationServiceException("There was an error creating account");
-    }
-}
-----
-
-Here, the _flights_ array, containing the flight IDs, is converted to actual objects:
-
-[source,java]
-----
-    List<Map<String, Object>> results = new ArrayList<Map<String, Object>>();
-    for (int i = 0; i < flights.size(); i++) {
-        String flightId = flights.getString(i);
-        GetResult res;
-        try {
-            res = bookingsCollection.get(flightId);
-        } catch (DocumentNotFoundException ex) {
-            throw new RuntimeException("Unable to retrieve flight id " + flightId);
-        }
-        Map<String, Object> flight = res.contentAsObject().toMap();
-        results.add(flight);
-    }
-
-    String queryType = String.format("KV get - scoped to %s.user: for %d bookings in document %s", scope.name(),
-            results.size(), username);
-    return Result.of(results, queryType);
-}
-----
-
-
-include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=data-model]
-
-include::{version-common}@sdk:shared:partial$sample-application.adoc[tag=rest-api]
-
-
-// TODO: we don't use the partial here, because of the location of swagger.json
-// in try-cb-dotnet/wwwroot/
-== REST API
-
-You can explore the REST API here in read-only mode, or once you are running the application, at the `/apidocs` endpoint.
-
-// swagger_ui::https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/try-cb-dotnet/wwwroot/swagger.json[]
-swagger_ui::https://raw.githubusercontent.com/couchbaselabs/try-cb-java/7.0/swagger.json[]
-////
