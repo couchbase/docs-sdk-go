@@ -82,15 +82,10 @@ USERNAME=<user_with_read_write_permission_to_travel-sample_bucket>
 PASSWORD=<password_for_user>
 ----
 
-Note: The connection string expects the couchbases:// or couchbase:// part.
 The connection string expects the `couchbases://` part.
 
 
 == Running The Application
-
-
-
-You can add environment variables `DB_CONN_STR`, `DB_USERNAME`, and `DB_PASSWORD` to your system environment variables or you can update the `application.properties` file in the `src/main/resources` folder.
 
 .Running from a Development Machine
 [TIP]
@@ -151,7 +146,7 @@ You will find the interactive Swagger documentation of the API if you go to the 
 Swagger documentation is used in this demo to showcase the different API endpoints and how they can be invoked.
 More details on the Swagger documentation can be found in the <<#swagger-documentation>>.
 
-image::swagger-documentation.png[Swagger Documentation]
+image::swagger_documentation.png[Swagger Documentation]
 
 
 
@@ -617,7 +612,7 @@ After the tests, the documents are cleaned up by calling the `DELETE` endpoint.
 
 .Run standard tests for the project.
 [source,console]
-====
+----
 cd test
 go test -v
 ----
