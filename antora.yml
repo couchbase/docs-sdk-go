@@ -14,6 +14,7 @@ asciidoc:
     version-server: '8.0'
     version-common: '8.0.1'
     name_platform: 'Go'
+    name_platform_lc: 'go'
     name-sdk: 'Go SDK'
     sdk_api: '3.9'
     sdk-api-link: https://pkg.go.dev/github.com/couchbase/gocb/v2
