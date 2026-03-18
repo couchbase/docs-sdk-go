@@ -1,16 +1,3 @@
-= Full Installation
-:description: Installation instructions for the Couchbase Go Client.
-:page-partial:
-
-[abstract]
-{description}
-
-
-
-
-
-
-
 = Couchbase Go SDK Installation
 :description: Installation instructions for the Couchbase Go Client.
 :navtitle: Full Installation
