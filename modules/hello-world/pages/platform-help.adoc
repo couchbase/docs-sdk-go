@@ -24,7 +24,7 @@ If this is not you, head back to the xref:overview.adoc[rest of the Couchbase Go
 * Be aware that the Go SDK supports https://github.com/golang/go/wiki/Modules[Go Modules]. 
 You can use `go get` to download the SDK:
 +
-IMPORTANT: `go get` only works if you have initialised a https://go.dev/blog/using-go-modules[Go module], and have a `go.mod` file in your working directory.
+TIP: `go get` only works if you have initialised a https://go.dev/blog/using-go-modules[Go module], and have a `go.mod` file in your working directory.
 +
 .Install the latest version of the Couchbase {sdk_dot_minor} Go SDK
 [source,console,subs="+attributes"]
