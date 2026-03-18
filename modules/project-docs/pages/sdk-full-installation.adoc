@@ -7,12 +7,28 @@
 
 
 
-The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, 
-and adding support for future Couchbase Server features like xref:concept-docs:collections.adoc[Collections and Scopes]
-(available from Couchbase Server 7.0 onwards).
-The Go 2.x SDK also introduces improved error handling providing extra error information.
 
-If you're upgrading your application from Couchbase Go SDK 1.x, please read the xref:project-docs:migrating-sdk-code-to-3.n.adoc[Migration Guide].
+
+
+
+= Couchbase Go SDK Installation
+:description: Installation instructions for the Couchbase Go Client.
+:navtitle: Full Installation
+:page-partial:
+:page-toclevels: 2
+
+[abstract]
+{description}
+
+
+This page gives full installation instructions for the {name-sdk}.
+In most cases, the xref:hello-world:start-using-sdk.adoc[Quickstart Guide] should be enough to get you up and running if you're in a hurry.
+
+
+== Prerequisites
+
+ In line with the https://golang.org/doc/devel/release.html#policy[Golang project], Couchbase supports both the current, and the previous, versions of Go.
+Earlier versions may work, but are not supported.
 
 
 == Installing the SDK
@@ -22,13 +38,14 @@ You can use `go get` to download the SDK:
 
 IMPORTANT: `go get` only works if you have initialised a https://go.dev/blog/using-go-modules[Go module], and have a `go.mod` file in your working directory.
 
-[source,console]
+.Install the latest version of the Couchbase {sdk_dot_minor} Go SDK
+[source,console,subs="+attributes"]
 ----
-$ go get github.com/couchbase/gocb/v2@v2.7.0
+$ go get github.com/couchbase/gocb/v2@v{sdk_current_version}
 ----
 
-NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], Couchbase supports both the current, and the previous, versions of Go.
-Earlier versions may work, but are not supported.
+
+== Further Information
 
 Information about new features, fixes, and known issues -- as well as information about how to install earlier release versions -- is in the xref:sdk-release-notes.adoc[release notes].
 
