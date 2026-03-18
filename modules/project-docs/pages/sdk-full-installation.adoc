@@ -14,7 +14,7 @@ In most cases, the xref:hello-world:start-using-sdk.adoc[Quickstart Guide] shoul
 
 == Prerequisites
 
- In line with the https://golang.org/doc/devel/release.html#policy[Golang project], Couchbase supports both the current, and the previous, versions of Go.
+In line with the https://golang.org/doc/devel/release.html#policy[Golang project], Couchbase supports both the current, and the previous, versions of Go.
 Earlier versions may work, but are not supported.
 
 
