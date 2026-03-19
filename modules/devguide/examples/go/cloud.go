@@ -55,9 +55,6 @@ func main() {
 	// end::bucket[]
 
 	// tag::collection[]
-	// Get a reference to the default collection, required for older Couchbase server versions
-	// col := bucket.DefaultCollection()
-
 	col := bucket.Scope("tenant_agent_00").Collection("users")
 	// end::collection[]
 

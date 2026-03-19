@@ -2,63 +2,95 @@
 :description: A quick start guide to get you up and running with Couchbase and the Go SDK.
 :page-aliases: ROOT:getting-started,ROOT:start-using,ROOT:hello-couchbase,ROOT:start-using-sdk
 :page-toclevels: 2
-:page-pagination: next
+:forum-link: https://www.couchbase.com/forums/c/go-sdk/23
+:page-partial:
+
+// Note to editors
+// 
+// This page pulls in content from
+// https://github.com/couchbase/docs-sdk-common/blob/release/8.0.1/modules/shared/partials/start-using-sdk.adoc
+//
+// and code samples from
+// https://github.com/couchbase/docs-sdk-go/tree/release/2.12/modules/devguide/examples/go
+// 
+// It can be seen built at
+// https://docs.couchbase.com/go-sdk/2.12/hello-world/start-using-sdk.html
+
+
 
 [abstract]
 {description}
 
-In this guide, you will learn:
+Couchbase has a simple interface for creating and modifying records in a document, 
+based upon the *collection* into which the documents are organized.
+You can read more about data modeling <<data-modeling,below>>, 
+but first let's look at those data operations, and installing the {name-sdk}.
 
-* How to xref:connect[connect to Couchbase Capella or Couchbase Server].
+// remember to add a nomenclature note to the next version of this page for LCB.
 
-* How to xref:add-and-retrieve-documents[add and retrieve Documents].
+[source,golang]
+----
+include::devguide:example$go/kv-durability-enhanced.go[indent=0,tag=durability]
+----
 
-* How to xref:sql-lookup[lookup documents] with the {sqlpp_url}[{sqlpp} (formerly N1QL)] query language.
+`upsert` inserts (creates) the document if it does not exist, or replaces it if it does.
+We'll explore creating and retrieving data records in more detail <<create-read-update-delete,below>>,
+after walking through a quick installation.
 
-== Hello Couchbase
 
-We will go through the code sample step by step, but for those in a hurry to see it, here it is:
+== Before You Start
 
-[{tabs}] 
+Couchbase Capella, our Database-as-a-Service, lets you get on with what matters, while we take care of the administration for you.
+Alternately, if you need to control every aspect of deployment -- 
+or just want to run the Server in a VM on your laptop -- 
+there are several self-managed options available:
+
+[tabs]
 ==== 
-Couchbase Capella Sample::
+Couchbase Capella::
 +
 --
-To connect to xref:cloud::index.adoc[Couchbase Capella], be sure to get the correct endpoint as well as user, password and bucket name.
-
-[source,go]
-----
-include::devguide:example$go/cloud.go[tags=**]
-----
+If you haven't already got a cluster set up, the easiest route is to https://cloud.couchbase.com/sign-up[sign up to Couchbase Capella and deploy a free tier cluster^], 
+then come back to this page.
+Make a note of the xref:cloud:get-started:connect.adoc[endpoint] to connect to, 
+and remember the credentials for the user that you set up.
 --
 
-Local Couchbase Server::
-+ 
--- 
-[source,go]
-----
-include::devguide:example$go/startusing.go[tags=**]
-----
+Self-Managed Couchbase Server::
++
+--
+Install Couchbase Server locally, or in your private Cloud:
 
-As well as the Go SDK (see below), and a running instance of Couchbase Server, you will need to load up the Travel Sample Bucket
-using either the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
-or the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
+* xref:{version-server}@server:install:get-started.adoc[Deployment overview]
+* xref:{version-server}@server:install:getting-started-docker.adoc[Docker Install]
+* xref:operator::overview.adoc[Couchbase Autonomous Operator]
+** xref:operator::install-kubernetes.adoc[Kubernetes]
+** xref:operator::install-openshift.adoc[Openshift]
+* xref:{version-server}server:cloud:couchbase-cloud-deployment.adoc[Cloud Marketplace]:
+** xref:{version-server}@server:cloud:couchbase-aws-marketplace.adoc[AWS Marketplace]
+** xref:{version-server}@server:cloud:couchbase-azure-marketplace.adoc[Azure Marketplace]
+** xref:{version-server}@server:cloud:couchbase-gcp-cloud-launcher.adoc[GCP Marketplace]
+
+For the example code below to run, you'll need the username and password of the Administrator user that you create, and the IP address of at least one of the nodes of the cluster.
 --
 ====
 
-The Couchbase Capella free tier version comes with the Travel Sample Bucket, and its Query indexes, loaded and ready.
 
-== Prerequisites
+// Script the docs!
+// Can any of the SDK installations be scripted?
 
-The following code samples assume:
+=== Prerequisites
+
+In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
+At time of writing (February 2026), this is 1.25 and 1.26.
+
+The code examples also assume:
 
 [tabs]
 ====
 Couchbase Capella::
 +
 --
-* You have initalised a https://go.dev/blog/using-go-modules[Go module], and have a `go.mod` file in your working directory.
-
 * You have signed up to https://cloud.couchbase.com/sign-up[Couchbase Capella].
 
 * You have created your own bucket, or loaded the Travel Sample dataset.
@@ -69,14 +101,12 @@ See the xref:cloud:get-started:cluster-and-data.adoc#credentials[Capella connect
 
 IMPORTANT: Couchbase Capella uses xref:cloud:organizations:organization-projects-overview.adoc[Roles] to control user access to cluster resources.
 For the purposes of this guide, you can use the *Organization Owner* role automatically assigned to your account during installation of the Capella cluster.
-In a production scenario, we strongly recommend setting up users with more granular access roles as a best practice.
+In production, Couchbase strongly recommends setting up users with more granular access roles as a best practice for data security.
 --
 
-Couchbase Server::
+Self-Managed Couchbase Server::
 +
 --
-* You have initalised a https://go.dev/blog/using-go-modules[Go module], and have a `go.mod` file in your working directory.
-
 * xref:{version-server}@server:getting-started/do-a-quick-install.adoc[Couchbase Server] is installed and accessible locally.
 
 * You have created your own bucket, or loaded the Travel Sample dataset using the xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface].
@@ -84,15 +114,16 @@ Couchbase Server::
 * A user is created with permissions to access your cluster (at least Application Access permissions).
 See xref:{version-server}@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users, Groups and Roles] for more details.
 
-IMPORTANT: Couchbase Server uses xref:{version-server}@server:learn:security/roles.adoc[Role Based Access Control (RBAC)] to control access to resources.
+IMPORTANT: Couchbase Server uses xref:{version-server}@server:learn:security/roles.adoc[Role-Based Access Control (RBAC)] to control access to cluster resources.
 In this guide we suggest using the *Full Admin* role created during setup of your local Couchbase Server cluster.
-For production client code, you will want to use more appropriate, restrictive settings.
+In production, Couchbase strongly recommends setting up users with more granular access roles as a best practice for data security.
 --
 ====
 
-== Quick Installation
 
-Version 2 of the Go SDK has added support for https://github.com/golang/go/wiki/Modules[Go Modules]. 
+== Installation
+
+// tag::quick-install[]
 You can use `go get` to download the SDK:
 
 [source,console]
@@ -101,90 +132,99 @@ $ go get github.com/couchbase/gocb/v2
 ----
 
 More details on installation can be found xref:project-docs:sdk-full-installation.adoc[here].
+// end::quick-install[]
 
-NOTE: In line with the https://golang.org/doc/devel/release.html#policy[Golang project], we support both the current, and the previous, versions of Go.
 
-== Step by Step
+=== IDE Plugins
 
-Create an empty file named `main.go` and walk through adding code step-by-step.
+To make development easier, Couchbase plugins are available for VSCode and the IntelliJ family of IDEs and editors.
+For links and more information on these and other integrations across the {name_platform} ecosystem, 
+check out the xref:project-docs:third-party-integrations.adoc[] page.
 
-Here are all the imports needed to run the sample code:
 
-[source,golang]
-----
-include::devguide:example$go/cloud.go[tags=imports,indent=0]
-----
+=== Grab the Code
 
-Now, create an empty `main()` function.
+If you're all set up and in a real hurry, just grab this code sample and add in your Capella details.
 
-[source,golang,indent=0]
-----
-func main() {
-	// add code here...
-}
-----
-
-In your `main()` function, add the following variables and update them accordingly:
-
-[{tabs}]
+.Complete Hello World code sample [*Click to open or collapse the listing*]
+[%collapsible]
 ====
+....
+include::devguide:example$go/cloud.go[tags=**]
+....
+====
+
+Otherwise, read on as we introduce the CRUD API and connection to Capella or self-managed Couchbase Server.
+
+TIP: There's a *View* link to the complete sample code on GitHub above each of the snippets on these SDK pages, and a *Copy* icon to grab just the snippet shown.
+
+
+== Connect to your Database
+
+Connect to your Couchbase Capella operational cluster (or your local Couchbase Cluster, if you are trying out self-managed Couchbase).
+
+
+[tabs,sync-group-id="Couchbase Capella|Self-Managed Couchbase Server"]
+==== 
 Couchbase Capella::
 +
 --
-[source,golang]
-----
-include::devguide:example$go/cloud.go[tag=connect-info,indent=0]
-----
---
-
-Local Couchbase Server::
-+
---
-
-[source,golang]
-----
-include::devguide:example$go/startusing.go[tag=connect-info,indent=0]
-----
---
-====
-
-=== Connect
-
-Connect to your cluster by calling the `Cluster.Connect()` function and pass it your connection details.
-The basic connection details that you’ll need are given below -- for more background information, see xref:howtos:managing-connections.adoc[].
-
-[tabs]
-====
-Couchbase Capella::
-+
---
-Couchbase Capella requires mandatory use of TLS (Transport Layer Security).
-As of Go SDK version 2.5.0, the standard certificate required to connect to a Capella cluster is automatically included with no additional configuration.
-
 [source,golang]
 ----
 include::devguide:example$go/cloud.go[tag=connect,indent=0]
 ----
 
-When accessing Capella from a different Wide Area Network or Availability Zone, you may experience latency issues with the default connection settings.
-SDK 2.6 introduces a `wan-development` Configuration Profile, which provides pre-configured timeout settings suitable for working in high latency environments.
-Basic usage is shown in the example above, but if you want to learn more see xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments].
-
-CAUTION: The Configuration Profiles feature is currently a xref:go-sdk:project-docs:compatibility.adoc#interface-stability[Volatile API] and may be subject to change.
-
+Note, the client certificate for connecting to a Capella cluster is included in the SDK installation.
 --
-Local Couchbase Server::
-+
---
+
+Self-Managed Couchbase Server::
++ 
+-- 
 [source,golang]
 ----
 include::devguide:example$go/startusing.go[tag=connect,indent=0]
 ----
 
 For developing locally on the same machine as Couchbase Server, your URI can be `couchbase://localhost` as shown here. 
-For production deployments, you will want to use a secure server, with `couchbases://`.
+For production deployments, you will want to use a TLS, enabled with `couchbases://`.
+--
+
+Cloud Native Gateway (CNG)::
++
+--
+Couchbase's large number of ports across the URLs of many services can be proxied by using a `couchbase2://` endpoint as the connection string --
+currently only compatible with recent versions of xref:operator:ROOT:concept-cloud-native-gateway.adoc[Couchbase Autonomous Operator]:
+
+[source,golang]
+----
+	cluster, err := gocb.Connect("couchbase2://"+connectionString, gocb.ClusterOptions{
+		Authenticator: gocb.PasswordAuthenticator{
+			Username: username,
+			Password: password,
+		},
+----
+
+Read more on the xref:howtos:managing-connections.adoc#cloud-native-gateway[Connections] page.
+
 --
 ====
+
+
+For a deeper look at connection options, read xref:howtos:managing-connections.adoc[].
+
+TIP: The connection code for getting started uses the Administrator password that you were given during set up.
+In any production app you should create a role restricted to the permissions needed for your app -- 
+more on this in xref:concept-docs:best-practices.adoc#roles-and-rbac[the Security documentation].
+
+When accessing Capella from a different Wide Area Network or Availability Zone, you may experience latency issues with the default connection settings.
+The `wan-development` Configuration Profile, provides pre-configured timeout settings suitable for working in high latency environments.
+See xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments].
+
+CAUTION: The Configuration Profiles feature is currently a xref:go-sdk:project-docs:compatibility.adoc#interface-stability[Volatile API] and may be subject to change.
+
+
+
+=== Opening a Bucket
 
 Following successful authentication, add this code snippet to access your `Bucket`:
 
@@ -193,18 +233,16 @@ Following successful authentication, add this code snippet to access your `Bucke
 include::devguide:example$go/cloud.go[tag=bucket,indent=0]
 ----
 
-////
-[TIP]
-.Connecting to Cloud Native Gateway, for Kubernetes or OpenShift
-====
-Couchbase's large number of ports across the URLs of many services can be proxied by using a `couchbase2://` endpoint as the connection string -- read more on the xref:howtos:managing-connections.adoc#cloud-native-gateway[Connections] page.
-====
-////
 
-=== Add and Retrieve Documents
+`WaitUntilReady` is an optional call,
+but it is good practice to use it.
+Opening resources such as buckets is asynchronous --
+that is, the `cluster.Bucket` call returns immediately and proceeds in the background.
+`WaitUntilReady` ensures that the bucket resource is fully loaded before proceeding.
+If not present, then the first key-value (KV) operation on the bucket will wait for it to be ready.
 
-The Go SDK supports full integration with the xref:concept-docs:collections.adoc[Collections] feature introduced in Couchbase Server 7.0.
-_Collections_ allow documents to be grouped by purpose or theme, according to a specified _Scope_.
+*Collections* allow documents to be grouped by purpose or theme, according to a specified *scope* -- see data modeling, <<data-modeling,below>>.
+Here we will use the `airport` collection within the `inventory` scope from `travel-sample` bucket as an example.
 
 Here we refer to the `users` collection within the `tenant_agent_00` scope from the Travel Sample bucket as an example, but you may replace this with your own data.
 
@@ -213,16 +251,19 @@ Here we refer to the `users` collection within the `tenant_agent_00` scope from 
 include::devguide:example$go/cloud.go[tag=collection,indent=0]
 ----
 
-[IMPORTANT]
-====
-.For Local Couchbase Server only
-The `DefaultCollection` must be used when connecting to a 6.6 cluster or earlier -- see comment in the code snippet above.
-====
 
-The code shows how you would use a named collection and scope. 
-A named or default collection will provide the same functionality as bucket-level operations did in previous versions of Couchbase Server.
 
-xref:howtos:kv-operations.adoc[Data operations], such as storing and retrieving documents, can be done using `Collection.Upsert()` and `Collection.Get()`.
+== Create, Read, Update, Delete
+
+Couchbase documents are organized into buckets, scopes, and collections.
+https://en.wikipedia.org/wiki/CRUD[CRUD operations^] -- Create, Read, Update, Delete -- can be performed upon documents in a collection.
+
+
+=== Insert (Create) and Upsert
+
+`insert` and `upsert` will both create a new document.
+The difference between the two is that if a document with that key already exists, the `insert` operation will fail, throwing `ErrDocumentExists` --
+while the `upsert` operation will succeed, replacing the content.
 
 Add the following code to create a new document:
 
@@ -231,27 +272,55 @@ Add the following code to create a new document:
 include::devguide:example$go/cloud.go[tag=upsert,indent=0]
 ----
 
-Now, let's retrieve it using a key-value (data) operation.
+
+=== Get (Read)
+
+The `get` method reads a document from a collection.
+If the collection does not have a document with this ID, the `get` method also throws `ErrDocumentNotFound`.
 
 [source,golang]
 ----
 include::devguide:example$go/cloud.go[tag=get,indent=0]
 ----
 
-=== {sqlpp} Lookup
 
-Couchbase {sqlpp} queries are performed by invoking `Cluster.Query()` or `Scope.Query`.
+=== Replace (Update) and Optimistic Locking
 
-Cluster level queries require you to specify the fully qualified keyspace each time (e.g. `travel-sample.inventory.airline`).
-However, with a Scope level query you only need to specify the Collection name -- which in this case is `airline`:
+When you replace a document, it's usually good practice to use xref:howtos:kv-operations.adoc#optimistic-locking[optimistic locking].
+Otherwise, changes might get lost if two people change the same document at the same time.
 
-[source,golang]
+Setting a Compare and Swap (CAS) value is a form of optimistic locking -- dealt with in depth in the xref:concurrent-document-mutations.adoc[CAS page].
+Here we just note that the CAS is a value representing the current state of an item; each time the item is modified, its CAS changes.
+The CAS value is returned as part of a document’s metadata whenever a document is accessed.
+Without explicitly setting it, a newly-created document would have a CAS value of ``0``.
+
+[source,go,indent=0]
 ----
-include::devguide:example$go/cloud.go[tag=query,indent=0]
+include::devguide:example$go/kv-crud.go[tag=replacecas]
 ----
 
-You can learn more about {sqlpp} queries on the xref:howtos:n1ql-queries-with-sdk.adoc[] page.
+Typically we would want to use CAS for something more meaningful like performing a `Get`, modifying the result and updating the document.
+By using the CAS value we know that if anyone else modified this document and updated it before our update then ours will error.
 
+[source,go,indent=0]
+----
+include::devguide:example$go/kv-crud.go[tag=update]
+----
+
+
+=== Remove (Delete)
+
+The remove method deletes a document from a collection:
+
+
+When removing a document, you will have the same concern for durability as with any additive modification to the Bucket:
+
+[source,go,indent=0]
+----
+include::devguide:example$go/kv-crud.go[tag=remove]
+----
+
+////
 === Execute!
 
 Now we can run our code using the following command:
@@ -268,35 +337,52 @@ The results you should expect are as follows:
 User: {Jade jade@test-email.com [Swimming Rowing]}
 map[airline:map[callsign:MILE-AIR country:United States iata:Q5 icao:MLA id:10 name:40-Mile Air type:airline]]
 ----
+////
 
-== Next Steps
+== Data Modeling
 
-Now you're up and running, try one of the following:
+Documents are organized into collections -- collections of documents that belong together.
+You get to decide what it means to "belong." 
+Developers usually put documents of the same type in the same collection.
 
-// Should search and analytics be removed?
+For example, imagine you have two types of documents: customers and invoices. 
+You could put the customer documents in a collection called `customers`, and the invoice documents in a collection called `invoices`.
 
-* Our xref:hello-world:sample-application.adoc[Travel Sample Application] demonstrates all the basics you need to know;
-* Explore xref:howtos:kv-operations.adoc[Key Value Operations] (CRUD) against a document database;
-* Or xref:howtos:n1ql-queries-with-sdk.adoc[Query] with our SQL-based {sqlpp} query language;
-// * Try longer-running queries with our xref:howtos:analytics-using-sdk.adoc[Analytics Service];
-// * A xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search];
-* Or read up on xref:concept-docs:data-services.adoc[which service fits your use case].
+Each document belongs to exactly one collection. 
+A document's ID is unique _within_ the collection.
+
+Different scopes can hold collections with different names. 
+There is no relationship between collections in different scopes.
+Each collection belongs to just one scope and
+a collection's name is unique within the scope.
+
+
+More details can be found on the xref:concept-docs:data-model.adoc[Data Model page].
+// The xref:student-record-developer-tutorial.adoc[Student Records Tutorial] gives an introduction to data modeling in a document database alongside using the {name-sdk}.
+
+
+
+== What Next?
+
+=== Help and Troubleshooting
+
+* xref:howtos:troubleshooting-cloud-connections.adoc[Troubleshooting common network problems].
+* {forum-link}[Help forum].
+* https://discord.com/channels/915294689681362954/1217642561645318194[Discord channel].
+* Read the xref:howtos:error-handling.adoc[error handling page].
+* xref:cloud:get-started:capella-iq/get-started-with-iq.adoc#generate-sdk-code-preview[Get help from Couchbase iQ].
+
+=== Next Steps
+
+* Take a look at the xref:hello-world:sample-application.adoc[].
+* xref:concept-docs:data-durability-acid-transactions.adoc[Learn more about the Data Service].
+* xref:concept-docs:querying-your-data.adoc[Discover {sqlpp}] -- our SQL-family querying language.
+// * Explore some of the xref:project-docs:third-party-integrations.adoc[third party integrations] with Couchbase and the {name_platform} SDK, across the {name_platform} ecosystem.
 
 === Additional Resources
 
-The API reference is generated for each release and can be found https://pkg.go.dev/github.com/couchbase/gocb/v2[here].
+* The API reference is generated for each release and can be found https://pkg.go.dev/github.com/couchbase/gocb/v2[here].
 Older API references are linked from their respective sections in the xref:project-docs:sdk-release-notes.adoc[Release Notes].
 
-xref:project-docs:migrating-sdk-code-to-3.n.adoc[The Migrating from SDK2 API (Go 1.x) to API 3 page (Go 2.x SDK)] highlights the main differences to be aware of when migrating your code.
-
-Couchbase welcomes community contributions to the Go SDK.
+* Couchbase welcomes community contributions to the Go SDK.
 The Go SDK source code is available on https://github.com/couchbase/gocb[GitHub].
-
-=== Troubleshooting
-
-* Couchbase Server is designed to work in the same WAN or availability zone as the client application.
-If you're running the SDK on your laptop against a Capella cluster, see further information on:
-** Notes on xref:ref:client-settings.adoc#constrained-network-environments[Constrained Network Environments].
-** xref:project-docs:compatibility.adoc#network-requirements[Network Requirements].
-** If you have a consumer-grade router which has problems with DNS-SRV records review our xref:howtos:troubleshooting-cloud-connections.adoc#troubleshooting-host-not-found[Troubleshooting Guide].
-* Our https://forums.couchbase.com/c/go-sdk/23[community forum] is a great source of help.
