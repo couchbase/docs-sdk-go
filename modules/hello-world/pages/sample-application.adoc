@@ -1,4 +1,4 @@
-= Quickstart in Couchbase with Golang and the Gin Web Framework
+= Quickstart with Golang and the Gin Web Framework
 :page-toclevels: 2
 :description: Quickstart app to build a REST API using Couchbase Capella in Go using the Web Framework.
 :page-aliases: ROOT:sample-application.adoc,ROOT:tutorial4.adoc,ROOT:sample-app-backend.adoc
