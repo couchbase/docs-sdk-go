@@ -37,7 +37,7 @@ To run this tutorial using a self-managed Couchbase cluster, please refer to the
 
 * A https://golang.org/doc/devel/release.html#policy[supported version of Golang].
 
-* The Travel Sample Bucket -- pre-loaded in Capella Free Tier, or see xref:cloud:clusters:data-service/import-data-documents.adoc#import-sample-data[].
+* The Travel Sample Bucket -- pre-loaded in Capella Free Tier, or see xref:cloud:clusters:data-service/import-data-documents.adoc#import-sample-data[Importing Data with the Capella UI].
 
 
 == App Setup
