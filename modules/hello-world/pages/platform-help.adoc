@@ -7,7 +7,7 @@
 {description}
 
 
-A simple Go orientation intro for _non-_Go folk who are evaluating the Couchbase Go SDK.
+A simple Go orientation intro for __non-__Go folk who are evaluating the Couchbase Go SDK.
 
 [IMPORTANT]
 .Is This Page for You?
@@ -18,6 +18,16 @@ If this is not you, head back to the xref:overview.adoc[rest of the Couchbase Go
 ====
 
 
-== Installing 
 
-GoMod
+* The https://go.dev/doc/tutorial/getting-started[Go Getting Started Guide] is an excellent introduction to installing and using the Go platform.
+
+* Be aware that the Go SDK supports https://github.com/golang/go/wiki/Modules[Go Modules]. 
+You can use `go get` to download the SDK:
++
+TIP: `go get` only works if you have initialised a https://go.dev/blog/using-go-modules[Go module], and have a `go.mod` file in your working directory.
++
+.Install the latest version of the Couchbase {sdk_dot_minor} Go SDK
+[source,console,subs="+attributes"]
+----
+$ go get github.com/couchbase/gocb/v2@v{sdk_current_version}
+----
