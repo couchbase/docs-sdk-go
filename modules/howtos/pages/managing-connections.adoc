@@ -224,7 +224,7 @@ E.....@.@.............+....Z.'yZ..#........
 
 The SDK includes the certificate for Capella.
 If you are working with a self-managed Couchbase cluster,
-see xref:sdk-authentication.adoc#certificate-authentication{Certificate Authentication].
+see xref:sdk-authentication.adoc#certificate-authentication[Certificate Authentication].
 
 
 == Alternate Addresses and Custom Ports
