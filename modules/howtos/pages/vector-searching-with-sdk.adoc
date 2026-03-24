@@ -88,7 +88,7 @@ include::devguide:example$go/search.go[tag=single_vector_query]
 ----
 
 Let's break this down.
-We create a `SearchRequest`, which can contain a traditional FTS query `SearchQuery` and/or the new `VectorSearch`.
+We create a `SearchRequest`, which can contain a traditional Search query `SearchQuery` and/or the new `VectorSearch`.
 Here we are just using the latter.
 
 The `VectorSearch` allows us to perform one or more `VectorQuery` s.
@@ -97,7 +97,7 @@ The `VectorQuery` itself takes the name of the document field that contains embe
 
 (Note that Couchbase itself is not involved in generating the vectors, and these will come from an external source such as an embeddings API.)
 
-Finally we execute the `SearchRequest` against the FTS index "travel-sample-index", which has previously been setup to vector index the "vector_field" field.
+Finally we execute the `SearchRequest` against the Search index "travel-sample-index", which has previously been setup to vector index the "vector_field" field.
 
 This happens to be a scoped index so we are using `scope.Search()`.
 If it was a global index we would use `cluster.Search()` instead - see <<Scoped vs Global Indexes>>.
@@ -164,8 +164,8 @@ include::devguide:example$go/search.go[tag=multiple_vector_queries]
 
 How the results are combined (ANDed or ORed) can be controlled with `vector.SearchOptions.VectorQueryCombination`.
 
-==== Combining FTS and vector queries
-You can combine a traditional FTS query with vector queries:
+==== Combining Search Service and Vector Queries
+You can combine a traditional Search query with vector queries:
 
 [source,go,indent=0]
 ----
