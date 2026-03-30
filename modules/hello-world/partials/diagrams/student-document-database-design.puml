@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+
+
+    database "student-bucket" {
+
+        node "art-school-scope" {
+
+                folder "student-record-collection" {
+
+                    file  "Hilary's record" as hilary {
+                        file "enrollment details" as hilary_enrollment
+                    }
+
+                    file "Ashley's record" as ashley {
+                        file "enrollment details" as ashley_enrollment
+
+                    }
+
+                }
+
+                folder "course-record-collection" {
+
+                    file "ART-HISTORY-000001" as art_history
+                    file "GRAPHIC-DESIGN-000003" as graphic_design
+                    file "FINE_ART-000002" as fine_art
+                }
+
+                hilary_enrollment --> art_history
+                hilary_enrollment --> graphic_design
+                ashley_enrollment -->fine_art
+        }
+
+    }
+
+@enduml
