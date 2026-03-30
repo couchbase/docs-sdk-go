@@ -1,0 +1,126 @@
+= Request Tracing
+:description: Collecting information about an individual request and its response is an essential feature of every observability stack.
+:page-topic-type: howto
+
+[abstract]
+{description}
+
+To give insight into a request/response flow, the SDK provides a `RequestTracer` interface and ships with both a default implementation as well as a module that can be plugged in to feed the traces to external systems (including OpenTelemetry).
+
+
+== The Default ThresholdLoggingTracer
+
+By default, the SDK will emit information about requests that are over a configurable threshold every 10 seconds.
+Note that if no requests are over the threshold no event / log will be emitted.
+
+It is possible to customize this behavior by modifying the configuration:
+
+[source,go]
+----
+include::devguide:example$go/observability-tracing.go[tag=threshold-logging]
+----
+
+In this case the emit interval is one minute and Key/Value requests will only be considered if their latency is greater or equal to two seconds.
+
+The JSON blob emitted looks similar to the following (prettified here for readability):
+
+[source,json]
+----
+[
+   {
+      "top":[
+         {
+            "operation_name":"Get",
+            "server_us":2,
+            "last_local_id":"E64FED2600000001/00000000EA6B514E",
+            "last_local_address":"127.0.0.1:51807",
+            "last_remote_address":"127.0.0.1:11210",
+            "last_dispatch_us":2748,
+            "last_operation_id":"0x9",
+            "total_us":324653
+         }
+      ],
+      "service":"kv",
+      "count":1
+   }
+]
+----
+
+For each service (e.g. Key/Value or Query) an entry exists in the outer JSON array.
+The top N (10 by default) slowest operations are collected and displayed, sorted by the total duration.
+This promotes quick visibility of the "worst offenders" and more efficient troubleshooting.
+
+Please note that we do not provide any stability guarantees on the logging output format and it might change between minor versions.
+
+The `ThresholdLoggingTracer` can be configured using `ThresholdLoggingOptions`.
+The following table shows the currently available properties:
+
+.ThresholdLoggingOptions Properties
+[options="header"]
+|====
+| Property       | Default | Description
+| `Interval` | 10 seconds | The interval where found slow operations are emitted.
+| `SampleSize`   | 10 | The number of samples to store per service.
+| `KVThreshold`  | 500 milliseconds | The threshold for the KV service.
+| `ViewsThreshold`  | 1 second | The threshold for the views service.
+| `QueryThreshold`  | 1 second | The threshold for the query service.
+| `SearchThreshold`  | 1 second | The threshold for the search service.
+| `AnalyticsThreshold`  | 1 second | The threshold for the analytics service.
+| `ManagementThreshold`  | 1 second | The threshold for the management service.
+|====
+
+
+== OpenTelemetry Integration
+
+The built-in tracer is great if you do not have a centralized monitoring system, but if you already plug into the OpenTelemetry ecosystem we want to make sure to provide first-class support.
+
+
+=== Exporting to OpenTelemetry
+
+This method exports tracing telemetry in OpenTelemetry's standard format (OTLP), which can be sent to any OTLP-compatible receiver such as Jaeger, Zipkin or `opentelemetry-collector`.
+
+First, add the Couchbase OpenTelemetry module and the OTLP trace exporter as dependencies:
+
+[source,console]
+----
+go get github.com/couchbase/gocb-opentelemetry
+go get go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc
+go get go.opentelemetry.io/otel/sdk/trace
+----
+
+Then configure the tracer:
+
+[source,go]
+----
+include::devguide:example$go/observability-tracing.go[tag=otel-tracing]
+----
+
+At this point the SDK will automatically be exporting spans, and you should see them in your receiver of choice.
+
+
+=== OpenTelemetry Troubleshooting
+
+* There are many ways to export spans.
+The example is exporting OpenTelemetry Protocol (OTLP) spans over GRPC to port 4317, which is the _de facto_ standard for OpenTelemetry.
+Make sure that your receiver is compatible with this, e.g. has these ports open and is ready to receive OTLP traffic over GRPC.
+With https://www.jaegertracing.io/docs/1.41/getting-started/[Jaeger in Docker] this is achieved with the options `-e COLLECTOR_OTLP_ENABLED=true` and `-p 4317:4317`.
+
+* The exporter used in this example is `BatchSpanProcessor` (via `sdktrace.WithBatcher`), which may not have a chance to export spans if the application exits very quickly (e.g. a test application).
+`sdktrace.WithSyncer` can be used instead for synchronous export, though it is not likely suitable for production.
+
+* The example above uses `sdktrace.AlwaysSample()`, which exports every span.
+This may need to be reduced to avoid overwhelming the receiver, with e.g. `sdktrace.TraceIDRatioBased(0.01)` to sample 1% of all traces.
+
+* It can be worth sending traces into https://opentelemetry.io/docs/collector/[OpenTelemetry Collector], and forwarding them on from there to your receiver of choice.
+Among other capabilities the collector can log traces it receives, making for easier debugging.
+
+
+=== Parent Spans
+
+If you want to set a parent for an SDK request, you can do it in the respective `*Options` struct.
+Wrap an existing OpenTelemetry span with `gocbopentelemetry.NewOpenTelemetryRequestSpan` and pass it as the `ParentSpan`:
+
+[source,go]
+----
+include::devguide:example$go/observability-tracing.go[tag=parent-span]
+----
