@@ -6,28 +6,18 @@
 {description}
 
 
-Couchbase is a schema-less JSON document database designed for high performance, scalability, and fast development. 
+Couchbase is a schema-less JSON document database designed for high performance, scalability, and fast development.
 This tutorial teaches you about the key concepts behind Couchbase and how they differ from traditional SQL database systems like MySQL and Oracle.
 
 IMPORTANT: This tutorial is designed for use with Capella Operational cloud services.
-If you wish to use a standalone or Docker installation of Couchbase, see the xref:server:tutorials:couchbase-tutorial-student-records.adoc[Server Developer Tutorial]. 
+If you wish to use a standalone or Docker installation of Couchbase, see the xref:server:tutorials:couchbase-tutorial-student-records.adoc[Server Developer Tutorial].
 
 
 == Prerequisites
 
-* Before starting this tutorial, you must have a Couchbase Capella account. 
-If you do not have one already, xref:cloud:get-started:create-account.adoc[Create an Account]. 
-* Install the Java Software Development Kit (JDK) -- Couchbase JVM SDKs are compatible with LTS versions of Java.
-** The recommended version is the latest Java LTS release, which is currently https://adoptium.net/[JDK {java_latest_lts_version}].
-Ensure you install the highest available patch for the LTS version. 
-* Install Apache Maven (version 3+)
-
-[TIP]
-====
-The easiest way to install and manage Java JDKs and Maven on your machine is through https://sdkman.io/install[SDKMan^].
-
-After following the instructions to install SDKMan, open a terminal window and run the commands `sdk install java` and `sdk install maven` to install the latest versions of Java and Maven. 
-====
+* Before starting this tutorial, you must have a Couchbase Capella account.
+If you do not have one already, xref:cloud:get-started:create-account.adoc[Create an Account].
+* Install https://go.dev/dl/[Go] (version 1.24 or later).
 
 
 [#database-design]
@@ -38,18 +28,18 @@ The model consists of three record types:
 [horizontal]
 *student*:: Information about individual students, like name and date of birth.
 
-*course*:: Courses the students can take. Includes course name, faculty, and the number of credit points associated with the course. 
+*course*:: Courses the students can take. Includes course name, faculty, and the number of credit points associated with the course.
 Students can take more than one course at a time.
 
-*enrollment*:: Information related to courses the students are taking. 
+*enrollment*:: Information related to courses the students are taking.
 In a relational database, this is usually a link record that creates a relationship between a student and a course.
 
 === Relational Model
 
-In a relational model, the database contains a list of students and a list of courses. 
+In a relational model, the database contains a list of students and a list of courses.
 Each student can enroll in multiple courses.
 
-A student’s enrollment record is stored in a separate table called `enrollment`, which links that record to the courses they are enrolling in.
+A student's enrollment record is stored in a separate table called `enrollment`, which links that record to the courses they are enrolling in.
 
 [plantuml,student-record-erd,svg]
 ....
@@ -60,14 +50,14 @@ The `enrollment` table highlights a challenge with the relational model, each ta
 
 === Document Model
 
-Couchbase uses a document model that stores each record as a JSON document. 
+Couchbase uses a document model that stores each record as a JSON document.
 The document model:
 
 - Contains simple scalar types and complex types, like nested records and arrays
 
 - Lets you store complex types without decomposing them to a second table
 
-In this tutorial, the document model stores the list of enrollment records with the student records. 
+In this tutorial, the document model stores the list of enrollment records with the student records.
 Each enrollment record contains a reference to the course that it relates to.
 
 [plantuml,student-document-database-design,svg]
@@ -75,10 +65,10 @@ Each enrollment record contains a reference to the course that it relates to.
 include::partial$diagrams/student-document-database-design.puml[]
 ....
 
-With JSON, you can change the structure of the document without having to rebuild schemas. 
+With JSON, you can change the structure of the document without having to rebuild schemas.
 For example, you can add a new field to store students' email addresses without migrating existing data to a new schema.
 
-In a document database, a student’s record and their course records can look similar to this:
+In a document database, a student's record and their course records can look similar to this:
 
 .Student record
 [source, json]
@@ -122,22 +112,22 @@ In a document database, a student’s record and their course records can look s
 }
 ----
 
-Hilary’s enrollment is stored in the same document as her student details, which means child information is stored with its parent. 
-This structure lets you access and retrieve all of Hilary’s details with one search and without the need for complex table joins.
+Hilary's enrollment is stored in the same document as her student details, which means child information is stored with its parent.
+This structure lets you access and retrieve all of Hilary's details with one search and without the need for complex table joins.
 
-NOTE: You should not store a student with their course record as it can lead to data duplication and make it difficult to maintain your data. 
+NOTE: You should not store a student with their course record as it can lead to data duplication and make it difficult to maintain your data.
 For example, you would need to access every single student record in your cluster to change the `credit-points`.
 
 
 
 == Create and Deploy a Cluster
 
-Every Capella account includes one free tier operational cluster. 
-In this tutorial, you will use the free tier cluster to create and manage student records. 
+Every Capella account includes one free tier operational cluster.
+In this tutorial, you will use the free tier cluster to create and manage student records.
 
-To create and deploy a cluster: 
+To create and deploy a cluster:
 
-. Sign in to https://cloud.couchbase.com/[Couchbase Capella]. 
+. Sign in to https://cloud.couchbase.com/[Couchbase Capella].
 
 . On the *Operational Clusters* page, click btn:[Create Cluster].
 
@@ -150,13 +140,13 @@ To create and deploy a cluster:
 
 . (Optional) Provide a description of your cluster.
 
-. Select one of the available cloud service providers.  
+. Select one of the available cloud service providers.
 
 . Select an available geographic region for your cluster.
 +
 TIP: If you are unsure which cloud provider and region to choose, select the default options, for example *AWS* and *US East*.
 
-. Accept the default *CIDR Block* for your cluster. 
+. Accept the default *CIDR Block* for your cluster.
 
 . Click btn:[Create Cluster] to deploy the cluster.
 
@@ -176,7 +166,7 @@ include::partial$diagrams/couchbase-hierarchy.puml[]
 ....
 
 [horizontal]
-bucket:: Stores and retrieves data in the server.              
+bucket:: Stores and retrieves data in the server.
 scope:: Stores collections. When you create a new bucket, Couchbase provides you with a default scope called `_default`.
 collection:: Contains a set of documents. Couchbase provides you with a default collection called `_default`.
 
@@ -187,7 +177,7 @@ For more information, see xref:cloud:clusters:data-service/about-buckets-scopes-
 
 To continue this tutorial, you must create a bucket to hold all student data, a scope to narrow down the data into only data related to an art school, and two collections to narrow it down further into art school students and art school courses.
 
-To create the data model from the Capella UI: 
+To create the data model from the Capella UI:
 
 . On the *Operational* tab, select *student-cluster*.
 
@@ -195,11 +185,11 @@ To create the data model from the Capella UI:
 
 . In the left pane, click btn:[+ Create].
 
-. Under *Bucket*, select *New* and enter the name `student-bucket`. Keep the default 100 MiB memory quota. 
+. Under *Bucket*, select *New* and enter the name `student-bucket`. Keep the default 100 MiB memory quota.
 
 . Under *Scope*, enter the name `art-school-scope`.
 
-. Under *Collection*, enter the name `student-record-collection` for your first collection. 
+. Under *Collection*, enter the name `student-record-collection` for your first collection.
 
 . Click btn:[Create].
 
@@ -207,10 +197,10 @@ To create the second collection, follow the above steps but use the existing `st
 
 The two collections allow you to use the relational model and the document model at the same time to achieve the best design and performance possible.
 
-The `student-record-collection` contains student records, and each student record contains a list of that student’s enrollments. 
+The `student-record-collection` contains student records, and each student record contains a list of that student's enrollments.
 Unlike the standard relational model decomposition where a link table is created between students and courses, a document model stores the enrollments as part of the student records.
 
-The `course-record-collection`, on the other hand, uses the relational model to link the enrollment records to the course records they apply to. 
+The `course-record-collection`, on the other hand, uses the relational model to link the enrollment records to the course records they apply to.
 This allows you to retrieve other details like the full title of the course or the number of credits students receive upon completing the course.
 
 [TIP]
@@ -222,19 +212,18 @@ or possibly have a scope for each art school across a district, repeating the co
 ====
 
 
-== Connecting the Java SDK
+== Connecting the Go SDK
 
 After implementing the data model, you can set up a Couchbase SDK and connect it to your cluster to write your first application.
-We will be using Maven here --
-for more information about the Java SDK installation, see the xref:project-docs:sdk-full-installation.adoc[full installation page],
+For more information about the Go SDK installation, see the xref:project-docs:sdk-full-installation.adoc[full installation page],
 or review the xref:start-using-sdk.adoc[Getting Started page].
 
 
 === Configure the Cluster Connection
 
-Before you can establish a connection to your cluster, you must obtain the connection string, add an allowed IP address, and configure the cluster access credentials.  
+Before you can establish a connection to your cluster, you must obtain the connection string, add an allowed IP address, and configure the cluster access credentials.
 
-To configure the connection: 
+To configure the connection:
 
 . On the *Operational Clusters* page, select *student-cluster*.
 
@@ -243,17 +232,17 @@ To configure the connection:
 . Make a note of the *Public Connection String*.
 You will need this to connect to the cluster.
 
-. Add an allowed IP address. 
+. Add an allowed IP address.
 
 .. From menu:Connect[SDKs], click the *Allowed IP Addresses* link to go to the *Allowed IP Addresses* page.
 
 .. Click btn:[Add Allowed IP].
 
-.. On the *Add Allowed IP* page, select btn:[Add Current IP Address] to automatically populate your public IP address. 
+.. On the *Add Allowed IP* page, select btn:[Add Current IP Address] to automatically populate your public IP address.
 +
 image::add-allowed-ip.png[alt="Add an allowed IP address"]
 
-.. Click btn:[Add Allowed IP].  
+.. Click btn:[Add Allowed IP].
 +
 
 . Create new cluster access credentials.
@@ -264,91 +253,42 @@ image::add-allowed-ip.png[alt="Add an allowed IP address"]
 
 .. Enter an access name, for example `administrator`, and make a note of it for later.
 
-.. Enter a password, for example `Admin@123`, and again make a note of it for later. 
+.. Enter a password, for example `Admin@123`, and again make a note of it for later.
 
-.. Under *Bucket-Level Access*, select *student-bucket* and *art-school-scope*, and set the access to *Read/Write*. 
+.. Under *Bucket-Level Access*, select *student-bucket* and *art-school-scope*, and set the access to *Read/Write*.
 +
 image::create-cluster-credentials.png[alt="Create cluster access credentials"]
 
 .. Click btn:[Create Cluster Access].
 
-You can now set up a Couchbase Java SDK and connect it to your cluster.
+You can now set up a Couchbase Go SDK and connect it to your cluster.
 
-=== Set Up the Java SDK
+=== Set Up the Go SDK
 
-To set up the Java SDK:
+To set up the Go SDK:
 
-. Create the following directory structure on your computer:
+. Create a new directory for your project on your computer:
 +
 ....
 📂 ~ (your home directory)
-  📂 student
-    📂 src
-      📂 main
-        📂 java
+  📂 student-record
 ....
 +
-. In the `student` directory, create a new file called `pom.xml`.
+. Open a terminal window, navigate to your `student-record` directory, and initialize a new Go module:
 +
-....
-📂 ~ (your home directory)
-  📂 student
-    📃 pom.xml ⬅ here!
-    📂 src
-      📂 main
-        📂 java
-....
-+
-. Paste the following code block into your `pom.xml` file:
-+
-[source,xml,subs="+attributes"]
+[source, console]
 ----
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>org.example</groupId>
-    <artifactId>couchbase-java</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
-    <properties>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
-        <encoding>UTF-8</encoding>
-        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
-        <project.resources.sourceEncoding>${encoding}</project.resources.sourceEncoding>
-        <archetype.encoding>${encoding}</archetype.encoding>
-    </properties>
-
-    <!-- The `<dependencies>` section of the code block lists all the libraries required to build your application. In the case of the student record tutorial, you only need the Couchbase client SDK and Log4J. -->
-    <dependencies>   
-        <dependency>
-            <groupId>com.couchbase.client</groupId>
-            <artifactId>java-client</artifactId>
-            <version>{sdk_current_version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>2.0.9</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>2.0.9</version>
-        </dependency>
-    </dependencies>
-
-</project>
+go mod init student-record
 ----
 +
-. Open a terminal window and navigate to your `student` directory.
-. Run the command `mvn install` to pull in all the dependencies and finish your SDK setup.
+. Add the Couchbase Go SDK as a dependency:
++
+[source, console]
+----
+go get github.com/couchbase/gocb/v2
+----
 
-Next, connect your Java SDK to your cluster.
+Next, connect your Go SDK to your cluster.
 
 
 [#connect-to-the-cluster]
@@ -356,46 +296,37 @@ Next, connect your Java SDK to your cluster.
 
 To connect to the cluster:
 
-. In your `java` directory, create a new file called `ConnectStudent.java`.
+. In your `student-record` directory, create a new file called `connect_student.go`.
 +
 ....
 📂 ~ (your home directory)
-  📂 student
-    📃 pom.xml
-    📂 src
-      📂 main
-        📂 java
-          📃 ConnectStudent.java ⬅ here!
+  📂 student-record
+    📃 go.mod
+    📃 connect_student.go ⬅ here!
 ....
 +
-. Paste the following code block into your `ConnectStudent.java` file:
+. Paste the following code block into your `connect_student.go` file:
 +
-[source, java]
+[source, go]
 ----
-include::devguide:example$java/ConnectStudent.java[]
+include::devguide:example$go/student-record/connect_student.go[]
 ----
 
-. In the `ConnectStudent.java` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection. 
+. In the `connect_student.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
 +
-[IMPORTANT]
-====
-You must re-run `mvn install` in your `student` directory whenever you make a change to a java file to rebuild your application. 
-====
-+
-. Open a terminal window and navigate to your `student` directory.
-. Run the command `mvn install` to pull in all the dependencies and rebuild your application.
+. Open a terminal window and navigate to your `student-record` directory.
 . Run the following command to check that the connection works:
 +
 [source, console]
 ----
-mvn exec:java -Dexec.mainClass="ConnectStudent" -Dexec.cleanupDaemonThreads=false
+go run connect_student.go
 ----
 +
 If the connection is successful, the collection name outputs in the console log.
 +
 image::student-record-collection-console-output.png[alt="Console showing successful connection to server"]
 
-If you come across errors in your console, see the <<#roubleshooting,troubleshooting section>>.
+If you come across errors in your console, see the <<#troubleshooting,troubleshooting section>>.
 
 
 
@@ -405,22 +336,21 @@ After connecting to the cluster, you can create a student record in the form of 
 
 To create a student record:
 
-. In your `java` directory, create a new file called `InsertStudent.java`.
-. Paste the following code block into your `InsertStudent.java` file:
+. In your `student-record` directory, create a new file called `insert_student.go`.
+. Paste the following code block into your `insert_student.go` file:
 +
-[source, java]
+[source, go]
 ----
-include::devguide:example$java/InsertStudent.java[]
+include::devguide:example$go/student-record/insert_student.go[]
 ----
 +
-. In the `InsertStudent.java` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection. 
-. Open a terminal window and navigate to your `student` directory.
-. Run the command `mvn install` to pull in all the dependencies and rebuild your application.
+. In the `insert_student.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
+. Open a terminal window and navigate to your `student-record` directory.
 . Run the following command to insert the student record into the collection:
 +
-[source, sh]
+[source, console]
 ----
-mvn exec:java -Dexec.mainClass="InsertStudent" -Dexec.cleanupDaemonThreads=false
+go run insert_student.go
 ----
 +
 . From the Capella UI, go to your student cluster and check the `student-record-collection` for the new student record you just added:
@@ -436,29 +366,28 @@ image::new-student-record.png[alt="Student added to the student-record-collectio
 Creating course records is similar to creating student records.
 To create course records:
 
-. In your `java` directory, create a new file called `InsertCourses.java`.
-. Paste the following code block into your `InsertCourses.java` file:
+. In your `student-record` directory, create a new file called `insert_courses.go`.
+. Paste the following code block into your `insert_courses.go` file:
 +
-[source, java]
+[source, go]
 ----
-include::devguide:example$java/InsertCourses.java[]
+include::devguide:example$go/student-record/insert_courses.go[]
 ----
 +
-. In the `InsertCourses.java` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
-. Open a terminal window and navigate to your `student` directory.
-. Run the command `mvn install` to pull in all the dependencies and rebuild your application.
-. Run the following command to insert the student record into the collection:
+. In the `insert_courses.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
+. Open a terminal window and navigate to your `student-record` directory.
+. Run the following command to insert the course records into the collection:
 +
-[source, sh]
+[source, console]
 ----
-mvn exec:java -Dexec.mainClass="InsertCourses" -Dexec.cleanupDaemonThreads=false
+go run insert_courses.go
 ----
 +
 . From the Capella UI, go to your student cluster and check the `course-record-collection` for the new course records you just added.
 +
 image::new-course-records.png[alt="Courses added to the course-record-collection in the cluster"]
 
-If you come across errors in your console, see the <<#roubleshooting,troubleshooting section>>.
+If you come across errors in your console, see the <<#troubleshooting,troubleshooting section>>.
 
 
 
@@ -481,11 +410,11 @@ To define an index:
 
 . On the *Operational Clusters* page, select *student-cluster*.
 
-. Go to menu:Data Tools[Query]. 
+. Go to menu:Data Tools[Query].
 
 . Select *student-bucket* and *art-school-scope* in the *Context* drop-down.
 +
-Using these filters, you can narrow down the scope of your queries. 
+Using these filters, you can narrow down the scope of your queries.
 You do not need to add the names of your bucket and scope to your queries.
 +
 image::query-editor-filters.png[alt="Filters in the Query Editor"]
@@ -607,7 +536,7 @@ The `META()` function call returns any property contained inside the document's 
 === Retrieving Records with the SDK
 
 You can also use {sqlpp} queries to retrieve your records with the SDK.
-Unlike the query editor, you must include the name of the bucket and the scope to fully qualify the name of the collection in the {sqlpp} statement in your application. 
+Unlike the query editor, you must include the name of the bucket and the scope to fully qualify the name of the collection in the {sqlpp} statement in your application.
 For example:
 
 [source, sqlpp]
@@ -621,24 +550,23 @@ You can use the SDK to retrieve all course records at once, or narrow your searc
 
 ===== Retrieve All Course Records
 
-To retrieve all of your course records using the Java SDK:
+To retrieve all of your course records using the Go SDK:
 
-. In your `java` directory, create a new file called `ArtSchoolRetriever.java`.
-. Paste the following code block into your `ArtSchoolRetriever.java` file:
+. In your `student-record` directory, create a new file called `art_school_retriever_all.go`.
+. Paste the following code block into your `art_school_retriever_all.go` file:
 +
-[source, java]
+[source, go]
 ----
-include::devguide:example$java/ArtSchoolRetrieverAll.java[]
+include::devguide:example$go/student-record/art_school_retriever_all.go[]
 ----
 +
-. In the `ArtSchoolRetriever.java` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
-. Open a terminal window and navigate to your `student` directory.
-. Run the command `mvn install` to pull in all the dependencies and rebuild your application.
+. In the `art_school_retriever_all.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
+. Open a terminal window and navigate to your `student-record` directory.
 . Run the following command to retrieve all course records:
 +
-[source, sh]
+[source, console]
 ----
-mvn exec:java -Dexec.mainClass="ArtSchoolRetriever" -Dexec.cleanupDaemonThreads=false
+go run art_school_retriever_all.go
 ----
 +
 If the retrieval is successful, the course information outputs in the console log.
@@ -648,31 +576,30 @@ image::record-retrieval-console-output.png[alt="Console showing successful cours
 ===== Retrieve Course Records with Less than 200 Credits
 
 You can set parameters in your code to narrow your search down further.
-To retrieve only courses with less than 200 `credit-points` using the Java SDK:
+To retrieve only courses with less than 200 `credit-points` using the Go SDK:
 
-. In your `java` directory, create a new file called `ArtSchoolRetrieverParameters.java`.
-. Paste the following code block into your `ArtSchoolRetrieverParameters.java` file:
+. In your `student-record` directory, create a new file called `art_school_retriever.go`.
+. Paste the following code block into your `art_school_retriever.go` file:
 +
-[source, java]
+[source, go]
 ----
-include::devguide:example$java/ArtSchoolRetriever.java[]
+include::devguide:example$go/student-record/art_school_retriever.go[]
 ----
 +
-. In the `ArtSchoolRetrieverParameters.java` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
-. Open a terminal window and navigate to your `student` directory.
-. Run the command `mvn install` to pull in all the dependencies and rebuild your application.
-. Run the following command to retrieve all course records:
+. In the `art_school_retriever.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
+. Open a terminal window and navigate to your `student-record` directory.
+. Run the following command to retrieve course records with parameters:
 +
-[source, sh]
+[source, console]
 ----
-mvn exec:java -Dexec.mainClass="ArtSchoolRetrieverParameters" -Dexec.cleanupDaemonThreads=false
+go run art_school_retriever.go
 ----
 +
 If the retrieval is successful, the course information with your parameters outputs in the console log.
 +
 image::record-retrieval-parameters-console-output.png[alt="Console showing successful course retrieval using parameters using the SDK"]
 
-If you come across errors in your console, see the <<#roubleshooting,troubleshooting section>>.
+If you come across errors in your console, see the <<#troubleshooting,troubleshooting section>>.
 
 
 == Add Course Enrollments
@@ -684,25 +611,24 @@ After retrieving student and course records, you can add enrollment details to t
 
 To add enrollment details to a student record:
 
-. In your `java` directory, create a new file called `AddEnrollments.java`.
-. Paste the following code block into your `AddEnrollments.java` file:
+. In your `student-record` directory, create a new file called `add_enrollments.go`.
+. Paste the following code block into your `add_enrollments.go` file:
 +
-[source, java]
+[source, go]
 ----
-include::devguide:example$java/AddEnrollments.java[]
+include::devguide:example$go/student-record/add_enrollments.go[]
 ----
 +
 NOTE: Because this is a tutorial, you do not need to add an error check to make sure that your collection has returned an item.
 In a live application, error checks must be made to prevent errors and keep the application running.
 +
-. In the `AddEnrollments.java` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
-. Open a terminal window and navigate to your `student` directory.
-. Run the command `mvn install` to pull in all the dependencies and rebuild your application.
-. Run the following command to insert the student record into the collection:
+. In the `add_enrollments.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
+. Open a terminal window and navigate to your `student-record` directory.
+. Run the following command to add the enrollment details to the student record:
 +
-[source, sh]
+[source, console]
 ----
-mvn exec:java -Dexec.mainClass="AddEnrollments" -Dexec.cleanupDaemonThreads=false
+go run add_enrollments.go
 ----
 +
 . From the Capella UI, go to your student cluster.
@@ -710,7 +636,7 @@ mvn exec:java -Dexec.mainClass="AddEnrollments" -Dexec.cleanupDaemonThreads=fals
 +
 image::updated-student-record.png[alt="Updated student record with course enrollment" width="600" height="800"]
 
-If you come across errors in your console, see the <<#roubleshooting,troubleshooting section>>.
+If you come across errors in your console, see the <<#troubleshooting,troubleshooting section>>.
 
 === Next Steps
 
@@ -721,6 +647,7 @@ or xref:concept-docs:querying-your-data.adoc[{sqlpp} Queries] from the SDK.
 
 
 
+[#troubleshooting]
 == Troubleshooting
 
 Below are some tutorial-specific tips for troubleshooting --
@@ -729,18 +656,14 @@ you can find more detailed troubleshooting for connecting to Capella in our xref
 
 === Authentication Error
 
-If you get an authentication error when running Maven commands in your console, confirm that the username and password in your Java file matches the username and password you used when setting up the Capella Operational cluster in your browser.
+If you get an authentication error when running your application, confirm that the username and password in your Go file matches the username and password you used when setting up the Capella Operational cluster in your browser.
 
-If they do not match, you can edit the Java file to add the correct username or password and try compiling and running the Maven command again.
+If they do not match, you can edit the Go file to add the correct username or password and try running the command again.
 
-=== Unknown Host Exception
+=== Unknown Host Error
 
-If you get an `UnknownHostException` error in your console, go to your Java file and confirm that the connection string matches the one provided by the Capella Operational cluster.
+If you get a host not found or DNS resolution error in your console, go to your Go file and confirm that the connection string matches the one provided by the Capella Operational cluster.
 
 === Other Build Errors
 
-For any other build errors in your console, run `mvn install` and try the original command again.
-
-
-
-
+For any other build errors in your console, run `go mod tidy` to ensure all dependencies are resolved and try the original command again.
