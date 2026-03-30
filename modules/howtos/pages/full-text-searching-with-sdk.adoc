@@ -10,7 +10,7 @@
 
 The Search Service allows you to create, manage, and query Search indexes on JSON documents stored in Couchbase buckets.
 It uses natural language processing for querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
-The supported query types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries. 
+The supported query types include queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries. 
 The Go SDK exposes an API for performing Search queries which abstracts some of the complexity of using the underlying REST API.
 
 
@@ -30,7 +30,7 @@ The former API supports Search queries (`SearchQuery`), while the latter additio
 Most of this documentation will focus on the former API, as the latter is in @Stability.Volatile status.
 
 We will perform a Search query here. For examples, see the <<vector-search>> section.
-Here is a simple MatchQuery that looks for the text 'swanky' using a defined index:
+Here is a simple `MatchQuery` that looks for the text 'swanky' using a defined index:
 
 [source,go,indent=0]
 ----
@@ -41,7 +41,7 @@ We have also included the `Fields` option which will get the content of the spec
 
 All simple query types are created in the same manner, although some have additional properties, which can be seen in common query type descriptions.
 Couchbase Search Service's xref:{version-server}@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the required range.
-Here is a date range query that looks for dates between 1st January 2019 and 1st February, the second parameter is whether the date should be considered inclusive.
+Here is a date range query that looks for dates between 1st of January 2019 and 1st of February 2019, the second parameter is whether the date should be considered inclusive.
 
 [source,go,indent=0]
 ----
