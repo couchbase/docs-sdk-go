@@ -290,6 +290,26 @@ go get github.com/couchbase/gocb/v2
 
 Next, connect your Go SDK to your cluster.
 
+[#set-up-logging]
+=== Set Up Logging
+Before we connect to the cluster we want a way to see the output of the SDK and any errors that may occur.
+
+. In your `student-record` directory, create a new file called `logger.go`.
++
+....
+📂 ~ (your home directory)
+  📂 student-record
+    📃 go.mod
+    📃 logger.go ⬅ here!
+....
++
+. Paste the following code block into your `logger.go` file:
++
+[source, go]
+----
+include::devguide:example$go/student-record/logger.go[]
+----
+
 
 [#connect-to-the-cluster]
 === Connect the SDK to Your Cluster
@@ -302,6 +322,7 @@ To connect to the cluster:
 📂 ~ (your home directory)
   📂 student-record
     📃 go.mod
+    📃 logger.go
     📃 connect_student.go ⬅ here!
 ....
 +
@@ -324,7 +345,39 @@ go run connect_student.go
 +
 If the connection is successful, the collection name outputs in the console log.
 +
-image::student-record-collection-console-output.png[alt="Console showing successful connection to server"]
+----
+time="2026-03-31T11:19:30+01:00" level=info msg="SDK Version: gocbcore/v10.9.1"
+time="2026-03-31T11:19:30+01:00" level=info msg="Creating new agent group: &{AgentConfig:{BucketName: UserAgent:gocb/v2.12.1 SeedConfig:{HTTPAddrs:[] MemdAddrs:[svc-dqi-node-003.kkiwizkmakejiw1p.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-002.kkiwizkmakejiw1p.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-001.kkiwizkmakejiw1p.customsubdomain.nonprod-project-avengers.com:11207] SRVRecord:0x140001c17a0} SecurityConfig:{UseTLS:true TLSRootCAProvider:0x103596190 NoTLSSeedNode:false Auth:0x140001175e0 AuthMechanisms:[]} CompressionConfig:{Enabled:true DisableDecompression:false MinSize:0 MinRatio:0} ConfigPollerConfig:{HTTPRedialPeriod:0s HTTPRetryDelay:0s HTTPMaxWait:0s CccpMaxWait:0s CccpPollPeriod:0s} IoConfig:{NetworkType: UseMutationTokens:true UseDurations:true UseOutOfOrderResponses:true DisableXErrorHello:false DisableJSONHello:false DisableSyncReplicationHello:false EnablePITRHello:false UseCollections:true UseClusterMapNotifications:true} KVConfig:{ConnectTimeout:20s ServerWaitBackoff:0s PoolSize:0 MaxQueueSize:0 ConnectionBufferSize:0} HTTPConfig:{MaxIdleConns:0 MaxIdleConnsPerHost:0 MaxConnsPerHost:0 ConnectTimeout:0s IdleConnectionTimeout:0s} DefaultRetryStrategy:0x140001173f0 CircuitBreakerConfig:{Enabled:true VolumeThreshold:0 ErrorThresholdPercentage:0 SleepWindow:0s RollingWindow:0s CompletionCallback:<nil> CanaryTimeout:0s} OrphanReporterConfig:{Enabled:true ReportInterval:0s SampleSize:0} TracerConfig:{Tracer:0x14000117450 NoRootTraceSpans:true} MeterConfig:{Meter:<nil>} ObservabilityConfig:{SemanticConventionOptIn:[]} TelemetryConfig:{TelemetryReporter:0x14000128cc0} InternalConfig:{EnableResourceUnitsTrackingHello:false AllowEnterpriseAnalytics:false}}}"
+time="2026-03-31T11:19:30+01:00" level=info msg="SDK Version: gocbcore/v10.9.1"
+time="2026-03-31T11:19:30+01:00" level=info msg="Creating new agent: &{BucketName: UserAgent:gocb/v2.12.1 SeedConfig:{HTTPAddrs:[] MemdAddrs:[svc-dqi-node-003.kkiwizkmakejiw1p.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-002.kkiwizkmakejiw1p.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-001.kkiwizkmakejiw1p.customsubdomain.nonprod-project-avengers.com:11207] SRVRecord:0x140001c17a0} SecurityConfig:{UseTLS:true TLSRootCAProvider:0x103596190 NoTLSSeedNode:false Auth:0x140001175e0 AuthMechanisms:[]} CompressionConfig:{Enabled:true DisableDecompression:false MinSize:0 MinRatio:0} ConfigPollerConfig:{HTTPRedialPeriod:0s HTTPRetryDelay:0s HTTPMaxWait:0s CccpMaxWait:0s CccpPollPeriod:0s} IoConfig:{NetworkType: UseMutationTokens:true UseDurations:true UseOutOfOrderResponses:true DisableXErrorHello:false DisableJSONHello:false DisableSyncReplicationHello:false EnablePITRHello:false UseCollections:true UseClusterMapNotifications:true} KVConfig:{ConnectTimeout:20s ServerWaitBackoff:0s PoolSize:0 MaxQueueSize:0 ConnectionBufferSize:0} HTTPConfig:{MaxIdleConns:0 MaxIdleConnsPerHost:0 MaxConnsPerHost:0 ConnectTimeout:0s IdleConnectionTimeout:0s} DefaultRetryStrategy:0x140001173f0 CircuitBreakerConfig:{Enabled:true VolumeThreshold:0 ErrorThresholdPercentage:0 SleepWindow:0s RollingWindow:0s CompletionCallback:<nil> CanaryTimeout:0s} OrphanReporterConfig:{Enabled:true ReportInterval:0s SampleSize:0} TracerConfig:{Tracer:0x14000117450 NoRootTraceSpans:true} MeterConfig:{Meter:<nil>} ObservabilityConfig:{SemanticConventionOptIn:[]} TelemetryConfig:{TelemetryReporter:0x14000128cc0} InternalConfig:{EnableResourceUnitsTrackingHello:false AllowEnterpriseAnalytics:false}}"
+time="2026-03-31T11:19:30+01:00" level=info msg="Initializing transactions: CustomATRLocation: ExpirationTime:0s DurabilityLevel:MAJORITY KeyValueTimeout:20s CleanupWindow:0s CleanupClientAttempts:true CleanupLostAttempts:true CleanupQueueSize:0 BucketAgentProvider:0x10363ddf0 LostCleanupATRLocationProvider:0x10363de70 Internal:{EnableNonFatalGets:false EnableParallelUnstaging:true EnableExplicitATRs:false NumATRs:0 UnstagingParallelismLimit:1000}"
+time="2026-03-31T11:19:30+01:00" level=info msg="SDK Version: gocbcore/v10.9.1"
+time="2026-03-31T11:19:30+01:00" level=info msg="Creating new agent: &{BucketName:student-bucket UserAgent:gocb/v2.12.1 SeedConfig:{HTTPAddrs:[] MemdAddrs:[svc-dqi-node-003.kkiwizkmakejiw1p.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-002.kkiwizkmakejiw1p.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-001.kkiwizkmakejiw1p.customsubdomain.nonprod-project-avengers.com:11207] SRVRecord:0x140001c17a0} SecurityConfig:{UseTLS:true TLSRootCAProvider:0x103596190 NoTLSSeedNode:false Auth:0x140001175e0 AuthMechanisms:[]} CompressionConfig:{Enabled:true DisableDecompression:false MinSize:0 MinRatio:0} ConfigPollerConfig:{HTTPRedialPeriod:0s HTTPRetryDelay:0s HTTPMaxWait:0s CccpMaxWait:0s CccpPollPeriod:0s} IoConfig:{NetworkType: UseMutationTokens:true UseDurations:true UseOutOfOrderResponses:true DisableXErrorHello:false DisableJSONHello:false DisableSyncReplicationHello:false EnablePITRHello:false UseCollections:true UseClusterMapNotifications:true} KVConfig:{ConnectTimeout:20s ServerWaitBackoff:0s PoolSize:0 MaxQueueSize:0 ConnectionBufferSize:0} HTTPConfig:{MaxIdleConns:0 MaxIdleConnsPerHost:0 MaxConnsPerHost:0 ConnectTimeout:0s IdleConnectionTimeout:0s} DefaultRetryStrategy:0x140001173f0 CircuitBreakerConfig:{Enabled:true VolumeThreshold:0 ErrorThresholdPercentage:0 SleepWindow:0s RollingWindow:0s CompletionCallback:<nil> CanaryTimeout:0s} OrphanReporterConfig:{Enabled:true ReportInterval:0s SampleSize:0} TracerConfig:{Tracer:0x14000117450 NoRootTraceSpans:true} MeterConfig:{Meter:<nil>} ObservabilityConfig:{SemanticConventionOptIn:[]} TelemetryConfig:{TelemetryReporter:0x14000128cc0} InternalConfig:{EnableResourceUnitsTrackingHello:false AllowEnterpriseAnalytics:false}}"
+time="2026-03-31T11:19:30+01:00" level=info msg="Starting poller controller loop"
+time="2026-03-31T11:19:30+01:00" level=info msg="CCCP Looper starting."
+time="2026-03-31T11:19:30+01:00" level=info msg="Starting poller controller loop"
+time="2026-03-31T11:19:30+01:00" level=info msg="CCCP Looper starting."
+time="2026-03-31T11:19:30+01:00" level=info msg="Agent closing"
+time="2026-03-31T11:19:30+01:00" level=info msg="Stopping poller controller"
+time="2026-03-31T11:19:30+01:00" level=info msg="CCCP Looper stopping"
+time="2026-03-31T11:19:30+01:00" level=info msg="CCCP Looper stopped"
+time="2026-03-31T11:19:30+01:00" level=info msg="Starting poller controller loop"
+time="2026-03-31T11:19:30+01:00" level=info msg="Poller controller stopped, exiting"
+time="2026-03-31T11:19:30+01:00" level=info msg="KV Mux closing"
+time="2026-03-31T11:19:30+01:00" level=info msg="KV Mux closed"
+time="2026-03-31T11:19:30+01:00" level=info msg="Agent close complete"
+The name of this collection is student-record-collection
+time="2026-03-31T11:19:31+01:00" level=info msg="Agent closing"
+time="2026-03-31T11:19:31+01:00" level=info msg="Stopping poller controller"
+time="2026-03-31T11:19:31+01:00" level=info msg="CCCP Looper stopping"
+time="2026-03-31T11:19:31+01:00" level=info msg="CCCP Looper stopped"
+time="2026-03-31T11:19:31+01:00" level=info msg="Config seen but CCCP poller exited, restarting CCCP poller."
+time="2026-03-31T11:19:31+01:00" level=info msg="Starting poller controller loop"
+time="2026-03-31T11:19:31+01:00" level=info msg="Poller controller stopped, exiting"
+time="2026-03-31T11:19:31+01:00" level=info msg="KV Mux closing"
+time="2026-03-31T11:19:31+01:00" level=info msg="KV Mux closed"
+time="2026-03-31T11:19:31+01:00" level=info msg="Agent close complete"
+----
 
 If you come across errors in your console, see the <<#troubleshooting,troubleshooting section>>.
 

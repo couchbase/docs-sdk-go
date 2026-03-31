@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/sirupsen/logrus"
 	"log"
 	"time"
 
@@ -9,8 +10,11 @@ import (
 
 func main() {
 	connectionString := "<<connection-string>>" // Replace this with Connection String
-	username := "<<username>>"                   // Replace this with username from cluster access credentials
-	password := "<<password>>"                   // Replace this with password from cluster access credentials
+	username := "<<username>>"                  // Replace this with username from cluster access credentials
+	password := "<<password>>"                  // Replace this with password from cluster access credentials
+
+	// Setup info level logging.
+	gocb.SetLogger(NewLogger(logrus.InfoLevel))
 
 	options := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
