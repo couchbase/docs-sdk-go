@@ -4,7 +4,10 @@ go 1.24.0
 
 toolchain go1.24.6
 
-require github.com/couchbase/gocb/v2 v2.12.1
+require (
+	github.com/couchbase/gocb/v2 v2.12.1
+	github.com/sirupsen/logrus v1.9.4
+)
 
 require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
