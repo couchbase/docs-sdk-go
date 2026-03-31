@@ -41,7 +41,7 @@ We have also included the `Fields` option which will get the content of the spec
 
 All simple query types are created in the same manner, although some have additional properties, which can be seen in common query type descriptions.
 Couchbase Search Service's xref:{version-server}@server:fts:fts-query-types.adoc[range of query types] enable powerful searching using multiple options, to ensure results are just within the required range.
-Here is a date range query that looks for dates between 1st of January 2019 and 1st of February 2019, the second parameter is whether the date should be considered inclusive.
+Here is a date range query that looks for dates between 1st of January 2019 and 1st of February 2019, the second parameter is whether the date should be considered inclusive:
 
 [source,go,indent=0]
 ----
