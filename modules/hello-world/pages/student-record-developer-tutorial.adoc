@@ -624,7 +624,27 @@ go run art_school_retriever_all.go
 +
 If the retrieval is successful, the course information outputs in the console log.
 +
-image::record-retrieval-console-output.png[alt="Console showing successful course retrieval using the SDK"]
+----
+time="2026-03-31T12:02:57+01:00" level=info msg="SDK Version: gocbcore/v10.9.1"
+time="2026-03-31T12:02:57+01:00" level=info msg="Creating new agent group: &{AgentConfig:{BucketName: UserAgent:gocb/v2.12.1 SeedConfig:{HTTPAddrs:[] MemdAddrs:[svc-dqi-node-002.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-003.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-001.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207] SRVRecord:0x140001997a0} SecurityConfig:{UseTLS:true TLSRootCAProvider:0x104c57480 NoTLSSeedNode:false Auth:0x14000031610 AuthMechanisms:[]} CompressionConfig:{Enabled:true DisableDecompression:false MinSize:0 MinRatio:0} ConfigPollerConfig:{HTTPRedialPeriod:0s HTTPRetryDelay:0s HTTPMaxWait:0s CccpMaxWait:0s CccpPollPeriod:0s} IoConfig:{NetworkType: UseMutationTokens:true UseDurations:true UseOutOfOrderResponses:true DisableXErrorHello:false DisableJSONHello:false DisableSyncReplicationHello:false EnablePITRHello:false UseCollections:true UseClusterMapNotifications:true} KVConfig:{ConnectTimeout:20s ServerWaitBackoff:0s PoolSize:0 MaxQueueSize:0 ConnectionBufferSize:0} HTTPConfig:{MaxIdleConns:0 MaxIdleConnsPerHost:0 MaxConnsPerHost:0 ConnectTimeout:0s IdleConnectionTimeout:0s} DefaultRetryStrategy:0x14000031420 CircuitBreakerConfig:{Enabled:true VolumeThreshold:0 ErrorThresholdPercentage:0 SleepWindow:0s RollingWindow:0s CompletionCallback:<nil> CanaryTimeout:0s} OrphanReporterConfig:{Enabled:true ReportInterval:0s SampleSize:0} TracerConfig:{Tracer:0x14000031480 NoRootTraceSpans:true} MeterConfig:{Meter:<nil>} ObservabilityConfig:{SemanticConventionOptIn:[]} TelemetryConfig:{TelemetryReporter:0x14000116cc0} InternalConfig:{EnableResourceUnitsTrackingHello:false AllowEnterpriseAnalytics:false}}}"
+time="2026-03-31T12:02:57+01:00" level=info msg="SDK Version: gocbcore/v10.9.1"
+time="2026-03-31T12:02:57+01:00" level=info msg="Creating new agent: &{BucketName: UserAgent:gocb/v2.12.1 SeedConfig:{HTTPAddrs:[] MemdAddrs:[svc-dqi-node-002.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-003.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-001.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207] SRVRecord:0x140001997a0} SecurityConfig:{UseTLS:true TLSRootCAProvider:0x104c57480 NoTLSSeedNode:false Auth:0x14000031610 AuthMechanisms:[]} CompressionConfig:{Enabled:true DisableDecompression:false MinSize:0 MinRatio:0} ConfigPollerConfig:{HTTPRedialPeriod:0s HTTPRetryDelay:0s HTTPMaxWait:0s CccpMaxWait:0s CccpPollPeriod:0s} IoConfig:{NetworkType: UseMutationTokens:true UseDurations:true UseOutOfOrderResponses:true DisableXErrorHello:false DisableJSONHello:false DisableSyncReplicationHello:false EnablePITRHello:false UseCollections:true UseClusterMapNotifications:true} KVConfig:{ConnectTimeout:20s ServerWaitBackoff:0s PoolSize:0 MaxQueueSize:0 ConnectionBufferSize:0} HTTPConfig:{MaxIdleConns:0 MaxIdleConnsPerHost:0 MaxConnsPerHost:0 ConnectTimeout:0s IdleConnectionTimeout:0s} DefaultRetryStrategy:0x14000031420 CircuitBreakerConfig:{Enabled:true VolumeThreshold:0 ErrorThresholdPercentage:0 SleepWindow:0s RollingWindow:0s CompletionCallback:<nil> CanaryTimeout:0s} OrphanReporterConfig:{Enabled:true ReportInterval:0s SampleSize:0} TracerConfig:{Tracer:0x14000031480 NoRootTraceSpans:true} MeterConfig:{Meter:<nil>} ObservabilityConfig:{SemanticConventionOptIn:[]} TelemetryConfig:{TelemetryReporter:0x14000116cc0} InternalConfig:{EnableResourceUnitsTrackingHello:false AllowEnterpriseAnalytics:false}}"
+time="2026-03-31T12:02:57+01:00" level=info msg="Initializing transactions: CustomATRLocation: ExpirationTime:0s DurabilityLevel:MAJORITY KeyValueTimeout:20s CleanupWindow:0s CleanupClientAttempts:true CleanupLostAttempts:true CleanupQueueSize:0 BucketAgentProvider:0x104cff0e0 LostCleanupATRLocationProvider:0x104cff160 Internal:{EnableNonFatalGets:false EnableParallelUnstaging:true EnableExplicitATRs:false NumATRs:0 UnstagingParallelismLimit:1000}"
+time="2026-03-31T12:02:57+01:00" level=info msg="Starting poller controller loop"
+time="2026-03-31T12:02:57+01:00" level=info msg="CCCP Looper starting."
+Found row: map[course-name:art history credit-points:100 faculty:fine art]
+Found row: map[course-name:fine art credit-points:50 faculty:fine art]
+Found row: map[course-name:graphic design credit-points:200 faculty:media and communication]
+time="2026-03-31T12:02:59+01:00" level=info msg="Agent closing"
+time="2026-03-31T12:02:59+01:00" level=info msg="Stopping poller controller"
+time="2026-03-31T12:02:59+01:00" level=info msg="CCCP Looper stopping"
+time="2026-03-31T12:02:59+01:00" level=info msg="CCCP Looper stopped"
+time="2026-03-31T12:02:59+01:00" level=info msg="Starting poller controller loop"
+time="2026-03-31T12:02:59+01:00" level=info msg="Poller controller stopped, exiting"
+time="2026-03-31T12:02:59+01:00" level=info msg="KV Mux closing"
+time="2026-03-31T12:02:59+01:00" level=info msg="KV Mux closed"
+time="2026-03-31T12:02:59+01:00" level=info msg="Agent close complete"
+----
 
 ===== Retrieve Course Records with Less than 200 Credits
 
@@ -650,7 +670,26 @@ go run art_school_retriever.go
 +
 If the retrieval is successful, the course information with your parameters outputs in the console log.
 +
-image::record-retrieval-parameters-console-output.png[alt="Console showing successful course retrieval using parameters using the SDK"]
+----
+time="2026-03-31T12:04:10+01:00" level=info msg="SDK Version: gocbcore/v10.9.1"
+time="2026-03-31T12:04:10+01:00" level=info msg="Creating new agent group: &{AgentConfig:{BucketName: UserAgent:gocb/v2.12.1 SeedConfig:{HTTPAddrs:[] MemdAddrs:[svc-dqi-node-001.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-002.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-003.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207] SRVRecord:0x140001597a0} SecurityConfig:{UseTLS:true TLSRootCAProvider:0x102b97480 NoTLSSeedNode:false Auth:0x140000a7610 AuthMechanisms:[]} CompressionConfig:{Enabled:true DisableDecompression:false MinSize:0 MinRatio:0} ConfigPollerConfig:{HTTPRedialPeriod:0s HTTPRetryDelay:0s HTTPMaxWait:0s CccpMaxWait:0s CccpPollPeriod:0s} IoConfig:{NetworkType: UseMutationTokens:true UseDurations:true UseOutOfOrderResponses:true DisableXErrorHello:false DisableJSONHello:false DisableSyncReplicationHello:false EnablePITRHello:false UseCollections:true UseClusterMapNotifications:true} KVConfig:{ConnectTimeout:20s ServerWaitBackoff:0s PoolSize:0 MaxQueueSize:0 ConnectionBufferSize:0} HTTPConfig:{MaxIdleConns:0 MaxIdleConnsPerHost:0 MaxConnsPerHost:0 ConnectTimeout:0s IdleConnectionTimeout:0s} DefaultRetryStrategy:0x140000a7420 CircuitBreakerConfig:{Enabled:true VolumeThreshold:0 ErrorThresholdPercentage:0 SleepWindow:0s RollingWindow:0s CompletionCallback:<nil> CanaryTimeout:0s} OrphanReporterConfig:{Enabled:true ReportInterval:0s SampleSize:0} TracerConfig:{Tracer:0x140000a7480 NoRootTraceSpans:true} MeterConfig:{Meter:<nil>} ObservabilityConfig:{SemanticConventionOptIn:[]} TelemetryConfig:{TelemetryReporter:0x140000aace0} InternalConfig:{EnableResourceUnitsTrackingHello:false AllowEnterpriseAnalytics:false}}}"
+time="2026-03-31T12:04:10+01:00" level=info msg="SDK Version: gocbcore/v10.9.1"
+time="2026-03-31T12:04:10+01:00" level=info msg="Creating new agent: &{BucketName: UserAgent:gocb/v2.12.1 SeedConfig:{HTTPAddrs:[] MemdAddrs:[svc-dqi-node-001.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-002.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207 svc-dqi-node-003.7j-ujozl9gn8rsid.customsubdomain.nonprod-project-avengers.com:11207] SRVRecord:0x140001597a0} SecurityConfig:{UseTLS:true TLSRootCAProvider:0x102b97480 NoTLSSeedNode:false Auth:0x140000a7610 AuthMechanisms:[]} CompressionConfig:{Enabled:true DisableDecompression:false MinSize:0 MinRatio:0} ConfigPollerConfig:{HTTPRedialPeriod:0s HTTPRetryDelay:0s HTTPMaxWait:0s CccpMaxWait:0s CccpPollPeriod:0s} IoConfig:{NetworkType: UseMutationTokens:true UseDurations:true UseOutOfOrderResponses:true DisableXErrorHello:false DisableJSONHello:false DisableSyncReplicationHello:false EnablePITRHello:false UseCollections:true UseClusterMapNotifications:true} KVConfig:{ConnectTimeout:20s ServerWaitBackoff:0s PoolSize:0 MaxQueueSize:0 ConnectionBufferSize:0} HTTPConfig:{MaxIdleConns:0 MaxIdleConnsPerHost:0 MaxConnsPerHost:0 ConnectTimeout:0s IdleConnectionTimeout:0s} DefaultRetryStrategy:0x140000a7420 CircuitBreakerConfig:{Enabled:true VolumeThreshold:0 ErrorThresholdPercentage:0 SleepWindow:0s RollingWindow:0s CompletionCallback:<nil> CanaryTimeout:0s} OrphanReporterConfig:{Enabled:true ReportInterval:0s SampleSize:0} TracerConfig:{Tracer:0x140000a7480 NoRootTraceSpans:true} MeterConfig:{Meter:<nil>} ObservabilityConfig:{SemanticConventionOptIn:[]} TelemetryConfig:{TelemetryReporter:0x140000aace0} InternalConfig:{EnableResourceUnitsTrackingHello:false AllowEnterpriseAnalytics:false}}"
+time="2026-03-31T12:04:10+01:00" level=info msg="Initializing transactions: CustomATRLocation: ExpirationTime:0s DurabilityLevel:MAJORITY KeyValueTimeout:20s CleanupWindow:0s CleanupClientAttempts:true CleanupLostAttempts:true CleanupQueueSize:0 BucketAgentProvider:0x102c3f0e0 LostCleanupATRLocationProvider:0x102c3f160 Internal:{EnableNonFatalGets:false EnableParallelUnstaging:true EnableExplicitATRs:false NumATRs:0 UnstagingParallelismLimit:1000}"
+time="2026-03-31T12:04:10+01:00" level=info msg="Starting poller controller loop"
+time="2026-03-31T12:04:10+01:00" level=info msg="CCCP Looper starting."
+Found row: map[course-name:art history credit-points:100 faculty:fine art]
+Found row: map[course-name:fine art credit-points:50 faculty:fine art]
+time="2026-03-31T12:04:12+01:00" level=info msg="Agent closing"
+time="2026-03-31T12:04:12+01:00" level=info msg="Stopping poller controller"
+time="2026-03-31T12:04:12+01:00" level=info msg="CCCP Looper stopping"
+time="2026-03-31T12:04:12+01:00" level=info msg="CCCP Looper stopped"
+time="2026-03-31T12:04:12+01:00" level=info msg="Starting poller controller loop"
+time="2026-03-31T12:04:12+01:00" level=info msg="Poller controller stopped, exiting"
+time="2026-03-31T12:04:12+01:00" level=info msg="KV Mux closing"
+time="2026-03-31T12:04:12+01:00" level=info msg="KV Mux closed"
+time="2026-03-31T12:04:12+01:00" level=info msg="Agent close complete"
+----
 
 If you come across errors in your console, see the <<#troubleshooting,troubleshooting section>>.
 
