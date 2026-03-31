@@ -131,7 +131,7 @@ The `VectorQuery` itself takes the name of the document field that contains embe
 
 Finally we execute the `SearchRequest` against the Search index "travel-sample-index", which has previously been setup to vector index the "vector_field" field.
 
-This happems to be a scoped index so we are using `scope.Search()`. 
+This happens to be a scoped index so we are using `scope.Search()`.
 If it was a global index we would use `cluster.Search()` instead - see <<Scoped vs Global Indexes>>.
 
 It returns the same `SearchResult` detailed earlier.
