@@ -1,0 +1,31 @@
+@startuml
+skinparam linetype ortho
+entity student {
+  * student-id
+--
+    name
+    date-of-birth
+}
+
+
+entity course {
+  * course-id
+    course-name
+    faculty
+    credit-points
+}
+
+entity enrollment {
+
+    * student-id
+    * course-id
+--
+    * date-enrolled
+      date-completed
+}
+
+
+student --o{ enrollment
+course --o{ enrollment
+
+@enduml
