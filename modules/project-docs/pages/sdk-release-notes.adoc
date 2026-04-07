@@ -1,8 +1,7 @@
-= SDK Release Notes
+= Release Notes
 :description: Release notes, installation instructions, and download archive for the Couchbase Go Client.
-:page-topic-type: project-doc
 :page-toclevels: 2
-:page-aliases: relnotes-go-sdk,ROOT:relnotes-go-sdk,ROOT:sdk-release-notes,ROOT:release-notes
+:page-aliases: relnotes-go-sdk.adoc,ROOT:relnotes-go-sdk.adoc,ROOT:sdk-release-notes.adoc,ROOT:release-notes.adoc
+:page-partial:
 
-
-include::2.9@go-sdk:project-docs:page$sdk-release-notes.adoc[tag=latest]
+include::2.12@go-sdk:project-docs:page$sdk-release-notes.adoc[tag=all]
