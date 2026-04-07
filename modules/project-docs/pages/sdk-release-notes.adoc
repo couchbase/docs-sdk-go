@@ -4,11 +4,6 @@
 :page-aliases: relnotes-go-sdk.adoc,ROOT:relnotes-go-sdk.adoc,ROOT:sdk-release-notes.adoc,ROOT:release-notes.adoc
 :page-partial:
 
-include::2.12@go-sdk:project-docs:page$sdk-release-notes.adoc[tag=all]
-
-
-
-
 
 [abstract]
 {description}
