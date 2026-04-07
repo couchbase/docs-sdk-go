@@ -1,9 +1,11 @@
 = SDK Release Notes
-:description: Release notes, brief installation instructions, and download archive for the Couchbase Go Client.
+:description: Release notes, installation instructions, and download archive for the Couchbase Go Client.
 :page-toclevels: 2
-:page-aliases: relnotes-go-sdk,ROOT:relnotes-go-sdk,ROOT:sdk-release-notes,ROOT:release-notes
+:page-aliases: relnotes-go-sdk.adoc,ROOT:relnotes-go-sdk.adoc,ROOT:sdk-release-notes.adoc,ROOT:release-notes.adoc
+:page-partial:
 
-// tag::latest[]
+
+// tag::all[]
 [abstract]
 {description}
 
@@ -1557,4 +1559,4 @@ Numerous _Alpha_ and _Beta_ releases were made in the run-up to the 2.0 release,
 == Older Releases
 
 Although https://www.couchbase.com/support-policy/enterprise-software[no longer supported], documentation for older releases continues to be available in our https://docs-archive.couchbase.com/home/index.html[docs archive].
-// end::latest[]
+// end::all[]
