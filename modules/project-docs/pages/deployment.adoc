@@ -29,6 +29,15 @@ Before deploying, take note of any xref:compatibility.adoc[compatibility] issues
 The xref:sdk-full-installation.adoc[full installation guide] should cover any special cases for all supported environments.
 
 
+
+
+// !Load Balancer - admonition
+
+include::{version-common}@sdk:shared:partial$deployment.adoc[tag=load-balancer]
+
+
+
+
 == Development & Testing Environments
 
 During development, some shortcuts are taken to get up and running which would not be acceptable during deployment.
