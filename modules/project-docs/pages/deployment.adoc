@@ -58,6 +58,71 @@ The best way to accommodate developing an application that is to be deployed to 
 
 
 
+
+
+== Couchbase Operational Cluster Feature Compatibility
+
+// tag::feature-compat[]
+All of the SDKs have API compatibility with most of the features in Couchbase Operational Clusters --
+whether self-managed, or Capella.
+The following table covers possible exceptions, and gives the version of the {name-sdk} and Couchbase Server with which some features were introduced.
+
+
+.Couchbase Server and SDK Supported Version Matrix
+[.table-merge-cells]
+[cols="8,5,5,5"]
+|===
+| | Server 7.2 | Server 7.6.x  | Server 8.0
+
+| KV Range Scan
+| N/A
+2+| From 2.7.0
+
+| Zone aware replica reads
+| N/A
+2+| From 2.9.2
+
+| Vector Search with Search Vector Index
+| N/A
+2+| From 2.8.0
+
+| Vector Query using Hyperscale Vector Index
+2+| N/A
+| From SDK 2.11.0 ①
+
+| Vector Query using Composite (GSI & vector) index
+2+| N/A
+| From SDK 2.11.0 ①
+
+| Distributed ACID Transactions  
+3+| From 2.4.0
+
+| DNS SRV refresh for serverless environments (AWS Lambda, Azure Functions, and GCP Functions)
+3+| From 2.6.0
+
+| Circuit Breakers
+3+| From 2.0.0
+
+| OTel 
+3+| From 2.12.0
+
+| Field Level Encryption 
+3+| From 1.5.0
+
+| Cloud Native Gateway  
+3+| 2.7.0
+|===
+
+<1> As part of the standard SDK {sqlpp} API, it should be compatible with all earlier versions of the SDK -- but it has not been tested.
+// end::feature-compat[]
+
+
+
+
+
+
+
+
 // == Migration
 // 
 // This section also contains information on xref:migrating-sdk-code-to-3.n.adoc[migrating from the previous version of the SDK API].
@@ -84,3 +149,8 @@ The best way to accommodate developing an application that is to be deployed to 
 *** xref:{version-server}@server:cloud:couchbase-aws-marketplace.adoc[AWS Marketplace]
 *** xref:{version-server}@server:cloud:couchbase-azure-marketplace.adoc[Azure Marketplace]
 *** xref:{version-server}@server:cloud:couchbase-gcp-cloud-launcher.adoc[GCP Marketplace]
+
+
+
+
+

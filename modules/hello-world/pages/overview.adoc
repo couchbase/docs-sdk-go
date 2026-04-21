@@ -192,6 +192,25 @@ Useful resources to help support your development experience with Couchbase and 
 </div>
 ++++
 
+
+
+
+{empty} +
+
+
+{empty} +
+
+
+
+== icon:code[] Couchbase Operational Cluster Feature Compatibility
+
+include::project-docs:deployment.adoc[tag=feature-compat]
+
+
+
+{empty} +
+
+
 include::{version-common}@sdk:shared:partial$columnar-available.adoc[tag=initial-availability-o]
 
 
