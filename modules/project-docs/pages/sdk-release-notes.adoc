@@ -40,6 +40,7 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+
 === Version 2.12.2 (23 April 2026)
 
 Version 2.12.2 is a maintenance release for the Go SDK 2.12.
@@ -49,11 +50,20 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.12.2?tab=doc[API Documentatio
 Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
 
 ==== Fixed Issues
-* https://jira.issues.couchbase.com/browse/GOCBC-1803[GOCBC-1803]: Reverted a behavioral change, where a non-empty username, but an empty password, result in a timeout instead of a `ErrAuthenticationFailure` (for example, in `WaitUntilReady`).
-* https://jira.issues.couchbase.com/browse/GOCBC-1805[GOCBC-1805]: Updated to the latest version of the couchbase2 protocol, which resolves an issue where the latest `gocb` and `goprotostellar` versions were incompatible.
-* https://jira.issues.couchbase.com/browse/GOCBC-1807[GOCBC-1807]: Fixed an issue where the internal TLS configuration is not preserved when using `SetAuthenticator`, which resulted in subsequent connections attempting to connect to TLS ports without TLS enabled, and failing.
-* https://jira.issues.couchbase.com/browse/GOCBC-1808[GOCBC-1808]: Resolved an issue with `SetAuthenticator` where the references to existing KV connections were being lost. Existing connections were still active, but orphaned. This resulted in failing operations until new connections were established.
-* https://jira.issues.couchbase.com/browse/GOCBC-1809[GOCBC-1809]: Fixed a deadlock that happens when `SetAuthenticator` is called with a `JWTAuthenticator` and authentication fails. Resolved a panic that could occur when `SetAuthenticator` is called with a `JWTAuthenticator` and the SDK is in the process of dialing a KV connection.
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1803[GOCBC-1803]:
+Reverted a behavioral change, where a non-empty username, but an empty password, result in a timeout instead of a `ErrAuthenticationFailure` (for example, in `WaitUntilReady`).
+* https://jira.issues.couchbase.com/browse/GOCBC-1805[GOCBC-1805]:
+Updated to the latest version of the `couchbase2` protocol, which resolves an issue where the latest `gocb` and `goprotostellar` versions were incompatible.
+* https://jira.issues.couchbase.com/browse/GOCBC-1807[GOCBC-1807]:
+Fixed an issue where the internal TLS configuration is not preserved when using `SetAuthenticator`, which resulted in subsequent connections attempting to connect to TLS ports without TLS enabled, and failing.
+* https://jira.issues.couchbase.com/browse/GOCBC-1808[GOCBC-1808]:
+Resolved an issue with `SetAuthenticator` where the references to existing KV connections were being lost. Existing connections were still active, but orphaned.
+This resulted in failing operations until new connections were established.
+* https://jira.issues.couchbase.com/browse/GOCBC-1809[GOCBC-1809]:
+Fixed a deadlock that happens when `SetAuthenticator` is called with a `JWTAuthenticator` and authentication fails.
+Resolved a panic that could occur when `SetAuthenticator` is called with a `JWTAuthenticator` and the SDK is in the process of dialing a KV connection.
+
 
 === Version 2.12.1 (23 March 2026)
 
