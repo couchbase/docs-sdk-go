@@ -110,7 +110,7 @@ The following table covers possible exceptions, and gives the version of the {na
 3+| From 1.5.0
 
 | Cloud Native Gateway  
-3+| 2.7.0
+3+| From 2.7.0
 |===
 
 <1> As part of the standard SDK {sqlpp} API, it should be compatible with all earlier versions of the SDK -- but it has not been tested.
