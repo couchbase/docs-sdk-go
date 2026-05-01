@@ -138,7 +138,10 @@ Likewise, the _Insert_ operation will only add the new value to the path if it d
 include::devguide:example$go/subdoc-mutatein.go[tag=mutateInInsert, indent=0]
 ----
 
-Dictionary values can also be replaced or removed, and you may combine any number of mutation operations within the same general _mutateIn_ API.
+Dictionary values can also be replaced or removed, and you may combine any multiple Sub-Document operations --
+these are formed into a single command packet, which is then executed atomically on the server.
+You can submit up to 16 operations at a time.
+
 Here's an example of one which replaces one path and removes another.
 
 .Combine multiple mutate operations
