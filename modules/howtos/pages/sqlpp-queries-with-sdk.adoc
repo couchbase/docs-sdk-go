@@ -53,7 +53,7 @@ Once a result returns you can iterate the returned rows and/or access the `Query
 == Queries & Placeholders
 
 Placeholders allow you to specify variable constraints for an otherwise constant query. 
-There are two variants of placeholders: postional and named parameters. 
+There are two variants of placeholders: positional and named parameters. 
 Positional parameters use an ordinal placeholder for substitution and named parameters use variables. 
 A named or positional parameter is a placeholder for a value in the WHERE, LIMIT or OFFSET clause of a query. 
 Note that both parameters and options are optional.
