@@ -40,6 +40,22 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+=== Version 2.12.3 (20 May 2026)
+
+Version 2.12.3 is a maintenance release for the Go SDK 2.12.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.12.3?tab=doc[API Documentation]
+
+Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
+
+==== New Features and Behavioral Changes
+* https://jira.issues.couchbase.com/browse/GOCBC-1815[GOCBC-1815]: Include more information in the warning-level log message when snappy decoding fails for a KV response.
+
+
+==== Fixed Issues
+* https://jira.issues.couchbase.com/browse/GOCBC-1812[GOCBC-1812]:
+Fixed an issue where `WaitUntilReady` can fail with `ErrRequestCanceled` during the initial network resolution when the seed endpoints don't match either the 'default' or 'external' network's endpoints. In that case, existing connections are dropped, cancelling the in-progress bootstrap, but this does not indicate an error.
+
 
 === Version 2.12.2 (23 April 2026)
 
