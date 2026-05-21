@@ -8,14 +8,17 @@ asciidoc:
   attributes:
     page-nav-header-levels: 1
     server_version: '8.0.1'
-    sdk_current_version: '2.12.1'
+    sdk_current_version: '2.12.3'
     sdk_dot_minor: '2.12'
     sdk_dot_major: 2.x'
     version-server: '8.0'
     version-common: '8.0.1'
     name_platform: 'Go'
     name_platform_lc: 'go'
+    lang-code: 'golang'
     name-sdk: 'Go SDK'
+    archive_version: 1.6
+    archive_major: 1.x
     sdk_api: '3.9'
     sdk-api-link: https://pkg.go.dev/github.com/couchbase/gocb/v2
     sdk-gh-link: https://github.com/couchbase/gocb
