@@ -116,6 +116,8 @@ Update the following files:
 * antora.yml
 * modules/devguide/examples/go/go.mod
 * modules/devguide/examples/go/sum
+* modules/devguide/examples/go/student-record/go.mod
+* modules/devguide/examples/go/student-record/sum
 * modules/project-docs/pages/sdk-release-notes.adoc
 
 === New Branches
