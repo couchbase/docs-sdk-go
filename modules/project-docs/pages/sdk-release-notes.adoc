@@ -49,12 +49,15 @@ https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.12.3?tab=doc[API Documentatio
 Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
 
 ==== New Features and Behavioral Changes
-* https://jira.issues.couchbase.com/browse/GOCBC-1815[GOCBC-1815]: Include more information in the warning-level log message when snappy decoding fails for a KV response.
-
+* https://jira.issues.couchbase.com/browse/GOCBC-1815[GOCBC-1815]: 
+When `snappy.Decode` fails a warning was emitted, but no information included on what went wrong.
+This warning is now updated to include the command, opaque, status and, datatype.
+(If redaction is enabled then  the key if redacted.)
 
 ==== Fixed Issues
 * https://jira.issues.couchbase.com/browse/GOCBC-1812[GOCBC-1812]:
-Fixed an issue where `WaitUntilReady` can fail with `ErrRequestCanceled` during the initial network resolution when the seed endpoints don't match either the 'default' or 'external' network's endpoints. In that case, existing connections are dropped, cancelling the in-progress bootstrap, but this does not indicate an error.
+Fixed an issue where `WaitUntilReady` can fail with `ErrRequestCanceled` during the initial network resolution when the seed endpoints don't match either the 'default' or 'external' network's endpoints. 
+In that case, existing connections are dropped, cancelling the in-progress bootstrap, but this does not indicate an error.
 
 
 === Version 2.12.2 (23 April 2026)
