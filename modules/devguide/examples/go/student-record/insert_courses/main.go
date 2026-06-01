@@ -1,11 +1,13 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
 	"log"
 	"time"
 
 	"github.com/couchbase/gocb/v2"
+	"github.com/sirupsen/logrus"
+
+	"student-record/internal"
 )
 
 func main() {
@@ -14,7 +16,7 @@ func main() {
 	password := "<<password>>"                  // Replace this with password from cluster access credentials
 
 	// Setup info level logging.
-	gocb.SetLogger(NewLogger(logrus.InfoLevel))
+	gocb.SetLogger(internal.NewLogger(logrus.InfoLevel))
 
 	options := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{

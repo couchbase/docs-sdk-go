@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"log"
 
 	"github.com/couchbase/gocb/v2"
+	"github.com/sirupsen/logrus"
+
+	"student-record/internal"
 )
 
 func main() {
@@ -14,7 +16,7 @@ func main() {
 	password := "<<password>>"                  // Replace this with password from cluster access credentials
 
 	// Setup info level logging.
-	gocb.SetLogger(NewLogger(logrus.InfoLevel))
+	gocb.SetLogger(internal.NewLogger(logrus.InfoLevel))
 
 	options := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
@@ -32,7 +34,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	retrieveCourses(cluster)
+	retrieveCoursesWithParameters(cluster)
 
 	err = cluster.Close(nil)
 	if err != nil {
@@ -40,10 +42,14 @@ func main() {
 	}
 }
 
-func retrieveCourses(cluster *gocb.Cluster) {
+func retrieveCoursesWithParameters(cluster *gocb.Cluster) {
 	queryResult, err := cluster.Query(
-		"SELECT crc.* FROM `student-bucket`.`art-school-scope`.`course-record-collection` crc",
-		&gocb.QueryOptions{},
+		"SELECT crc.* FROM `student-bucket`.`art-school-scope`.`course-record-collection` crc WHERE crc.`credit-points` < $credits",
+		&gocb.QueryOptions{
+			NamedParameters: map[string]interface{}{
+				"credits": 200,
+			},
+		},
 	)
 	if err != nil {
 		log.Fatal(err)
