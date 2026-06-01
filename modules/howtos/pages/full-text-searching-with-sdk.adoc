@@ -34,7 +34,7 @@ Here is a simple `MatchQuery` that looks for the text 'swanky' using a defined i
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=matchquery]
+include::devguide:example$go/search_test.go[tag=matchquery]
 ----
 
 We have also included the `Fields` option which will get the content of the specified (indexed) field as a part of the response.
@@ -45,7 +45,7 @@ Here is a date range query that looks for dates between 1st of January 2019 and 
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=daterangequery]
+include::devguide:example$go/search_test.go[tag=daterangequery]
 ----
 
 Queries can also be combined together.
@@ -53,7 +53,7 @@ A conjunction query contains multiple child queries; its result documents must s
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=conjunctionquery]
+include::devguide:example$go/search_test.go[tag=conjunctionquery]
 ----
 
 [TIP]
@@ -83,7 +83,7 @@ Note that `Fields` is a special case, where it's a function.
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=iteratingrows]
+include::devguide:example$go/search_test.go[tag=iteratingrows]
 ----
 
 Take care to ensure you call `Err` after accessing rows and check for any errors returned.
@@ -93,7 +93,7 @@ Facets can only be accessed once all the rows have been iterated.
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=iteratingfacets]
+include::devguide:example$go/search_test.go[tag=iteratingfacets]
 ----
 
 
@@ -116,7 +116,7 @@ Vector search queries have a slightly different import from other components of 
 In this first example we are performing a single vector query:
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=single_vector_query]
+include::devguide:example$go/search_test.go[tag=single_vector_query]
 ----
 
 Let's break this down.
@@ -141,7 +141,7 @@ You can run multiple vector queries together:
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=multiple_vector_queries]
+include::devguide:example$go/search_test.go[tag=multiple_vector_queries]
 ----
 
 
@@ -152,7 +152,7 @@ You can combine a traditional Search query with vector queries:
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=vector_fts_query_combination]
+include::devguide:example$go/search_test.go[tag=vector_fts_query_combination]
 ----
 
 How the results are combined (ANDed or ORed) can be controlled with `vector.SearchOptions.VectorQueryCombination`.
@@ -162,7 +162,7 @@ Note, traditional Search queries, without vector search, are also supported with
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=fts_search_request]
+include::devguide:example$go/search_test.go[tag=fts_search_request]
 ----
 
 The `SearchQuery` is created in the same way as detailed earlier.
@@ -174,6 +174,6 @@ Like the Couchbase Query Service, the Search Service allows `RequestPlus` querie
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=consistency]
+include::devguide:example$go/search_test.go[tag=consistency]
 ----
 

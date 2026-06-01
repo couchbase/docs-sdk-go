@@ -9,7 +9,7 @@
 {description}
 Here we cover CRUD operations, document expiration, and optimistic locking with CAS.
 
-The complete code sample used on this page can be downloaded from https://github.com/couchbase/docs-sdk-go/blob/temp/{sdk_dot_minor}/modules/devguide/examples/go/kv-crud.go[here]
+The complete code sample used on this page can be downloaded from https://github.com/couchbase/docs-sdk-go/blob/temp/{sdk_dot_minor}/modules/devguide/examples/go/kv-crud_test.go[here]
 -- from which you can see in context how to authenticate and connect to a Couchbase Cluster, then perform these Collection operations.
 
 == Documents
@@ -29,7 +29,7 @@ Here is the _Insert_ operation at its simplest:
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-crud.go[tag=insert]
+include::devguide:example$go/kv-crud_test.go[tag=insert]
 ----
 
 Options like timeout may also be added to operations.
@@ -38,7 +38,7 @@ Timeout sets the timeout value for the underlying network connection.
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-crud.go[tag=insertoptions]
+include::devguide:example$go/kv-crud_test.go[tag=insertoptions]
 ----
 
 === CAS
@@ -50,7 +50,7 @@ Without explicitly setting it, a newly-created document would have a CAS value o
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-crud.go[tag=replacecas]
+include::devguide:example$go/kv-crud_test.go[tag=replacecas]
 ----
 
 Typically we would want to use CAS for something more meaningful like performing a Get, modifying the result and updating the document.
@@ -58,7 +58,7 @@ By using the CAS value we know that if anyone else modified this document and up
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-crud.go[tag=update]
+include::devguide:example$go/kv-crud_test.go[tag=update]
 ----
 
 Expiry sets an explicit time to live (TTL) for a document in seconds.
@@ -67,7 +67,7 @@ xref:{version-server}@server:learn:buckets-memory-and-storage/expiration.adoc#ex
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-expiry.go[tag=expiry]
+include::devguide:example$go/kv-expiry_test.go[tag=expiry]
 ----
 
 == Durability
@@ -103,7 +103,7 @@ Below we can see how to set this on an operation:
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-durability-enhanced.go[tag=durability]
+include::devguide:example$go/kv-durability-enhanced_test.go[tag=durability]
 ----
 
 If a version of Couchbase Server lower than 6.5 is being used then the application can fall-back to xref:concept-docs:durability-replication-failure-considerations.adoc#older-server-versions['client verified' durability]. 
@@ -112,7 +112,7 @@ Here we can see how that is set:
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-durability-observe.go[tag=observebased]
+include::devguide:example$go/kv-durability-observe_test.go[tag=observebased]
 ----
 
 To stress, durability is a useful feature but should not be the default for most applications, as there is a performance consideration, 
@@ -172,14 +172,14 @@ Using the `Get()` method with the document key can be done in a similar fashion 
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-crud.go[tag=get]
+include::devguide:example$go/kv-crud_test.go[tag=get]
 ----
 
 Timeout can also be set, as in the earlier `Insert` example:
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-crud.go[tag=gettimeout]
+include::devguide:example$go/kv-crud_test.go[tag=gettimeout]
 ----
 
 == Removing
@@ -188,7 +188,7 @@ When removing a document, you will have the same concern for durability as with 
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-crud.go[tag=remove]
+include::devguide:example$go/kv-crud_test.go[tag=remove]
 ----
 
 
@@ -201,14 +201,14 @@ To prevent a document that already has expiry from expiring you can use `Touch` 
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-expiry.go[tag=touch]
+include::devguide:example$go/kv-expiry_test.go[tag=touch]
 ----
 
 If you want to get the document at the same time as extending expiry then you can use `GetAndTouch`.
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-expiry.go[tag=getandtouch]
+include::devguide:example$go/kv-expiry_test.go[tag=getandtouch]
 ----
 
 
@@ -222,13 +222,13 @@ NOTE: Increment & Decrement are considered part of the 'binary' API and as such 
 .Increment
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-counter.go[tag=increment]
+include::devguide:example$go/kv-counter_test.go[tag=increment]
 ----
 
 .Decrement
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-counter.go[tag=decrement]
+include::devguide:example$go/kv-counter_test.go[tag=decrement]
 ----
 
 TIP: Setting the document expiry time only works when a document is created, and it is not possible to update the expiry time of an existing counter document with the Increment method -- to do this during an increment, use with the `Touch()` method.
@@ -255,7 +255,7 @@ Here's an example of a KV range scan that gets all documents in a collection:
 .KV Range Scan for all documents in a collection
 [source,go]
 ----
-include::devguide:example$go/kv-range-scan.go[tag=range_scan_all_documents, indent=0]
+include::devguide:example$go/kv-range-scan_test.go[tag=range_scan_all_documents, indent=0]
 ----
 
 <1> The `RangeScan` struct has two optional fields: `From` and `To`.
@@ -276,7 +276,7 @@ For example, to get all documents associated with user "alice", you would write:
 .KV Range Scan for all documents in a collection whose IDs start with `alice::`
 [source,go]
 ----
-include::devguide:example$go/kv-range-scan.go[tag=range_scan_prefix, indent=0]
+include::devguide:example$go/kv-range-scan_test.go[tag=range_scan_prefix, indent=0]
 ----
 
 <1> Note the use of the `NewRangeScanForPrefix` helper function which gives a `RangeScan` scan type configured to return all documents with the given prefix.
@@ -289,7 +289,7 @@ If you want to get random documents from a collection, use a sample scan.
 .KV Range Scan for 100 random documents
 [source,go]
 ----
-include::devguide:example$go/kv-range-scan.go[tag=range_scan_sample, indent=0]
+include::devguide:example$go/kv-range-scan_test.go[tag=range_scan_sample, indent=0]
 ----
 
 [#kv-range-scan-only-ids]
@@ -300,7 +300,7 @@ If you only want the document IDs, set the `IDsOnly` field of `ScanOptions` to `
 .KV Range Scan for all document IDs in a collection
 [source,go]
 ----
-include::devguide:example$go/kv-range-scan.go[tag=range_scan_all_document_ids, indent=0]
+include::devguide:example$go/kv-range-scan_test.go[tag=range_scan_all_document_ids, indent=0]
 ----
 
 == Scoped KV Operations
@@ -312,7 +312,7 @@ Here is an example showing an upsert in the `users` collection, which lives in t
 
 [source,go]
 ----
-include::devguide:example$go/kv-collection-scope.go[tag=namedcollectionupsert, indent=0]
+include::devguide:example$go/kv-collection-scope_test.go[tag=namedcollectionupsert, indent=0]
 ----
 
 == Additional Resources

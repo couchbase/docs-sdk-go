@@ -16,13 +16,13 @@ Access a non-default collection, in the default scope, with:
 
 [source,golang]
 ----
-include::devguide:example$go/collections.go[tag=collections_1,indent=0]
+include::devguide:example$go/collections_test.go[tag=collections_1,indent=0]
 ----
 
 And for a non-default scope:
 [source,golang]
 ----
-include::devguide:example$go/collections.go[tag=collections_2,indent=0]
+include::devguide:example$go/collections_test.go[tag=collections_2,indent=0]
 ----
 
 

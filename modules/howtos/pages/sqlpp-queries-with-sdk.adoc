@@ -39,7 +39,7 @@ Here's a complete example of doing an query and handling the results:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/query.go[tag=simple]
+include::devguide:example$go/query_test.go[tag=simple]
 ----
 
 NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connection using `cluster.Bucket(name)` before you can use {sqlpp}.
@@ -62,14 +62,14 @@ The first example shows how to provide them by name:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/n1ql-query-named-placeholders.go[tag=named-params]
+include::devguide:example$go/n1ql-query-named-placeholders_test.go[tag=named-params]
 ----
 
 The second example by position:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/n1ql-query-positional-placeholders.go[tag=pos-params]
+include::devguide:example$go/n1ql-query-positional-placeholders_test.go[tag=pos-params]
 ----
 
 // The complete code for this page's example can be found at xref:[??]
@@ -84,7 +84,7 @@ If no error is returned then the request succeeded and the result provides acces
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/n1ql-query-simple.go[tag=results]
+include::devguide:example$go/n1ql-query-simple_test.go[tag=results]
 ----
 
 There are two places that row iteration can return errors - `result.Row` and `result.Err`.
@@ -96,7 +96,7 @@ If you only expect a single result or only want to use the first result in a res
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/n1ql-query-one.go[tag=one]
+include::devguide:example$go/n1ql-query-one_test.go[tag=one]
 ----
 
 The `QueryMetaData` provides insight into some basic profiling/timing information as well as information like the `ClientContextID`.
@@ -119,7 +119,7 @@ For example, here is how you can print the `executionTime` of a query:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/n1ql-query-metrics.go[tag=metrics]
+include::devguide:example$go/n1ql-query-metrics_test.go[tag=metrics]
 ----
 
 == Query Options
@@ -157,7 +157,7 @@ If `QueryScanConsistencyRequestPlus` is chosen, it will likely take a bit longer
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/n1ql-query-consistency.go[tag=consistency]
+include::devguide:example$go/n1ql-query-consistency_test.go[tag=consistency]
 ----
 
 // Due to https://issues.couchbase.com/browse/MB-46876 this section won’t work with named scopes and collections,
@@ -170,7 +170,7 @@ Depending on the index update rate this might provide a speedier response.
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/n1ql-query-consistentwith.go[tag=consistentwith]
+include::devguide:example$go/n1ql-query-consistentwith_test.go[tag=consistentwith]
 ----
 ////
 
@@ -199,7 +199,7 @@ the assumption is that the `airline` collection exists within a scope `inventory
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/query.go[tag=simple-named-scope]
+include::devguide:example$go/query_test.go[tag=simple-named-scope]
 ----
 
 A complete list of `QueryOptions` can be found in the https://pkg.go.dev/github.com/couchbase/gocb/v2#Scope.Query[API docs].

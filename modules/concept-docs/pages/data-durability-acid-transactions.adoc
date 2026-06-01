@@ -25,7 +25,7 @@ The CRUD API of the {sqlpp} Query service is mirrored by the Data Service's API,
 
 [source,golang]
 ----
-include::devguide:example$go/kv-durability-enhanced.go[tag=durability]
+include::devguide:example$go/kv-durability-enhanced_test.go[tag=durability]
 ----
 
 At its heart, a database is in the business of storing data and letting you query and retrieve it.

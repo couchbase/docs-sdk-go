@@ -36,7 +36,7 @@ The report also supports being exported to JSON for purposes such as logging.
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/healthcheck.go[tag=ping]
+include::devguide:example$go/healthcheck_test.go[tag=ping]
 ----
 
 <.> ReportID is optional and assigns a name to this report, if empty then a uuid will be assigned.
@@ -81,7 +81,7 @@ If you want the _current_ status, then use xref:#ping[Ping].
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/healthcheck.go[tag=diagnostics]
+include::devguide:example$go/healthcheck_test.go[tag=diagnostics]
 ----
 
 <.> ReportID is optional and assigns a name to this report, if empty then a uuid will be assigned.

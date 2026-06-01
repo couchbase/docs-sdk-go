@@ -63,7 +63,7 @@ If no tracer is configured using `ClusterOptions.Tracer` then the default `Thres
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/slow-operations.go[tag=config]
+include::devguide:example$go/slow-operations_test.go[tag=config]
 ----
 
 The following properties can be configured:

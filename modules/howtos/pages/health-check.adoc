@@ -20,7 +20,7 @@ Below we use it at the `Bucket` level:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/healthcheck.go[tag=ping]
+include::devguide:example$go/healthcheck_test.go[tag=ping]
 ----
 
 <.> ReportID is optional and assigns a name to this report, if empty then a uuid will be assigned.
@@ -38,7 +38,7 @@ As the Go SDK does not hold long lived HTTP connections the `Diagnostics` operat
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/healthcheck.go[tag=diagnostics]
+include::devguide:example$go/healthcheck_test.go[tag=diagnostics]
 ----
 
 <.> ReportID is optional and assigns a name to this report, if empty then a uuid will be assigned.

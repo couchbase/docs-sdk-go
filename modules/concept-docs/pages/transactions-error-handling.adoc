@@ -18,7 +18,7 @@ include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=txnfaile
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=configExpiration,indent=0]
+include::devguide:example$go/transactions_test.go[tag=configExpiration,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=txnfailed1]
@@ -29,5 +29,5 @@ Pulling all of the above together, this is the suggested best practice for error
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=fullErrorHandling,indent=0]
+include::devguide:example$go/transactions_test.go[tag=fullErrorHandling,indent=0]
 ----

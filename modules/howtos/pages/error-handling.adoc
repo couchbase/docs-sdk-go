@@ -19,7 +19,7 @@ You can use `errors.Is` as follows:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/error-handling.go[tag=is]
+include::devguide:example$go/error-handling_test.go[tag=is]
 ----
 
 You can, of course, just log or print out the error as usual and the SDK will try to include as much information as it can in the error message logged (via the usual `err.Error()`).
@@ -35,19 +35,19 @@ If a particular key cannot be found it is return as an `ErrDocumentNotFound`:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/error-handling.go[tag=replace]
+include::devguide:example$go/error-handling_test.go[tag=replace]
 ----
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/error-handling.go[tag=is]
+include::devguide:example$go/error-handling_test.go[tag=is]
 ----
 
 On the other hand if the key already exists and should not (e.g. on an insert) then it is returned as a `ErrDocumentExists`:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/error-handling.go[tag=exists]
+include::devguide:example$go/error-handling_test.go[tag=exists]
 ----
 
 === Concurrency
@@ -58,7 +58,7 @@ If it has, it returns `ErrCasMismatch`, and the most appropriate response is to 
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/error-handling.go[tag=cas]
+include::devguide:example$go/error-handling_test.go[tag=cas]
 ----
 
 === Ambiguity
@@ -78,7 +78,7 @@ For instance, for inserts, they can simply be retried to see if they fail on `Er
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/error-handling.go[tag=insert]
+include::devguide:example$go/error-handling_test.go[tag=insert]
 ----
 
 That example is much closer to what an application will want to be doing.  Let's flesh it out further.
@@ -88,7 +88,7 @@ The application can write wrappers so that it can easily do operations without h
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/error-handling.go[tag=insert-real]
+include::devguide:example$go/error-handling_test.go[tag=insert-real]
 ----
 
 This will make a 'best effort' to do the insert (though its retry strategy is rather naive, and applications may want to implement a more sophisticated approach involving exponential backoff and circuit breaking.)
@@ -117,7 +117,7 @@ A {sqlpp_url}[{sqlpp} (formerly N1QL)] query either returns results or `QueryErr
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/error-handling.go[tag=query]
+include::devguide:example$go/error-handling_test.go[tag=query]
 ----
 
 Analytics works in an identical fashion, raising an `AnalyticsError`.

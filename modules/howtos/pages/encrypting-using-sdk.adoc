@@ -44,7 +44,7 @@ To begin we need to create a couple of keys, you should *not* use the `InsecureK
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/fle.go[tag=keys]
+include::devguide:example$go/fle_test.go[tag=keys]
 ----
 
 Now that we have keys we can create a `Provider` (here we use the `AeadAes256CbcHmacSha512` algorithm which is the default supplied by the library).
@@ -53,7 +53,7 @@ At this point we also create `CryptoManager` and register our encrypters and dec
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/fle.go[tag=provider]
+include::devguide:example$go/fle_test.go[tag=provider]
 ----
 
 Now we can create a `Transcoder` using our `CryptoManager`.
@@ -61,7 +61,7 @@ Once created we need to register the `Transcoder` with the SDK.
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/fle.go[tag=transcoder]
+include::devguide:example$go/fle_test.go[tag=transcoder]
 ----
 
 == Usage
@@ -71,21 +71,21 @@ Sensitive fields in your data classes can be "annotated" using the `encrypted` t
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/fle.go[tag=annotation]
+include::devguide:example$go/fle_test.go[tag=annotation]
 ----
 
 Now let's create a person document and save it to Couchbase:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/fle.go[tag=upsert]
+include::devguide:example$go/fle_test.go[tag=upsert]
 ----
 
 You can get the document as a `map[string]interface{}` to verify the fields were encrypted:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/fle.go[tag=getmap]
+include::devguide:example$go/fle_test.go[tag=getmap]
 ----
 
 Because decoding as a `map` does not decrypt anything, the expected output is something like:
@@ -108,7 +108,7 @@ Now let's read the person document using the data binding.
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/fle.go[tag=getstr]
+include::devguide:example$go/fle_test.go[tag=getstr]
 ----
 
 The output is now:

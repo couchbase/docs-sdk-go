@@ -19,20 +19,20 @@ The most common uses of the `UserManager` API are creating and listing users:
 .Creating Users
 [source,golang,indent=0]
 ----
-include::devguide:example$go/user-management.go[tag=upsert]
+include::devguide:example$go/user-management_test.go[tag=upsert]
 ----
 
 .Listing Users
 [source,golang,indent=0]
 ----
-include::devguide:example$go/user-management.go[tag=getall]
+include::devguide:example$go/user-management_test.go[tag=getall]
 ----
 
 Using a user created in the SDK to access data:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/user-management.go[tag=operations]
+include::devguide:example$go/user-management_test.go[tag=operations]
 ----
 
 From SDK 2.6, you can also perform password rotation on the currently authenticated user without the need for elevated permissions.
@@ -42,7 +42,7 @@ If you don't, you will start to see authentication errors.
 
 [source,golang]
 ----
-include::devguide:example$go/change-password.go[tag=change-password]
+include::devguide:example$go/change-password_test.go[tag=change-password]
 ----
 
 == Further Reading
