@@ -31,7 +31,7 @@ NOTE: When using a Couchbase version < 6.5 you must create a valid Bucket connec
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/analytics.go[tag=query]
+include::devguide:example$go/analytics_test.go[tag=query]
 ----
 
 
@@ -42,21 +42,21 @@ Here is one example of each:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/analytics-simple-query.go[tag=simple]
+include::devguide:example$go/analytics-simple-query_test.go[tag=simple]
 ----
 
 The query may be performed with positional parameters:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/analytics-positional-placeholders.go[tag=positional]
+include::devguide:example$go/analytics-positional-placeholders_test.go[tag=positional]
 ----
 
 Alternatively, the query may be performed with named parameters:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/analytics-named-placeholders.go[tag=named]
+include::devguide:example$go/analytics-named-placeholders_test.go[tag=named]
 ----
 
 NOTE: As timeouts are propagated to the server by the client, a timeout set on the client side may be used to stop the processing of a request, in order to save system resources.
@@ -81,7 +81,7 @@ Here, we give the request priority over others, and set a custom, server-side ti
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/analytics.go[tag=options]
+include::devguide:example$go/analytics_test.go[tag=options]
 ----
 
 
@@ -97,7 +97,7 @@ Always remember to check the error value of `Err` after iterating the results, t
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/analytics-simple-query.go[tag=results]
+include::devguide:example$go/analytics-simple-query_test.go[tag=results]
 ----
 
 // Move these to Error reference doc?
@@ -108,7 +108,7 @@ If you only expect a single result or only want to use the first result in a res
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/analytics-query-one.go[tag=one]
+include::devguide:example$go/analytics-query-one_test.go[tag=one]
 ----
 
 ////
@@ -129,7 +129,7 @@ Here is a snippet using several items of metadata
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/analytics-simple-query.go[tag=metadata]
+include::devguide:example$go/analytics-simple-query_test.go[tag=metadata]
 ----
 
 For a listing of available `Metrics` in `MetaData`, see the xref:concept-docs:analytics-for-sdk-users.adoc[Understanding Analytics] SDK doc.
@@ -152,7 +152,7 @@ We can then query the Dataset as normal, using the fully qualified keyspace:
 
 [source,golang]
 ----
-include::devguide:example$go/analytics-collection-scope.go[tag=handle-collection,indent=0]
+include::devguide:example$go/analytics-collection-scope_test.go[tag=handle-collection,indent=0]
 ----
 
 Note that using the `CREATE DATASET` syntax we could choose any Dataset name in any Dataverse, including the default.
@@ -160,7 +160,7 @@ However the SDK supports this standard convention, allowing us to query from the
 
 [source,golang]
 ----
-include::devguide:example$go/analytics-collection-scope.go[tag=handle-scope,indent=0]
+include::devguide:example$go/analytics-collection-scope_test.go[tag=handle-scope,indent=0]
 ----
 
 

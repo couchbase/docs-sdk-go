@@ -52,7 +52,7 @@ wrapped inside the {name-sdk} Query API.
 .Hyperscale Index Example
 [source,go,indent=0]
 ----
-include::devguide:example$go/n1ql-query-vector.go[tag=vector-hyperscale-index]
+include::devguide:example$go/n1ql-query-vector_test.go[tag=vector-hyperscale-index]
 ----
 
 Parameterizing the query, as with xref:sqlpp-queries-with-sdk.adoc#parameterized-queries[regular queries], will allow the reuse of the xref:server:n1ql:n1ql-intro/queriesandresults.adoc#prepare-stmts[Query Plan].
@@ -61,7 +61,7 @@ This can be more efficient, unless you are doing a lot of optimization to your q
 .Parameterized Vector Query
 [source,go,indent=0]
 ----
-include::devguide:example$go/n1ql-query-vector.go[tag=vector-hyperscale-index-parameterized]
+include::devguide:example$go/n1ql-query-vector_test.go[tag=vector-hyperscale-index-parameterized]
 ----
 
 
@@ -84,7 +84,7 @@ In this first example we are performing a single vector query:
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=single_vector_query]
+include::devguide:example$go/search_test.go[tag=single_vector_query]
 ----
 
 Let's break this down.
@@ -158,7 +158,7 @@ You can run multiple vector queries together:
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=multiple_vector_queries]
+include::devguide:example$go/search_test.go[tag=multiple_vector_queries]
 ----
 
 
@@ -169,7 +169,7 @@ You can combine a traditional Search query with vector queries:
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/search.go[tag=vector_fts_query_combination]
+include::devguide:example$go/search_test.go[tag=vector_fts_query_combination]
 ----
 
 How the results are combined (ANDed or ORed) can be controlled with `vector.SearchOptions.VectorQueryCombination`.

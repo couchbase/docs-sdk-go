@@ -17,7 +17,7 @@ It is possible to customize this behavior by modifying the configuration:
 
 [source,go]
 ----
-include::devguide:example$go/observability-tracing.go[tag=threshold-logging]
+include::devguide:example$go/observability-tracing_test.go[tag=threshold-logging]
 ----
 
 In this case the emit interval is one minute and Key/Value requests will only be considered if their latency is greater or equal to two seconds.
@@ -92,7 +92,7 @@ Then configure the tracer:
 
 [source,go]
 ----
-include::devguide:example$go/observability-tracing.go[tag=otel-tracing]
+include::devguide:example$go/observability-tracing_test.go[tag=otel-tracing]
 ----
 
 At this point the SDK will automatically be exporting spans, and you should see them in your receiver of choice.
@@ -122,5 +122,5 @@ Wrap an existing OpenTelemetry span with `gocbopentelemetry.NewOpenTelemetryRequ
 
 [source,go]
 ----
-include::devguide:example$go/observability-tracing.go[tag=parent-span]
+include::devguide:example$go/observability-tracing_test.go[tag=parent-span]
 ----
