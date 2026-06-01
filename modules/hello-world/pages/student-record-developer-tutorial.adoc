@@ -294,53 +294,55 @@ Next, connect your Go SDK to your cluster.
 === Set Up Logging
 Before we connect to the cluster we want a way to see the output of the SDK and any errors that may occur.
 
-. In your `student-record` directory, create a new file called `logger.go`.
+. In your `student-record` directory, create a new directory `internal` containing a file called `logger.go`.
 +
 ....
 📂 ~ (your home directory)
   📂 student-record
     📃 go.mod
-    📃 logger.go ⬅ here!
+    📂 internal
+        📃 logger.go ⬅ here!
 ....
 +
-. Paste the following code block into your `logger.go` file:
+. Paste the following code block into your `internal/logger.go` file:
 +
 [source, go]
 ----
-include::devguide:example$go/student-record/logger.go[]
+include::devguide:example$go/student-record/internal/logger.go[]
 ----
-
 
 [#connect-to-the-cluster]
 === Connect the SDK to Your Cluster
 
 To connect to the cluster:
 
-. In your `student-record` directory, create a new file called `connect_student.go`.
+. In your `student-record` directory, create a new directory called `connect_student` containing a `main.go` file.
 +
 ....
 📂 ~ (your home directory)
   📂 student-record
     📃 go.mod
-    📃 logger.go
-    📃 connect_student.go ⬅ here!
+    📂 internal
+        📃 logger.go
+    📂 connect_student
+        📃 main.go ⬅ here!
 ....
 +
-. Paste the following code block into your `connect_student.go` file:
+. Paste the following code block into your `connect_student/main.go` file:
 +
 [source, go]
 ----
-include::devguide:example$go/student-record/connect_student.go[]
+include::devguide:example$go/student-record/connect_student/main.go[]
 ----
 
-. In the `connect_student.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
+. In the `connect_student/main.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
 +
 . Open a terminal window and navigate to your `student-record` directory.
 . Run the following command to check that the connection works:
 +
 [source, console]
 ----
-go run connect_student.go
+go run ./connect_student
 ----
 +
 If the connection is successful, the collection name outputs in the console log.
@@ -389,21 +391,21 @@ After connecting to the cluster, you can create a student record in the form of 
 
 To create a student record:
 
-. In your `student-record` directory, create a new file called `insert_student.go`.
-. Paste the following code block into your `insert_student.go` file:
+. In your `student-record` directory, create a new directory called `insert_student` containing a `main.go` file.
+. Paste the following code block into your `insert_student/main.go` file:
 +
 [source, go]
 ----
-include::devguide:example$go/student-record/insert_student.go[]
+include::devguide:example$go/student-record/insert_student/main.go[]
 ----
 +
-. In the `insert_student.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
+. In the `insert_student/main.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
 . Open a terminal window and navigate to your `student-record` directory.
 . Run the following command to insert the student record into the collection:
 +
 [source, console]
 ----
-go run insert_student.go
+go run ./insert_student
 ----
 +
 . From the Capella UI, go to your student cluster and check the `student-record-collection` for the new student record you just added:
@@ -419,21 +421,21 @@ image::new-student-record.png[alt="Student added to the student-record-collectio
 Creating course records is similar to creating student records.
 To create course records:
 
-. In your `student-record` directory, create a new file called `insert_courses.go`.
-. Paste the following code block into your `insert_courses.go` file:
+. In your `student-record` directory, create a new directory called `insert_courses` containing a `main.go` file.
+. Paste the following code block into your `insert_courses/main.go` file:
 +
 [source, go]
 ----
-include::devguide:example$go/student-record/insert_courses.go[]
+include::devguide:example$go/student-record/insert_courses/main.go[]
 ----
 +
-. In the `insert_courses.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
+. In the `insert_courses/main.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
 . Open a terminal window and navigate to your `student-record` directory.
 . Run the following command to insert the course records into the collection:
 +
 [source, console]
 ----
-go run insert_courses.go
+go run ./insert_courses
 ----
 +
 . From the Capella UI, go to your student cluster and check the `course-record-collection` for the new course records you just added.
@@ -605,21 +607,21 @@ You can use the SDK to retrieve all course records at once, or narrow your searc
 
 To retrieve all of your course records using the Go SDK:
 
-. In your `student-record` directory, create a new file called `art_school_retriever_all.go`.
-. Paste the following code block into your `art_school_retriever_all.go` file:
+. In your `student-record` directory, create a new directory called `art_school_retriever_all` containing a `main.go` file.
+. Paste the following code block into your `art_school_retriever_all/main.go` file:
 +
 [source, go]
 ----
-include::devguide:example$go/student-record/art_school_retriever_all.go[]
+include::devguide:example$go/student-record/art_school_retriever_all/main.go[]
 ----
 +
-. In the `art_school_retriever_all.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
+. In the `art_school_retriever_all/main.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
 . Open a terminal window and navigate to your `student-record` directory.
 . Run the following command to retrieve all course records:
 +
 [source, console]
 ----
-go run art_school_retriever_all.go
+go run ./art_school_retriever_all
 ----
 +
 If the retrieval is successful, the course information outputs in the console log.
@@ -651,21 +653,21 @@ time="2026-03-31T12:02:59+01:00" level=info msg="Agent close complete"
 You can set parameters in your code to narrow your search down further.
 To retrieve only courses with less than 200 `credit-points` using the Go SDK:
 
-. In your `student-record` directory, create a new file called `art_school_retriever.go`.
-. Paste the following code block into your `art_school_retriever.go` file:
+. In your `student-record` directory, create a new directory called `art_school_retriever` containing a `main.go` file.
+. Paste the following code block into your `art_school_retriever/main.go` file:
 +
 [source, go]
 ----
-include::devguide:example$go/student-record/art_school_retriever.go[]
+include::devguide:example$go/student-record/art_school_retriever/main.go[]
 ----
 +
-. In the `art_school_retriever.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
+. In the `art_school_retriever/main.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
 . Open a terminal window and navigate to your `student-record` directory.
 . Run the following command to retrieve course records with parameters:
 +
 [source, console]
 ----
-go run art_school_retriever.go
+go run ./art_school_retriever
 ----
 +
 If the retrieval is successful, the course information with your parameters outputs in the console log.
@@ -703,24 +705,24 @@ After retrieving student and course records, you can add enrollment details to t
 
 To add enrollment details to a student record:
 
-. In your `student-record` directory, create a new file called `add_enrollments.go`.
-. Paste the following code block into your `add_enrollments.go` file:
+. In your `student-record` directory, create a new directory called `add_enrollments` containing a `main.go` file.
+. Paste the following code block into your `add_enrollments/main.go` file:
 +
 [source, go]
 ----
-include::devguide:example$go/student-record/add_enrollments.go[]
+include::devguide:example$go/student-record/add_enrollments/main.go[]
 ----
 +
 NOTE: Because this is a tutorial, you do not need to add an error check to make sure that your collection has returned an item.
 In a live application, error checks must be made to prevent errors and keep the application running.
 +
-. In the `add_enrollments.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
+. In the `add_enrollments/main.go` file, replace the `\<<connection-string>>`, `\<<username>>`, and `\<<password>>` placeholders with the connection string, username, and password that you noted when configuring the cluster connection.
 . Open a terminal window and navigate to your `student-record` directory.
 . Run the following command to add the enrollment details to the student record:
 +
 [source, console]
 ----
-go run add_enrollments.go
+go run ./add_enrollments
 ----
 +
 . From the Capella UI, go to your student cluster.

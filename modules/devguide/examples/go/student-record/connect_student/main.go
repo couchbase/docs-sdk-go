@@ -1,11 +1,14 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
+	"fmt"
 	"log"
 	"time"
 
 	"github.com/couchbase/gocb/v2"
+	"github.com/sirupsen/logrus"
+
+	"student-record/internal"
 )
 
 func main() {
@@ -14,8 +17,9 @@ func main() {
 	password := "<<password>>"                  // Replace this with password from cluster access credentials
 
 	// Setup info level logging.
-	gocb.SetLogger(NewLogger(logrus.InfoLevel))
+	gocb.SetLogger(internal.NewLogger(logrus.InfoLevel))
 
+	// Connecting to the cluster
 	options := gocb.ClusterOptions{
 		Authenticator: gocb.PasswordAuthenticator{
 			Username: username,
@@ -23,6 +27,7 @@ func main() {
 		},
 	}
 
+	// Use the pre-configured profile below to avoid latency issues with your connection.
 	if err := options.ApplyProfile(gocb.ClusterConfigProfileWanDevelopment); err != nil {
 		log.Fatal(err)
 	}
@@ -32,30 +37,25 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// The `cluster.Bucket` retrieves the bucket you set up for the student cluster.
 	bucket := cluster.Bucket("student-bucket")
+
+	// Forces the application to wait until the bucket is ready.
 	err = bucket.WaitUntilReady(10*time.Second, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// The `bucket.Scope` retrieves the `art-school-scope` from the bucket.
 	scope := bucket.Scope("art-school-scope")
+
+	// The `scope.Collection` retrieves the student collection from the scope.
 	studentRecords := scope.Collection("student-record-collection")
 
-	// Create and populate the student record.
-	hilary := map[string]interface{}{
-		"name":          "Hilary Smith",
-		"date-of-birth": "1980-12-21",
-	}
+	// A check to make sure the collection is connected and retrieved when you run the application.
+	fmt.Println("The name of this collection is", studentRecords.Name())
 
-	// The `Upsert` function inserts or updates documents in a collection.
-	// The first parameter is a unique ID for the document, similar to a primary key used in a relational database system.
-	// If the `Upsert` call finds a document with a matching ID in the collection, it updates the document.
-	// If there is no matching ID, it creates a new document.
-	_, err = studentRecords.Upsert("000001", hilary, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	// Like with all database systems, it's good practice to disconnect from the Couchbase cluster after you have finished working with it.
 	err = cluster.Close(nil)
 	if err != nil {
 		log.Fatal(err)
