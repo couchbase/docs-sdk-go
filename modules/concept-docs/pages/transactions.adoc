@@ -21,7 +21,7 @@ Internally `Transactions` is created on `gocb.Connect(...)` and its lifetime is 
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=init,indent=0]
+include::devguide:example$go/transactions_test.go[tag=init,indent=0]
 ----
 
 NOTE: Multiple calls to `cluster.Transactions()` will yield the same `Transactions` object.
@@ -29,7 +29,7 @@ This is because the `Transactions` object performs automated xref:concept-docs:t
 
 [source,go]
 ----
-include::devguide:example$/go/transactions.go[tag=create-simple,indent=0]
+include::devguide:example$go/transactions_test.go[tag=create-simple,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tags=mechanics;!library-cleanup-process]
@@ -49,7 +49,7 @@ The application can use this to signal why it triggered a rollback, as so:
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=rollbackCause,indent=0]
+include::devguide:example$go/transactions_test.go[tag=rollbackCause,indent=0]
 ----
 
 After a transaction is rolled back, it cannot be committed, no further operations are allowed on it, and the SDK will not try to automatically commit it at the end of the code block.
@@ -68,7 +68,7 @@ include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=custom-m
 
 [source,go]
 ----
-include::devguide:example$/go/transactions.go[tag=customMetadata,indent=0]
+include::devguide:example$go/transactions_test.go[tag=customMetadata,indent=0]
 ----
 
 When specified:
@@ -80,7 +80,7 @@ Custom metadata collections can also be provided at the transaction level itself
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=customMetadataTxn,indent=0]
+include::devguide:example$go/transactions_test.go[tag=customMetadataTxn,indent=0]
 ----
 
 This will override any metadata collection that has been provided at the `Transactions` level.

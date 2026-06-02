@@ -79,14 +79,14 @@ This means that we need to do a bit of marshalling to get the data into a set of
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/custom-logging.go[tag=loggerwrapper]
+include::devguide:example$go/custom-logging_test.go[tag=loggerwrapper]
 ----
 
 Next we need to create a logrus logger instance, wrap it in our own logger and then pass it to gocb:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/custom-logging.go[tag=creation]
+include::devguide:example$go/custom-logging_test.go[tag=creation]
 ----
 
 Now all of the gocb logging output will go through our logger and be outputted to stdout (e.g. the terminal) in JSON.

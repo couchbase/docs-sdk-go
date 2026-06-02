@@ -17,7 +17,7 @@ Our xref:hello-world:start-using-sdk.adoc[Getting Started] guide introduced basi
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/connecting.go[tag=simpleconnect]
+include::devguide:example$go/connecting_test.go[tag=simpleconnect]
 ----
 
 
@@ -37,7 +37,7 @@ That is:
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/connecting-cca.go[tag=certconnect]
+include::devguide:example$go/connecting-cca_test.go[tag=certconnect]
 ----
 
 
@@ -45,5 +45,5 @@ include::{version-common}@sdk:shared:partial$auth-overview.adoc[tag=ldap]
 
 [source,golang,indent=0]
 ----
-include::devguide:example$go/connecting.go[tag=insecureLDAP]
+include::devguide:example$go/connecting_test.go[tag=insecureLDAP]
 ----

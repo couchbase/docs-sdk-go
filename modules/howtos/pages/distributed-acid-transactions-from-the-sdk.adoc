@@ -49,7 +49,7 @@ include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=creating
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=examples,indent=0]
+include::devguide:example$go/transactions_test.go[tag=examples,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=lambda-ctx]
@@ -101,7 +101,7 @@ To insert a document within a transaction {lambda}, simply call `ctx.Insert()`.
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=insert,indent=0]
+include::devguide:example$go/transactions_test.go[tag=insert,indent=0]
 ----
 
 === Get
@@ -110,7 +110,7 @@ To retrieve a document from the database you can call `ctx.Get()`.
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=get,indent=0]
+include::devguide:example$go/transactions_test.go[tag=get,indent=0]
 ----
 
 `ctx.Get()` will return a `TransactionGetResult` object, which is very similar to the `GetResult` you are used to.
@@ -119,7 +119,7 @@ Getting a document could potentially return an `ErrDocumentNotFound` which can b
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=getOpt,indent=0]
+include::devguide:example$go/transactions_test.go[tag=getOpt,indent=0]
 ----
 
 If the `ErrDocumentNotFound` is not ignored then `Get` will cause the transaction to fail with `TransactionFailedError` (after rolling back any changes, of course).
@@ -129,7 +129,7 @@ Gets will "Read Your Own Writes", e.g. this will succeed:
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=getReadOwnWrites,indent=0]
+include::devguide:example$go/transactions_test.go[tag=getReadOwnWrites,indent=0]
 ----
 
 === Replace
@@ -139,7 +139,7 @@ This is necessary so the SDK can check that the document is not involved in anot
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=replace,indent=0]
+include::devguide:example$go/transactions_test.go[tag=replace,indent=0]
 ----
 
 === Remove
@@ -148,7 +148,7 @@ As with replaces, removing a document requires a `ctx.Get()` call first.
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=remove,indent=0]
+include::devguide:example$go/transactions_test.go[tag=remove,indent=0]
 ----
 
 == {sqlpp} Queries
@@ -168,21 +168,21 @@ Here is an example of selecting some rows from the `travel-sample` bucket:
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=querySelectScope,indent=0]
+include::devguide:example$go/transactions_test.go[tag=querySelectScope,indent=0]
 ----
 
 An example using a `Scope` for an UPDATE operation:
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=queryUpdate,indent=0]
+include::devguide:example$go/transactions_test.go[tag=queryUpdate,indent=0]
 ----
 
 And an example combining `SELECT` and `UPDATE`.
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=queryComplex,indent=0]
+include::devguide:example$go/transactions_test.go[tag=queryComplex,indent=0]
 ----
 
 As you can see from the snippet above, it is possible to call regular Go methods from the {lambda}, permitting complex logic to be performed.
@@ -193,7 +193,7 @@ This example shows inserting a document and then selecting it again:
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=queryInsert,indent=0]
+include::devguide:example$go/transactions_test.go[tag=queryInsert,indent=0]
 ----
 
 <1> The inserted document is only staged at this point, as the transaction has not yet committed. +
@@ -206,7 +206,7 @@ Query options can be provided via `TransactionQueryOptions`, which provides a su
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=queryOptions,indent=0]
+include::devguide:example$go/transactions_test.go[tag=queryOptions,indent=0]
 ----
 
 .Supported Transaction Query Options
@@ -235,7 +235,7 @@ In this example we insert a document with a key-value operation, and read it wit
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=queryRyow,indent=0]
+include::devguide:example$go/transactions_test.go[tag=queryRyow,indent=0]
 ----
 
 <1> The key-value insert operation is only staged, and so it is not visible to other transactions or non-transactional actors.
@@ -280,7 +280,7 @@ For example, if you want to change the level of durability which must be attaine
 
 [source,go]
 ----
-include::devguide:example$go/transactions.go[tag=config,indent=0]
+include::devguide:example$go/transactions_test.go[tag=config,indent=0]
 ----
 
 include::{version-common}@sdk:shared:partial$acid-transactions.adoc[tag=config]

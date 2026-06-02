@@ -1,0 +1,51 @@
+package main
+
+import (
+	"github.com/couchbase/gocb/v2"
+)
+
+func Example_transcodingRawbinary() {
+	opts := gocb.ClusterOptions{
+		Authenticator: gocb.PasswordAuthenticator{
+			Username: "Administrator",
+			Password: "password",
+		},
+	}
+	cluster, err := gocb.Connect("localhost", opts)
+	if err != nil {
+		panic(err)
+	}
+
+	bucket := cluster.Bucket("travel-sample")
+
+	collection := bucket.Scope("inventory").Collection("airport")
+
+	// #tag::rawbinary[]
+	input := []byte("hello world")
+	transcoder := gocb.NewRawBinaryTranscoder()
+
+	_, err = collection.Upsert("key", input, &gocb.UpsertOptions{
+		Transcoder: transcoder,
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	getRes, err := collection.Get("key", &gocb.GetOptions{
+		Transcoder: transcoder,
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	var returned []byte
+	err = getRes.Content(&returned)
+	if err != nil {
+		panic(err)
+	}
+	// #end::rawbinary[]
+
+	if err := cluster.Close(nil); err != nil {
+		panic(err)
+	}
+}

@@ -30,7 +30,7 @@ but first let's look at those data operations, and installing the {name-sdk}.
 
 [source,golang]
 ----
-include::devguide:example$go/kv-durability-enhanced.go[indent=0,tag=durability]
+include::devguide:example$go/kv-durability-enhanced_test.go[indent=0,tag=durability]
 ----
 
 `upsert` inserts (creates) the document if it does not exist, or replaces it if it does.
@@ -150,7 +150,7 @@ If you're all set up and in a real hurry, just grab this code sample and add in 
 [%collapsible]
 ====
 ....
-include::devguide:example$go/cloud.go[tags=**]
+include::devguide:example$go/cloud_test.go[tags=**]
 ....
 ====
 
@@ -171,7 +171,7 @@ Couchbase Capella::
 --
 [source,golang]
 ----
-include::devguide:example$go/cloud.go[tag=connect,indent=0]
+include::devguide:example$go/cloud_test.go[tag=connect,indent=0]
 ----
 
 Note, the client certificate for connecting to a Capella cluster is included in the SDK installation.
@@ -182,7 +182,7 @@ Self-Managed Couchbase Server::
 -- 
 [source,golang]
 ----
-include::devguide:example$go/startusing.go[tag=connect,indent=0]
+include::devguide:example$go/startusing_test.go[tag=connect,indent=0]
 ----
 
 For developing locally on the same machine as Couchbase Server, your URI can be `couchbase://localhost` as shown here. 
@@ -230,7 +230,7 @@ Following successful authentication, add this code snippet to access your `Bucke
 
 [source,golang]
 ----
-include::devguide:example$go/cloud.go[tag=bucket,indent=0]
+include::devguide:example$go/cloud_test.go[tag=bucket,indent=0]
 ----
 
 
@@ -248,7 +248,7 @@ Here we refer to the `users` collection within the `tenant_agent_00` scope from 
 
 [source,golang]
 ----
-include::devguide:example$go/cloud.go[tag=collection,indent=0]
+include::devguide:example$go/cloud_test.go[tag=collection,indent=0]
 ----
 
 
@@ -269,7 +269,7 @@ Add the following code to create a new document:
 
 [source,golang]
 ----
-include::devguide:example$go/cloud.go[tag=upsert,indent=0]
+include::devguide:example$go/cloud_test.go[tag=upsert,indent=0]
 ----
 
 
@@ -280,7 +280,7 @@ If the collection does not have a document with this ID, the `get` method also t
 
 [source,golang]
 ----
-include::devguide:example$go/cloud.go[tag=get,indent=0]
+include::devguide:example$go/cloud_test.go[tag=get,indent=0]
 ----
 
 
@@ -296,7 +296,7 @@ Without explicitly setting it, a newly-created document would have a CAS value o
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-crud.go[tag=replacecas]
+include::devguide:example$go/kv-crud_test.go[tag=replacecas]
 ----
 
 Typically we would want to use CAS for something more meaningful like performing a `Get`, modifying the result and updating the document.
@@ -304,7 +304,7 @@ By using the CAS value we know that if anyone else modified this document and up
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-crud.go[tag=update]
+include::devguide:example$go/kv-crud_test.go[tag=update]
 ----
 
 
@@ -317,7 +317,7 @@ When removing a document, you will have the same concern for durability as with 
 
 [source,go,indent=0]
 ----
-include::devguide:example$go/kv-crud.go[tag=remove]
+include::devguide:example$go/kv-crud_test.go[tag=remove]
 ----
 
 ////

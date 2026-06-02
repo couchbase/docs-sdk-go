@@ -21,7 +21,7 @@ Here is an example with `EmitInterval` set at 30 seconds:
 
 [source,go]
 ----
-include::devguide:example$go/observability-metrics.go[tag=logging-meter]
+include::devguide:example$go/observability-metrics_test.go[tag=logging-meter]
 ----
 
 Once enabled, there is no further configuration needed. The `LoggingMeter` will emit the collected request statistics every interval.
@@ -101,7 +101,7 @@ For metrics, add this logic to the application:
 
 [source,go]
 ----
-include::devguide:example$go/observability-metrics.go[tag=otel-meter]
+include::devguide:example$go/observability-metrics_test.go[tag=otel-meter]
 ----
 
 At this point the SDK is hooked up with the OpenTelemetry metrics and will emit them to the exporter.

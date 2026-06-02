@@ -97,7 +97,7 @@ The `LookupInResult` contains two functions for inspecting the results:
 .Retrieve Sub-Document value
 [source,go]
 ----
-include::devguide:example$go/subdoc-lookupin.go[tag=lookupInGet, indent=0]
+include::devguide:example$go/subdoc-lookupin_test.go[tag=lookupInGet, indent=0]
 ----
 
 NOTE: The value pointer provided to the `ContentAt` function must match the type at the provided index.
@@ -105,7 +105,7 @@ NOTE: The value pointer provided to the `ContentAt` function must match the type
 .Check existence of Sub-Document path
 [source,go]
 ----
-include::devguide:example$go/subdoc-lookupin.go[tag=lookupInExists, indent=0]
+include::devguide:example$go/subdoc-lookupin_test.go[tag=lookupInExists, indent=0]
 ----
 
 NOTE: Using `ExistsSpec` with `ContentAt` will return an error if the path does not exist.
@@ -115,7 +115,7 @@ Multiple operations can be combined as well:
 .Combine multiple lookup operations
 [source,go]
 ----
-include::devguide:example$go/subdoc-lookupin.go[tag=lookupInMulti, indent=0]
+include::devguide:example$go/subdoc-lookupin_test.go[tag=lookupInMulti, indent=0]
 ----
 
 
@@ -127,7 +127,7 @@ The simplest of these operations is _Upsert_, which, similar to the fulldoc-leve
 .Upserting a new Sub-Document
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein.go[tag=mutateInUpsert, indent=0]
+include::devguide:example$go/subdoc-mutatein_test.go[tag=mutateInUpsert, indent=0]
 ----
 
 Likewise, the _Insert_ operation will only add the new value to the path if it does not exist:
@@ -135,7 +135,7 @@ Likewise, the _Insert_ operation will only add the new value to the path if it d
 .Inserting a Sub-Document
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein.go[tag=mutateInInsert, indent=0]
+include::devguide:example$go/subdoc-mutatein_test.go[tag=mutateInInsert, indent=0]
 ----
 
 Dictionary values can also be replaced or removed, and you may combine any multiple Sub-Document operations --
@@ -147,7 +147,7 @@ Here's an example of one which replaces one path and removes another.
 .Combine multiple mutate operations
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein.go[tag=mutateInMulti, indent=0]
+include::devguide:example$go/subdoc-mutatein_test.go[tag=mutateInMulti, indent=0]
 ----
 
 NOTE: `MutateIn` is an _atomic_ operation.
@@ -161,13 +161,13 @@ Unlike fulldoc _Append_/_Prepend_ operations (which simply concatenate bytes to 
 .Array appending a sub-document
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppend, indent=0]
+include::devguide:example$go/subdoc-mutatein-arrays_test.go[tag=mutateInArrayAppend, indent=0]
 ----
 
 .Array prepending a sub-document
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayPrepend, indent=0]
+include::devguide:example$go/subdoc-mutatein-arrays_test.go[tag=mutateInArrayPrepend, indent=0]
 ----
 
 If your document only needs to contain an array, you do not have to create a top-level object wrapper to contain it.
@@ -176,7 +176,7 @@ Simply initialize the document with an empty array and then use the empty path f
 .Creating and populating an array document
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDoc, indent=0]
+include::devguide:example$go/subdoc-mutatein-arrays_test.go[tag=mutateInArrayDoc, indent=0]
 ----
 
 Note that in the above we carried over the CAS value from the Upsert operation to ensure that if someone else modified the document first then our change would error.
@@ -189,13 +189,13 @@ Be sure to know the difference between the use of the _HasMultiple_ option being
 .Add multiple elements to an array
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDocMulti, indent=0]
+include::devguide:example$go/subdoc-mutatein-arrays_test.go[tag=mutateInArrayDocMulti, indent=0]
 ----
 
 .Add single array as element to existing array
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayDocMultiSingle, indent=0]
+include::devguide:example$go/subdoc-mutatein-arrays_test.go[tag=mutateInArrayDocMultiSingle, indent=0]
 ----
 
 Note that using _HasMultiple_ with a single _ArrayAppend_ operation results in greater performance increase and bandwidth savings than simply specifying a single _ArrayAppend_ for each element.
@@ -204,7 +204,7 @@ Below we set elements individually to achieve the same as the `HasMultiple` exam
 .Adding multiple elements to array (slow)
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppendMulti, indent=0]
+include::devguide:example$go/subdoc-mutatein-arrays_test.go[tag=mutateInArrayAppendMulti, indent=0]
 ----
 
 If you wish to create an array if it does not exist and also push elements to it within the same operation you may use the <<subdoc_create_path,_CreatePath_>> option:
@@ -212,7 +212,7 @@ If you wish to create an array if it does not exist and also push elements to it
 .Array appending a sub-document with create path
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAppendCreatePath, indent=0]
+include::devguide:example$go/subdoc-mutatein-arrays_test.go[tag=mutateInArrayAppendCreatePath, indent=0]
 ----
 
 == Arrays as Unique Sets
@@ -223,7 +223,7 @@ This will do a check to determine if the given value exists or not before actual
 .Adding unique elements to arrays
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayAddUnique, indent=0]
+include::devguide:example$go/subdoc-mutatein-arrays_test.go[tag=mutateInArrayAddUnique, indent=0]
 ----
 
 Note that currently the _ArrayAddUnique_ will fail with a _Path Mismatch_ error if the array contains JSON _floats_, _objects_, or _arrays_.
@@ -243,7 +243,7 @@ For example, to insert `"Cruel"` as the second element in the array `["Hello", "
 .Inserting elements into arrays
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein-arrays.go[tag=mutateInArrayInsert, indent=0]
+include::devguide:example$go/subdoc-mutatein-arrays_test.go[tag=mutateInArrayInsert, indent=0]
 ----
 
 // for your examples, above, CD: “I feel like somewhere in this we should also just a an example path like "my.path[1]" too, just to show how to use the index with a nested path. I don't think it's necessarily clear.”
@@ -259,7 +259,7 @@ These operations are logically similar to the _counter_ operation on an entire d
 .Incrementing a counter
 [source,go]
 ----
-include::devguide:example$go/subdoc-counter.go[tag=mutateInIncrement, indent=0]
+include::devguide:example$go/subdoc-counter_test.go[tag=mutateInIncrement, indent=0]
 ----
 
 The _Increment_ and _Decrement_ operations perform simple arithmetic against a numeric value.
@@ -268,7 +268,7 @@ The updated value is returned.
 .Decrementing a counter
 [source,go]
 ----
-include::devguide:example$go/subdoc-counter.go[tag=mutateInDecrement, indent=0]
+include::devguide:example$go/subdoc-counter_test.go[tag=mutateInDecrement, indent=0]
 ----
 
 The existing value for _counter_ operations must be within range of a 64 bit signed integer.
@@ -335,7 +335,7 @@ In this case, the _CreatePath_ option may be used.
 .Upsert with CreatePath
 [source,go]
 ----
-include::devguide:example$go/subdoc-mutatein.go[tag=mutateInCreatePath, indent=0]
+include::devguide:example$go/subdoc-mutatein_test.go[tag=mutateInCreatePath, indent=0]
 ----
 
 == Reading Sub-Documents From Replicas
@@ -347,7 +347,7 @@ The `Collection.LookupInAnyReplica` method returns the first response -- from ac
 .Sub-Document read from any replica
 [source,go]
 ----
-include::devguide:example$go/subdoc-lookupin.go[tag=lookupInAnyReplica, indent=0]
+include::devguide:example$go/subdoc-lookupin_test.go[tag=lookupInAnyReplica, indent=0]
 ----
 
 The `Collection.LookupInAllReplicas` method fetches all available replicas (and the active copy), and returns all responses:
@@ -355,7 +355,7 @@ The `Collection.LookupInAllReplicas` method fetches all available replicas (and 
 .Sub-Document read from all replicas
 [source,go]
 ----
-include::devguide:example$go/subdoc-lookupin.go[tag=lookupInAllReplicas, indent=0]
+include::devguide:example$go/subdoc-lookupin_test.go[tag=lookupInAllReplicas, indent=0]
 ----
 
 The results for both operations have type `LookupInReplicaResult` which exposes the same interface as `LookupInResult`, with the addition of an `IsReplica()` method that indicates whether the result originated from a replica or an active node.
@@ -368,7 +368,7 @@ For example the following two blocks can execute concurrently without any risk o
 .Performing concurrent Sub Document mutations
 [source,go]
 ----
-include::devguide:example$go/subdoc.go[tag=concurrent, indent=0]
+include::devguide:example$go/subdoc_test.go[tag=concurrent, indent=0]
 ----
 
 Even when modifying the _same_ part of the document, operations will not necessarily conflict.
@@ -380,7 +380,7 @@ If CAS is required then it can be provided like this:
 .Performing concurrent Sub Document mutations with CAS
 [source,go]
 ----
-include::devguide:example$go/subdoc.go[tag=cas, indent=0]
+include::devguide:example$go/subdoc_test.go[tag=cas, indent=0]
 ----
 
 == Durability
@@ -391,7 +391,7 @@ xref:concept-docs:durability-replication-failure-considerations.adoc#older-serve
 .Performing Sub Document mutations with traditional durability
 [source,go]
 ----
-include::devguide:example$go/subdoc-durability.go[tag=traddurability, indent=0]
+include::devguide:example$go/subdoc-durability_test.go[tag=traddurability, indent=0]
 ----
 
 In Couchbase Server 6.5 and up, this is built upon with xref:concept-docs:durability-replication-failure-considerations.adoc#durable-writes[Durable Writes], 
@@ -400,7 +400,7 @@ which uses the concept of xref:{version-server}@server:learn:data/durability.ado
 .Performing Sub Document mutations with Durable Writes
 [source,go]
 ----
-include::devguide:example$go/subdoc-durability.go[tag=newdurability, indent=0]
+include::devguide:example$go/subdoc-durability_test.go[tag=newdurability, indent=0]
 ----
 
 == Error handling

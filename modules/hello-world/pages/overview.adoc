@@ -39,7 +39,7 @@ Data Ops (CRUD)::
 
 [source,golang]
 ----
-include::devguide:example$go/kv-durability-enhanced.go[indent=0,tag=durability]
+include::devguide:example$go/kv-durability-enhanced_test.go[indent=0,tag=durability]
 ----
 --
 
@@ -49,7 +49,7 @@ include::devguide:example$go/kv-durability-enhanced.go[indent=0,tag=durability]
 
 [source,golang]
 ----
-include::devguide:example$go/n1ql-query-consistency.go[tag=consistency,indent=0]
+include::devguide:example$go/n1ql-query-consistency_test.go[tag=consistency,indent=0]
 ----
 --
 
@@ -59,7 +59,7 @@ Vector Search::
 
 [source,golang]
 ----
-include::devguide:example$go/search.go[tag=vector_fts_query_combination,indent=0]
+include::devguide:example$go/search_test.go[tag=vector_fts_query_combination,indent=0]
 ----
 --
 ====
@@ -236,7 +236,7 @@ include::{version-common}@sdk:shared:partial$columnar-available.adoc[tag=initial
 
 [source,go]
 ----
-include::devguide:example$go/overview.go[tag=overview,indent=0]
+include::devguide:example$go/overview_test.go[tag=overview,indent=0]
 ----
 
 The Couchbase Go SDK 2.x is a complete rewrite of the API, reducing the number of overloads to present a simplified surface area, and adding support for Couchbase Server features like Collections and Scopes (available from Couchbase Server 7.0).
