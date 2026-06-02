@@ -2,39 +2,65 @@ name: Examples
 
 on:
   push:
-    branches:
+    branches: &trigger-branches
       - release/2.*
 
+    paths: &trigger-paths
+      - modules/devguide/examples/go/**
+      - .github/workflows/examples.yml
+      - antora.yml
+      - modules/project-docs/pages/sdk-release-notes.adoc
+
   pull_request:
-    branches:
-      - release/2.*
+    branches: *trigger-branches
+    paths: *trigger-paths
+
+  workflow_dispatch:
+    inputs:
+      sdk-version:
+        description: 'gocb version to build with (e.g. v2.12.3, master, c84becd). If not set, will use the version specified in go.mod.'
+        required: false
+        default: ''
 
 jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./modules/devguide/examples/go
+
     steps:
       - uses: actions/checkout@v6
 
       - uses: actions/setup-go@v6
         with:
-          go-version-file: ./modules/devguide/examples/go/go.mod
+          go-version: stable
+          cache-dependency-path: ./modules/devguide/examples/go/go.mod
 
-      - working-directory: ./modules/devguide/examples/go
-        run: |
-          make lint
+      - if: inputs.sdk-version != ''
+        run: make set-sdk-version SDK_VERSION=${{ inputs.sdk-version }}
 
+      - run: make lint
 
   build:
     name: Build
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./modules/devguide/examples/go
+
     steps:
       - uses: actions/checkout@v6
 
       - uses: actions/setup-go@v6
         with:
-          go-version-file: ./modules/devguide/examples/go/go.mod
+          go-version: stable
+          cache-dependency-path: ./modules/devguide/examples/go/go.mod
 
-      - working-directory: ./modules/devguide/examples/go
-        run: |
-          make build
+      - if: inputs.sdk-version != ''
+        run: make set-sdk-version SDK_VERSION=${{ inputs.sdk-version }}
+
+      - run: make build
