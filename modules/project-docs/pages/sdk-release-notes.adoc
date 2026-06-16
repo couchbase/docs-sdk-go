@@ -40,6 +40,20 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+=== Version 2.12.4 (16 June 2026)
+
+Version 2.12.4 is a maintenance release for the Go SDK 2.12.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.12.4?tab=doc[API Documentation]
+
+==== Fixed issues
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1824[GOCBC-1824]: Resolved a data race in `Collection.Scan` when `ScanOptions.Concurrency` is set to a value greater than 1.
+* https://jira.issues.couchbase.com/browse/GOCBC-1816[GOCBC-1816]: Resolved a data race during when `Cluster.Close` is called while operations are ongoing, due to how the meter was accessed internally.
+* https://jira.issues.couchbase.com/browse/GOCBC-1816[GOCBC-1821]: Fixed the value of `ScanTermMaximum`, which had been encoded incorrectly. This could lead to documents missing from a scan result when document keys include nonstandard unicode characters. `ScanTermMaximum` is now equivalent to `utf8.MaxRune`.
+* https://jira.issues.couchbase.com/browse/GOCBC-1828[GOCBC-1828]: Fixed an issue with `Collection.Scan` where any fatal errors from initial vBucket scans, could either be returned immediately, or via `ScanResult.Err` depending on goroutine scheduling. Now they are consistently returned immediately by `Collection.Scan`.
+* https://jira.issues.couchbase.com/browse/GOCBC-1835[GOCBC-1835]: Fixed an issue when an already cancelled `context.Context` is provided to an operation where the operation may still succeed. It is now guaranteed that the operation will fail with `ErrRequestCanceled`.
+
 === Version 2.12.3 (20 May 2026)
 
 Version 2.12.3 is a maintenance release for the Go SDK 2.12.
