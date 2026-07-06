@@ -3,5 +3,11 @@
 :page-topic-type: project-doc
 :page-toclevels: 2
 :page-aliases: relnotes-go-sdk,ROOT:relnotes-go-sdk,ROOT:sdk-release-notes,ROOT:release-notes
+:name_platform_lc: go
+
+include::6.5@sdk:shared:partial$use-latest.adoc[tag=latest]
+
+
 
 include::2.3@go-sdk:project-docs:page$sdk-release-notes.adoc[tag=latest]
+
