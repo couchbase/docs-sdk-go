@@ -40,6 +40,23 @@ We always recommend using the latest version of the SDK -- it contains all of th
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
 
+=== Version 2.12.5 (2 September 2026)
+
+Version 2.12.5 is a maintenance release for the Go SDK 2.12.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.12.5?tab=doc[API Documentation]
+
+==== New Features and Behavioral Changes
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1831[GOCBC-1831]: Logs related to HTTP operations now always include a unique request ID, which was only present for some HTTP operations previously.
+
+==== Fixed issues
+
+* https://jira.issues.couchbase.com/browse/GOCBC-1861[GOCBC-1861]: Fixed an issue where a negative `Initial` in `IncrementOptions`/`DecrementOptions` was failing with `ErrInvalidArgument` in `couchbase2` mode. This is now interpreted as absence of initial value (i.e. If the document does not exist, the operation will fail with `ErrDocumentNotFound`), consistent with the behavior when using the `couchbase(s)` scheme.
+* https://jira.issues.couchbase.com/browse/GOCBC-1855[GOCBC-1855]: Resolved a `WaitGroup`-related panic that could happen when `Cluster.Close` is called while operations are ongoing concurrently.
+* https://jira.issues.couchbase.com/browse/GOCBC-1862[GOCBC-1862]: Resolved an issue in `couchbase2` mode where a relevant gRPC status detail block was ignored if it was not the first detail block in the response. This meant that generic errors could be returned instead of a more specific error that was appropriate for the gRPC status.
+* https://jira.issues.couchbase.com/browse/GOCBC-1842[GOCBC-1842]: Fixed an issue where config attributes that we report in application telemetry and dispatch-level spans (Node UUID, canonical address) might not be propagated to a KV client if it is still dialing when the first cluster config is seen. This could result in the attributes missing from the application telemetry entries or dispatch spans, and in "failed to split host port" debug-level log lines.
+
 === Version 2.12.4 (16 June 2026)
 
 Version 2.12.4 is a maintenance release for the Go SDK 2.12.

@@ -1,5 +1,12 @@
 linters:
   disable:
     - errcheck
+  exclusions:
+    rules:
+      # TODO(DC): We should update the docs page using these examples to use the CollectionQueryIndexManager API instead
+      - path: query-index-manager_test.go
+        linters:
+          - staticcheck
+        text: "SA1019" # 'Using a deprecated function, variable, constant or field'
 
 version: "2"

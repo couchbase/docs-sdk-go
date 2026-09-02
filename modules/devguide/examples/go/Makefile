@@ -17,5 +17,5 @@ set-sdk-version:
 		go mod tidy
 
 lint:
-	go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.8
+	go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.13
 	golangci-lint run -v
