@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/couchbase/gocb-opentelemetry v0.3.0
-	github.com/couchbase/gocb/v2 v2.12.4
+	github.com/couchbase/gocb/v2 v2.12.5
 	github.com/couchbase/gocbencryption/v2 v2.0.0
 	github.com/pquerna/ffjson v0.0.0-20190930134022-aa0246cd15f7
 	github.com/sirupsen/logrus v1.9.3
@@ -19,7 +19,7 @@ require (
 require (
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/couchbase/gocbcore/v10 v10.9.3 // indirect
+	github.com/couchbase/gocbcore/v10 v10.9.4 // indirect
 	github.com/couchbase/gocbcoreps v0.1.5-0.20260413093139-b38df312dd87 // indirect
 	github.com/couchbase/goprotostellar v1.0.6-0.20260407143512-d7af25156dcc // indirect
 	github.com/couchbaselabs/gocbconnstr/v2 v2.0.0 // indirect
