@@ -17,45 +17,27 @@ Older versions may remain compatible, but are not supported.
 
 === OS Compatibility
 
-The {name-sdk} will run on, and is supported on, the following OSs and platforms.
-The SDK has been tested on a representative subset of the platforms listed below.
-
-****
-[discrete]
-=== GNU/Linux
-
-* Amazon Linux 2 & AL2023.
-* Red Hat Enterprise Linux 8, 9, & 10.
-* Oracle Linux 8, 9, & 10.
-* Ubuntu (LTS) 22.04 (_Jammy_) & 24.04 (_Noble_).
-* Debian 11 (_Bullseye_), Debian 12 (_Bookworm_), & Debian 13 (_Trixie_).
-* SUSE Enterprise Linux 12 & 15.
-* Alpine Linux 3.21 - 3.23.
-
-[discrete]
-=== Microsoft Windows
-
-* Microsoft Windows 10 & 11;
-* Windows Server 2019, 2022, & 2025.
-
-[discrete]
-=== Mac OS X
-
-* The current and previous two releases of OS X.
-At time of writing (February 2026): 26 (Tahoe), 15 (Sequoia), and 14 (Sonoma).
-****
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=os-compat]
 
 
 
 
 // Platforms, Chipsets, and Virtual Environments.
-include::{version-common}@sdk:shared:partial$platform.adoc[tag=virtual]
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=virtual]
+
 
 
 
 
 // Network Requirements
-include::{version-common}@sdk:shared:partial$network-requirements.adoc[]
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=network-requirements]
+
+
+
+// Serverless Environments
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=serverless]
+
+
 
 
 
@@ -66,20 +48,14 @@ Couchbase SDKs are tested against a variety of different environments to ensure 
 
 === Couchbase Version/SDK Version Matrix
 
-The matrix below denotes the version of Couchbase Server, the version of the {name-sdk} and whether the SDK is:
-
-* ✖ *Unsupported*: This combination is not tested, and is not within the scope of technical support if you have purchased a support agreement.
-* ◎ *Compatible*: This combination has been tested previously, and should be compatible.
-Nevertheless, this combination is not recommended by our technical support organization, as not all of the latest features are supported by it.
-It is best to upgrade either the SDK or the Couchbase version you are using.
-* ✔ *Supported*: This combination is subject to ongoing quality assurance, and is fully supported by our technical support organization.
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=matrix-notes1]
 
 
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
 [cols="40,25,25,23,25"]
 |===
-| | SDK 2.6 - 2.7 | 2.8 - 2.9 | 2.10 | 2.11 & 2.12
+| | SDK 2.6 - 2.7 | 2.8 - 2.9 | 2.10 | 2.11 - 2.13
 
 | *Server 8.0*
 | *◎*
@@ -100,15 +76,18 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 | *✔*
 |===
 
-Note the https://www.couchbase.com/support-policy/EOL/[End of Life dates^] for Couchbase Server and SDK versions.
-See the notes there for Support details.
+
+
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=matrix-notes2]
+
+
+
 
 === Capella Compatibility
 
-At time of release, the Couchbase {sdk_current_version} Go SDK is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service. 
-To make development easier, the {sdk_current_version} SDK includes the Capella client certificate already installed.
 
-include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=cloud]
+
 
 
 
@@ -137,10 +116,9 @@ include::{version-common}@sdk:shared:partial$capella.adoc[tag=cloud]
 | From SDK 2.11.0 ①
 |===
 
-① As part of the standard SDK {sqlpp} API, it should be compatible with all earlier versions of the SDK -- but it has not been tested.
+include::{version-common}@sdk:shared:partial$compat[tag=feature-notes]
 
-This table is not an exhaustive list -- just a few highlights -- provided to help assess compatibility of older versions in particular.
-For alignment of SDKs and new Server features, scroll down to the information below the <<api-version,API Version table>>.
+// ① As part of the standard SDK {sqlpp} API, it should be compatible with all earlier versions of the SDK -- but it has not been tested.
 
 
 
@@ -156,7 +134,7 @@ For alignment of SDKs and new Server features, scroll down to the information be
 
 === API Version
 
-include::{version-common}@sdk:shared:partial$api-version.adoc[tag=api-version]
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=api-version]
 
 
 
@@ -166,9 +144,11 @@ include::{version-common}@sdk:shared:partial$api-version.adoc[tag=api-version]
 
 === Interface Stability
 
-include::{version-common}@sdk:shared:partial$interface-stability-pars.adoc[tag=interface-stability-section]
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=interface-stability-section]
 
 
 === Older SDK Versions
 
-include::{version-common}@sdk:shared:partial$archive.adoc[tag=link]
+
+include::{version-common}@sdk:shared:partial$compat.adoc[tag=archive-link]
+

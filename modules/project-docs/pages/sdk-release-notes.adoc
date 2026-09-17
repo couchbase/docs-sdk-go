@@ -34,11 +34,26 @@ The most current and up to date API Documentation is always available through th
 
 
 [#latest-release]
-== Go SDK 2.12 Releases
+== Go SDK 2.13 Releases
 
 We always recommend using the latest version of the SDK -- it contains all of the latest security patches and support for new and upcoming features.
 All patch releases for each dot minor release should be API compatible, and safe to upgrade;
 any changes to expected behavior are noted in the release notes that follow.
+
+
+[v2.13.0]
+=== Version 2.13.0 (?? October 2026)
+
+Version 2.13.0 is the first release in the Go SDK 2.13 series.
+
+https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.13.0?tab=doc[API Documentation]
+
+
+
+
+
+
+== Go SDK 2.12 Releases
 
 === Version 2.12.5 (2 September 2026)
 

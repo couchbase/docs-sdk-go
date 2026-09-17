@@ -1,9 +1,9 @@
 = Couchbase Go SDK Documentation
 
-This repository hosts the documentation source for the https://docs.couchbase.com/go-sdk/2.12/hello-world/overview.html[Couchbase Go SDK].
+This repository hosts the documentation source for the https://docs.couchbase.com/go-sdk/2.13/hello-world/overview.html[Couchbase Go SDK].
 
 This branch documents the 2.12 release of the SDK.
-It follows the https://docs.couchbase.com/go-sdk/2.12/project-docs/compatibility.html#api-version[SDK 3.9 API].
+It follows the https://docs.couchbase.com/go-sdk/2.13/project-docs/compatibility.html#api-version[SDK 3.10 API].
 
 This branch reflects the new Information Architecture for the SDK docs.
 
@@ -24,7 +24,7 @@ If you are not sure the best way to update the docs, please raise a JIRA ticket 
 
 == Notes for Docs Maintainers
 
-The philosophy behind the Information Architecture can be found in the https://docs.couchbase.com/go-sdk/2.12/project-docs/metadoc-about-these-sdk-docs.html[meta doc].
+The philosophy behind the Information Architecture can be found in the https://docs.couchbase.com/go-sdk/2.13/project-docs/metadoc-about-these-sdk-docs.html[meta doc].
 
 === Directory Structure
 
