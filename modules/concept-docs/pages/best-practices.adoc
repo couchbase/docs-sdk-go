@@ -113,6 +113,15 @@ and will provide full back pressure for streaming results from large {sqlpp} or 
 See the xref:howtos:concurrent-async-apis.adoc[Async & Reactive APIs page] for further discussion and practical examples.
 
 
+=== Bulk Get, Multi-Get, and Network Latency
+
+include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=bulk-get]
+
+
+// ==== When to Use Bulk Get
+
+// include::{version-common}@sdk:shared:partial$best-practices.adoc[tag=bulk-get-async-platform]
+
 
 == Error Handling
 
