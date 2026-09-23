@@ -89,7 +89,7 @@ func Example_concurrentGet() {
 		fmt.Printf("Fetched document #%d: ID: %s, Content: %v\n", fetchedCount, getOp.ID, docContent)
 	}
 
-	log.Printf("Completed fetching %d/%d documents in %d milliseconds\n", fetchedCount, len(docIDs))
+	log.Printf("Completed fetching %d/%d documents\n", fetchedCount, len(docIDs))
 	// #end::send[]
 
 	cluster.Close(nil)
