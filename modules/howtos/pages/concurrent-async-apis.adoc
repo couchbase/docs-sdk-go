@@ -92,6 +92,17 @@ include::devguide:example$go/concurrent-batch_test.go[tag=send]
 
 // use case bulk loader for data integration
 
+=== Other Operations
+
+The above example was for an `Upsert`, but the advice and techniques are the same for other CRUD operations.
+Here is an example of a bulk get:
+
+[source,golang,indent=0]
+----
+include::devguide:example$go/bulk_get.go[tag=bulk-get]
+----
+
+
 === Batching guidelines
 Batching improves network utilization.
 However there is a batching threshold at which the maximum network efficiency is gained -- 
