@@ -58,8 +58,6 @@ func Example_concurrentGet() {
   // #end::prepareOps[]
 
 	// #tag::send[]
-	startTime := time.Now()
-
 	err = collection.Do(getOps, nil)
 	if err != nil {
 		log.Println(err)
