@@ -100,6 +100,7 @@ Here is an example of a bulk get:
 [source,golang,indent=0]
 ----
 include::devguide:example$go/bulk_get.go[tag=bulk-get]
+include::devguide:example$go/bulk_get.go[tag=send]
 ----
 
 
