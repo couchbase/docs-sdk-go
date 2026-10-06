@@ -2,7 +2,7 @@
 
 This repository hosts the documentation source for the https://docs.couchbase.com/go-sdk/2.13/hello-world/overview.html[Couchbase Go SDK].
 
-This branch documents the 2.12 release of the SDK.
+This branch documents the 2.13 release of the SDK.
 It follows the https://docs.couchbase.com/go-sdk/2.13/project-docs/compatibility.html#api-version[SDK 3.10 API].
 
 This branch reflects the new Information Architecture for the SDK docs.
