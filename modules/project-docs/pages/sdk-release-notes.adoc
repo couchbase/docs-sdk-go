@@ -42,16 +42,56 @@ any changes to expected behavior are noted in the release notes that follow.
 
 
 [v2.13.0]
-=== Version 2.13.0 (?? October 2026)
+=== Version 2.13.0 (7 October 2026)
 
 Version 2.13.0 is the first release in the Go SDK 2.13 series.
 
 https://pkg.go.dev/github.com/couchbase/gocb/v2@v2.13.0?tab=doc[API Documentation]
 
+Tracing and metrics with the `couchbase2` scheme should be considered stability level *volatile* at this time.
 
+==== New Features and Behavioral Changes
 
+* https://jira.issues.couchbase.com/browse/GOCBC-1867[GOCBC-1867]:
+Added `Collection.GetReplica`, which reads a document from one specific replica, and only directs the request to one replica --
+unlike `GetAnyReplica` and `GetAllReplicas`, which fan out the requests.
+The replica to read is specified using a `GetReplicaStrategy`.
+* https://jira.issues.couchbase.com/browse/GOCBC-1856[GOCBC-1856]:
+Added the `Scoring` search option.
+This can be set to `ScoringNone` to disable scoring.
+This is equivalent to the  `SearchOptions.DisableScoring` option, which is now deprecated.
+* https://jira.issues.couchbase.com/browse/GOCBC-1804[GOCBC-1804]:
+Added support for setting an expiry (TTL) on documents inserted or replaced in a transaction, through the new `Expiry` field in `TransactionInsertOptions` and `TransactionReplaceOptions`.
+* https://jira.issues.couchbase.com/browse/GOCBC-1791[GOCBC-1791]:
+Added `EventingFunctionStateResuming` to the `EventingFunctionStatus` values, which is the state of an Eventing function moving from paused to deployed.
+* https://jira.issues.couchbase.com/browse/GOCBC-1853[GOCBC-1853]:
+Query error code 2120 ("Error authorizing against cluster") is now returned as `ErrAuthenticationFailure`.
+* https://jira.issues.couchbase.com/browse/GOCBC-1849[GOCBC-1849]:
+Added `ErrAuthorizationFailure`, which the `couchbase2` scheme returns when the credentials are valid but the user does not have permission to access or modify a resource.
+Before this change, `ErrAuthenticationFailure` was returned.
+* https://jira.issues.couchbase.com/browse/GOCBC-1848[GOCBC-1848]:
+In `couchbase2` mode, error contexts now include more details when the server provides them.
+* https://jira.issues.couchbase.com/browse/GOCBC-1864[GOCBC-1864]:
+In `couchbase2` mode, `GetAnyReplica` and `GetAllReplicas` now fail with `ErrFeatureNotAvailable` if `ReadPreference` is set.
+Before this change, `ReadPreference` was ignored without an error.
+* https://jira.issues.couchbase.com/browse/GOCBC-1881[GOCBC-1881]:
+Fewer allocations when recording metrics, which improves performance.
 
+==== Fixed Issues
 
+* https://jira.issues.couchbase.com/browse/GOCBC-1869[GOCBC-1869]:
+Fixed a nil pointer dereference panic in `Collection.Scan` that could occur under high concurrency, when KV connections are closed by the server.
+* https://jira.issues.couchbase.com/browse/GOCBC-1872[GOCBC-1872]:
+Fixed a divide-by-zero panic in lost transactions cleanup, which happened when the client was not responsible for cleaning any ATRs.
+* https://jira.issues.couchbase.com/browse/GOCBC-1838[GOCBC-1838]:
+Fixed an issue where a custom transactions metadata collection, and collections given in the transactions cleanup config, were not always in the cleanup set immediately after initialization.
+They were added asynchronously, so how soon they were added depended on goroutine scheduling.
+* https://jira.issues.couchbase.com/browse/GOCBC-1870[GOCBC-1870]:
+Fixed an issue where an HTTP request could fail without being retried if its connection was closed while the request was being written
+(for example, a TLS connection closed by the server right after the handshake).
+These requests are now retried with the `SocketCloseInFlightRetryReason` retry reason.
+* https://jira.issues.couchbase.com/browse/GOCBC-1843[GOCBC-1843]:
+Fixed an issue where `WatchIndexes` did not return immediately when the provided `context.Context` was canceled, but waited until the end of the sleep between index polling iterations.
 
 == Go SDK 2.12 Releases
 
