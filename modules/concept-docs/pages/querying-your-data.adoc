@@ -50,8 +50,8 @@ How you combine the Data Service and {sqlpp} should depend on your use case, but
 
 Couchbase offers a choice of:
 
-* xref:columnar:intro:intro.adoc[Capella Columnar] for real-time analytics, with data stored elsewhere in your data lake.
-* xref:howtos:analytics-using-sdk.adoc[Couchbase Analytics Service (CBAS)] for traditional data analytics against your operational cluster.
+* xref:enterprise-analytics:intro:intro.adoc[Operational Insights Enterprise] & xref:analytics:intro:intro.adoc[Operational Insights Capella] for real-time analytics, with data stored elsewhere in your data lake.
+* xref:howtos:analytics-using-sdk.adoc[Couchbase Analytics Service (CBAS)] for traditional data analytics against your operational database cluster.
 
 Both use versions of the {sqlpp} query language.
 
